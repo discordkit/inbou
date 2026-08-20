@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Least privilege: the job only checks out and runs checks. It needs no secrets
+# — the tests drive workerd locally and never reach Discord.
+permissions:
+  contents: read
+
+# A newer commit on the same ref supersedes an in-flight run.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: Check & Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: voidzero-dev/setup-vp@v1
+        with:
+          node-version: "lts"
+          cache: true
+
+      - run: vp check
+
+      - run: vp test
+
+      # Proves the Worker DEPLOYS, not just that it runs. The Vitest pool's
+      # module resolution is permissive enough that a Node builtin slips
+      # through it unnoticed; only the real bundle catches one.
+      - run: vp run check:bundle

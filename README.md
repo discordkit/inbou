@@ -1,1 +1,97 @@
-# inbou
+<div align="center">
+
+# 鸚法
+
+[![CI status][ci_badge]][ci] [![License][license_badge]][license]
+
+A Japanese practice bot for Discord, built on [discordkit][discordkit] and deployed to Cloudflare Workers.
+
+</div>
+
+---
+
+**鸚法** (_inbou_) puns on 鸚鵡返し (_ōmugaeshi_, parroting something back) and 文法 (_bunpō_, grammar) — repetition being how a language sticks, and a nod to Coca Bird, the cockatiel the server is named for.
+
+## 🏗️ How it works
+
+The bot is **two Workers**, and the split is the most important thing to understand before changing anything.
+
+```
+bot Worker  (src/worker/)          ← the foundation; edits here reconnect
+  ├─ fetch      /health
+  ├─ scheduled  cron wake-up, so an evicted bot comes back
+  └─ Durable Object (InbouBot)
+       └─ Gateway connection ──> Discord
+            ├─ onReady
+            ├─ onInteractionCreate
+            └─ onMessageCreate
+                    │
+                    │  service binding (HANDLERS)
+                    ▼
+handlers Worker  (src/handlers/)   ← app logic; edit freely, session survives
+  ├─ commands.ts   slash commands
+  └─ messages.ts   prefix commands
+```
+
+Discord allows exactly **one Gateway session per bot**, and a Worker invocation cannot hold a socket open past the request that created it. A Durable Object can: it is addressable, single-instance, and — the part that matters — its alarms survive eviction. So the connection lives in the DO.
+
+### Why the second Worker exists
+
+The Cloudflare plugin makes the Worker entry self-accepting, and that entry re-exports the Durable Object. So editing _any_ module the entry can reach tears down the isolate, kills the Gateway session, and costs a fresh `IDENTIFY` against Discord's 1000-per-day budget. During a focused session on game logic that adds up fast, and the bot blinks offline each time.
+
+Moving app logic into a separate Worker puts it outside that import graph. The plugin reloads the handlers Worker on its own, the Durable Object is never touched, and the session survives. Measured: four consecutive edits to handler code kept the same session id, while the equivalent edit to the bot Worker reconnects — which is correct, since its wiring genuinely changed.
+
+This is the pattern Discord bot frameworks converge on — keep the socket service stable, reload the handler service — adapted to Workers via `auxiliaryWorkers` and a service binding.
+
+### Other decisions worth knowing
+
+- **Connection timers run on DO alarms, not `setTimeout`.** A DO's JS timers die with its isolate, so an evicted object would stop heartbeating and lose the session with no error anywhere. `src/worker/alarmScheduler.ts` multiplexes the connection's several pending timers onto the DO's single, non-repeating alarm slot.
+- **`nodejs_compat` is off, deliberately.** The Gateway client runs on the bare Workers runtime — Web-standard `WebSocket`, no Node builtins. `vp run check:bundle` fails the build if a dependency pulls one in, so that stays a decision rather than a drift.
+- **Intents are requested explicitly where no handler implies them.** `onMessageCreate` registers its own, but `MESSAGE_CONTENT` gates message _fields_ rather than an event: without it `content` arrives as an empty string and a prefix match silently never fires.
+
+## 📦 Setup
+
+```bash
+vp install
+```
+
+Copy `.env.schema` to `.env` and fill it in. `.env` is gitignored; `.env.schema` is committed and declares the shape, which Varlock validates.
+
+| Variable                 | Required | Where to get it                                                                                                                                     |
+| ------------------------ | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `DISCORD_BOT_TOKEN`      | yes      | [Developer Portal][portal] → your app → **Bot → Reset Token**. Authenticates both the Gateway connection and the REST calls.                        |
+| `DISCORD_APPLICATION_ID` | yes      | Same app → **General Information**. Public; it appears in invite URLs.                                                                              |
+| `DISCORD_GUILD_ID`       | no       | The server to register commands into while developing. Guild commands appear immediately; global ones can take up to an hour. Needs Developer Mode. |
+
+The bot needs two **privileged** intents enabled under **Bot → Privileged Gateway Intents**: **Message Content** and **Server Members**. Without them Discord closes the connection with a fatal `4014`.
+
+## 🔧 Running it
+
+| What              | Command                    | Notes                                                       |
+| ----------------- | -------------------------- | ----------------------------------------------------------- |
+| Local dev         | `vp run dev`               | Runs both Workers and the DO in real workerd via Miniflare. |
+| Tests             | `vp test`                  | Drives a real Durable Object inside workerd.                |
+| Bundle check      | `vp run check:bundle`      | Fails if the bundle pulls in a Node builtin.                |
+| Register commands | `vp run commands:register` | Pushes the command list to Discord.                         |
+| Deploy            | `wrangler deploy`          | Needs your own Cloudflare account.                          |
+
+Slash commands are registered over REST and persist on Discord's side, so `commands:register` is a deliberate step rather than something the bot does at boot. Re-running it replaces the whole set, which is what makes a removed command disappear.
+
+## 🧪 Two checks, and why both
+
+- **`vp test`** proves the code _runs_ on workerd.
+- **`vp run check:bundle`** proves it _deploys_.
+
+The test pool runs inside workerd but with permissive module resolution — Vitest itself needs Node interop — so `node:fs` resolves happily there. Only the real bundle tells the truth. Run both.
+
+## 🥂 License
+
+[MIT][license] © [Drake Costa][personal-website]
+
+[discordkit]: https://github.com/discordkit/discordkit
+[portal]: https://discord.com/developers/applications
+[ci_badge]: https://github.com/discordkit/inbou/actions/workflows/ci.yml/badge.svg
+[ci]: https://github.com/discordkit/inbou/actions/workflows/ci.yml
+[license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license]: https://github.com/discordkit/inbou/blob/main/LICENSE.md
+[personal-website]: https://saeris.gg
