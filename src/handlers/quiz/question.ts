@@ -67,6 +67,29 @@ export interface Question {
   example?: { jpn: string; eng: string };
 }
 
+/**
+ * Why no question could be produced.
+ *
+ * A plain union rather than a Result wrapper: the caller narrows it with an
+ * `in` check and pays nothing on the success path, which matters because this
+ * runs once per question and 85,004 times in the corpus test.
+ *
+ * The two reasons need different responses, which is the whole point of
+ * distinguishing them. `no-words` is a filter the channel chose that matches
+ * nothing — easy to hit by accident, since N4 + godan-n is zero words and
+ * adjectives have no verb class at all — so the bot tells them to widen it.
+ * `no-forms` means words matched but none could produce an askable form, which
+ * the corpus test says is impossible; if it ever happens it is a data bug worth
+ * logging, not advice to give a player.
+ */
+export interface NoQuestion {
+  empty: `no-words` | `no-forms`;
+}
+
+/** Narrow {@link generate}'s return. */
+export const isQuestion = (result: Question | NoQuestion): result is Question =>
+  !(`empty` in result);
+
 /** Does this word pass the session's filters? */
 export const matches = (word: Word, filters: Filters): boolean => {
   if (filters.levels.length > 0) {
@@ -200,9 +223,9 @@ export const generate = (
   words: readonly Word[],
   filters: Filters,
   random: () => number = Math.random
-): Question | null => {
+): Question | NoQuestion => {
   const pool = words.filter((w) => matches(w, filters));
-  if (pool.length === 0) return null;
+  if (pool.length === 0) return { empty: `no-words` };
 
   // Try a few words before giving up: a word can pass the filters and still
   // have no askable form left once the form filter is applied, and scanning
@@ -227,5 +250,5 @@ export const generate = (
     if (question !== null) return question;
   }
 
-  return null;
+  return { empty: `no-forms` };
 };

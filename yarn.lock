@@ -1920,6 +1920,7 @@ __metadata:
     vitest: "catalog:"
     wanakana: "npm:^5.3.1"
     wrangler: "npm:4.121.0"
+    xstate: "npm:5.32.5"
   languageName: unknown
   linkType: soft
 
@@ -3044,6 +3045,13 @@ __metadata:
     utf-8-validate:
       optional: true
   checksum: 10/8856922c26fd2d106931c16310d9a0bc2d6d37ed8771352bfa0d2a36df0ab5cb1f6528c6db8213f3333cf4ce93925e56f13604df0454cb0d4289fef922bebcdd
+  languageName: node
+  linkType: hard
+
+"xstate@npm:5.32.5":
+  version: 5.32.5
+  resolution: "xstate@npm:5.32.5"
+  checksum: 10/e390e0efcd0499b1a2020a108a8ac9ff75c025ea7c70c0106bdb4e48704dc8be07632a7ce4121c4472cd777f15926d6afb4efb263731145634d2791b2cdf47f9
   languageName: node
   linkType: hard
 

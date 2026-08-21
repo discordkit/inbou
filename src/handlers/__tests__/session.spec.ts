@@ -1,7 +1,7 @@
 import { env } from "cloudflare:workers";
 import { describe, expect, it } from "vitest";
 import type { Question } from "../quiz/question.js";
-import { DEFAULT_CONFIG } from "../quiz/session.js";
+import { DEFAULT_CONFIG } from "../quiz/machine.js";
 import type { QuizSession } from "../session.js";
 
 /**
@@ -56,9 +56,10 @@ describe(`quizSession in the handlers Worker`, () => {
     await stub.begin(`chan-1`, question(`1`), DEFAULT_CONFIG);
 
     const state = await stub.current();
-    expect(state?.channelId).toBe(`chan-1`);
-    expect(state?.question?.answer).toBe(`うらない`);
-    expect(state?.questionNumber).toBe(1);
+    expect(state?.context.channelId).toBe(`chan-1`);
+    expect(state?.context.question?.answer).toBe(`うらない`);
+    expect(state?.context.questionNumber).toBe(1);
+    expect(state?.state).toBe(`asking`);
   });
 
   it(`keeps one session per channel`, async () => {
@@ -72,7 +73,7 @@ describe(`quizSession in the handlers Worker`, () => {
     await a.begin(`chan-a`, question(`1`), DEFAULT_CONFIG);
     await a.submit(`mika`, `うらない`, true);
 
-    expect((await a.current())?.scores).toEqual({ mika: 1 });
+    expect((await a.current())?.context.scores).toEqual({ mika: 1 });
     await expect(b.current()).resolves.toBeNull();
   });
 
@@ -128,7 +129,7 @@ describe(`quizSession in the handlers Worker`, () => {
     });
 
     const state = await stub.current();
-    expect(state?.deadline).toBeGreaterThan(Date.now());
+    expect(state?.context.deadline).toBeGreaterThan(Date.now());
     // The stored alarm, not just the state that decided it.
     await expect(stub.pendingAlarm()).resolves.toBeGreaterThan(Date.now());
   });
@@ -144,10 +145,12 @@ describe(`quizSession in the handlers Worker`, () => {
       timeoutMs: 0
     });
 
+    // The machine leaves `asking` when the alarm fires, which is also what
+    // clears the stored alarm.
     await expect
-      .poll(async () => (await stub.current())?.question, { timeout: 5_000 })
-      .toBeNull();
-    expect((await stub.current())?.timeoutStreak).toBe(1);
+      .poll(async () => (await stub.current())?.state, { timeout: 5_000 })
+      .toBe(`revealing`);
+    expect((await stub.current())?.context.timeoutStreak).toBe(1);
   });
 
   it(`clears the alarm once the question is answered`, async () => {
@@ -158,7 +161,7 @@ describe(`quizSession in the handlers Worker`, () => {
     await stub.begin(`chan`, question(`1`), DEFAULT_CONFIG);
     await stub.submit(`mika`, `うらない`, true);
 
-    expect((await stub.current())?.deadline).toBeNull();
+    expect((await stub.current())?.context.deadline).toBeNull();
     // The stored alarm has to be gone too. Checking only `deadline` would
     // pass while a real alarm stayed armed, and it would fire against the
     // next question.

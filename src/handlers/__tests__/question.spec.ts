@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { judge } from "../quiz/answer.js";
 import {
   generate,
+  isQuestion,
   matches,
   pose,
   type Filters,
@@ -155,7 +156,7 @@ describe(`generate: picking from the corpus`, () => {
     const filters: Filters = { ...anyFilters, levels: [4], types: [`adj-na`] };
     for (let i = 0; i < 20; i += 1) {
       const q = generate(words, filters);
-      expect(q?.wordId).toBe(shizuka.id);
+      expect(isQuestion(q) && q.wordId).toBe(shizuka.id);
     }
   });
 
@@ -164,15 +165,20 @@ describe(`generate: picking from the corpus`, () => {
     // basics-only session would be a bug the player experiences as unfairness.
     const filters: Filters = { ...anyFilters, forms: [`past-negative`] };
     for (let i = 0; i < 20; i += 1) {
-      expect(generate(words, filters)?.form).toBe(`past-negative`);
+      const q = generate(words, filters);
+      expect(isQuestion(q) && q.form).toBe(`past-negative`);
     }
   });
 
   it(`returns null when no word passes the filters`, () => {
-    // WHY: the caller reports this as a misconfigured session. Returning a
-    // question anyway would ignore the filters the channel chose.
-    expect(generate(words, { ...anyFilters, levels: [1] })).toBeNull();
-    expect(generate([], anyFilters)).toBeNull();
+    // WHY: the caller reports this as a misconfigured session, and needs to
+    // know WHICH kind. `no-words` is advice for the channel ("widen your
+    // filters"); `no-forms` would be a data bug to log. Returning a question
+    // anyway would ignore the filters the channel chose.
+    expect(generate(words, { ...anyFilters, levels: [1] })).toEqual({
+      empty: `no-words`
+    });
+    expect(generate([], anyFilters)).toEqual({ empty: `no-words` });
   });
 
   it(`finds a valid question even when random attempts keep missing`, () => {
@@ -184,14 +190,14 @@ describe(`generate: picking from the corpus`, () => {
     // shizuka is first in the list and has no causative-passive, so a
     // zero-returning random always picks the wrong word.
     const q = generate([shizuka, taberu], filters, alwaysFirst);
-    expect(q?.wordId).toBe(taberu.id);
-    expect(q?.answer).toBe(`たべさせられる`);
+    expect(isQuestion(q) && q.wordId).toBe(taberu.id);
+    expect(isQuestion(q) && q.answer).toBe(`たべさせられる`);
   });
 
   it(`is driven by the injected random source`, () => {
     // WHY: selection has to be testable. If it reached for Math.random
     // directly, none of the tests above could pin a specific outcome.
     const q = generate(words, anyFilters, () => 0);
-    expect(q?.wordId).toBe(uru.id);
+    expect(isQuestion(q) && q.wordId).toBe(uru.id);
   });
 });
