@@ -255,17 +255,42 @@ export const leaderboard = (
  * questions, so the machine has to be rebuilt from storage on every wake.
  */
 export interface PersistedSession {
-  snapshot: unknown;
+  /**
+   * XState's own persisted-snapshot shape, not `unknown`.
+   *
+   * Typing it precisely is what lets `restore` hand it straight back to
+   * `createActor` without a cast — and a cast here would be load-bearing, since
+   * a snapshot that failed to restore would silently reset a session's scores
+   * on the next wake from hibernation.
+   */
+  snapshot: ReturnType<SessionActor[`getPersistedSnapshot`]>;
 }
+
+/** Ignored by {@link restore}; see the note there. */
+const RESTORE_INPUT = {
+  channelId: ``,
+  question: null as unknown as Question,
+  config: DEFAULT_CONFIG,
+  now: 0
+};
 
 export const persist = (actor: SessionActor): PersistedSession => ({
   snapshot: actor.getPersistedSnapshot()
 });
 
-/** Rebuild a running machine from what was stored. */
+/**
+ * Rebuild a running machine from what was stored.
+ *
+ * `input` is required by the type even here, because the machine declares one —
+ * but restoring takes its context from the snapshot and ignores it. Passing a
+ * placeholder satisfies the signature without pretending the value is used; the
+ * round-trip test proves the restored context comes from the snapshot rather
+ * than from this.
+ */
 export const restore = (persisted: PersistedSession): SessionActor => {
   const actor = createActor(sessionMachine, {
-    snapshot: persisted.snapshot as never
+    snapshot: persisted.snapshot,
+    input: RESTORE_INPUT
   });
   actor.start();
   return actor;

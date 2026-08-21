@@ -120,7 +120,7 @@ export class QuizSession extends DurableObject {
    * the bug worth catching — a stale alarm closes the NEXT question early.
    */
   async pendingAlarm(): Promise<number | null> {
-    return  this.ctx.storage.getAlarm();
+    return this.ctx.storage.getAlarm();
   }
 
   /**
