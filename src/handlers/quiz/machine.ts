@@ -5,7 +5,7 @@ import {
   type Actor,
   type SnapshotFrom
 } from "xstate";
-import type { Question } from "./question.js";
+import type { Filters, Question } from "./question.js";
 
 /**
  * A quiz session as an explicit state machine.
@@ -61,6 +61,15 @@ export const DEFAULT_CONFIG: SessionConfig = {
 export interface SessionContext {
   channelId: string;
   config: SessionConfig;
+  /**
+   * The filters this session draws questions from.
+   *
+   * Stored with the session rather than held by the caller: the Durable Object
+   * hibernates between questions, so anything the next question needs has to
+   * survive that. Without this, question two would be drawn from the whole
+   * corpus and quietly ignore the level the channel chose.
+   */
+  filters: Filters;
   /** 1-based; the question currently open or just closed. */
   questionNumber: number;
   question: Question | null;
@@ -136,6 +145,7 @@ export const sessionMachine = setup({
       channelId: string;
       question: Question;
       config: SessionConfig;
+      filters: Filters;
       now: number;
     }
   },
@@ -146,6 +156,7 @@ export const sessionMachine = setup({
   context: ({ input }) => ({
     channelId: input.channelId,
     config: input.config,
+    filters: input.filters,
     questionNumber: 1,
     question: input.question,
     attempts: [],
@@ -271,6 +282,7 @@ const RESTORE_INPUT = {
   channelId: ``,
   question: null as unknown as Question,
   config: DEFAULT_CONFIG,
+  filters: { levels: [], types: [], classes: [], forms: [] } as Filters,
   now: 0
 };
 
@@ -301,10 +313,11 @@ export const begin = (
   channelId: string,
   question: Question,
   config: SessionConfig,
+  filters: Filters,
   now: number
 ): SessionActor => {
   const actor = createActor(sessionMachine, {
-    input: { channelId, question, config, now }
+    input: { channelId, question, config, filters, now }
   });
   actor.start();
   return actor;

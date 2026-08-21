@@ -31,8 +31,15 @@ const question = (id: string): Question => ({
 });
 
 const NOW = 1_700_000_000_000;
+const ANY_FILTERS = { levels: [], types: [], classes: [], forms: [] };
 const session = (config: Partial<SessionConfig> = {}) =>
-  begin(`chan`, question(`1`), { ...DEFAULT_CONFIG, ...config }, NOW);
+  begin(
+    `chan`,
+    question(`1`),
+    { ...DEFAULT_CONFIG, ...config },
+    ANY_FILTERS,
+    NOW
+  );
 
 const right = (userId: string) =>
   ({

@@ -9,7 +9,7 @@ import {
   type SessionContext,
   type SessionSnapshot
 } from "./quiz/machine.js";
-import type { Question } from "./quiz/question.js";
+import type { Filters, Question } from "./quiz/question.js";
 
 /**
  * One quiz session, per channel.
@@ -99,9 +99,10 @@ export class QuizSession extends DurableObject {
   async begin(
     channelId: string,
     question: Question,
-    config: SessionConfig
+    config: SessionConfig,
+    filters: Filters
   ): Promise<SessionView> {
-    const actor = begin(channelId, question, config, Date.now());
+    const actor = begin(channelId, question, config, filters, Date.now());
     await this.#save(actor);
     return view(actor.getSnapshot());
   }

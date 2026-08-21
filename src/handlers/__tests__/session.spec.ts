@@ -24,6 +24,8 @@ const sessionEnv = env as unknown as {
 const session = (name: string): DurableObjectStub<QuizSession> =>
   sessionEnv.SESSION.get(sessionEnv.SESSION.idFromName(name));
 
+const ANY_FILTERS = { levels: [], types: [], classes: [], forms: [] };
+
 const question = (id: string): Question => ({
   wordId: id,
   prompt: `うりません`,
@@ -53,7 +55,7 @@ describe(`quizSession in the handlers Worker`, () => {
     // empty on the next wake and quietly lose the scores mid-game.
     const stub = session(`round-trip`);
     await stub.clear();
-    await stub.begin(`chan-1`, question(`1`), DEFAULT_CONFIG);
+    await stub.begin(`chan-1`, question(`1`), DEFAULT_CONFIG, ANY_FILTERS);
 
     const state = await stub.current();
     expect(state?.context.channelId).toBe(`chan-1`);
@@ -70,7 +72,7 @@ describe(`quizSession in the handlers Worker`, () => {
     await a.clear();
     await b.clear();
 
-    await a.begin(`chan-a`, question(`1`), DEFAULT_CONFIG);
+    await a.begin(`chan-a`, question(`1`), DEFAULT_CONFIG, ANY_FILTERS);
     await a.submit(`mika`, `うらない`, true);
 
     expect((await a.current())?.context.scores).toEqual({ mika: 1 });
@@ -80,7 +82,7 @@ describe(`quizSession in the handlers Worker`, () => {
   it(`scores the first correct answer and closes the question`, async () => {
     const stub = session(`scoring`);
     await stub.clear();
-    await stub.begin(`chan`, question(`1`), DEFAULT_CONFIG);
+    await stub.begin(`chan`, question(`1`), DEFAULT_CONFIG, ANY_FILTERS);
 
     const wrong = await stub.submit(`drake`, `うった`, false);
     expect(wrong.outcome).toEqual({ kind: `wrong` });
@@ -101,7 +103,12 @@ describe(`quizSession in the handlers Worker`, () => {
     // this wrong would either drop the final scores or ask an extra question.
     const stub = session(`final`);
     await stub.clear();
-    await stub.begin(`chan`, question(`1`), { ...DEFAULT_CONFIG, length: 1 });
+    await stub.begin(
+      `chan`,
+      question(`1`),
+      { ...DEFAULT_CONFIG, length: 1 },
+      ANY_FILTERS
+    );
 
     const result = await stub.submit(`mika`, `うらない`, true);
     expect(result.needsNext).toBe(false);
@@ -123,10 +130,15 @@ describe(`quizSession in the handlers Worker`, () => {
     // idle channel's question would stay open forever.
     const stub = session(`alarm-set`);
     await stub.clear();
-    await stub.begin(`chan`, question(`1`), {
-      ...DEFAULT_CONFIG,
-      timeoutMs: 60_000
-    });
+    await stub.begin(
+      `chan`,
+      question(`1`),
+      {
+        ...DEFAULT_CONFIG,
+        timeoutMs: 60_000
+      },
+      ANY_FILTERS
+    );
 
     const state = await stub.current();
     expect(state?.context.deadline).toBeGreaterThan(Date.now());
@@ -140,10 +152,15 @@ describe(`quizSession in the handlers Worker`, () => {
     // streak advance — the path that ends a quiet endless session.
     const stub = session(`alarm-fires`);
     await stub.clear();
-    await stub.begin(`chan`, question(`1`), {
-      ...DEFAULT_CONFIG,
-      timeoutMs: 0
-    });
+    await stub.begin(
+      `chan`,
+      question(`1`),
+      {
+        ...DEFAULT_CONFIG,
+        timeoutMs: 0
+      },
+      ANY_FILTERS
+    );
 
     // The machine leaves `asking` when the alarm fires, which is also what
     // clears the stored alarm.
@@ -158,7 +175,7 @@ describe(`quizSession in the handlers Worker`, () => {
     // early, cutting the round short for no visible reason.
     const stub = session(`alarm-cleared`);
     await stub.clear();
-    await stub.begin(`chan`, question(`1`), DEFAULT_CONFIG);
+    await stub.begin(`chan`, question(`1`), DEFAULT_CONFIG, ANY_FILTERS);
     await stub.submit(`mika`, `うらない`, true);
 
     expect((await stub.current())?.context.deadline).toBeNull();
