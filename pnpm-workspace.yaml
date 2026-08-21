@@ -1,6 +1,0 @@
-# Both ship native binaries whose postinstall must run: workerd IS the Workers
-# runtime that `vp dev` and the Vitest pool execute against, and esbuild is a
-# native binary too. Without these the runtime is simply missing.
-allowBuilds:
-  esbuild: true
-  workerd: true

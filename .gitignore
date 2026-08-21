@@ -3,6 +3,16 @@ dist/
 .wrangler/
 coverage/
 
+# Yarn: commit the pinned release so a fresh clone resolves the same binary,
+# but never the cache or install state.
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
 # Real secrets. `.env.schema` is committed and declares the shape; this holds
 # the values.
 .env
