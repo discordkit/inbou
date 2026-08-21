@@ -38,7 +38,7 @@ export default {
     // invocations, but this is idempotent and cheap.
     discord.setToken(`Bot ${env.DISCORD_BOT_TOKEN}`);
 
-    const event = (await request.json()) as ForwardedEvent;
+    const event = await request.json<ForwardedEvent>();
 
     try {
       switch (event.type) {
