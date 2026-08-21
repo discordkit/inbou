@@ -2,7 +2,7 @@
 
 A per-channel Japanese conjugation quiz. The bot posts a word and a target form; players answer by typing an ordinary channel message, and the first correct one scores.
 
-Status: **draft 1**, 2026-08-20. Decisions here are settled unless marked open. Section 8 lists what is not.
+Status: **draft 2**, 2026-08-21. Decisions here are settled unless marked open; section 8 lists what is not, and section 7 what is built. Sections 1–5 describe the bot as it currently plays, revised after the first live session.
 
 ## Why a Gateway bot and not interactions
 
@@ -16,27 +16,33 @@ One session belongs to one channel. The bot posts a question, anyone who wants t
 
 ```
 鸚法 BOT
-  ┌ Question 3 · 売りません
-  │ Target   Non-past negative (plain)
-  │ Class    Godan (-r)
-  └ [Hint] [Settings] [End]
+  ┌ Question 3 of 10
+  │ ## 売りません
+  │ From    Non-past negative (polite)
+  │ Target  Non-past negative (plain)
+  │ Class   Godan (-る)
+  └ Type your answer in the channel
 
 drake   売らなかった   ❌
+mika    ながい          (ignored — not aimed at the question)
 mika    うらない       ⭕
 
 鸚法 BOT
-  ┌ mika got it — 売らない
-  │ Dictionary  売る（うる）
+  ┌ Correct
+  │ @mika got it — 4 points
+  │ Answer      売らない（うらない）
+  │ Dictionary  売る（うる）      Class  Godan (-る)
   │ Meaning     to sell; to betray
-  │ Rule        Godan negative: う-row → あ-row, then ない.
-  └ Attempts    drake 売らなかった (past, not non-past)
+  │ Example     本を売る。/ I sell books.
+  └ Attempts    ❌ @drake 売らなかった   ⭕ @mika うらない
 ```
 
 ### Rules
 
-- **One guess per player per question.** A second message from the same player is ignored — not penalised, just not scored. Adjustable after playtesting.
-- **No skip. A timeout instead.** Default **2 minutes**, configurable. On expiry the bot reveals the answer and moves on.
+- **Three guesses per player per question**, configurable with `guesses`. A correct answer is worth **4 points on the first try and one less for each miss**, never below one — precision pays, but a typo is not final. Further messages from a player who is out of guesses are ignored rather than penalised.
+- **No skip. A timeout instead.** Default **1 minute**, configurable. Two minutes was measured as too long in the channel and thirty seconds as too short. On expiry the bot reveals the answer and moves on.
 - **Wrong guesses get a ❌ reaction**, correct ones ⭕. The teaching embed lands only when the question closes, so nothing is leaked mid-race.
+- **Only plausible answers are scored.** Every message in the channel reaches the handler, so a message has to share a stem with the expected answer to count — a real attempt at 売らない starts うら even when wrong, while "lol same" does not. The race happens alongside the conversation rather than instead of it.
 - **Scoring is per guild**, accumulated across sessions.
 
 ### Session length
@@ -49,11 +55,13 @@ Two surfaces, deliberately. Flags for people who know what they want, buttons fo
 
 ```
 /quiz start   [level] [type] [class] [forms]
-              [length] [timeout] [difficulty]
+              [length] [timeout] [guesses]
 /quiz config  <same flags>     — applies to the running session
 /quiz end                       — stop, post final scores
-/quiz scores  [user]            — guild leaderboard
 /hint                           — ephemeral, private
+
+not built yet (step 6):
+/quiz scores  [user]            — guild leaderboard
 /review                         — ephemeral recap of your last answer
 ```
 
@@ -65,8 +73,9 @@ Two surfaces, deliberately. Flags for people who know what they want, buttons fo
 | `type`       | verb, adj-i, adj-na | + noun (off by default, see below) |
 | `class`      | all                 | ichidan, godan, suru, kuru         |
 | `forms`      | basics              | any of the 13, or `all`            |
-| `length`     | 10                  | 5–30, or `endless`                 |
-| `timeout`    | 2m                  | 30s–10m                            |
+| `length`     | 10                  | 1–50, or `endless`                 |
+| `timeout`    | 1m                  | 30s–10m                            |
+| `guesses`    | 3                   | 1–10                               |
 | `difficulty` | single              | `single` \| `compound`             |
 
 **Why nouns default off.** In the reference corpus N5 is 312 nouns to 119 verbs, and nouns only conjugate the copula — だ / です / だった. Leaving them on makes an N5 session repetitive and easy. They stay available, just not by default.
@@ -91,11 +100,11 @@ So the teaching moment cannot be private at the moment a wrong answer is typed. 
 
 | Moment        | Channel                           | Privacy                                    |
 | ------------- | --------------------------------- | ------------------------------------------ |
+| Side chatter  | Nothing at all                    | Not scored, no attempt spent               |
 | Wrong guess   | ❌ reaction on their message      | Public, but silent — no explanation leaked |
 | Correct guess | ⭕ reaction, round closes         | Public                                     |
 | Round ends    | Embed: answer, rule, all attempts | Public — the question is settled           |
 | `/hint`       | Ephemeral reply                   | **Genuinely private**                      |
-| `/review`     | Ephemeral reply                   | **Genuinely private**                      |
 
 The reaction carries information (right or wrong) without carrying the answer, so the race survives: knowing drake was wrong tells you nothing about what is right.
 
@@ -103,10 +112,11 @@ Because `/hint` is ephemeral and in-channel, nobody switches to DMs, and a hint 
 
 ## 4. Answering: what counts as correct
 
-1. **Normalise** — NFKC, strip all whitespace, trim trailing `。、.,!?！？`
-2. **Romaji → kana** — ours only, see below
-3. **Fold katakana** — katakana to hiragana by codepoint −96
-4. **Compare** — against the folded kana answer, _or_ the kanji surface unfolded
+1. **Is it even an attempt?** The message must share a stem with the expected answer, or it is ordinary conversation and is ignored entirely. See below.
+2. **Normalise** — NFKC, strip all whitespace, trim trailing `。、.,!?！？`
+3. **Romaji → kana** — ours only, see below
+4. **Fold katakana** — katakana to hiragana by codepoint −96
+5. **Compare** — against the folded kana answer, _or_ the kanji surface unfolded
 
 All four of these score for 売らない:
 
@@ -116,6 +126,8 @@ All four of these score for 売らない:
 ウラナイ      katakana  (folded)
 uranai        romaji    (converted — our addition)
 ```
+
+**Telling an attempt from conversation.** Every message in a channel with a running session reaches the handler, so without step 1 "lol same" takes a ❌ and costs someone a guess. The test is a shared stem: every conjugation of 売る keeps う, and a wrong attempt like うらなかった or うった keeps it too. It is deliberately generous — a wild guess that shares nothing is ignored rather than scored, which costs the player nothing, while scoring their chatter costs them an attempt they never chose to spend. A correct answer always counts however short, and the kanji spelling gets its own stem so 売らなかった is not ignored for sharing no prefix with a kana one.
 
 **Romaji is a real decision, not a detail.** The reference app never scores romaji: its input field converts before submission. A Discord message arrives raw, so without step 2 a member typing `uranai` is simply wrong. For a club with mixed keyboard setups that excludes people. It also brings ambiguity we must handle — `n` vs `nn`, `si` / `shi`, trailing consonants mid-word.
 
@@ -155,7 +167,70 @@ Difficulty at N3 and above should come from multi-word constructions carrying a 
 
 ## 6. Where things live
 
-Quiz logic goes in `src/handlers/` so that editing it never restarts the Gateway session. See the README for why that split exists.
+Quiz logic goes in `src/handlers/` so that editing it never restarts the Gateway session. The rest of this section is what that costs and what it buys; the README has the shorter version.
+
+### Why the bot reloads without reconnecting
+
+Discord allows **one Gateway session per bot** and **1000 IDENTIFYs per day**. A Worker invocation cannot hold a socket open past the request that created it, but a Durable Object can — it is addressable, single-instance, and its alarms survive eviction. So the connection lives in `InbouBot`.
+
+That creates the problem this architecture exists to solve. The Cloudflare plugin makes the Worker entry self-accepting, and that entry re-exports the Durable Object, so **editing any module the entry can reach tears down the isolate and kills the session**. During an afternoon on quiz logic that burns a lot of IDENTIFYs, and the bot blinks offline each time.
+
+Moving app logic into a second Worker puts it outside that import graph:
+
+```
+bot Worker (src/worker/)              handlers Worker (src/handlers/)
+  entry ─┬─ fetch /health               entry ─┬─ commands.ts
+         ├─ scheduled (cron)                   ├─ messages.ts
+         └─ InbouBot ──── Gateway              ├─ quiz/*  (pure logic)
+              │                                ├─ corpus.json
+              │  HANDLERS (service binding)    └─ QuizSession (per channel)
+              └────────────────────────────▶        │
+                                                     │ SELF (service binding)
+                                                     └──▶ back to the entry
+```
+
+**Measured:** four consecutive edits to handler code kept the same session id, while an edit to the bot Worker reconnects — which is correct, since its wiring genuinely changed.
+
+### The boundary is one type-only import
+
+`src/worker/bot.ts` imports `ForwardedEvent` from `../handlers/events.js`, and that is the _only_ line crossing the split. It is a `import type`, erased at compile time, so nothing from `src/handlers/` reaches the bot Worker's runtime graph.
+
+Verified rather than assumed — the bot bundle is **41.99 KiB and contains no handler code at all**, against the handlers Worker's 3,148 KiB:
+
+```sh
+wrangler deploy --dry-run --config wrangler.jsonc --outdir out
+grep -c "conjugate\|questionEmbed" out/index.js   # 0
+```
+
+**Turning that into a value import would silently end the HMR benefit.** Nothing would break; edits would just start costing a Gateway session again, and the only symptom is the bot blinking offline while you work. If you need something from the handlers side in the bot Worker, forward it as an event instead.
+
+### The alarm has to come back out
+
+The session object can close a question on its own, but it can do neither of the things that follow: posting the reveal is a REST call, and choosing the next question needs the corpus. So the handlers Worker **binds itself** as `SELF`, and the alarm dispatches a `SESSION_TIMEOUT` through the same event contract the bot Worker uses.
+
+One path for "something happened, act on it", whether it originated at the Gateway or at a timer.
+
+### What each layer may depend on
+
+The split above is about reload cost. These boundaries are about testability, and they are why 148 of the 159 tests need neither a token nor workerd:
+
+| Layer                                                      | Depends on                      | Tested with         |
+| ---------------------------------------------------------- | ------------------------------- | ------------------- |
+| `quiz/conjugate`, `answer`, `question`, `render`, `config` | nothing                         | plain functions     |
+| `quiz/machine`                                             | xstate only                     | machine transitions |
+| `quiz/flow`                                                | `DiscordEffects`, `SessionPort` | recording stub      |
+| `discord.ts`                                               | `@discordkit/client`            | MSW                 |
+| `session.ts`                                               | `cloudflare:workers`            | real Durable Object |
+
+`flow.ts` is the load-bearing one: it decides _what_ to post but depends on an interface, so a whole round — question, reaction, reveal, next question, standings — runs end to end in Node. `discord.ts` is the only module that reaches for the client, and `session.ts` the only one that needs the runtime.
+
+The test setup mirrors this. `vite.config.ts` declares two Vitest projects: `unit` runs in Node, `workers` in the Cloudflare pool. Wallaby watches `unit`, because it instruments files with a coverage probe that cannot cross the process boundary into workerd. **`vp test` still runs both** — a change can pass the watch loop and fail the runtime project.
+
+### The corpus never enters the Durable Object
+
+`corpus.json` is imported at the handlers Worker's module scope, parsed once per isolate. It is deliberately absent from `QuizSession`, which wakes from hibernation on **every question** and would re-parse 1.8 MB each time — spending the 10 ms CPU budget and undoing the hibernation savings the cost model depends on.
+
+So questions are generated in the request path, which is already warm, and handed to the object already resolved. The object stores a few hundred bytes.
 
 | Store          | Holds         | Notes                                                                                                             |
 | -------------- | ------------- | ----------------------------------------------------------------------------------------------------------------- |
@@ -222,9 +297,9 @@ Sequenced so each step is verifiable on its own and nothing blocks on an open qu
 1. ~~**Conjugator**~~ — done. Port `conjugate.ts` and `kana.ts`, add polite/casual flat keying, test the irregulars. Pure functions, no Discord, no session cost.
 2. ~~**Scorer**~~ — done. Normalise → romaji → fold → compare. Table-driven tests over the four accepted spellings.
 3. ~~**Corpus pipeline**~~ — done; see section 9.
-4. ~~**Session DO**~~ — done. Rules are pure functions in `quiz/session.ts`; the object persists them and keeps the alarm in step.
-5. **Discord surface** — commands, embeds, reactions, buttons, ephemeral hint.
-6. **Leaderboard** — D1 schema and `/quiz scores`.
+4. ~~**Session DO**~~ — done. Rules are an XState machine in `quiz/machine.ts`; the object persists it and keeps the alarm in step.
+5. ~~**Discord surface**~~ — done, and played live. Commands, embeds, reactions, ephemeral hint.
+6. **Leaderboard** — D1 schema, `/quiz scores` and `/review`. Scores currently live only for the length of a session.
 7. **Compound forms** — grammar layer over the primitive, wired to the existing notes.
 
 ## 8. Still open
@@ -234,8 +309,9 @@ None of these block step 1.
 - ~~**Can the handlers Worker own a Durable Object namespace?**~~ **Answered: yes.** Verified end to end; see section 6.
 - ~~**Where does the corpus live — bundle, D1, or static assets?**~~ **Answered: bundled.** Measured at 578 KiB gzipped against a 3 MB limit — 19% — so the simplest option is also affordable. See section 9.
 - **How are ties handled** when two correct answers land in the same second? Gateway ordering gives a sequence, so first-received wins — but that is a decision to state, not to leave to chance.
-- **What exactly ends an endless session** — 3, 4, or 5 consecutive timeouts? At a 2-minute timeout, 3 means six quiet minutes. Probably right, worth playtesting.
-- **Does `/hint` cost anything?** Currently free. If scores matter competitively a hint might forfeit the point, or not, if the bot is primarily a teaching tool.
+- **What exactly ends an endless session** — 3, 4, or 5 consecutive timeouts? At a 1-minute timeout, 3 means three quiet minutes, which may now be too eager.
+- **Does `/hint` cost anything?** Currently free. If scores matter competitively a hint might cost a point, or not, if the bot is primarily a teaching tool.
+- **How generous should the plausibility test be?** It currently needs a shared stem, which ignores a wild guess that happens to share nothing with the answer. That costs the player nothing, but it also means a genuinely lost player gets no ❌ at all — worth watching in the channel.
 
 ## 9. The corpus
 
