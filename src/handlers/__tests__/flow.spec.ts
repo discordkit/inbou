@@ -3,6 +3,7 @@ import type { DiscordEffects } from "../discord.js";
 import { DEFAULT_SETTINGS } from "../quiz/config.js";
 import {
   handleAnswer,
+  handleResume,
   handleTimeout,
   startSession,
   type FlowDeps,
@@ -82,8 +83,16 @@ const sessionStub = (): SessionPort & { timeout: () => void } => {
 
       if (!correct) return { outcome: { kind: `wrong` }, needsNext: false };
       const over = after.value === `finished`;
+      const earned =
+        (after.context.scores[userId] ?? 0) -
+        (before.context.scores[userId] ?? 0);
       return {
-        outcome: { kind: `correct`, userId },
+        outcome: {
+          kind: `correct`,
+          userId,
+          points: earned,
+          total: after.context.scores[userId] ?? 0
+        },
         ...(closing === null ? {} : { closed: closing }),
         ...(over
           ? {
@@ -100,6 +109,12 @@ const sessionStub = (): SessionPort & { timeout: () => void } => {
     },
     next: async (question) => {
       actor?.send({ type: `NEXT`, question, now: Date.now() });
+    },
+    pause: async (ms) => {
+      actor?.send({ type: `PAUSE`, until: Date.now() + ms });
+    },
+    resume: async () => {
+      actor?.send({ type: `RESUME`, now: Date.now() });
     },
     configure: async (settings) => {
       actor?.send({
@@ -148,14 +163,56 @@ const deps = (words: readonly Word[] = [uru]) => {
   };
 };
 
+/**
+ * Start a session and step past the intro pause.
+ *
+ * A real session opens with the rules and waits, so every test about answering
+ * has to get past that first — the same way the alarm does in production.
+ */
+const play = async (
+  d: Awaited<ReturnType<typeof deps>>,
+  settings = DEFAULT_SETTINGS
+): Promise<void> => {
+  await startSession(d, `chan`, settings);
+  await handleResume(d, `chan`);
+};
+
 describe(`starting a session`, () => {
-  it(`posts the first question`, async () => {
+  it(`explains the rules before asking anything`, async () => {
+    // WHY: a session used to open with a question nobody had agreed the terms
+    // of. The intro states the guess count, the clock and the scoring, so the
+    // first question is not also the moment everyone works out the rules.
     const d = deps();
     const started = await startSession(d, `chan`, DEFAULT_SETTINGS);
 
     expect(started).toBe(true);
     expect(d.posts).toHaveLength(1);
-    expect(JSON.stringify(d.posts[0]?.embed)).toContain(`Question 1 of 10`);
+    const intro = JSON.stringify(d.posts[0]?.embed);
+    expect(intro).toContain(`Conjugation practice`);
+    expect(intro).toContain(`Guesses each`);
+    expect(intro).toContain(`4 points`);
+  });
+
+  it(`waits before the first question rather than posting it immediately`, async () => {
+    // WHY: the pause has to actually pause. `setTimeout` dies with the Worker
+    // isolate, so the wait runs on the session's alarm and this returns —
+    // posting the question here would make the intro purely decorative.
+    const d = deps();
+    await startSession(d, `chan`, DEFAULT_SETTINGS);
+
+    expect(d.posts).toHaveLength(1);
+    expect((await d.session.current())?.state).toBe(`paused`);
+  });
+
+  it(`asks question one when the pause ends, without skipping it`, async () => {
+    // WHY: question one is stored and counted before anyone sees it, so
+    // resuming with the ordinary "next question" path would jump to two.
+    const d = deps();
+    await startSession(d, `chan`, DEFAULT_SETTINGS);
+    await handleResume(d, `chan`);
+
+    expect(JSON.stringify(d.posts[1]?.embed)).toContain(`Question 1 of 10`);
+    expect((await d.session.current())?.context.questionNumber).toBe(1);
   });
 
   it(`tells the channel when the filters match nothing`, async () => {
@@ -176,22 +233,22 @@ describe(`answering`, () => {
     // WHY: the explanation waits for the reveal, so the players still thinking
     // are not handed the answer. A ❌ says "not that" without saying what.
     const d = deps();
-    await startSession(d, `chan`, DEFAULT_SETTINGS);
+    await play(d);
     // Shares the stem with the answer, so it reads as a real attempt.
     await handleAnswer(d, `chan`, `m1`, `drake`, `うった`);
 
     expect(d.reactions).toEqual([{ messageId: `m1`, emoji: `❌` }]);
-    // Only the original question; no reveal yet.
-    expect(d.posts).toHaveLength(1);
+    // Intro and the question; no reveal yet.
+    expect(d.posts).toHaveLength(2);
   });
 
   it(`marks a correct guess and reveals the answer`, async () => {
     const d = deps([uru, taberu]);
-    await startSession(d, `chan`, DEFAULT_SETTINGS);
+    await play(d);
     await handleAnswer(d, `chan`, `m1`, `mika`, `うる`);
 
     expect(d.reactions).toEqual([{ messageId: `m1`, emoji: `⭕` }]);
-    const reveal = JSON.stringify(d.posts[1]?.embed);
+    const reveal = JSON.stringify(d.posts[2]?.embed);
     expect(reveal).toContain(`<@mika>`);
     expect(reveal).toContain(`うる`);
   });
@@ -201,7 +258,7 @@ describe(`answering`, () => {
     // spelling for that to work. A mismatch here would reject correct answers
     // with nothing in the logs.
     const d = deps([uru, taberu]);
-    await startSession(d, `chan`, DEFAULT_SETTINGS);
+    await play(d);
     await handleAnswer(d, `chan`, `m1`, `mika`, `売る`);
 
     expect(d.reactions[0]?.emoji).toBe(`⭕`);
@@ -210,7 +267,7 @@ describe(`answering`, () => {
   it(`ignores a second guess from the same player`, async () => {
     // WHY: one guess each. Reacting twice would suggest the second was counted.
     const d = deps();
-    await startSession(d, `chan`, DEFAULT_SETTINGS);
+    await play(d);
     await handleAnswer(d, `chan`, `m1`, `drake`, `うった`);
     await handleAnswer(d, `chan`, `m2`, `drake`, `うる`);
 
@@ -229,12 +286,12 @@ describe(`answering`, () => {
 
   it(`asks the next question after a correct answer`, async () => {
     const d = deps([uru, taberu]);
-    await startSession(d, `chan`, DEFAULT_SETTINGS);
+    await play(d);
     await handleAnswer(d, `chan`, `m1`, `mika`, `うる`);
 
-    // question 1, reveal, question 2
-    expect(d.posts).toHaveLength(3);
-    expect(JSON.stringify(d.posts[2]?.embed)).toContain(`Question 2 of 10`);
+    // intro, question 1, reveal, question 2
+    expect(d.posts).toHaveLength(4);
+    expect(JSON.stringify(d.posts[3]?.embed)).toContain(`Question 2 of 10`);
   });
 
   it(`draws later questions from the session's own filters`, async () => {
@@ -246,21 +303,21 @@ describe(`answering`, () => {
     // filters were applied — selection order would decide it, not filtering.
     const n1: Word = { ...taberu, id: `3`, jlpt: 1 };
     const d = deps([n1, uru]);
-    await startSession(d, `chan`, DEFAULT_SETTINGS);
+    await play(d);
     await handleAnswer(d, `chan`, `m1`, `mika`, `うる`);
 
     // Only `uru` is N5, so both questions must be it — never the N1 word.
     // Asserted on the class rather than the prompt, because the prompt is
     // whatever form was chosen (うります for the polite non-past) and would
     // couple this test to that choice.
-    const second = JSON.stringify(d.posts[2]?.embed);
+    const second = JSON.stringify(d.posts[3]?.embed);
     expect(second).toContain(`Godan (-る)`);
     expect(second).not.toContain(`Ichidan`);
   });
 
   it(`posts the standings on the last question`, async () => {
     const d = deps();
-    await startSession(d, `chan`, {
+    await play(d, {
       ...DEFAULT_SETTINGS,
       session: { ...DEFAULT_SETTINGS.session, length: 1 }
     });
@@ -275,13 +332,13 @@ describe(`answering`, () => {
 describe(`timing out`, () => {
   it(`reveals the answer and asks the next question`, async () => {
     const d = deps([uru, taberu]);
-    await startSession(d, `chan`, DEFAULT_SETTINGS);
+    await play(d);
     d.session.timeout();
     await handleTimeout(d, `chan`);
 
-    const reveal = JSON.stringify(d.posts[1]?.embed);
+    const reveal = JSON.stringify(d.posts[2]?.embed);
     expect(reveal).toContain(`Nobody got it in time`);
-    expect(JSON.stringify(d.posts[2]?.embed)).toContain(`Question 2`);
+    expect(JSON.stringify(d.posts[3]?.embed)).toContain(`Question 2`);
   });
 
   it(`still reveals and posts standings on the LAST question`, async () => {
@@ -290,7 +347,7 @@ describe(`timing out`, () => {
     // required `revealing` dropped both the final reveal and the standings, and
     // the session just stopped with no explanation in the channel.
     const d = deps();
-    await startSession(d, `chan`, {
+    await play(d, {
       ...DEFAULT_SETTINGS,
       session: { ...DEFAULT_SETTINGS.session, length: 1 }
     });
@@ -309,19 +366,19 @@ describe(`side chatter`, () => {
     // WHY: every message in the channel reaches the handler. Scoring chatter
     // took a ❌ and burned an attempt, which made the race hostile to talking.
     const d = deps();
-    await startSession(d, `chan`, DEFAULT_SETTINGS);
+    await play(d);
     await handleAnswer(d, `chan`, `m1`, `drake`, `lol same`);
     await handleAnswer(d, `chan`, `m2`, `drake`, `がんばって`);
 
     expect(d.reactions).toHaveLength(0);
-    // Still only the question; nothing was revealed or advanced.
-    expect(d.posts).toHaveLength(1);
+    // Intro and the question; nothing was revealed or advanced.
+    expect(d.posts).toHaveLength(2);
   });
 
   it(`still scores a real attempt from the same player afterwards`, async () => {
     // WHY: ignoring chatter must not cost the player their attempts.
     const d = deps([uru, taberu]);
-    await startSession(d, `chan`, DEFAULT_SETTINGS);
+    await play(d);
     await handleAnswer(d, `chan`, `m1`, `drake`, `lol same`);
     await handleAnswer(d, `chan`, `m2`, `drake`, `うる`);
 

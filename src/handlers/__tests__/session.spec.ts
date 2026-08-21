@@ -90,14 +90,39 @@ describe(`quizSession in the handlers Worker`, () => {
     expect(wrong.outcome).toEqual({ kind: `wrong` });
 
     const right = await stub.submit(`mika`, `うらない`, true);
+    // `points` is what THIS answer earned; `total` is the running score. The
+    // reveal reported only the total, so a four-point answer on question ten
+    // read as "20 points".
     expect(right.outcome).toEqual({
       kind: `correct`,
       userId: `mika`,
-      points: 4
+      points: 4,
+      total: 4
     });
     // The teaching embed needs the question that just closed.
     expect(right.closed?.answer).toBe(`うらない`);
     expect(right.needsNext).toBe(true);
+  });
+
+  it(`reports what one answer earned, not the running total`, async () => {
+    // WHY: this shipped wrong, and only shows on the SECOND question — with one
+    // question the two numbers are identical, so a single-question test cannot
+    // tell them apart. In the channel a four-point answer on question ten read
+    // as "20 points", which is exactly what made the final leaderboard look
+    // arbitrary.
+    const stub = session(`per-answer-points`);
+    await stub.clear();
+    await stub.begin(`chan`, question(`1`), DEFAULT_CONFIG, ANY_FILTERS);
+    await stub.submit(`mika`, `うらない`, true);
+    await stub.next(question(`2`));
+
+    const second = await stub.submit(`mika`, `うらない`, true);
+    expect(second.outcome).toEqual({
+      kind: `correct`,
+      userId: `mika`,
+      points: 4,
+      total: 8
+    });
   });
 
   it(`reports the final standings on the last question`, async () => {

@@ -112,6 +112,38 @@ const isKanaChar = (ch: string): boolean => {
 };
 
 /**
+ * Levenshtein distance, bounded so a long message exits early.
+ *
+ * Only used to recognise a typo, so anything past `limit` is "far" and the
+ * exact figure does not matter — which keeps this O(limit x n) rather than
+ * O(m x n) on a paragraph of chat.
+ */
+const editDistance = (a: string, b: string, limit: number): number => {
+  if (Math.abs(a.length - b.length) > limit) return limit + 1;
+
+  let previous = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i += 1) {
+    const current = [i];
+    let best = i;
+    for (let j = 1; j <= b.length; j += 1) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      const value = Math.min(
+        (current[j - 1] ?? 0) + 1,
+        (previous[j] ?? 0) + 1,
+        (previous[j - 1] ?? 0) + cost
+      );
+      current.push(value);
+      best = Math.min(best, value);
+    }
+    // Every cell in this row is already past the limit, so the final distance
+    // can only be worse.
+    if (best > limit) return limit + 1;
+    previous = current;
+  }
+  return previous[b.length] ?? limit + 1;
+};
+
+/**
  * Is this message even trying to be an answer?
  *
  * Every message in a channel with a running session reaches the handler, so
@@ -140,6 +172,18 @@ export const looksLikeAnswer = (
   if (judge(input, expected).correct) return true;
 
   const folded = fold(cleaned);
+  const target = fold(normalize(expected.kana));
+
+  // A typo is an attempt, even one that lands on the first mora. かたえない
+  // against こたえない shares no prefix at all, so the stem test alone read it
+  // as conversation and ignored a guess that was plainly aimed at the
+  // question. Distance answers what the stem was standing in for.
+  //
+  // Scaled to the answer's length so a two-mora word does not accept anything
+  // two edits away, which would be most of the kana syllabary.
+  const budget = Math.min(2, Math.floor(target.length / 3) + 1);
+  if (editDistance(folded, target, budget) <= budget) return true;
+
   const stem = fold(normalize(expected.stem));
   if (stem === ``) return false;
   if (folded.startsWith(stem)) return true;

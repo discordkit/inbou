@@ -121,6 +121,16 @@ describe(`looksLikeAnswer: telling an attempt from conversation`, () => {
     expect(rejected).toEqual([]);
   });
 
+  it(`catches a typo, even in the first mora`, () => {
+    // WHY: this shipped wrong. かたえない against こたえない differs only in the
+    // first character, so a prefix test read it as conversation and ignored a
+    // guess that was obviously aimed at the question — the player saw no ❌ and
+    // no attempt spent, which looks like the bot missing them entirely.
+    const kotaenai = { kana: `こたえない`, kanji: `答えない`, stem: `こた` };
+    expect(looksLikeAnswer(`かたえない`, kotaenai)).toBe(true);
+    expect(looksLikeAnswer(`こたえなi`, kotaenai)).toBe(true);
+  });
+
   it(`ignores ordinary conversation`, () => {
     // WHY: every message in the channel reaches the handler. Before this,
     // chatter took a ❌ and burned an attempt — the race is meant to happen

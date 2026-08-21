@@ -1,4 +1,4 @@
-import { isBasic, type Form } from "./forms.js";
+import { isBasic, type Form, type WordType } from "./forms.js";
 import type { Question } from "./question.js";
 import type { VerbClass } from "./wordClass.js";
 
@@ -146,11 +146,11 @@ export interface AttemptLine {
  */
 export const revealEmbed = (
   question: Question,
-  outcome: { winner: string | null; points?: number },
+  outcome: { winner: string | null; points?: number; total?: number },
   attempts: readonly AttemptLine[]
 ): Embed => {
   const won = outcome.winner !== null;
-  const { points } = outcome;
+  const { points, total } = outcome;
   const fields: Embed[`fields`] = [
     {
       name: `Answer`,
@@ -193,7 +193,15 @@ export const revealEmbed = (
     ...(outcome.winner === null
       ? {}
       : {
-          description: `<@${outcome.winner}> got it${points === undefined ? `` : ` — ${String(points)} point${points === 1 ? `` : `s`}`}`
+          // What this answer earned, then the running total. Reporting only
+          // the total made a late answer read as though one question were
+          // worth twenty points, which is exactly what left the final
+          // leaderboard looking arbitrary.
+          description: `<@${outcome.winner}> got it${
+            points === undefined
+              ? ``
+              : ` — **+${String(points)}**${total === undefined ? `` : ` (${String(total)} total)`}`
+          }`
         }),
     color: won ? MOSS : VERMILION,
     fields
@@ -235,6 +243,78 @@ export const hintEmbed = (question: Question): Embed => ({
     { name: `Target`, value: formLabel(question.form), inline: true },
     { name: `Class`, value: classLabel(question), inline: true }
   ]
+});
+
+/**
+ * What the channel is shown before the first question.
+ *
+ * A session starts with a burst of rules nobody agreed to — how many guesses,
+ * how long each question stays open, what is being drilled. Posting them once,
+ * with a pause before question one, means the first question is not also the
+ * moment everyone works out how the game runs.
+ */
+export const introEmbed = (
+  settings: {
+    filters: { levels: readonly number[]; types: readonly WordType[] };
+    session: { length: number | null; timeoutMs: number; guesses: number };
+  },
+  startsInSeconds: number
+): Embed => {
+  const { levels, types } = settings.filters;
+  const { length, timeoutMs, guesses } = settings.session;
+
+  return {
+    title: `Conjugation practice`,
+    description: `Answer by typing in the channel. First correct answer takes the question.`,
+    color: INDIGO,
+    fields: [
+      {
+        name: `Questions`,
+        value: length === null ? `Endless` : String(length),
+        inline: true
+      },
+      {
+        name: `Time each`,
+        value: `${String(Math.round(timeoutMs / 1000))}s`,
+        inline: true
+      },
+      {
+        name: `Guesses each`,
+        value: String(guesses),
+        inline: true
+      },
+      {
+        name: `Drilling`,
+        value: `${levels.length === 0 ? `Any level` : levels.map((l) => `N${String(l)}`).join(`, `)} · ${types.join(`, `)}`
+      },
+      {
+        // Named so the taper is understood before it matters, rather than
+        // inferred later from a leaderboard that does not add up.
+        name: `Scoring`,
+        value: `${String(guesses + 1)} points for a first-guess answer, one less for each miss. \`/hint\` is free.`
+      }
+    ],
+    footer: { text: `First question in ${String(startsInSeconds)} seconds…` }
+  };
+};
+
+/** A mid-session standings update, so a long run has a visible shape. */
+export const standingsEmbed = (
+  standings: ReadonlyArray<{ userId: string; points: number }>,
+  afterQuestion: number,
+  pauseSeconds: number
+): Embed => ({
+  title: `Standings after ${String(afterQuestion)} questions`,
+  description:
+    standings.length === 0
+      ? `Nobody has scored yet.`
+      : standings.map(
+          (s, i) =>
+            `${i === 0 ? `🥇` : i === 1 ? `🥈` : i === 2 ? `🥉` : `　`} <@${s.userId}> — ${String(s.points)}`
+        ).join(`
+`),
+  color: INDIGO,
+  footer: { text: `Next question in ${String(pauseSeconds)} seconds…` }
 });
 
 /** Told to the channel when the filters match nothing. */

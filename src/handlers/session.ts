@@ -39,7 +39,7 @@ const KEY = `session`;
 
 /** A snapshot flattened for callers that only need to render it. */
 export interface SessionView {
-  state: `asking` | `revealing` | `finished`;
+  state: `asking` | `revealing` | `paused` | `finished`;
   context: SessionContext;
 }
 
@@ -51,7 +51,14 @@ export interface AnswerResult {
         reason: `not-playing` | `already-answered` | `finished`;
       }
     | { kind: `wrong` }
-    | { kind: `correct`; userId: string; points: number };
+    | {
+        kind: `correct`;
+        userId: string;
+        /** What this answer earned. */
+        points: number;
+        /** Their session total afterwards. */
+        total: number;
+      };
   /** Present when the question closed, for the teaching embed. */
   closed?: Question;
   /** Present when the session ended with this answer. */
@@ -92,8 +99,13 @@ export class QuizSession extends DurableObject<SessionEnv> {
     // DO's JS timers die with its isolate, so an evicted session would stop
     // timing out with no error anywhere — the same reasoning as the connection
     // timers in the bot Worker.
+    // `paused` arms it too: the wait between questions runs on the same alarm,
+    // because a Worker's JS timers die with the isolate and a paused session
+    // would otherwise never resume.
     const deadline =
-      snapshot.value === `asking` ? snapshot.context.deadline : null;
+      snapshot.value === `asking` || snapshot.value === `paused`
+        ? snapshot.context.deadline
+        : null;
     if (deadline === null) {
       await this.ctx.storage.deleteAlarm();
     } else {
@@ -177,14 +189,38 @@ export class QuizSession extends DurableObject<SessionEnv> {
 
     if (!correct) return { outcome: { kind: `wrong` }, needsNext: false };
 
-    const points = after.context.scores[userId] ?? 0;
+    // What THIS answer earned, not the running total. Reporting the total made
+    // the reveal say "20 points" for a four-point answer on question ten, which
+    // is precisely the confusion the per-answer figure exists to remove.
+    const earned =
+      (after.context.scores[userId] ?? 0) -
+      (before.context.scores[userId] ?? 0);
     const over = after.value === `finished`;
     return {
-      outcome: { kind: `correct`, userId, points },
+      outcome: {
+        kind: `correct`,
+        userId,
+        points: earned,
+        total: after.context.scores[userId] ?? 0
+      },
       ...(closing === null ? {} : { closed: closing }),
       ...(over ? { final: leaderboard(after.context) } : {}),
       needsNext: !over
     };
+  }
+
+  /**
+   * Open the question already stored, without advancing past it.
+   *
+   * Used when a pause ends over a question nobody has seen yet — the intro
+   * holds question one, which is already stored and counted.
+   */
+  async resume(): Promise<SessionView | null> {
+    const actor = await this.#load();
+    if (actor === null) return null;
+    actor.send({ type: `RESUME`, now: Date.now() });
+    await this.#save(actor);
+    return view(actor.getSnapshot());
   }
 
   /**
@@ -201,6 +237,19 @@ export class QuizSession extends DurableObject<SessionEnv> {
     return view(actor.getSnapshot());
   }
 
+  /**
+   * Hold before the next question, so the channel can read what just happened.
+   *
+   * Runs on the same alarm as the question timeout. A `setTimeout` would not
+   * survive the isolate being evicted, and a paused session that never resumes
+   * looks exactly like the bot having stopped.
+   */
+  async pause(ms: number): Promise<void> {
+    const actor = await this.#load();
+    if (actor === null) return;
+    actor.send({ type: `PAUSE`, until: Date.now() + ms });
+    await this.#save(actor);
+  }
   /**
    * Apply new settings, from the next question onward.
    *
@@ -245,10 +294,16 @@ export class QuizSession extends DurableObject<SessionEnv> {
   override async alarm(): Promise<void> {
     const actor = await this.#load();
     if (actor === null) return;
-    if (actor.getSnapshot().value !== `asking`) return;
 
-    actor.send({ type: `TIMEOUT` });
-    await this.#save(actor);
+    const state = actor.getSnapshot().value;
+    // A pause ending is not a timeout — the question already closed. Both wake
+    // the Worker the same way; it reads the state to know which happened.
+    if (state === `asking`) {
+      actor.send({ type: `TIMEOUT` });
+      await this.#save(actor);
+    } else if (state !== `paused`) {
+      return;
+    }
 
     // Hand the rest back to the Worker. This object can close the question,
     // but posting the reveal is a REST call and choosing the next question
@@ -257,7 +312,10 @@ export class QuizSession extends DurableObject<SessionEnv> {
     const { channelId } = actor.getSnapshot().context;
     await this.env.SELF.fetch(`https://handlers/event`, {
       method: `POST`,
-      body: JSON.stringify({ type: `SESSION_TIMEOUT`, channelId })
+      body: JSON.stringify({
+        type: state === `paused` ? `SESSION_RESUME` : `SESSION_TIMEOUT`,
+        channelId
+      })
     });
   }
 }

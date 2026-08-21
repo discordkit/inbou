@@ -25,4 +25,12 @@ export type ForwardedEvent =
    * choose the next question (which needs the corpus it deliberately does not
    * carry), so it hands both back here.
    */
-  | { type: `SESSION_TIMEOUT`; channelId: string };
+  | { type: `SESSION_TIMEOUT`; channelId: string }
+  /**
+   * A pause between questions ended.
+   *
+   * Same mechanism as the timeout and the same reason: the wait runs on the
+   * session object's alarm, because a Worker's `setTimeout` dies with the
+   * isolate. The object distinguishes the two by its own state.
+   */
+  | { type: `SESSION_RESUME`; channelId: string };

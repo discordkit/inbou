@@ -4,7 +4,12 @@ import { discordEffects } from "./discord.js";
 import type { ForwardedEvent } from "./events.js";
 import { handleMessage } from "./messages.js";
 import corpus from "./quiz/corpus.json";
-import { handleTimeout, type FlowDeps, type SessionPort } from "./quiz/flow.js";
+import {
+  handleResume,
+  handleTimeout,
+  type FlowDeps,
+  type SessionPort
+} from "./quiz/flow.js";
 import type { Word } from "./quiz/question.js";
 import type { QuizSession } from "./session.js";
 
@@ -75,6 +80,11 @@ export default {
         }
         case `MESSAGE_CREATE`:
           await handleMessage(depsFor(env, event.data.channelId), event.data);
+          break;
+        case `SESSION_RESUME`:
+          // A pause ended. The question was chosen before the wait, so this
+          // only has to open it.
+          await handleResume(depsFor(env, event.channelId), event.channelId);
           break;
         case `SESSION_TIMEOUT`:
           // The Durable Object's alarm fired. It has already closed the

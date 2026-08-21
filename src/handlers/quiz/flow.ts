@@ -3,10 +3,12 @@ import { judge, looksLikeAnswer } from "./answer.js";
 import type { QuizSettings } from "./config.js";
 import { generate, isQuestion, type Question, type Word } from "./question.js";
 import {
+  introEmbed,
   noWordsMessage,
   questionEmbed,
   revealEmbed,
   scoresEmbed,
+  standingsEmbed,
   type AttemptLine
 } from "./render.js";
 
@@ -32,11 +34,15 @@ export interface SessionPort {
     filters: QuizSettings[`filters`]
   ) => Promise<unknown>;
   current: () => Promise<{
-    state: `asking` | `revealing` | `finished`;
+    state: `asking` | `revealing` | `paused` | `finished`;
     context: {
       question: Question | null;
       questionNumber: number;
-      config: { length: number | null };
+      config: {
+        length: number | null;
+        timeoutMs: number;
+        guesses: number;
+      };
       filters: QuizSettings[`filters`];
       attempts: AttemptLine[];
       scores: Record<string, number>;
@@ -47,13 +53,22 @@ export interface SessionPort {
     typed: string,
     correct: boolean
   ) => Promise<{
-    outcome: { kind: string; userId?: string; points?: number };
+    outcome: {
+      kind: string;
+      userId?: string;
+      /** What this answer earned. */
+      points?: number;
+      /** Their session total afterwards. */
+      total?: number;
+    };
     closed?: Question;
     final?: Array<{ userId: string; points: number }>;
     needsNext: boolean;
   }>;
   next: (question: Question) => Promise<unknown>;
   configure: (settings: QuizSettings) => Promise<unknown>;
+  pause: (ms: number) => Promise<unknown>;
+  resume: () => Promise<unknown>;
   /**
    * Fire the question timeout.
    *
@@ -64,6 +79,15 @@ export interface SessionPort {
   timeout?: (() => void) | undefined;
   end: () => Promise<Array<{ userId: string; points: number }> | null>;
 }
+
+/** How long the channel gets to read the intro before question one. */
+export const INTRO_PAUSE_MS = 10_000;
+
+/** How long the channel gets to read a mid-session standings update. */
+export const STANDINGS_PAUSE_MS = 10_000;
+
+/** Standings are posted after every this-many questions. */
+export const STANDINGS_EVERY = 10;
 
 /** Everything a round needs to run. */
 export interface FlowDeps {
@@ -99,10 +123,20 @@ export const startSession = async (
     settings.session,
     settings.filters
   );
+
+  // The rules first, then a pause. A session used to open with a question
+  // nobody had agreed the terms of — how many guesses, how long, what is being
+  // drilled — so the first question doubled as the moment everyone worked out
+  // how the game runs.
+  //
+  // The first question is NOT posted here. `pause` arms the session's alarm and
+  // this returns; the alarm calls back through `handleResume`, which posts it.
+  // Posting it now would make the pause purely decorative.
   await deps.discord.post(
     channelId,
-    questionEmbed(result, 1, settings.session.length)
+    introEmbed(settings, Math.round(INTRO_PAUSE_MS / 1000))
   );
+  await deps.session.pause(INTRO_PAUSE_MS);
   return true;
 };
 
@@ -156,6 +190,42 @@ export const handleAnswer = async (
   await closeRound(deps, channelId, result);
 };
 
+/**
+ * A pause has ended; ask the question that was waiting.
+ *
+ * Pauses work by returning rather than blocking. `setTimeout` inside a Worker
+ * dies with the isolate, so a wait that outlived an eviction would never
+ * resume — the session object holds it on the same alarm as the question
+ * timeout, and the alarm calls back here.
+ *
+ * The very first question is a special case: `questionNumber` is already 1 and
+ * the question is already stored, so it is posted as-is rather than advanced
+ * past.
+ */
+export const handleResume = async (
+  deps: FlowDeps,
+  channelId: string
+): Promise<void> => {
+  const view = await deps.session.current();
+  if (view === null || view.state !== `paused`) return;
+
+  const pending = view.context.question;
+  if (pending !== null && view.context.attempts.length === 0) {
+    await deps.session.resume();
+    await deps.discord.post(
+      channelId,
+      questionEmbed(
+        pending,
+        view.context.questionNumber,
+        view.context.config.length
+      )
+    );
+    return;
+  }
+
+  await advance(deps, channelId);
+};
+
 /** Fire the timeout, which the Durable Object's alarm triggers. */
 export const handleTimeout = async (
   deps: FlowDeps,
@@ -198,7 +268,10 @@ const closeRound = async (
           winner: result.outcome.userId ?? null,
           ...(result.outcome.points === undefined
             ? {}
-            : { points: result.outcome.points })
+            : { points: result.outcome.points }),
+          ...(result.outcome.total === undefined
+            ? {}
+            : { total: result.outcome.total })
         },
         view?.context.attempts ?? []
       )
@@ -238,6 +311,45 @@ const advance = async (deps: FlowDeps, channelId: string): Promise<void> => {
   }
 
   const settings = view.context;
+
+  // Out of questions. Reached when the session paused on its last question —
+  // `paused` cannot carry the usual guard, because that would end a
+  // one-question session during its own introduction.
+  if (
+    settings.config.length !== null &&
+    settings.questionNumber >= settings.config.length
+  ) {
+    const standings = await deps.session.end();
+    if (standings !== null) {
+      await deps.discord.post(
+        channelId,
+        scoresEmbed(standings, settings.questionNumber)
+      );
+    }
+    return;
+  }
+
+  // Standings every so often, so a long run has a visible shape rather than
+  // being twenty questions and then a number nobody expected. Skipped when the
+  // session is about to end anyway, since the final board follows immediately.
+  const done = settings.questionNumber;
+  const nearlyOver =
+    settings.config.length !== null && done >= settings.config.length;
+  if (done > 0 && done % STANDINGS_EVERY === 0 && !nearlyOver) {
+    await deps.discord.post(
+      channelId,
+      standingsEmbed(
+        Object.entries(settings.scores)
+          .map(([userId, points]) => ({ userId, points }))
+          .sort((a, b) => b.points - a.points),
+        done,
+        Math.round(STANDINGS_PAUSE_MS / 1000)
+      )
+    );
+    await deps.session.pause(STANDINGS_PAUSE_MS);
+    return;
+  }
+
   // The session's own filters, not fresh ones: the object hibernates between
   // questions, so this is the only place they survive from. Drawing from the
   // whole corpus here would quietly ignore the level the channel chose.

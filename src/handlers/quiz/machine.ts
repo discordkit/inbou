@@ -116,6 +116,10 @@ export type SessionEvent =
   | { type: `TIMEOUT` }
   | { type: `NEXT`; question: Question; now: number }
   | { type: `CONFIGURE`; config: SessionConfig; filters: Filters }
+  /** Hold before the next question, so the channel can read what just happened. */
+  | { type: `PAUSE`; until: number }
+  /** Start the clock on a question already stored, without advancing past it. */
+  | { type: `RESUME`; now: number }
   | { type: `END` };
 
 /** Has this player used every attempt this question? */
@@ -258,8 +262,67 @@ export const sessionMachine = setup({
             closedBy: `timeout` as const
           })
         },
+        // The intro pause happens here: the session starts in `asking` with
+        // question one already stored, and holds before anyone sees it.
+        PAUSE: {
+          target: `paused`,
+          actions: assign({
+            deadline: ({ event }) =>
+              event.type === `PAUSE` ? event.until : null
+          })
+        },
         CONFIGURE: { actions: applyConfig },
         END: { target: `finished`, actions: assign({ deadline: null }) }
+      }
+    },
+
+    /**
+     * Holding between questions.
+     *
+     * The intro and the periodic standings both need the channel to have a
+     * moment to read before the next prompt lands. The wait runs on the same
+     * alarm as the question timeout rather than a `setTimeout`, because a
+     * Worker's JS timers die with the isolate — a paused session would simply
+     * never resume, which is the failure the timeout already taught us about.
+     */
+    paused: {
+      // Deliberately NOT guarded on `sessionOver`. This state covers two
+      // different waits: the intro, which holds question one *before* anyone
+      // has answered it, and the standings break between questions. Ending here
+      // on the question count would finish a one-question session during its
+      // own introduction. `revealing` carries the guard instead, since that is
+      // the state a resolved question passes through.
+      on: {
+        // Opens the question already in context rather than advancing to a new
+        // one. The intro pause holds question ONE, which is stored and counted
+        // before anyone sees it — `NEXT` there would skip straight to two.
+        RESUME: {
+          target: `asking`,
+          actions: assign({
+            attempts: [],
+            closedBy: null,
+            deadline: ({ context, event }) =>
+              event.type === `RESUME`
+                ? event.now + context.config.timeoutMs
+                : null
+          })
+        },
+        NEXT: {
+          target: `asking`,
+          actions: assign({
+            questionNumber: ({ context }) => context.questionNumber + 1,
+            question: ({ event }) =>
+              event.type === `NEXT` ? event.question : null,
+            attempts: [],
+            closedBy: null,
+            deadline: ({ context, event }) =>
+              event.type === `NEXT`
+                ? event.now + context.config.timeoutMs
+                : null
+          })
+        },
+        CONFIGURE: { actions: applyConfig },
+        END: { target: `finished` }
       }
     },
 
@@ -285,6 +348,13 @@ export const sessionMachine = setup({
               event.type === `NEXT`
                 ? event.now + context.config.timeoutMs
                 : null
+          })
+        },
+        PAUSE: {
+          target: `paused`,
+          actions: assign({
+            deadline: ({ event }) =>
+              event.type === `PAUSE` ? event.until : null
           })
         },
         CONFIGURE: { actions: applyConfig },

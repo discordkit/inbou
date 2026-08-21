@@ -80,12 +80,16 @@ describe(`revealEmbed: the teaching moment`, () => {
   it(`says what the answer was worth`, () => {
     // WHY: points now vary with how many guesses it took, so a bare "got it"
     // leaves the score unexplained.
-    expect(
-      revealEmbed(uru, { winner: `mika`, points: 3 }, []).description
-    ).toContain(`3 points`);
-    expect(
-      revealEmbed(uru, { winner: `mika`, points: 1 }, []).description
-    ).toContain(`1 point`);
+    // What the answer earned, and the running total separately. Reporting only
+    // the total made a late answer read as though one question were worth
+    // twenty points, which left the final leaderboard looking arbitrary.
+    const embed = revealEmbed(
+      uru,
+      { winner: `mika`, points: 3, total: 11 },
+      []
+    );
+    expect(embed.description).toContain(`+3`);
+    expect(embed.description).toContain(`11 total`);
   });
 
   it(`says nobody got it when the question timed out`, () => {
