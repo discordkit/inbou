@@ -37,6 +37,16 @@ export default {
    *
    * `start()` is idempotent — a live connection short-circuits — so this costs
    * nothing when the bot is already running.
+   *
+   * **Crons do not fire on a schedule in local dev.** Miniflare exposes them as
+   * an endpoint instead, so a freshly started dev server leaves the object
+   * asleep and the bot offline until something addresses it. Either request is
+   * enough to bring it up:
+   *
+   *     curl http://localhost:5173/health
+   *     curl "http://localhost:5173/cdn-cgi/handler/scheduled?format=json"
+   *
+   * In production the cron does this every five minutes on its own.
    */
   async scheduled(_event: ScheduledController, env: Env): Promise<void> {
     await bot(env).start();

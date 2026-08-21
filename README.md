@@ -10,7 +10,7 @@ A Japanese practice bot for Discord, built on [discordkit][discordkit] and deplo
 
 ---
 
-**鸚法** (_inbou_) puns on 鸚鵡返し (_ōmugaeshi_, parroting something back) and 文法 (_bunpō_, grammar) — repetition being how a language sticks, and a nod to Coca Bird, the cockatiel the server is named for.
+**鸚法** (_inbou_) puns on 鸚鵡返し (_ōmugaeshi_, parroting something back) and 文法 (_bunpō_, grammar) — repetition being how a language sticks, and a nod to Coca Bird, the cockatiel emoji character which is the server's mascot.
 
 ## 🏗️ How it works
 
@@ -76,6 +76,16 @@ The bot needs two **privileged** intents enabled under **Bot → Privileged Gate
 | Deploy            | `wrangler deploy`          | Needs your own Cloudflare account.                          |
 
 Slash commands are registered over REST and persist on Discord's side, so `commands:register` is a deliberate step rather than something the bot does at boot. Re-running it replaces the whole set, which is what makes a removed command disappear.
+
+### The bot starts offline in dev
+
+The Gateway connection lives in a Durable Object, and a Durable Object only wakes when something addresses it. In production the cron trigger does that every five minutes — but **Miniflare does not fire crons on a schedule locally**, so a freshly started dev server leaves the bot offline until you poke it:
+
+```bash
+curl http://localhost:5173/health
+```
+
+That reports the connection state and, because reading it requires the object, starts the connection. `/cdn-cgi/handler/scheduled` runs the same code path if you would rather exercise the cron itself. Both are idempotent: a live connection short-circuits, so neither costs a Gateway session.
 
 ## 🧪 Two checks, and why both
 
