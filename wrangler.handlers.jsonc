@@ -9,6 +9,13 @@
   // survives eviction, and putting it here means editing quiz logic reloads
   // only this Worker — the Gateway connection in the bot Worker is untouched,
   // so a session start is not spent on every edit.
+  //
+  // The Worker also binds itself, so the session object's alarm can hand the timeout
+  // back to the request path. The object can close a question on its own, but
+  // posting the reveal needs a REST call and choosing the next question needs
+  // the corpus — neither belongs inside an object that wakes from hibernation
+  // constantly.
+  "services": [{ "binding": "SELF", "service": "inbou-handlers" }],
   "durable_objects": {
     "bindings": [
       {

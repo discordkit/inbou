@@ -93,6 +93,7 @@ export type SessionEvent =
     }
   | { type: `TIMEOUT` }
   | { type: `NEXT`; question: Question; now: number }
+  | { type: `CONFIGURE`; config: SessionConfig; filters: Filters }
   | { type: `END` };
 
 /** Has this player already used their one guess this question? */
@@ -135,6 +136,27 @@ const recordAttempt = assign<
           { userId: event.userId, answer: event.typed, correct: event.correct }
         ]
       : context.attempts
+});
+
+/**
+ * Apply new settings without disturbing the open question.
+ *
+ * `/quiz config` takes effect from the *next* question: changing the timeout
+ * mid-question would move a deadline players are already racing, and changing
+ * the filters cannot retroactively alter what was asked. So this writes the
+ * config and leaves `deadline` alone.
+ */
+const applyConfig = assign<
+  SessionContext,
+  SessionEvent,
+  undefined,
+  SessionEvent,
+  never
+>({
+  config: ({ context, event }) =>
+    event.type === `CONFIGURE` ? event.config : context.config,
+  filters: ({ context, event }) =>
+    event.type === `CONFIGURE` ? event.filters : context.filters
 });
 
 export const sessionMachine = setup({
@@ -207,6 +229,7 @@ export const sessionMachine = setup({
             closedBy: `timeout` as const
           })
         },
+        CONFIGURE: { actions: applyConfig },
         END: { target: `finished`, actions: assign({ deadline: null }) }
       }
     },
@@ -235,6 +258,7 @@ export const sessionMachine = setup({
                 : null
           })
         },
+        CONFIGURE: { actions: applyConfig },
         END: { target: `finished` }
       }
     },

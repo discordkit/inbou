@@ -30,11 +30,76 @@ if (!token || !application) {
 
 discord.setToken(`Bot ${token}`);
 
+// Discord's option types. 1 is a subcommand, 3 a string.
+const SUB_COMMAND = 1;
+const STRING = 3;
+
+/** The settings every `/quiz` subcommand that configures a session accepts. */
+const settingOptions = [
+  {
+    type: STRING,
+    name: `level`,
+    description: `JLPT levels, e.g. N5 or "N5,N4". Use "any" for no filter.`
+  },
+  {
+    type: STRING,
+    name: `type`,
+    description: `Word types: verb, adj-i, adj-na, noun.`
+  },
+  {
+    type: STRING,
+    name: `class`,
+    description: `Verb classes: ichidan, godan, suru, kuru.`
+  },
+  {
+    type: STRING,
+    name: `forms`,
+    description: `Forms to ask: "basics", "all", or specific names.`
+  },
+  {
+    type: STRING,
+    name: `length`,
+    description: `Questions per session, 1-50, or "endless".`
+  },
+  {
+    type: STRING,
+    name: `timeout`,
+    description: `How long each question stays open, 30s to 10m.`
+  }
+];
+
 /** The command set. This list is the source of truth; Discord mirrors it. */
 const commands = [
   {
     name: `ping`,
     description: `Check that the bot is awake.`
+  },
+  {
+    name: `hint`,
+    description: `A private nudge on the current question.`
+  },
+  {
+    name: `quiz`,
+    description: `Japanese conjugation practice.`,
+    options: [
+      {
+        type: SUB_COMMAND,
+        name: `start`,
+        description: `Start a conjugation session in this channel.`,
+        options: settingOptions
+      },
+      {
+        type: SUB_COMMAND,
+        name: `config`,
+        description: `Change the running session, from the next question.`,
+        options: settingOptions
+      },
+      {
+        type: SUB_COMMAND,
+        name: `end`,
+        description: `End the session and show the standings.`
+      }
+    ]
   }
 ];
 

@@ -15,4 +15,14 @@ import type { MessageCreate } from "@discordkit/gateway";
  */
 export type ForwardedEvent =
   | { type: `INTERACTION_CREATE`; data: Interaction }
-  | { type: `MESSAGE_CREATE`; data: MessageCreate };
+  | { type: `MESSAGE_CREATE`; data: MessageCreate }
+  /**
+   * A question ran out of time.
+   *
+   * Unlike the other two this does not come from the Gateway — it is the
+   * session object's alarm calling its own Worker back. The object can close
+   * the question itself, but it can neither post the reveal (a REST call) nor
+   * choose the next question (which needs the corpus it deliberately does not
+   * carry), so it hands both back here.
+   */
+  | { type: `SESSION_TIMEOUT`; channelId: string };

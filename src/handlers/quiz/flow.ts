@@ -53,6 +53,7 @@ export interface SessionPort {
     needsNext: boolean;
   }>;
   next: (question: Question) => Promise<unknown>;
+  configure: (settings: QuizSettings) => Promise<unknown>;
   end: () => Promise<Array<{ userId: string; points: number }> | null>;
 }
 

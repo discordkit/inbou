@@ -33,7 +33,7 @@ export const diagnostics = defineDiagnostics({
     DISCORD_REQUEST_FAILED: {
       why: (p: { action: string; status?: number; detail?: string }) =>
         `Discord rejected ${p.action}${p.status === undefined ? `` : ` with ${String(p.status)}`}${p.detail === undefined ? `` : `: ${p.detail}`}.`,
-      fix: (p: { status?: number }) =>
+      fix: (p: { action: string; status?: number; detail?: string }) =>
         p.status === 403
           ? `Check the bot's permissions in that channel — posting embeds and adding reactions are separate grants.`
           : p.status === 429
@@ -51,7 +51,7 @@ export const diagnostics = defineDiagnostics({
     NO_WORDS_FOR_FILTERS: {
       why: (p: { levels: string; types: string }) =>
         `No corpus words match levels [${p.levels}] and types [${p.types}].`,
-      fix: () =>
+      fix: (_p: { levels: string; types: string }) =>
         `Widen the filters. Some combinations are genuinely empty — N4 with ぬ-verbs has no words, and adjectives have no verb class at all.`
     },
 
@@ -65,7 +65,7 @@ export const diagnostics = defineDiagnostics({
     CORPUS_INCONSISTENT: {
       why: (p: { wordId: string; pos: string }) =>
         `Corpus word ${p.wordId} (${p.pos}) produced no conjugation table.`,
-      fix: () =>
+      fix: (_p: { wordId: string; pos: string }) =>
         `Rebuild with \`vp run corpus:build\` and check corpus.spec.ts — a passing suite means this cannot happen, so the committed corpus is stale.`
     },
 
@@ -77,7 +77,7 @@ export const diagnostics = defineDiagnostics({
      */
     UNKNOWN_INTERACTION: {
       why: (p: { name: string }) => `No handler for interaction \`${p.name}\`.`,
-      fix: () =>
+      fix: (_p: { name: string }) =>
         `Re-run \`vp run commands:register\`, or add a case for it in commands.ts. The registered list is replaced wholesale, so a removed command disappears.`
     }
   }

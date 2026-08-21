@@ -97,6 +97,13 @@ const sessionStub = (): SessionPort => {
     next: async (question) => {
       actor?.send({ type: `NEXT`, question, now: Date.now() });
     },
+    configure: async (settings) => {
+      actor?.send({
+        type: `CONFIGURE`,
+        config: settings.session,
+        filters: settings.filters
+      });
+    },
     end: async () => {
       if (actor === null) return null;
       actor.send({ type: `END` });

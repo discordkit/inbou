@@ -65,7 +65,13 @@ const view = (snapshot: SessionSnapshot): SessionView => ({
   context: snapshot.context
 });
 
-export class QuizSession extends DurableObject {
+/** What the session object needs from its environment. */
+interface SessionEnv {
+  /** This Worker, bound to itself. See the alarm handler for why. */
+  SELF: Fetcher;
+}
+
+export class QuizSession extends DurableObject<SessionEnv> {
   /**
    * Rebuild the machine from storage.
    *
@@ -195,6 +201,26 @@ export class QuizSession extends DurableObject {
     return view(actor.getSnapshot());
   }
 
+  /**
+   * Apply new settings, from the next question onward.
+   *
+   * Never mid-question: moving a deadline players are already racing would be
+   * unfair, and new filters cannot change what has already been asked.
+   */
+  async configure(settings: {
+    session: SessionConfig;
+    filters: Filters;
+  }): Promise<void> {
+    const actor = await this.#load();
+    if (actor === null) return;
+    actor.send({
+      type: `CONFIGURE`,
+      config: settings.session,
+      filters: settings.filters
+    });
+    await this.#save(actor);
+  }
+
   /** End the session early, returning the final standings. */
   async end(): Promise<Array<{ userId: string; points: number }> | null> {
     const actor = await this.#load();
@@ -223,5 +249,15 @@ export class QuizSession extends DurableObject {
 
     actor.send({ type: `TIMEOUT` });
     await this.#save(actor);
+
+    // Hand the rest back to the Worker. This object can close the question,
+    // but posting the reveal is a REST call and choosing the next question
+    // needs the corpus — neither belongs in an object that wakes from
+    // hibernation on every question.
+    const { channelId } = actor.getSnapshot().context;
+    await this.env.SELF.fetch(`https://handlers/event`, {
+      method: `POST`,
+      body: JSON.stringify({ type: `SESSION_TIMEOUT`, channelId })
+    });
   }
 }
