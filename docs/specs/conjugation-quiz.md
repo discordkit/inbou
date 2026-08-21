@@ -219,10 +219,10 @@ Requests are not a concern either: alarm-driven heartbeats run at roughly 2,100/
 
 Sequenced so each step is verifiable on its own and nothing blocks on an open question.
 
-1. **Conjugator** — port `conjugate.ts` and `kana.ts`, add polite/casual flat keying, test the irregulars. Pure functions, no Discord, no session cost.
-2. **Scorer** — normalise → romaji → fold → compare. Table-driven tests over the four accepted spellings.
+1. ~~**Conjugator**~~ — done. Port `conjugate.ts` and `kana.ts`, add polite/casual flat keying, test the irregulars. Pure functions, no Discord, no session cost.
+2. ~~**Scorer**~~ — done. Normalise → romaji → fold → compare. Table-driven tests over the four accepted spellings.
 3. ~~**Corpus pipeline**~~ — done; see section 9.
-4. **Session DO** — state machine and alarm timeout. The binding is spiked and working; `src/handlers/session.ts` is the placeholder to replace.
+4. ~~**Session DO**~~ — done. Rules are pure functions in `quiz/session.ts`; the object persists them and keeps the alarm in step.
 5. **Discord surface** — commands, embeds, reactions, buttons, ephemeral hint.
 6. **Leaderboard** — D1 schema and `/quiz scores`.
 7. **Compound forms** — grammar layer over the primitive, wired to the existing notes.
