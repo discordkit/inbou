@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import corpus from "../quiz/corpus.json";
 import { formTable, formsFor, type WordType } from "../quiz/forms.js";
+import { judge } from "../quiz/answer.js";
+import { pose, type Word } from "../quiz/question.js";
 
 /**
  * Is every word in the shipped corpus actually askable?
@@ -98,6 +100,38 @@ describe(`corpus integrity`, () => {
     const surfaces = new Set(words.map((w) => w.kana));
     const present = [`うんこ`, `ウンチ`].filter((c) => surfaces.has(c));
     expect(present).toEqual([]);
+  });
+
+  it(`poses every question with an answer the scorer accepts`, () => {
+    // WHY: the contract between the generator and the scorer, checked across
+    // the whole corpus rather than a handful of examples. `pose` writes the
+    // kanji answer by splicing the kanji stem onto a conjugated tail, and a
+    // word whose kanji and reading do not line up would produce a spelling
+    // that `judge` then rejects — silently marking a correct answer wrong for
+    // that one word, with nothing in the logs.
+    const failures: string[] = [];
+    for (const word of words) {
+      for (const form of formsFor(word.type as WordType)) {
+        const question = pose(word as Word, form);
+        if (question === null) continue;
+        const expected = {
+          kana: question.answer,
+          ...(question.answerKanji === undefined
+            ? {}
+            : { kanji: question.answerKanji })
+        };
+        const kanaOk = judge(question.answer, expected).correct;
+        const kanjiOk =
+          question.answerKanji === undefined ||
+          judge(question.answerKanji, expected).correct;
+        if (!kanaOk || !kanjiOk) {
+          failures.push(
+            `${word.kanji ?? word.kana} ${form} -> ${question.answerKanji ?? question.answer}`
+          );
+        }
+      }
+    }
+    expect(failures.slice(0, 8)).toEqual([]);
   });
 
   it(`records which JMdict release produced it`, () => {
