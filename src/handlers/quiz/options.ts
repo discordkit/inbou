@@ -64,6 +64,7 @@ export const readOptions = (
     else if (option.name === `forms`) raw.forms = value;
     else if (option.name === `length`) raw.length = value;
     else if (option.name === `timeout`) raw.timeout = value;
+    else if (option.name === `guesses`) raw.guesses = value;
   }
 
   return {

@@ -23,6 +23,7 @@ const question = (id: string): Question => ({
   prompt: `うりません`,
   form: `non-past-negative`,
   answer: `うらない`,
+  stem: `うら`,
   dictionary: `売る`,
   reading: `うる`,
   gloss: `to sell`,
@@ -58,16 +59,43 @@ const wrong = (userId: string) =>
     now: NOW
   }) as const;
 
-describe(`one guess per player per question`, () => {
-  it(`ignores a second guess from the same player`, () => {
-    // WHY: the spec's rule. Without it a player could brute force the answer by
-    // typing repeatedly, which would end the race for everyone else.
+describe(`guesses per player per question`, () => {
+  it(`lets a player try again after a wrong guess`, () => {
+    // WHY: a near miss deserves another go. One guess made an ordinary typo
+    // final, which reads as harsh in a teaching bot.
     const actor = session();
+    actor.send(wrong(`drake`));
+    actor.send(right(`drake`));
+
+    expect(actor.getSnapshot().value).toBe(`revealing`);
+    // Second guess, so one point less than the maximum of four.
+    expect(actor.getSnapshot().context.scores.drake).toBe(3);
+  });
+
+  it(`stops accepting guesses once a player runs out`, () => {
+    // WHY: bounded, or a fast typist could brute force the answer by working
+    // through the possibilities.
+    const actor = session({ guesses: 2 });
+    actor.send(wrong(`drake`));
     actor.send(wrong(`drake`));
     actor.send(right(`drake`));
 
     expect(actor.getSnapshot().value).toBe(`asking`);
     expect(actor.getSnapshot().context.scores.drake).toBeUndefined();
+  });
+
+  it(`awards fewer points for each wrong guess first`, () => {
+    // WHY: precision should pay. Without the taper there is no reason to read
+    // the form carefully rather than guess.
+    const first = session();
+    first.send(right(`mika`));
+    expect(first.getSnapshot().context.scores.mika).toBe(4);
+
+    const third = session();
+    third.send(wrong(`mika`));
+    third.send(wrong(`mika`));
+    third.send(right(`mika`));
+    expect(third.getSnapshot().context.scores.mika).toBe(2);
   });
 
   it(`lets a different player still answer`, () => {
@@ -77,7 +105,7 @@ describe(`one guess per player per question`, () => {
     actor.send(wrong(`drake`));
     actor.send(right(`mika`));
 
-    expect(actor.getSnapshot().context.scores).toEqual({ mika: 1 });
+    expect(actor.getSnapshot().context.scores).toEqual({ mika: 4 });
   });
 
   it(`does not penalise a wrong guess`, () => {
@@ -122,7 +150,8 @@ describe(`the race`, () => {
     actor.send({ type: `NEXT`, question: question(`2`), now: NOW });
     actor.send(right(`mika`));
 
-    expect(actor.getSnapshot().context.scores).toEqual({ mika: 2 });
+    // Four points a question, answered first time.
+    expect(actor.getSnapshot().context.scores).toEqual({ mika: 8 });
   });
 });
 
@@ -196,14 +225,17 @@ describe(`when a session ends`, () => {
     expect(actor.getSnapshot().context.questionNumber).toBe(41);
   });
 
-  it(`clears the deadline when the session finishes`, () => {
-    // WHY: a finished session must not leave an alarm armed on a channel that
-    // is no longer playing.
+  it(`clears the deadline but keeps the question when it finishes`, () => {
+    // WHY: the deadline must go, or a finished session leaves an alarm armed on
+    // a channel that is no longer playing. The question must STAY: the last
+    // question reaches `finished` straight from `asking`, and its reveal has
+    // not been posted yet — clearing it here ended sessions silently, with no
+    // final answer and no standings.
     const actor = session();
     actor.send({ type: `END` });
     expect(actor.getSnapshot().value).toBe(`finished`);
     expect(actor.getSnapshot().context.deadline).toBeNull();
-    expect(actor.getSnapshot().context.question).toBeNull();
+    expect(actor.getSnapshot().context.question).not.toBeNull();
   });
 });
 
@@ -220,7 +252,7 @@ describe(`persistence`, () => {
     const revived = restore(wire as ReturnType<typeof persist>);
 
     expect(revived.getSnapshot().value).toBe(`asking`);
-    expect(revived.getSnapshot().context.scores).toEqual({ mika: 1 });
+    expect(revived.getSnapshot().context.scores).toEqual({ mika: 4 });
     expect(revived.getSnapshot().context.question?.wordId).toBe(`7`);
     expect(revived.getSnapshot().context.questionNumber).toBe(2);
   });
@@ -234,7 +266,7 @@ describe(`persistence`, () => {
     revived.send(right(`mika`));
 
     expect(revived.getSnapshot().value).toBe(`revealing`);
-    expect(revived.getSnapshot().context.scores).toEqual({ mika: 1 });
+    expect(revived.getSnapshot().context.scores).toEqual({ mika: 4 });
   });
 });
 
@@ -248,8 +280,8 @@ describe(`leaderboard`, () => {
     actor.send(right(`mika`));
 
     expect(leaderboard(actor.getSnapshot().context)).toEqual([
-      { userId: `mika`, points: 2 },
-      { userId: `drake`, points: 1 }
+      { userId: `mika`, points: 8 },
+      { userId: `drake`, points: 4 }
     ]);
   });
 

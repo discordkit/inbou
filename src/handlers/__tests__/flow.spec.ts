@@ -3,6 +3,7 @@ import type { DiscordEffects } from "../discord.js";
 import { DEFAULT_SETTINGS } from "../quiz/config.js";
 import {
   handleAnswer,
+  handleTimeout,
   startSession,
   type FlowDeps,
   type SessionPort
@@ -48,7 +49,7 @@ const recorder = () => {
 };
 
 /** The machine behind a `SessionPort`, standing in for the Durable Object. */
-const sessionStub = (): SessionPort => {
+const sessionStub = (): SessionPort & { timeout: () => void } => {
   let actor: SessionActor | null = null;
 
   return {
@@ -94,6 +95,9 @@ const sessionStub = (): SessionPort => {
         needsNext: !over
       };
     },
+    timeout: () => {
+      actor?.send({ type: `TIMEOUT` });
+    },
     next: async (question) => {
       actor?.send({ type: `NEXT`, question, now: Date.now() });
     },
@@ -136,11 +140,12 @@ const taberu: Word = {
   gloss: `to eat`
 };
 
-const deps = (
-  words: readonly Word[] = [uru]
-): FlowDeps & ReturnType<typeof recorder> => {
+const deps = (words: readonly Word[] = [uru]) => {
   const rec = recorder();
-  return { ...rec, session: sessionStub(), words, random: () => 0 };
+  const session = sessionStub();
+  return { ...rec, session, words, random: () => 0 } satisfies FlowDeps & {
+    session: { timeout: () => void };
+  };
 };
 
 describe(`starting a session`, () => {
@@ -172,6 +177,7 @@ describe(`answering`, () => {
     // are not handed the answer. A ❌ says "not that" without saying what.
     const d = deps();
     await startSession(d, `chan`, DEFAULT_SETTINGS);
+    // Shares the stem with the answer, so it reads as a real attempt.
     await handleAnswer(d, `chan`, `m1`, `drake`, `うった`);
 
     expect(d.reactions).toEqual([{ messageId: `m1`, emoji: `❌` }]);
@@ -263,5 +269,62 @@ describe(`answering`, () => {
     const last = JSON.stringify(d.posts.at(-1)?.embed);
     expect(last).toContain(`Session complete`);
     expect(last).toContain(`<@mika>`);
+  });
+});
+
+describe(`timing out`, () => {
+  it(`reveals the answer and asks the next question`, async () => {
+    const d = deps([uru, taberu]);
+    await startSession(d, `chan`, DEFAULT_SETTINGS);
+    d.session.timeout();
+    await handleTimeout(d, `chan`);
+
+    const reveal = JSON.stringify(d.posts[1]?.embed);
+    expect(reveal).toContain(`Nobody got it in time`);
+    expect(JSON.stringify(d.posts[2]?.embed)).toContain(`Question 2`);
+  });
+
+  it(`still reveals and posts standings on the LAST question`, async () => {
+    // WHY: this shipped broken. On the last question the machine runs straight
+    // from `asking` to `finished`, skipping `revealing` — so a handler that
+    // required `revealing` dropped both the final reveal and the standings, and
+    // the session just stopped with no explanation in the channel.
+    const d = deps();
+    await startSession(d, `chan`, {
+      ...DEFAULT_SETTINGS,
+      session: { ...DEFAULT_SETTINGS.session, length: 1 }
+    });
+    d.session.timeout();
+    await handleTimeout(d, `chan`);
+
+    const posted = d.posts.map((p) => JSON.stringify(p.embed)).join(`
+`);
+    expect(posted).toContain(`Nobody got it in time`);
+    expect(posted).toContain(`Session complete`);
+  });
+});
+
+describe(`side chatter`, () => {
+  it(`ignores messages that are not aimed at the question`, async () => {
+    // WHY: every message in the channel reaches the handler. Scoring chatter
+    // took a ❌ and burned an attempt, which made the race hostile to talking.
+    const d = deps();
+    await startSession(d, `chan`, DEFAULT_SETTINGS);
+    await handleAnswer(d, `chan`, `m1`, `drake`, `lol same`);
+    await handleAnswer(d, `chan`, `m2`, `drake`, `がんばって`);
+
+    expect(d.reactions).toHaveLength(0);
+    // Still only the question; nothing was revealed or advanced.
+    expect(d.posts).toHaveLength(1);
+  });
+
+  it(`still scores a real attempt from the same player afterwards`, async () => {
+    // WHY: ignoring chatter must not cost the player their attempts.
+    const d = deps([uru, taberu]);
+    await startSession(d, `chan`, DEFAULT_SETTINGS);
+    await handleAnswer(d, `chan`, `m1`, `drake`, `lol same`);
+    await handleAnswer(d, `chan`, `m2`, `drake`, `うる`);
+
+    expect(d.reactions).toEqual([{ messageId: `m2`, emoji: `⭕` }]);
   });
 });

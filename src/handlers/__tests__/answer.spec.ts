@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { judge, normalize } from "../quiz/answer.js";
+import { judge, looksLikeAnswer, normalize } from "../quiz/answer.js";
 
 /** 売らない, the plain non-past negative of 売る — the worked example in the spec. */
 const URANAI = { kana: `うらない`, kanji: `売らない` };
@@ -102,5 +102,51 @@ describe(`judge: romaji conversion edge cases`, () => {
     // where the learning happens.
     expect(judge(`uranai`, URANAI).normalized).toBe(`うらない`);
     expect(judge(`URANAI`, URANAI).normalized).toBe(`うらない`);
+  });
+});
+
+describe(`looksLikeAnswer: telling an attempt from conversation`, () => {
+  // 売る → 売らない. Every conjugation keeps うら-, or at minimum う-.
+  const uranai = { kana: `うらない`, kanji: `売らない`, stem: `う` };
+
+  it(`accepts a wrong guess that is clearly aimed at the question`, () => {
+    // WHY: a near miss is still an attempt and should be scored. Ignoring it
+    // would leave the player wondering whether the bot saw them at all.
+    const rejected = [
+      `うらなかった`,
+      `うった`,
+      `うります`,
+      `売らなかった`
+    ].filter((guess) => !looksLikeAnswer(guess, uranai));
+    expect(rejected).toEqual([]);
+  });
+
+  it(`ignores ordinary conversation`, () => {
+    // WHY: every message in the channel reaches the handler. Before this,
+    // chatter took a ❌ and burned an attempt — the race is meant to happen
+    // alongside the conversation, not instead of it.
+    const scored = [
+      `lol same`,
+      `がんばって`,
+      `I have no idea`,
+      `?`,
+      `🎉`,
+      ``
+    ].filter((chatter) => looksLikeAnswer(chatter, uranai));
+    expect(scored).toEqual([]);
+  });
+
+  it(`always accepts the correct answer, however short the stem`, () => {
+    // WHY: a one-mora word shares almost nothing with its stem. Rejecting a
+    // right answer for being too short would be the worst possible failure.
+    expect(looksLikeAnswer(`した`, { kana: `した`, stem: `す` })).toBe(true);
+  });
+
+  it(`accepts romaji aimed at the question`, () => {
+    // WHY: romaji support exists so members without a kana keyboard can play.
+    // The plausibility test folds the same way the scorer does, so it must not
+    // quietly exclude them.
+    expect(looksLikeAnswer(`uranai`, uranai)).toBe(true);
+    expect(looksLikeAnswer(`urimasu`, uranai)).toBe(true);
   });
 });

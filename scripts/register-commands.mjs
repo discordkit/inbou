@@ -65,6 +65,11 @@ const settingOptions = [
     type: STRING,
     name: `timeout`,
     description: `How long each question stays open, 30s to 10m.`
+  },
+  {
+    type: STRING,
+    name: `guesses`,
+    description: `Attempts per player per question, 1-10.`
   }
 ];
 

@@ -50,13 +50,35 @@ export interface SessionConfig {
   timeoutMs: number;
   /** Consecutive timeouts that end an endless session. */
   quitAfterTimeouts: number;
+  /**
+   * How many attempts each player gets per question.
+   *
+   * More than one because a near miss deserves another go — but bounded, or a
+   * fast typist could brute force the answer. Each wrong guess costs a point of
+   * what a later correct one is worth, so precision still pays.
+   */
+  guesses: number;
 }
 
 export const DEFAULT_CONFIG: SessionConfig = {
   length: 10,
-  timeoutMs: 120_000,
-  quitAfterTimeouts: 3
+  // A minute. Two was measured as too long in the channel — the round stalls
+  // and people drift off — while thirty seconds is not enough to read the
+  // prompt and type a conjugation.
+  timeoutMs: 60_000,
+  quitAfterTimeouts: 3,
+  guesses: 3
 };
+
+/**
+ * What a correct answer is worth, given how many wrong guesses preceded it.
+ *
+ * First time is worth the most and each miss costs one, so a player who reads
+ * the form carefully scores above one who works through the possibilities.
+ * Never below one: landing it on the last guess is still landing it.
+ */
+export const pointsFor = (wrongGuesses: number, guesses: number): number =>
+  Math.max(1, guesses + 1 - wrongGuesses);
 
 export interface SessionContext {
   channelId: string;
@@ -96,8 +118,8 @@ export type SessionEvent =
   | { type: `CONFIGURE`; config: SessionConfig; filters: Filters }
   | { type: `END` };
 
-/** Has this player already used their one guess this question? */
-const alreadyAnswered = ({
+/** Has this player used every attempt this question? */
+const outOfGuesses = ({
   context,
   event
 }: {
@@ -105,7 +127,8 @@ const alreadyAnswered = ({
   event: SessionEvent;
 }): boolean =>
   event.type === `ANSWER` &&
-  context.attempts.some((a) => a.userId === event.userId);
+  context.attempts.filter((a) => a.userId === event.userId).length >=
+    context.config.guesses;
 
 const isCorrect = ({ event }: { event: SessionEvent }): boolean =>
   event.type === `ANSWER` && event.correct;
@@ -171,7 +194,7 @@ export const sessionMachine = setup({
       now: number;
     }
   },
-  guards: { alreadyAnswered, isCorrect, sessionOver }
+  guards: { outOfGuesses, isCorrect, sessionOver }
 }).createMachine({
   id: `session`,
   initial: `asking`,
@@ -193,10 +216,10 @@ export const sessionMachine = setup({
       on: {
         ANSWER: [
           {
-            // One guess per player. A second message is ignored rather than
+            // Out of attempts. Further messages are ignored rather than
             // penalised, so nobody can brute force the answer and nobody loses
-            // anything by typing in the channel.
-            guard: `alreadyAnswered`,
+            // anything by continuing to talk in the channel.
+            guard: `outOfGuesses`,
             actions: []
           },
           {
@@ -205,13 +228,19 @@ export const sessionMachine = setup({
             actions: [
               recordAttempt,
               assign({
-                scores: ({ context, event }) =>
-                  event.type === `ANSWER`
-                    ? {
-                        ...context.scores,
-                        [event.userId]: (context.scores[event.userId] ?? 0) + 1
-                      }
-                    : context.scores,
+                scores: ({ context, event }) => {
+                  if (event.type !== `ANSWER`) return context.scores;
+                  // Wrong guesses this player already made on this question.
+                  const missed = context.attempts.filter(
+                    (a) => a.userId === event.userId && !a.correct
+                  ).length;
+                  return {
+                    ...context.scores,
+                    [event.userId]:
+                      (context.scores[event.userId] ?? 0) +
+                      pointsFor(missed, context.config.guesses)
+                  };
+                },
                 // An answered question means the room is awake.
                 timeoutStreak: 0,
                 deadline: null,
@@ -264,9 +293,17 @@ export const sessionMachine = setup({
     },
 
     /** Over. Nothing more is scored and no alarm is armed. */
+    /**
+     * Over. Nothing more is scored and no alarm is armed.
+     *
+     * `question` is deliberately KEPT. The last question reaches this state
+     * directly from `asking`, and its reveal has not been posted yet — clearing
+     * it here left the final round with nothing to show, so the session ended
+     * silently. Only the deadline goes, because that is what arms the alarm.
+     */
     finished: {
       type: `final`,
-      entry: assign({ question: null, deadline: null })
+      entry: assign({ deadline: null })
     }
   }
 });

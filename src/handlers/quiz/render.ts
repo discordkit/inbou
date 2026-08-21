@@ -1,4 +1,4 @@
-import type { Form } from "./forms.js";
+import { isBasic, type Form } from "./forms.js";
 import type { Question } from "./question.js";
 import type { VerbClass } from "./wordClass.js";
 
@@ -101,11 +101,33 @@ export const questionEmbed = (
   description: `## ${question.prompt}`,
   color: INDIGO,
   fields: [
-    { name: `Target`, value: formLabel(question.form), inline: true },
+    // What the prompt already IS, alongside what is wanted. Without it the
+    // transformation has to be inferred from the word itself, and 見せません
+    // against 見せない is hard to tell apart at a glance — the player cannot
+    // see whether the prompt is already in the target form.
+    { name: `From`, value: promptLabel(question), inline: true },
+    {
+      name: `Target`,
+      value: `${formLabel(question.form)} (plain)`,
+      inline: true
+    },
     { name: `Class`, value: classLabel(question), inline: true }
   ],
   footer: { text: `Type your answer in the channel` }
 });
+
+/**
+ * What form the prompt is in.
+ *
+ * A basic form is asked from its own polite counterpart, so the prompt is that
+ * same form in the polite register; everything else is asked from the
+ * dictionary form. Saying so removes the guesswork about what is being
+ * converted, which is the part that reads as ambiguous in the channel.
+ */
+export const promptLabel = (question: Question): string =>
+  isBasic(question.form)
+    ? `${formLabel(question.form)} (polite)`
+    : `Dictionary form`;
 
 /** One player's attempt, as the reveal embed lists it. */
 export interface AttemptLine {
@@ -124,10 +146,11 @@ export interface AttemptLine {
  */
 export const revealEmbed = (
   question: Question,
-  outcome: { winner: string | null },
+  outcome: { winner: string | null; points?: number },
   attempts: readonly AttemptLine[]
 ): Embed => {
   const won = outcome.winner !== null;
+  const { points } = outcome;
   const fields: Embed[`fields`] = [
     {
       name: `Answer`,
@@ -162,7 +185,16 @@ export const revealEmbed = (
   }
 
   return {
-    title: won ? `<@${outcome.winner ?? ``}> got it` : `Nobody got it in time`,
+    // The winner goes in the description, never the title. Discord does not
+    // resolve mention markup in an embed title — it renders the raw
+    // `<@123…>` — but it does in a description or a field value, which is why
+    // the Attempts list below shows names correctly.
+    title: won ? `Correct` : `Nobody got it in time`,
+    ...(outcome.winner === null
+      ? {}
+      : {
+          description: `<@${outcome.winner}> got it${points === undefined ? `` : ` — ${String(points)} point${points === 1 ? `` : `s`}`}`
+        }),
     color: won ? MOSS : VERMILION,
     fields
   };

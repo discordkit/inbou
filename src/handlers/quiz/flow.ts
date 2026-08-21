@@ -1,5 +1,5 @@
 import type { DiscordEffects } from "../discord.js";
-import { judge } from "./answer.js";
+import { judge, looksLikeAnswer } from "./answer.js";
 import type { QuizSettings } from "./config.js";
 import { generate, isQuestion, type Question, type Word } from "./question.js";
 import {
@@ -47,13 +47,21 @@ export interface SessionPort {
     typed: string,
     correct: boolean
   ) => Promise<{
-    outcome: { kind: string; userId?: string };
+    outcome: { kind: string; userId?: string; points?: number };
     closed?: Question;
     final?: Array<{ userId: string; points: number }>;
     needsNext: boolean;
   }>;
   next: (question: Question) => Promise<unknown>;
   configure: (settings: QuizSettings) => Promise<unknown>;
+  /**
+   * Fire the question timeout.
+   *
+   * Present so a test can drive the same transition the Durable Object's alarm
+   * causes in production. The object implements it as part of its alarm
+   * handler rather than as a callable method.
+   */
+  timeout?: (() => void) | undefined;
   end: () => Promise<Array<{ userId: string; points: number }> | null>;
 }
 
@@ -121,12 +129,19 @@ export const handleAnswer = async (
   const question = view.context.question;
   if (question === null) return;
 
-  const verdict = judge(content, {
+  const expected = {
     kana: question.answer,
     ...(question.answerKanji === undefined
       ? {}
-      : { kanji: question.answerKanji })
-  });
+      : { kanji: question.answerKanji }),
+    stem: question.stem
+  };
+
+  // Ordinary conversation must not score. Every message in the channel reaches
+  // here, so without this "lol same" takes a ❌ and costs someone an attempt.
+  if (!looksLikeAnswer(content, expected)) return;
+
+  const verdict = judge(content, expected);
 
   const result = await deps.session.submit(
     userId,
@@ -147,14 +162,22 @@ export const handleTimeout = async (
   channelId: string
 ): Promise<void> => {
   const view = await deps.session.current();
-  if (view === null || view.state !== `revealing`) return;
-  const question = view.context.question;
-  if (question === null) return;
+  if (view === null) return;
 
-  await deps.discord.post(
-    channelId,
-    revealEmbed(question, { winner: null }, view.context.attempts)
-  );
+  // `finished` counts as well as `revealing`. On the LAST question the machine
+  // runs straight from `asking` to `finished`, because `revealing` falls
+  // through once the session is over — so requiring `revealing` here silently
+  // dropped both the reveal and the final standings, and the session just
+  // stopped.
+  if (view.state === `asking`) return;
+
+  const question = view.context.question;
+  if (question !== null) {
+    await deps.discord.post(
+      channelId,
+      revealEmbed(question, { winner: null }, view.context.attempts)
+    );
+  }
   await advance(deps, channelId);
 };
 
@@ -171,7 +194,12 @@ const closeRound = async (
       channelId,
       revealEmbed(
         closed,
-        { winner: result.outcome.userId ?? null },
+        {
+          winner: result.outcome.userId ?? null,
+          ...(result.outcome.points === undefined
+            ? {}
+            : { points: result.outcome.points })
+        },
         view?.context.attempts ?? []
       )
     );

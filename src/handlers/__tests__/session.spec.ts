@@ -31,6 +31,7 @@ const question = (id: string): Question => ({
   prompt: `うりません`,
   form: `non-past-negative`,
   answer: `うらない`,
+  stem: `うら`,
   answerKanji: `売らない`,
   dictionary: `売る`,
   reading: `うる`,
@@ -75,7 +76,8 @@ describe(`quizSession in the handlers Worker`, () => {
     await a.begin(`chan-a`, question(`1`), DEFAULT_CONFIG, ANY_FILTERS);
     await a.submit(`mika`, `うらない`, true);
 
-    expect((await a.current())?.context.scores).toEqual({ mika: 1 });
+    // Four points: correct on the first of three guesses.
+    expect((await a.current())?.context.scores).toEqual({ mika: 4 });
     await expect(b.current()).resolves.toBeNull();
   });
 
@@ -91,7 +93,7 @@ describe(`quizSession in the handlers Worker`, () => {
     expect(right.outcome).toEqual({
       kind: `correct`,
       userId: `mika`,
-      points: 1
+      points: 4
     });
     // The teaching embed needs the question that just closed.
     expect(right.closed?.answer).toBe(`うらない`);
@@ -112,7 +114,7 @@ describe(`quizSession in the handlers Worker`, () => {
 
     const result = await stub.submit(`mika`, `うらない`, true);
     expect(result.needsNext).toBe(false);
-    expect(result.final).toEqual([{ userId: `mika`, points: 1 }]);
+    expect(result.final).toEqual([{ userId: `mika`, points: 4 }]);
   });
 
   it(`ignores answers when the channel has no session`, async () => {

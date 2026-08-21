@@ -58,6 +58,14 @@ export interface Question {
   answer: string;
   /** The kanji spelling of the answer, when the word has one. */
   answerKanji?: string;
+  /**
+   * The part every conjugation of this word keeps.
+   *
+   * Used to tell an attempt from ordinary conversation: a real guess at
+   * 売らない starts うら even when it is wrong, while "lol same" does not. See
+   * `looksLikeAnswer`.
+   */
+  stem: string;
   /** For the teaching embed and `/hint`. */
   dictionary: string;
   reading: string;
@@ -156,11 +164,30 @@ export const pose = (word: Word, form: Form): Question | null => {
   const answerKanji =
     word.kanji === undefined ? undefined : spliceKanji(word, answer);
 
+  // The part every conjugation of this word keeps.
+  //
+  // Taken as the shared prefix of the dictionary form and this conjugation,
+  // then capped one mora short of the dictionary form — the final mora is
+  // exactly what conjugating replaces (うる → うらない, うって), so a stem that
+  // included it would only ever match the dictionary form itself. That case is
+  // real: the non-past affirmative IS the dictionary form, so the raw shared
+  // prefix is the whole word.
+  let shared = 0;
+  while (
+    shared < word.kana.length &&
+    shared < answer.length &&
+    word.kana[shared] === answer[shared]
+  ) {
+    shared += 1;
+  }
+  shared = Math.min(shared, Math.max(1, word.kana.length - 1));
+
   return {
     wordId: word.id,
     prompt,
     form,
     answer,
+    stem: word.kana.slice(0, shared),
     ...(answerKanji === undefined ? {} : { answerKanji }),
     dictionary: word.kanji ?? word.kana,
     reading: word.kana,

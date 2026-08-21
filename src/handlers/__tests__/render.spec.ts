@@ -14,6 +14,7 @@ const uru: Question = {
   prompt: `うりません`,
   form: `non-past-negative`,
   answer: `うらない`,
+  stem: `うら`,
   answerKanji: `売らない`,
   dictionary: `売る`,
   reading: `うる`,
@@ -45,12 +46,16 @@ describe(`questionEmbed`, () => {
     const embed = questionEmbed(uru, 3, 10);
     expect(embed.title).toBe(`Question 3 of 10`);
     expect(embed.description).toContain(`うりません`);
+    // "From" as well as "Target": 見せません and 見せない look alike, so a
+    // player cannot otherwise tell whether the prompt is already in the form
+    // being asked for.
     expect(embed.fields?.[0]).toEqual({
-      name: `Target`,
-      value: `Non-past negative`,
+      name: `From`,
+      value: `Non-past negative (polite)`,
       inline: true
     });
-    expect(embed.fields?.[1]?.value).toBe(`Godan (-る)`);
+    expect(embed.fields?.[1]?.value).toBe(`Non-past negative (plain)`);
+    expect(embed.fields?.[2]?.value).toBe(`Godan (-る)`);
   });
 
   it(`omits the total for an endless session`, () => {
@@ -61,10 +66,26 @@ describe(`questionEmbed`, () => {
 });
 
 describe(`revealEmbed: the teaching moment`, () => {
-  it(`names the winner and shows the answer with its reading`, () => {
+  it(`names the winner in the description, never the title`, () => {
+    // WHY: Discord does not resolve mention markup in an embed title — it
+    // renders the raw `<@123…>`, which is what the channel saw. Descriptions
+    // and field values do resolve it, which is why the Attempts list was
+    // showing names correctly all along.
     const embed = revealEmbed(uru, { winner: `mika` }, []);
-    expect(embed.title).toContain(`<@mika>`);
+    expect(embed.title).not.toContain(`<@`);
+    expect(embed.description).toContain(`<@mika>`);
     expect(embed.fields?.[0]?.value).toBe(`売らない（うらない）`);
+  });
+
+  it(`says what the answer was worth`, () => {
+    // WHY: points now vary with how many guesses it took, so a bare "got it"
+    // leaves the score unexplained.
+    expect(
+      revealEmbed(uru, { winner: `mika`, points: 3 }, []).description
+    ).toContain(`3 points`);
+    expect(
+      revealEmbed(uru, { winner: `mika`, points: 1 }, []).description
+    ).toContain(`1 point`);
   });
 
   it(`says nobody got it when the question timed out`, () => {

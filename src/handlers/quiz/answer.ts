@@ -104,3 +104,60 @@ export const judge = (
     normalized: folded
   };
 };
+
+/** Is this character kana (hiragana, katakana, or the long-vowel mark)? */
+const isKanaChar = (ch: string): boolean => {
+  const code = ch.codePointAt(0) ?? 0;
+  return (code >= 0x30_40 && code <= 0x30_ff) || code === 0x30_fc;
+};
+
+/**
+ * Is this message even trying to be an answer?
+ *
+ * Every message in a channel with a running session reaches the handler, so
+ * without this ordinary conversation scores as a wrong guess — burning an
+ * attempt and littering the channel with ❌. The race is supposed to happen
+ * *alongside* the chat, not instead of it.
+ *
+ * The test is a shared stem: a real attempt at 売らない starts うら, even when
+ * it is wrong (うらなかった, うらん). Chatter almost never does. It is
+ * deliberately generous — a wrong guess that shares nothing with the answer is
+ * ignored rather than scored, which costs a player nothing, while scoring
+ * someone's "lol same" costs them an attempt they never spent.
+ *
+ * `stem` is the shared prefix of the expected answer and the word it came from,
+ * which is the part every conjugation of that word keeps.
+ */
+export const looksLikeAnswer = (
+  input: string,
+  expected: { kana: string; kanji?: string; stem: string }
+): boolean => {
+  const cleaned = normalize(input);
+  if (cleaned === ``) return false;
+
+  // Correct answers always count, however short. A one-mora answer like する
+  // may share almost nothing with its stem.
+  if (judge(input, expected).correct) return true;
+
+  const folded = fold(cleaned);
+  const stem = fold(normalize(expected.stem));
+  if (stem === ``) return false;
+  if (folded.startsWith(stem)) return true;
+
+  // A guess written in kanji shares no prefix with a kana stem — 売らなかった
+  // against う matches nothing — so the kanji spelling needs its own stem. It
+  // is the expected kanji answer minus its trailing kana, which is exactly the
+  // part every conjugation of that word keeps: 売らない → 売.
+  const kanji = expected.kanji;
+  if (kanji === undefined) return false;
+
+  let tail = 0;
+  while (
+    tail < kanji.length &&
+    isKanaChar(kanji[kanji.length - 1 - tail] ?? ``)
+  ) {
+    tail += 1;
+  }
+  const kanjiStem = kanji.slice(0, kanji.length - tail);
+  return kanjiStem !== `` && cleaned.startsWith(kanjiStem);
+};

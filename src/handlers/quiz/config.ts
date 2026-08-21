@@ -198,6 +198,23 @@ const parseTimeout = (raw: string): number | SettingError => {
   return ms;
 };
 
+/**
+ * How many attempts each player gets per question.
+ *
+ * Bounded above because more attempts than there are plausible conjugations
+ * turns the race into brute force, and the point taper would bottom out anyway.
+ */
+const parseGuesses = (raw: string): number | SettingError => {
+  const n = Number(raw.trim());
+  if (!Number.isInteger(n) || n < 1 || n > 10) {
+    return {
+      option: `guesses`,
+      message: `\`${raw}\` is not a guess count. Use 1 to 10.`
+    };
+  }
+  return n;
+};
+
 const isError = (value: unknown): value is SettingError =>
   typeof value === `object` && value !== null && `option` in value;
 
@@ -209,6 +226,7 @@ export interface RawOptions {
   forms?: string;
   length?: string;
   timeout?: string;
+  guesses?: string;
 }
 
 /**
@@ -277,6 +295,11 @@ export const parseSettings = (
     const timeoutMs = parseTimeout(raw.timeout);
     if (isError(timeoutMs)) errors.push(timeoutMs);
     else settings.session = { ...settings.session, timeoutMs };
+  }
+  if (raw.guesses !== undefined) {
+    const guesses = parseGuesses(raw.guesses);
+    if (isError(guesses)) errors.push(guesses);
+    else settings.session = { ...settings.session, guesses };
   }
 
   return errors.length > 0 ? { errors } : settings;
