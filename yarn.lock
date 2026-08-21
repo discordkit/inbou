@@ -1918,6 +1918,7 @@ __metadata:
     varlock: "npm:^1.16.1"
     vite-plus: "catalog:"
     vitest: "catalog:"
+    wanakana: "npm:^5.3.1"
     wrangler: "npm:4.121.0"
   languageName: unknown
   linkType: soft
@@ -2928,6 +2929,13 @@ __metadata:
   bin:
     vitest: ./vitest.mjs
   checksum: 10/020843460fe696c23be2a363634dde4daf54625f1c443c24066ba3f87c478b0ccfdd5124343ba30eb092f54902ffea09f4bed0af4a16a9ee805e494ee2dce34e
+  languageName: node
+  linkType: hard
+
+"wanakana@npm:^5.3.1":
+  version: 5.3.1
+  resolution: "wanakana@npm:5.3.1"
+  checksum: 10/401c46ac51135d7a97315750af1b95cf7e1a8c6612b28c9c26d86983f967ca5f2c59def77a6ccfa85028dae383a92b4897c905b581cceb1f22928f4986d8db6c
   languageName: node
   linkType: hard
 
