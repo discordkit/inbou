@@ -3,5 +3,26 @@
   "name": "inbou-handlers",
   "main": "src/handlers/index.ts",
   "compatibility_date": "2026-08-11",
-  "compatibility_flags": []
+  "compatibility_flags": [],
+  // Quiz sessions are Durable Objects on THIS side of the split, not the bot
+  // Worker's. A session needs durable per-channel state and a timer that
+  // survives eviction, and putting it here means editing quiz logic reloads
+  // only this Worker — the Gateway connection in the bot Worker is untouched,
+  // so a session start is not spent on every edit.
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "SESSION",
+        "class_name": "QuizSession"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      // SQLite-backed, matching the bot Worker: it is the free-plan class and
+      // the only backend whose storage works locally under `wrangler dev`.
+      "tag": "v1",
+      "new_sqlite_classes": ["QuizSession"]
+    }
+  ]
 }

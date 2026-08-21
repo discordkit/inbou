@@ -2,6 +2,12 @@ import { discord } from "@discordkit/client";
 import { handleCommand } from "./commands.js";
 import type { ForwardedEvent } from "./events.js";
 import { handleMessage } from "./messages.js";
+import type { QuizSession } from "./session.js";
+
+// Re-exported so the runtime can construct the class this Worker's
+// `durable_objects` binding names. Quiz sessions live here rather than in the
+// bot Worker so that editing them never restarts the Gateway connection.
+export { QuizSession } from "./session.js";
 
 /**
  * The reloadable half of the bot.
@@ -21,6 +27,8 @@ export interface Env {
    * this.
    */
   DISCORD_BOT_TOKEN: string;
+  /** One quiz session per channel, keyed by channel id. */
+  SESSION: DurableObjectNamespace<QuizSession>;
 }
 
 export default {

@@ -29,11 +29,30 @@ const plugins =
         // poolOptions shape, which fails with `Missing "./config" specifier`.
         cloudflareTest({
           wrangler: { configPath: `./wrangler.jsonc` },
-          // The bot Worker binds `HANDLERS`, so the pool has to know about the
-          // handlers Worker too — otherwise workerd refuses to start with
-          // "binding HANDLERS refers to a service ... but no such service is
-          // defined". `auxiliaryWorkers` covers dev; this covers tests.
+          // The pool runs every test inside ONE Worker, and resolves each
+          // Durable Object class against that Worker's entry module. The bot
+          // Worker's entry exports `InbouBot` but not `QuizSession`, which
+          // lives in the handlers Worker — so without this the session tests
+          // fail with "does not export a QuizSession Durable Object".
+          //
+          // Re-exporting both from one test entry is what lets a single pool
+          // reach both Workers' objects. This is a test-harness concern only:
+          // in dev and production each Worker declares its own, verified by
+          // `wrangler dev` reporting the two namespaces separately.
+          main: `./src/testEntry.ts`,
           miniflare: {
+            // Named here because the binding lives in wrangler.handlers.jsonc,
+            // which the pool does not read — it is configured from
+            // wrangler.jsonc above. `useSQLite` mirrors that file's
+            // `new_sqlite_classes` migration; without it the class gets the
+            // key-value backend and every `ctx.storage.sql` call throws.
+            durableObjects: {
+              SESSION: { className: `QuizSession`, useSQLite: true }
+            },
+            // The bot Worker binds `HANDLERS`, so the pool has to know about the
+            // handlers Worker too — otherwise workerd refuses to start with
+            // "binding HANDLERS refers to a service ... but no such service is
+            // defined". `auxiliaryWorkers` covers dev; this covers tests.
             workers: [
               {
                 name: `inbou-handlers`,
@@ -86,6 +105,13 @@ export default defineConfig({
       // command list in the script.
       "commands:register": {
         command: `varlock run -- node scripts/register-commands.mjs`,
+        cache: false
+      },
+      // Rebuilds the committed word corpus from JMdict. Deliberate rather than
+      // automatic: it downloads ~14 MB and the output is checked in, so a
+      // normal build and CI never touch the network.
+      "corpus:build": {
+        command: `node scripts/build-corpus.mjs`,
         cache: false
       }
     }
