@@ -64,7 +64,7 @@ const settingOptions = [
   {
     type: STRING,
     name: `forms`,
-    description: `Forms to ask: "basics", "all", or specific names.`
+    description: `Forms to ask: "basics", "all", "compounds", or a name.`
   },
   {
     type: STRING,

@@ -1,3 +1,4 @@
+import { COMPOUNDS, type Compound } from "./compound.js";
 import { conjugate, type ConjugationRow } from "./conjugate.js";
 
 /**
@@ -39,6 +40,17 @@ export const FORMS = [
 ] as const;
 
 export type Form = (typeof FORMS)[number];
+
+/**
+ * Everything the quiz can ask for: a single inflection or a construction.
+ *
+ * One union rather than two parallel types, so the scorer, the session and the
+ * embeds treat a compound exactly like any other question.
+ */
+export type Askable = Form | Compound;
+
+export const isCompound = (form: Askable): form is Compound =>
+  (COMPOUNDS as readonly string[]).includes(form);
 
 /**
  * The four tense × polarity forms that also exist in a polite register.

@@ -66,16 +66,16 @@ Two surfaces, deliberately. Flags for people who know what they want, buttons fo
 
 ### Defaults
 
-| Flag         | Default             | Accepts                            |
-| ------------ | ------------------- | ---------------------------------- |
-| `level`      | N5                  | N5–N1, comma-separated             |
-| `type`       | verb, adj-i, adj-na | + noun (off by default, see below) |
-| `class`      | all                 | ichidan, godan, suru, kuru         |
-| `forms`      | basics              | any of the 13, or `all`            |
-| `length`     | 10                  | 1–50, or `endless`                 |
-| `timeout`    | 1m                  | 30s–10m                            |
-| `guesses`    | 3                   | 1–10                               |
-| `difficulty` | single              | `single` \| `compound`             |
+| Flag         | Default             | Accepts                                                   |
+| ------------ | ------------------- | --------------------------------------------------------- |
+| `level`      | N5                  | N5–N1, comma-separated                                    |
+| `type`       | verb, adj-i, adj-na | + noun (off by default, see below)                        |
+| `class`      | all                 | ichidan, godan, suru, kuru                                |
+| `forms`      | basics              | any of the 13, `all`, `compounds`, or a construction name |
+| `length`     | 10                  | 1–50, or `endless`                                        |
+| `timeout`    | 1m                  | 30s–10m                                                   |
+| `guesses`    | 3                   | 1–10                                                      |
+| `difficulty` | single              | `single` \| `compound`                                    |
 
 **Why nouns default off.** In the reference corpus N5 is 312 nouns to 119 verbs, and nouns only conjugate the copula — だ / です / だった. Leaving them on makes an N5 session repetitive and easy. They stay available, just not by default.
 
@@ -162,7 +162,13 @@ Difficulty at N3 and above should come from multi-word constructions carrying a 
 | 〜させられる       | be made to do               | causative → passive                |
 | 〜たくない         | don't want to               | masu-stem + たい → い-adj negative |
 
-**We already own the teaching text.** `vscode-jisho/src/shared/grammar.ts` is 641 lines of originally-written notes whose `AUXILIARY_NOTES` covers exactly these building blocks — しまう・おく・いる・くれる・もらう・あげる・そうだ・ようだ・らしい plus the passive and causative primitives. Each carries a gist, a detail paragraph and an N5-vocabulary example.
+**Built, in `quiz/compound.ts`.** Each construction is a recipe — which conjugator row to read, which polarity, what tail to append — so nothing re-implements inflection. That is what keeps 飲む → 飲んでしまう correct without this layer knowing the euphonic rules, and 〜たくない correct without it knowing that 〜たい inflects as an い-adjective.
+
+Two are derived rather than appended. `〜させられる` conjugates the causative again (it is itself an ichidan verb, whatever the original class), which is the same mechanism `formTable` already used for `causative-passive`. `〜たくない` and `〜なければ` are the conjugator's own negative rows.
+
+**Constructions are never asked unless requested.** `forms` accepts `compounds` for all five or one by name; `all` still means all inflections. An N5 session must not start producing 〜させられる because a word happened to support it.
+
+**The reveal names the construction and what it means** — 〜てしまう as "do completely, or do regrettably" — since the word's own gloss says only "to eat". `vscode-jisho/src/shared/grammar.ts` has fuller notes (a detail paragraph and an N5 example per auxiliary) that were not available when this was built; worth importing if the one-line gists prove too thin in the channel.
 
 ## 6. Where things live
 
@@ -352,7 +358,7 @@ Sequenced so each step is verifiable on its own and nothing blocks on an open qu
 4. ~~**Session DO**~~ — done. Rules are an XState machine in `quiz/machine.ts`; the object persists it and keeps the alarm in step.
 5. ~~**Discord surface**~~ — done, and played live. Commands, embeds, reactions, ephemeral hint.
 6. ~~**Leaderboard**~~ — done. D1 holds one aggregated row per player per guild; `/quiz scores` reads it, `/review` recaps a miss. See "What survives a session" below.
-7. **Compound forms** — grammar layer over the primitive, wired to the existing notes.
+7. ~~**Compound forms**~~ — done. Five constructions in `quiz/compound.ts`, asked via `forms:compounds` or by name.
 
 ## 8. Still open
 

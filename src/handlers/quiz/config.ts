@@ -1,6 +1,7 @@
 import { boundedInteger } from "@discordkit/core/validations/boundedInteger";
 import * as v from "valibot";
-import { FORMS, type Form, type WordType } from "./forms.js";
+import { COMPOUNDS } from "./compound.js";
+import { FORMS, type Askable, type Form, type WordType } from "./forms.js";
 import type { Filters } from "./question.js";
 import { DEFAULT_CONFIG, type SessionConfig } from "./machine.js";
 import type { VerbClass } from "./wordClass.js";
@@ -122,15 +123,17 @@ const classSchema = listOf<VerbClass>(
   `Use ichidan, godan, suru or kuru.`
 );
 
-const formsSchema = listOf<Form>(
-  (key) => {
-    if (key === `all`) return [];
-    if (key === `basics`) return BASICS;
-    const form = FORMS.find((f) => f === key);
-    return form === undefined ? null : [form];
-  },
-  `Use \`basics\`, \`all\`, or one of: ${FORMS.join(`, `)}.`
-);
+const formsSchema = listOf<Askable>((key) => {
+  // `all` clears the filter, which leaves inflections only — constructions
+  // are N3+ material and are asked for by name or with `compounds`.
+  if (key === `all`) return [];
+  if (key === `basics`) return BASICS;
+  if (key === `compounds`) return [...COMPOUNDS];
+  const form = FORMS.find((f) => f === key);
+  if (form !== undefined) return [form];
+  const compound = COMPOUNDS.find((c) => c === key);
+  return compound === undefined ? null : [compound];
+}, `Use \`basics\`, \`all\`, \`compounds\`, or a form name.`);
 
 /** Bounded: a 500-question session would hold the channel hostage. */
 const lengthSchema = v.pipe(

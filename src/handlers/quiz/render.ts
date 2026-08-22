@@ -4,7 +4,14 @@ import {
   type ActionRow,
   type Embed
 } from "@discordkit/client";
-import { isBasic, type Form, type WordType } from "./forms.js";
+import { compoundGist, COMPOUND_LABELS } from "./compound.js";
+import {
+  isBasic,
+  isCompound,
+  type Askable,
+  type Form,
+  type WordType
+} from "./forms.js";
 import type { Question } from "./question.js";
 import type { VerbClass } from "./wordClass.js";
 
@@ -38,7 +45,8 @@ const FORM_LABELS: Record<Form, string> = {
   "causative-passive": `Causative-passive`
 };
 
-export const formLabel = (form: Form): string => FORM_LABELS[form];
+export const formLabel = (form: Askable): string =>
+  isCompound(form) ? COMPOUND_LABELS[form] : FORM_LABELS[form];
 
 /** How each verb class is named to a player. */
 const CLASS_LABELS: Record<VerbClass, string> = {
@@ -114,8 +122,12 @@ export const questionEmbed = (
     // see whether the prompt is already in the target form.
     { name: `From`, value: promptLabel(question), inline: true },
     {
+      // A construction names itself; only an inflection needs its register
+      // spelled out, since 〜てしまう has no polite/plain distinction to make.
       name: `Target`,
-      value: `${formLabel(question.form)} (plain)`,
+      value: isCompound(question.form)
+        ? formLabel(question.form)
+        : `${formLabel(question.form)} (plain)`,
       inline: true
     },
     { name: `Class`, value: classLabel(question), inline: true }
@@ -132,7 +144,7 @@ export const questionEmbed = (
  * converted, which is the part that reads as ambiguous in the channel.
  */
 export const promptLabel = (question: Question): string =>
-  isBasic(question.form)
+  !isCompound(question.form) && isBasic(question.form)
     ? `${formLabel(question.form)} (polite)`
     : `Dictionary form`;
 
@@ -218,6 +230,16 @@ export const revealEmbed = (
     { name: `Class`, value: classLabel(question), inline: true },
     { name: `Meaning`, value: question.gloss }
   ];
+
+  // What the construction itself means, which the word's own gloss does not
+  // say: 食べてしまう is not just "to eat". This is the teaching the higher
+  // levels exist for.
+  if (isCompound(question.form)) {
+    fields.push({
+      name: formLabel(question.form),
+      value: compoundGist(question.form)
+    });
+  }
 
   if (question.example !== undefined) {
     fields.push({

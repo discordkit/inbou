@@ -1,8 +1,11 @@
+import { buildCompound, type Compound } from "./compound.js";
 import type { BaseQuestion } from "./kind.js";
 import {
   formsFor,
   formTable,
   isBasic,
+  isCompound,
+  type Askable,
   type Form,
   type WordType
 } from "./forms.js";
@@ -40,7 +43,7 @@ export interface Filters {
   /** Verb classes to include. Ignored for non-verbs. Empty means all. */
   classes: readonly VerbClass[];
   /** Which forms may be asked. Empty means every form the word supports. */
-  forms: readonly Form[];
+  forms: readonly Askable[];
 }
 
 /**
@@ -50,8 +53,8 @@ export interface Filters {
  * back into the corpus — which is what keeps it cheap to wake.
  */
 export interface Question extends BaseQuestion {
-  /** The form being asked for. */
-  form: Form;
+  /** The inflection or construction being asked for. */
+  form: Askable;
   /** The kana answer, which is what typed answers are folded onto. */
   answer: string;
   /** The kanji spelling of the answer, when the word has one. */
@@ -124,17 +127,25 @@ export const matches = (word: Word, filters: Filters): boolean => {
  * keeps only forms the conjugator really produced. That last step is what makes
  * an unanswerable question impossible rather than merely unlikely.
  */
-const askableForms = (word: Word, filters: Filters): Form[] => {
+const askableForms = (word: Word, filters: Filters): Askable[] => {
   const table = formTable(word.kana, [word.pos]);
   if (table === null) return [];
 
   const supported = formsFor(word.type);
-  const wanted =
+  const inflections = (
     filters.forms.length === 0
       ? supported
-      : supported.filter((f) => filters.forms.includes(f));
+      : supported.filter((f) => filters.forms.includes(f))
+  ).filter((form) => table.casual[form] !== undefined);
 
-  return wanted.filter((form) => table.casual[form] !== undefined);
+  // Constructions are only asked when explicitly requested: they are N3+
+  // material, and an N5 session should not start producing 〜させられる because
+  // the word happened to support it.
+  const compounds = filters.forms
+    .filter(isCompound)
+    .filter((c) => buildCompound(word.kana, [word.pos], c) !== null);
+
+  return [...inflections, ...compounds];
 };
 
 /**
@@ -145,6 +156,28 @@ const askableForms = (word: Word, filters: Filters): Form[] => {
  * other form is asked from the dictionary form. Returns null if the word cannot
  * produce that form, which the caller treats as "pick again".
  */
+/**
+ * The part every conjugation of this word keeps.
+ *
+ * The shared prefix of the dictionary form and this conjugation, capped one
+ * mora short — that final mora is exactly what conjugating replaces (うる →
+ * うらない), so including it would only ever match the dictionary form itself.
+ */
+const stemOf = (dictionary: string, answer: string): string => {
+  let shared = 0;
+  while (
+    shared < dictionary.length &&
+    shared < answer.length &&
+    dictionary[shared] === answer[shared]
+  ) {
+    shared += 1;
+  }
+  return dictionary.slice(
+    0,
+    Math.min(shared, Math.max(1, dictionary.length - 1))
+  );
+};
+
 export const pose = (word: Word, form: Form): Question | null => {
   const table = formTable(word.kana, [word.pos]);
   const answer = table?.casual[form];
@@ -162,30 +195,12 @@ export const pose = (word: Word, form: Form): Question | null => {
   const answerKanji =
     word.kanji === undefined ? undefined : spliceKanji(word, answer);
 
-  // The part every conjugation of this word keeps.
-  //
-  // Taken as the shared prefix of the dictionary form and this conjugation,
-  // then capped one mora short of the dictionary form — the final mora is
-  // exactly what conjugating replaces (うる → うらない, うって), so a stem that
-  // included it would only ever match the dictionary form itself. That case is
-  // real: the non-past affirmative IS the dictionary form, so the raw shared
-  // prefix is the whole word.
-  let shared = 0;
-  while (
-    shared < word.kana.length &&
-    shared < answer.length &&
-    word.kana[shared] === answer[shared]
-  ) {
-    shared += 1;
-  }
-  shared = Math.min(shared, Math.max(1, word.kana.length - 1));
-
   return {
     wordId: word.id,
     prompt,
     form,
     answer,
-    stem: word.kana.slice(0, shared),
+    stem: stemOf(word.kana, answer),
     ...(answerKanji === undefined ? {} : { answerKanji }),
     dictionary: word.kanji ?? word.kana,
     reading: word.kana,
@@ -243,6 +258,10 @@ const spliceKanji = (word: Word, conjugated: string): string | undefined => {
  * Returns null when no word passes the filters, which the caller reports as a
  * misconfigured session rather than an empty round.
  */
+/** Build whichever kind of question this form calls for. */
+const ask = (word: Word, form: Askable): Question | null =>
+  isCompound(form) ? poseCompound(word, form) : pose(word, form);
+
 export const generate = (
   words: readonly Word[],
   filters: Filters,
@@ -261,7 +280,7 @@ export const generate = (
     if (forms.length === 0) continue;
     const form = forms[Math.floor(random() * forms.length)];
     if (form === undefined) continue;
-    const question = pose(word, form);
+    const question = ask(word, form);
     if (question !== null) return question;
   }
 
@@ -270,9 +289,43 @@ export const generate = (
   for (const word of pool) {
     const [form] = askableForms(word, filters);
     if (form === undefined) continue;
-    const question = pose(word, form);
+    const question = ask(word, form);
     if (question !== null) return question;
   }
 
   return { empty: `no-forms` };
+};
+
+/**
+ * Build a multi-word construction question.
+ *
+ * Asked from the dictionary form with the construction named in the prompt —
+ * there is no register conversion to make, so the basic-form rule does not
+ * apply. Otherwise identical to {@link pose}: the same `Question` shape, so the
+ * scorer, the session and the embeds treat it like any other question.
+ */
+export const poseCompound = (
+  word: Word,
+  compound: Compound
+): Question | null => {
+  const answer = buildCompound(word.kana, [word.pos], compound);
+  if (answer === null) return null;
+
+  const answerKanji =
+    word.kanji === undefined ? undefined : spliceKanji(word, answer);
+
+  return {
+    wordId: word.id,
+    prompt: word.kana,
+    form: compound,
+    answer,
+    stem: stemOf(word.kana, answer),
+    ...(answerKanji === undefined ? {} : { answerKanji }),
+    dictionary: word.kanji ?? word.kana,
+    reading: word.kana,
+    gloss: word.gloss,
+    type: word.type,
+    ...(word.verbClass === undefined ? {} : { verbClass: word.verbClass }),
+    ...(word.example === undefined ? {} : { example: word.example })
+  };
 };

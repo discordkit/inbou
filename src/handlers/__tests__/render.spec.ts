@@ -353,3 +353,33 @@ describe(`standingsEmbed`, () => {
     expect(embed.title).not.toContain(`complete`);
   });
 });
+
+describe(`revealing a construction`, () => {
+  const shimau: Question = {
+    ...uru,
+    form: `do-completely`,
+    answer: `うってしまう`,
+    answerKanji: `売ってしまう`
+  };
+
+  it(`explains what the construction means, not just the word`, () => {
+    // WHY: the word's gloss says "to sell"; it does not say that 〜てしまう
+    // adds completion or regret. Constructions are the whole point of the
+    // higher levels, so the reveal has to teach the grammar, not the verb.
+    const embed = revealEmbed(shimau, { winner: null }, []);
+
+    expect(JSON.stringify(embed)).toContain(`regrettably`);
+    expect(embed.fields?.some((f) => f.name === `〜てしまう`)).toBe(true);
+  });
+
+  it(`names the construction as the target rather than a register`, () => {
+    // WHY: "(plain)" is meaningless for 〜てしまう — there is no polite
+    // counterpart to convert from. Showing it would describe a distinction the
+    // question is not making.
+    const embed = questionEmbed(shimau, 1, 10);
+    const target = embed.fields?.find((f) => f.name === `Target`);
+
+    expect(target?.value).toBe(`〜てしまう`);
+    expect(target?.value).not.toContain(`plain`);
+  });
+});
