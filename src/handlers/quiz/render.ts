@@ -1,3 +1,9 @@
+import {
+  ButtonStyle,
+  ComponentType,
+  type ActionRow,
+  type Embed
+} from "@discordkit/client";
 import { isBasic, type Form, type WordType } from "./forms.js";
 import type { Question } from "./question.js";
 import type { VerbClass } from "./wordClass.js";
@@ -70,14 +76,15 @@ export const classLabel = (question: Question): string => {
 export const withReading = (dictionary: string, reading: string): string =>
   dictionary === reading ? dictionary : `${dictionary}（${reading}）`;
 
-/** The subset of a Discord embed this bot builds. */
-export interface Embed {
-  title?: string;
-  description?: string;
-  color?: number;
-  fields?: Array<{ name: string; value: string; inline?: boolean }>;
-  footer?: { text: string };
-}
+/**
+ * A Discord embed, as the client models it.
+ *
+ * Re-exported rather than redefined. A hand-rolled shape here compiled fine but
+ * did not structurally match `@discordkit/client`'s, which is why the effects
+ * layer needed a cast to hand these to `createMessage` — and a cast is exactly
+ * the thing that would stop complaining if the two ever diverged.
+ */
+export type { Embed } from "@discordkit/client";
 
 // Discord renders the left border in these. Chosen for meaning rather than
 // brand: the correct answer is the only green thing the bot posts.
@@ -128,6 +135,50 @@ export const promptLabel = (question: Question): string =>
   isBasic(question.form)
     ? `${formLabel(question.form)} (polite)`
     : `Dictionary form`;
+
+/**
+ * The custom ids a question's buttons carry.
+ *
+ * Discord echoes these back on the interaction, so they are the routing key.
+ * Named as constants because a typo would produce a button that silently does
+ * nothing — the interaction arrives, matches no case, and the player sees
+ * "this interaction failed".
+ */
+export const BUTTON = {
+  hint: `quiz:hint`,
+  end: `quiz:end`
+} as const;
+
+/**
+ * The controls under a question.
+ *
+ * `/hint` still works, but a button is where someone stuck on a conjugation
+ * actually looks — and it costs them no typing in a channel where typing is
+ * how you answer.
+ *
+ * Built from the client's component types rather than hand-rolled objects, so
+ * the shape is checked against the same schema `createMessage` validates
+ * against.
+ */
+export const questionButtons = (): ActionRow[] => [
+  {
+    type: ComponentType.ActionRow,
+    components: [
+      {
+        type: ComponentType.Button,
+        style: ButtonStyle.Secondary,
+        label: `Hint`,
+        customId: BUTTON.hint
+      },
+      {
+        type: ComponentType.Button,
+        style: ButtonStyle.Danger,
+        label: `End session`,
+        customId: BUTTON.end
+      }
+    ]
+  }
+];
 
 /** One player's attempt, as the reveal embed lists it. */
 export interface AttemptLine {

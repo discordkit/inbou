@@ -5,7 +5,7 @@ import type { DiscordEffects } from "./discord.js";
 import { isSettings, parseSettings } from "./quiz/config.js";
 import { startSession, type FlowDeps } from "./quiz/flow.js";
 import { readOptions } from "./quiz/options.js";
-import { hintEmbed, scoresEmbed } from "./quiz/render.js";
+import { BUTTON, hintEmbed, scoresEmbed } from "./quiz/render.js";
 
 /**
  * Slash commands.
@@ -164,12 +164,33 @@ export const handleCommand = async (
   deps: CommandDeps,
   interaction: Interaction
 ): Promise<void> => {
+  const channelId = interaction.channelId;
+
+  // A button under the question. Same actions as the slash commands, reached
+  // without typing — which matters in a channel where typing is how you answer.
+  if (interaction.type === InteractionType.MESSAGE_COMPONENT) {
+    if (channelId === undefined || channelId === null) return;
+    const customId = (interaction.data as { customId?: string } | undefined)
+      ?.customId;
+
+    if (customId === BUTTON.hint) {
+      await hint(deps, interaction);
+      return;
+    }
+    if (customId === BUTTON.end) {
+      await end(deps, interaction, channelId);
+      return;
+    }
+
+    diagnostics.UNKNOWN_INTERACTION({ name: customId ?? `unnamed component` });
+    return;
+  }
+
   if (interaction.type !== InteractionType.APPLICATION_COMMAND) return;
 
   const name = interaction.data?.name;
   if (name === undefined) return;
 
-  const channelId = interaction.channelId;
   if (channelId === undefined || channelId === null) {
     await deps.discord.reply(interaction, {
       content: CHANNEL_MISSING,

@@ -1,8 +1,11 @@
 import { describe, expect, it } from "vitest";
+import { ComponentType } from "@discordkit/client";
 import type { Question } from "../quiz/question.js";
 import {
+  BUTTON,
   classLabel,
   hintEmbed,
+  questionButtons,
   questionEmbed,
   revealEmbed,
   scoresEmbed,
@@ -193,5 +196,29 @@ describe(`classLabel`, () => {
     expect(classLabel({ ...uru, type: `adj-na`, verbClass: undefined })).toBe(
       `な-adjective`
     );
+  });
+});
+
+describe(`questionButtons`, () => {
+  it(`offers a hint and an end control`, () => {
+    // WHY: a button is where someone stuck actually looks, and it costs no
+    // typing in a channel where typing is how you answer.
+    //
+    // `components` is a union — an action row holds buttons, OR a text input,
+    // OR a select — so this narrows rather than assuming an array.
+    const [row] = questionButtons();
+    const buttons = Array.isArray(row?.components) ? row.components : [];
+    expect(buttons.map((b) => b.customId)).toEqual([BUTTON.hint, BUTTON.end]);
+  });
+
+  it(`uses the component types the client validates against`, () => {
+    // WHY: the ids are the routing key — Discord echoes them back, and a
+    // mismatch produces a button that silently does nothing while the player
+    // sees "this interaction failed". Building from the client's enums rather
+    // than raw numbers is what keeps the shape and the router in step.
+    const [row] = questionButtons();
+    expect(row?.type).toBe(ComponentType.ActionRow);
+    const buttons = Array.isArray(row?.components) ? row.components : [];
+    expect(buttons.every((b) => b.type === ComponentType.Button)).toBe(true);
   });
 });

@@ -4,6 +4,7 @@ import { setupServer } from "msw/node";
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
 import { discordEffects } from "../discord.js";
 import type { Embed } from "../quiz/render.js";
+import { questionButtons } from "../quiz/render.js";
 
 /**
  * The one layer that really talks to Discord.
@@ -78,6 +79,24 @@ describe(`the Discord effects layer`, () => {
       expect(seen[0]?.body).toMatchObject({
         embeds: [{ title: `Question 1` }]
       });
+    });
+
+    it(`sends components alongside the embed`, async () => {
+      // WHY: the buttons are only useful if they reach Discord in the shape it
+      // accepts. This asserts on the request body rather than the object we
+      // built, which is the part a schema mismatch would break.
+      await discordEffects.post(`chan-1`, embed, questionButtons());
+
+      expect(seen[0]?.body).toMatchObject({
+        components: [{ type: 1, components: [{ type: 2 }, { type: 2 }] }]
+      });
+    });
+
+    it(`omits components when there are none`, async () => {
+      // WHY: an empty `components` array replaces whatever was there, so sending
+      // one on a reveal would strip the buttons off nothing and add noise.
+      await discordEffects.post(`chan-1`, embed);
+      expect(seen[0]?.body).not.toHaveProperty(`components`);
     });
 
     it(`returns null rather than throwing when Discord refuses`, async () => {

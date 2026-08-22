@@ -5,6 +5,7 @@ import { generate, isQuestion, type Question, type Word } from "./question.js";
 import {
   introEmbed,
   noWordsMessage,
+  questionButtons,
   questionEmbed,
   revealEmbed,
   scoresEmbed,
@@ -218,7 +219,8 @@ export const handleResume = async (
         pending,
         view.context.questionNumber,
         view.context.config.length
-      )
+      ),
+      questionButtons()
     );
     return;
   }
@@ -362,6 +364,7 @@ const advance = async (deps: FlowDeps, channelId: string): Promise<void> => {
   await deps.session.next(result);
   await deps.discord.post(
     channelId,
-    questionEmbed(result, settings.questionNumber + 1, settings.config.length)
+    questionEmbed(result, settings.questionNumber + 1, settings.config.length),
+    questionButtons()
   );
 };

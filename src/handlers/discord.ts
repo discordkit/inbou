@@ -3,11 +3,12 @@ import {
   createMessage,
   createReaction,
   InteractionCallbackType,
-  MessageFlag
+  MessageFlag,
+  type ActionRow,
+  type Embed
 } from "@discordkit/client";
 import type { Interaction } from "@discordkit/client/interactions/types/Interaction";
 import { diagnostics } from "./diagnostics.js";
-import type { Embed } from "./quiz/render.js";
 
 /**
  * Everything the bot does to the outside world, behind one interface.
@@ -23,7 +24,11 @@ import type { Embed } from "./quiz/render.js";
  */
 export interface DiscordEffects {
   /** Post a message to a channel. Returns its id, or null if it failed. */
-  post: (channelId: string, embed: Embed) => Promise<string | null>;
+  post: (
+    channelId: string,
+    embed: Embed,
+    components?: ActionRow[]
+  ) => Promise<string | null>;
   /** Post plain text, for short notices that do not warrant an embed. */
   say: (channelId: string, content: string) => Promise<string | null>;
   /** React to a message, which is how a guess is marked right or wrong. */
@@ -61,11 +66,14 @@ const detailOf = (error: unknown): string =>
  * `%E2%9D%8C`.
  */
 export const discordEffects: DiscordEffects = {
-  post: async (channelId, embed) => {
+  post: async (channelId, embed, components) => {
     try {
       const message = await createMessage({
         channel: channelId,
-        body: { embeds: [embed] }
+        body: {
+          embeds: [embed],
+          ...(components === undefined ? {} : { components })
+        }
       });
       return (message as { id?: string }).id ?? null;
     } catch (error) {
