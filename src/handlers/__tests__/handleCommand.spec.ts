@@ -451,3 +451,81 @@ describe(`reconfiguring a running session`, () => {
     expect(replies[0]?.content).not.toContain(`next question`);
   });
 });
+
+describe(`reporting feedback`, () => {
+  const feedbackIn = (sub: string, summary: string): Interaction =>
+    ({
+      type: 2,
+      channelId: `chan`,
+      guildId: `g1`,
+      locale: `ja`,
+      member: { user: { id: `drake` } },
+      data: {
+        name: `feedback`,
+        options: [{ name: sub, options: [{ name: `summary`, value: summary }] }]
+      }
+    }) as unknown as Interaction;
+
+  it(`replies privately with a link, never posting to the channel`, async () => {
+    // WHY: the link carries the reporter's own user id and this server's id.
+    // Posting it publicly would publish those to everyone in the channel,
+    // which is the opposite of letting them decide.
+    const {
+      deps: d,
+      replies,
+      posts
+    } = deps(`asking`, scoresWith(), {
+      question
+    });
+    await handleCommand(d, feedbackIn(`bug`, `kanji marked wrong`));
+
+    expect(replies[0]?.ephemeral).toBe(true);
+    expect(posts).toEqual([]);
+    expect(JSON.stringify(replies[0]?.embed)).toContain(`github.com`);
+  });
+
+  it(`carries the running session's settings`, async () => {
+    // WHY: this is the context a reporter cannot supply themselves, and the
+    // reason the command exists rather than a link in the README.
+    const { deps: d, replies } = deps(`asking`, scoresWith(), { question });
+    await handleCommand(d, feedbackIn(`bug`, `timer too short`));
+
+    const link = JSON.stringify(replies[0]?.embed);
+    expect(link).toContain(`60s`);
+    expect(link).toContain(`bug.yml`);
+  });
+
+  it(`uses the idea form for a suggestion`, async () => {
+    const { deps: d, replies } = deps(null);
+    await handleCommand(d, feedbackIn(`idea`, `weak-forms practice`));
+
+    expect(JSON.stringify(replies[0]?.embed)).toContain(`idea.yml`);
+  });
+
+  it(`works with no session running`, async () => {
+    // WHY: most reports are filed after something went wrong and the session
+    // ended. Requiring a live one would block exactly the common case.
+    const { deps: d, replies } = deps(null);
+    await handleCommand(d, feedbackIn(`bug`, `bot went quiet`));
+
+    expect(replies[0]?.ephemeral).toBe(true);
+    // Decoded: the context rides in the query string, so `none running` is
+    // written `none+running` on the wire.
+    expect(
+      decodeURIComponent(
+        (replies[0]?.embed?.description ?? ``).replaceAll(`+`, ` `)
+      )
+    ).toContain(`none running`);
+  });
+
+  it(`says what the form will contain before it is opened`, async () => {
+    // WHY: a GitHub issue is public. Naming what is included is what makes
+    // submitting it an informed choice rather than a surprise.
+    const { deps: d, replies } = deps(null);
+    await handleCommand(d, feedbackIn(`bug`, `x`));
+
+    const text = replies[0]?.embed?.description ?? ``;
+    expect(text).toContain(`user id`);
+    expect(text).toContain(`Nothing is sent until`);
+  });
+});

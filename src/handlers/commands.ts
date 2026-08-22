@@ -1,6 +1,7 @@
 import { InteractionType } from "@discordkit/client";
 import type { Interaction } from "@discordkit/client/interactions/types/Interaction";
 import { diagnostics } from "./diagnostics.js";
+import { feedbackUrl, type FeedbackKind } from "./feedback.js";
 import type { DiscordEffects } from "./discord.js";
 import { isSettings, parseSettings } from "./quiz/config.js";
 import { finish, startSession, type FlowDeps } from "./quiz/flow.js";
@@ -8,9 +9,15 @@ import {
   readCustomId,
   readInvoker,
   readOptions,
+  readTextOption,
   readUserOption
 } from "./quiz/options.js";
-import { BUTTON, leaderboardEmbed, standingEmbed } from "./quiz/render.js";
+import {
+  BUTTON,
+  feedbackEmbed,
+  leaderboardEmbed,
+  standingEmbed
+} from "./quiz/render.js";
 
 /**
  * Slash commands.
@@ -237,6 +244,45 @@ const scores = async (
 };
 
 /**
+ * `/feedback` — open a pre-filled GitHub issue.
+ *
+ * Ephemeral, because the link carries the reporter's own ids and the channel
+ * has no reason to see them. The bot cannot file the issue itself: that would
+ * need a repository token held by a bot anyone in the server can invoke.
+ */
+const feedback = async (
+  deps: CommandDeps,
+  interaction: Interaction,
+  kind: FeedbackKind,
+  summary: string
+): Promise<void> => {
+  const view = await deps.session.current();
+  const running = view === null || view.state === `finished` ? null : view;
+
+  const url = feedbackUrl(kind, summary, {
+    userId: readInvoker(interaction),
+    guildId: interaction.guildId ?? null,
+    channelId: interaction.channelId ?? null,
+    locale: interaction.locale ?? null,
+    session:
+      running === null
+        ? null
+        : {
+            length: running.context.config.length,
+            timeoutMs: running.context.config.timeoutMs,
+            guesses: running.context.config.guesses,
+            levels: running.context.filters.levels,
+            forms: running.context.filters.forms
+          }
+  });
+
+  await deps.discord.reply(interaction, {
+    embed: feedbackEmbed(kind, url),
+    ephemeral: true
+  });
+};
+
+/**
  * `/hint` — a private nudge.
  *
  * The whole point of the ephemeral reply: a hint that everyone could see would
@@ -318,6 +364,17 @@ export const handleCommand = async (
 
   if (name === `review`) {
     await review(deps, interaction);
+    return;
+  }
+
+  if (name === `feedback`) {
+    const kind = invocation.subcommand === `idea` ? `idea` : `bug`;
+    await feedback(
+      deps,
+      interaction,
+      kind,
+      readTextOption(interaction.data?.options, `summary`)
+    );
     return;
   }
 

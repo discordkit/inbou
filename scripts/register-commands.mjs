@@ -90,6 +90,36 @@ const commands = [
     description: `Check that the bot is awake.`
   },
   {
+    name: `feedback`,
+    description: `Report a problem or suggest an idea.`,
+    options: [
+      {
+        type: SUB_COMMAND,
+        name: `bug`,
+        description: `Something the bot did wrong.`,
+        options: [
+          {
+            type: STRING,
+            name: `summary`,
+            description: `What happened, in a sentence.`
+          }
+        ]
+      },
+      {
+        type: SUB_COMMAND,
+        name: `idea`,
+        description: `Something the bot could do.`,
+        options: [
+          {
+            type: STRING,
+            name: `summary`,
+            description: `What you would like, in a sentence.`
+          }
+        ]
+      }
+    ]
+  },
+  {
     name: `review`,
     description: `Privately show the last question you got wrong.`
   },

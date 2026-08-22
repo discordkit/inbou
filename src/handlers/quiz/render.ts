@@ -405,6 +405,29 @@ ${question.example.eng}`
   };
 };
 
+/**
+ * The link `/feedback` hands back.
+ *
+ * States what the pre-filled form contains before the user opens it. A GitHub
+ * issue is public and a Discord id is not secret, but publishing one is their
+ * decision, so it is named rather than buried in a query string.
+ */
+export const feedbackEmbed = (kind: `bug` | `idea`, url: string): Embed => ({
+  title: kind === `bug` ? `Report a problem` : `Suggest an idea`,
+  description: [
+    `**[Open the pre-filled form ↗](${url})**`,
+    ``,
+    `It includes your Discord user id, this server and channel id, your`,
+    `language setting, the bot's build, and the current quiz settings — so a`,
+    `report can be traced back to what actually happened.`,
+    ``,
+    `Nothing is sent until you press Submit on GitHub, and you can edit or`,
+    `delete anything first.`
+  ].join(`
+`),
+  color: INDIGO
+});
+
 /** Short of the answer on purpose: enough to unstick, not to win. */
 export const hintEmbed = (question: Question): Embed => ({
   title: `Hint`,

@@ -1,4 +1,6 @@
 /**
+ * Ambient declarations for things the bundler provides.
+ *
  * SQL files imported for their text.
  *
  * Vite inlines `?raw` imports at build time, which is how a test running inside
@@ -15,3 +17,6 @@ declare module "*.sql?raw" {
   const content: string;
   export default content;
 }
+
+/** The commit this Worker was built from, injected by `vite.config.ts`. */
+declare const __BUILD__: string;

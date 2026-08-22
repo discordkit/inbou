@@ -1,3 +1,4 @@
+import { execSync } from "node:child_process";
 import { cloudflare } from "@cloudflare/vite-plugin";
 import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
 // `defineConfig` comes from vite-plus rather than `vitest/config`: `run.tasks`
@@ -70,6 +71,24 @@ const wakeBotInDev = () => ({
 // Hoisted out of the config object: inferring this conditional inline makes
 // TypeScript deep-compare the whole literal against `UserConfig`, which blows
 // the instantiation depth limit once the shared lint/fmt configs are present.
+/**
+ * The commit the running bot was built from.
+ *
+ * Baked in at build time because a Worker has no repository to ask at runtime,
+ * and a bug report that cannot name a build is a bug report nobody can place.
+ * Falls back to `unknown` outside a git checkout so a tarball still builds.
+ */
+const BUILD = (() => {
+  try {
+    return execSync(`git rev-parse --short HEAD`, {
+      encoding: `utf8`,
+      stdio: [`ignore`, `pipe`, `ignore`]
+    }).trim();
+  } catch {
+    return `unknown`;
+  }
+})();
+
 const plugins =
   process.env.VITEST === undefined
     ? [
@@ -161,6 +180,9 @@ const workersProject = {
 // typechecks on its own; only the combination trips it, and the runtime shape
 // is correct. Revisit when either package slims its types down.
 export default defineConfig({
+  // Read by `/feedback`, so a report can name the build it came from. The
+  // module guards against this being absent, which is the case under test.
+  define: { __BUILD__: JSON.stringify(BUILD) },
   test: {
     // Two projects, split by what they actually need. Everything the quiz
     // decides — conjugating, scoring, choosing a question, the session rules —

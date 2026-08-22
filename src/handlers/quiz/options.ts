@@ -84,6 +84,14 @@ export const readOptions = (options: unknown): Invocation => {
   return { ...(subcommand === undefined ? {} : { subcommand }), options: raw };
 };
 
+/** A named string option, for commands whose options are not session settings. */
+export const readTextOption = (options: unknown, name: string): string => {
+  const found = invocationOf(options).own.find(
+    (option) => option.name === name
+  );
+  return found?.value === undefined ? `` : String(found.value);
+};
+
 /** The `user` option on `/quiz scores`. A Discord USER option is a snowflake string. */
 export const readUserOption = (options: unknown): string | null => {
   const user = invocationOf(options).own.find(
