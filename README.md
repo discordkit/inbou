@@ -203,7 +203,12 @@ production without a version and a changelog line.
 4. **Slash commands last**, so Discord never offers a command the running code
    cannot answer.
 
-### Required secrets
+### Two kinds of secret, which is not obvious
+
+They look alike and are not interchangeable. Confusing them is how the first
+production deploy went out green and then threw `1101` on every request.
+
+**GitHub secrets** are read by the CI runner, at build time.
 
 | Secret                   | Used for                                  |
 | ------------------------ | ----------------------------------------- |
@@ -211,18 +216,63 @@ production without a version and a changelog line.
 | `CLOUDFLARE_ACCOUNT_ID`  | Same                                      |
 | `DISCORD_BOT_TOKEN`      | Registering slash commands after deploy   |
 | `DISCORD_APPLICATION_ID` | Same                                      |
-| `BUMPY_GH_TOKEN`         | So the Version PR triggers CI (see below) |
+| `BUMPY_GH_TOKEN`         | So the version PR triggers CI (see below) |
 
 The Cloudflare token needs **Workers Scripts: Edit**, **D1: Edit**, **Workers
-KV Storage: Edit**, **Account Settings: Read**, and **User Details: Read**.
+KV Storage: Edit**, **Account Settings: Read**, and **User Details: Read**. If
+the repo is org-owned, a fine-grained PAT also needs that repo in its
+**Repository access** list — permissions alone are not enough.
+
+**Cloudflare Worker secrets** are read by the running Workers. `wrangler
+deploy` ships code, not environment, so these are set once and persist across
+deploys:
+
+```bash
+npx wrangler secret put DISCORD_BOT_TOKEN --name inbou-handlers
+npx wrangler secret put DISCORD_BOT_TOKEN --name inbou
+npx wrangler secret put DISCORD_APPLICATION_ID --name inbou
+```
+
+Or in the dashboard: **Workers & Pages → the Worker → Settings → Variables and
+Secrets → Add**, type **Secret**, then **Deploy**.
 
 `BUMPY_GH_TOKEN` is a fine-grained PAT, and it is not optional here. GitHub
 does not trigger workflows from PRs created with the default token, and `main`
-requires the `Check & Test` check to merge — so a Version PR opened without it
+requires the `Check & Test` check to merge — so a version PR opened without it
 would sit forever with checks that never run.
 
-Secrets currently live at repo level. Moving them to a `production` GitHub
-Environment restricted to `main` would be worthwhile hardening.
+The release job runs in a `production` GitHub Environment restricted to `main`,
+which records a deployment on every release. The GitHub secrets above are still
+repo-level; scoping them to that environment would mean only the release job
+could read them.
+
+### One token, one bot
+
+Discord allows **one Gateway session per bot token**. Local development and
+production therefore cannot share one: both would connect, and the channel
+would get every message twice — two intro embeds, two copies of each question.
+
+So development needs its own Discord application, with its own token in your
+local `.env`. Production's token lives only in Cloudflare's Worker secrets.
+
+`DISCORD_GUILD_ID` exists for this split: set it in dev and commands register
+to one guild and appear instantly; leave it unset in production and they
+register globally.
+
+The same constraint governs staging. A preview deployment needs a third
+application, and it is only worth running while you are actually testing — the
+Gateway socket costs about 10,800 GB-s/day of the free tier's 13,000 Durable
+Object allowance, so two always-on bots do not fit.
+
+### Nothing to configure in the Discord portal
+
+The bot dials Discord over the Gateway; Discord never calls in. **Leave
+"Interactions Endpoint URL" empty** — filling it in makes Discord HTTP-post
+interactions instead of sending them over the socket, and every command breaks.
+
+The portal only needs the two privileged intents — **Message Content** and
+**Server Members** — under Bot → Privileged Gateway Intents. Without them
+Discord closes the connection with a fatal `4014`.
 
 ### Dependency versions
 
