@@ -168,14 +168,24 @@ export class QuizSession extends DurableObject<SessionEnv> {
         needsNext: false
       };
     }
-    if (before.value === `revealing`) {
-      // The question already closed; a late answer is not scored.
+    if (before.value !== `asking`) {
+      // Nothing is being asked. `revealing` means the question already closed,
+      // and `paused` is the intro or a standings break — scoring then would
+      // hand a point to whoever typed during the countdown, for a question the
+      // channel has not been shown.
       return {
         outcome: { kind: `ignored`, reason: `finished` },
         needsNext: false
       };
     }
-    if (before.context.attempts.some((a) => a.userId === userId)) {
+    // Out of attempts. The count comes from the session's own config rather
+    // than a hard-coded one-per-player: this object used to reject every second
+    // guess, which made the machine's `outOfGuesses` guard unreachable and
+    // multi-guess quietly not work at all.
+    const used = before.context.attempts.filter(
+      (a) => a.userId === userId
+    ).length;
+    if (used >= before.context.config.guesses) {
       return {
         outcome: { kind: `ignored`, reason: `already-answered` },
         needsNext: false

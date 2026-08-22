@@ -104,6 +104,67 @@ describe(`quizSession in the handlers Worker`, () => {
     expect(right.needsNext).toBe(true);
   });
 
+  it(`accepts every guess the config allows`, async () => {
+    // WHY: this shipped broken and the flow tests could not see it. They drive
+    // a stub built from the machine, which was correct all along — the object
+    // kept its own one-guess-per-player check from before the rule changed, so
+    // it rejected every second attempt and the machine's guard was unreachable.
+    // In the channel a player's second and third guesses simply vanished: no
+    // reaction, no score, no explanation.
+    const stub = session(`multi-guess`);
+    await stub.clear();
+    await stub.begin(`chan`, question(`1`), DEFAULT_CONFIG, ANY_FILTERS);
+
+    const first = await stub.submit(`saeris`, `いきません`, false);
+    const second = await stub.submit(`saeris`, `いきなかった`, false);
+    expect(first.outcome).toEqual({ kind: `wrong` });
+    expect(second.outcome).toEqual({ kind: `wrong` });
+
+    // The third lands, and is worth two — four less one for each miss.
+    const third = await stub.submit(`saeris`, `うらない`, true);
+    expect(third.outcome).toEqual({
+      kind: `correct`,
+      userId: `saeris`,
+      points: 2,
+      total: 2
+    });
+  });
+
+  it(`does not score an answer sent during a pause`, async () => {
+    // WHY: the intro and the standings breaks both hold the session in
+    // `paused`. Nothing is being asked, so a message arriving then is chatter —
+    // scoring it would hand a point to whoever typed during the countdown.
+    const stub = session(`answer-while-paused`);
+    await stub.clear();
+    await stub.begin(`chan`, question(`1`), DEFAULT_CONFIG, ANY_FILTERS);
+    await stub.pause(10_000);
+
+    const result = await stub.submit(`mika`, `うらない`, true);
+    expect(result.outcome.kind).toBe(`ignored`);
+  });
+
+  it(`stops once a player is out of guesses`, async () => {
+    // WHY: the limit still has to hold, or a fast typist could brute force the
+    // answer by working through the possibilities.
+    const stub = session(`out-of-guesses`);
+    await stub.clear();
+    await stub.begin(
+      `chan`,
+      question(`1`),
+      { ...DEFAULT_CONFIG, guesses: 2 },
+      ANY_FILTERS
+    );
+
+    await stub.submit(`saeris`, `a`, false);
+    await stub.submit(`saeris`, `b`, false);
+    const third = await stub.submit(`saeris`, `うらない`, true);
+
+    expect(third.outcome).toEqual({
+      kind: `ignored`,
+      reason: `already-answered`
+    });
+  });
+
   it(`reports what one answer earned, not the running total`, async () => {
     // WHY: this shipped wrong, and only shows on the SECOND question — with one
     // question the two numbers are identical, so a single-question test cannot
