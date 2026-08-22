@@ -10,27 +10,12 @@ import type { Filters, Question } from "./question.js";
 /**
  * A quiz session as an explicit state machine.
  *
- * The previous shape encoded its states as a combination of `question === null`,
- * `deadline === null` and `finished` — which let `{ question: null, deadline:
- * set }` exist: a closed question with a live timer. That is not a hypothetical;
- * it is the stale-alarm bug this project already shipped once, where an alarm
- * left armed after an answer fired against the *next* question and closed it
- * early. A test caught it only after being rewritten to assert on the stored
- * alarm rather than the field that was supposed to mirror it.
- *
- * Three states, and the illegal combinations simply cannot be built:
- *
- *   asking     a question is open and the clock is running
- *   revealing  it just closed; the channel is being told what the answer was
- *   finished   the session is over and nothing more is scored
- *
- * `deadline` is meaningful only in `asking`, so "closed question, live alarm"
- * has nowhere to live. The Durable Object reads the state name to decide
- * whether to arm or clear the alarm, rather than inferring it from a field.
- *
- * XState was chosen over hand-rolled transitions because @saeris/vscode-jisho
- * already uses it, so it is a known quantity in the organisation, and it costs
- * 5.3 KB gzipped with no dependencies.
+ * States rather than a combination of nullable fields, because
+ * `{ question: null, deadline: set }` — a closed question with a live timer —
+ * was a bug this project shipped once: the stale alarm closed the *next*
+ * question early. `deadline` now only means anything in `asking`, so that
+ * combination has nowhere to live, and the Durable Object arms or clears the
+ * alarm from the state name rather than inferring it.
  */
 
 export interface Scores {
@@ -69,13 +54,7 @@ export interface SessionConfig {
   timeoutMs: number;
   /** Consecutive timeouts that end an endless session. */
   quitAfterTimeouts: number;
-  /**
-   * How many attempts each player gets per question.
-   *
-   * More than one because a near miss deserves another go — but bounded, or a
-   * fast typist could brute force the answer. Each wrong guess costs a point of
-   * what a later correct one is worth, so precision still pays.
-   */
+  /** Attempts per player per question. Bounded, or a fast typist brute forces it. */
   guesses: number;
 }
 
@@ -90,10 +69,8 @@ export const DEFAULT_CONFIG: SessionConfig = {
 };
 
 /**
- * What a correct answer is worth, given how many wrong guesses preceded it.
+ * What a correct answer is worth, after `wrongGuesses` misses.
  *
- * First time is worth the most and each miss costs one, so a player who reads
- * the form carefully scores above one who works through the possibilities.
  * Never below one: landing it on the last guess is still landing it.
  */
 export const pointsFor = (wrongGuesses: number, guesses: number): number =>
@@ -102,46 +79,21 @@ export const pointsFor = (wrongGuesses: number, guesses: number): number =>
 export interface SessionContext {
   channelId: string;
   /**
-   * The guild this session belongs to, for the cross-session leaderboard.
-   *
-   * Held here rather than read from the event that ends the session, because
-   * the two are not equivalent: a session can end on the timeout path, and that
-   * event comes from the object's own alarm, which knows only its channel.
-   * Reading the guild per-event would silently drop exactly those sessions from
-   * the leaderboard. Null in a DM, where there is no guild to score against.
+   * Null in a DM. Stored rather than read from the ending event: a session can
+   * end on the timeout path, and that alarm knows only its channel.
    */
   guildId: string | null;
   config: SessionConfig;
-  /**
-   * The filters this session draws questions from.
-   *
-   * Stored with the session rather than held by the caller: the Durable Object
-   * hibernates between questions, so anything the next question needs has to
-   * survive that. Without this, question two would be drawn from the whole
-   * corpus and quietly ignore the level the channel chose.
-   */
+  /** Stored here because the object hibernates between questions. */
   filters: Filters;
   /** 1-based; the question currently open or just closed. */
   questionNumber: number;
   question: Question | null;
   attempts: Attempt[];
   scores: Scores;
-  /**
-   * How many questions each player has answered correctly this session.
-   *
-   * Kept alongside the points rather than derived from `attempts`, which holds
-   * only the open question — the count has to outlive the question it came
-   * from to mean anything at the end.
-   */
+  /** Correct answers per player. Not derivable from `attempts`, which resets. */
   correct: Scores;
-  /**
-   * The last question each player got wrong, for `/review`.
-   *
-   * Recorded when the wrong answer is typed rather than when the question
-   * closes: at that moment the question and the answer are both in hand, and
-   * every path that closes a question would otherwise need its own copy of
-   * this — which is how the two drift apart.
-   */
+  /** The last question each player got wrong, for `/review`. */
   misses: Record<string, Miss>;
   /** Consecutive timeouts, cleared by any answered question. */
   timeoutStreak: number;
@@ -211,13 +163,7 @@ const recordAttempt = assign<
       : context.attempts
 });
 
-/**
- * Keep the question somebody just got wrong.
- *
- * Separate from {@link recordAttempt} because the two have different
- * lifetimes: an attempt belongs to the open question and is cleared with it,
- * while a miss has to outlive the question to be worth reviewing.
- */
+/** Keep the question somebody just got wrong; it outlives the question itself. */
 const recordMiss = assign<
   SessionContext,
   SessionEvent,
@@ -241,12 +187,9 @@ const recordMiss = assign<
 });
 
 /**
- * Apply new settings without disturbing the open question.
+ * Apply new settings from the next question, leaving `deadline` alone.
  *
- * `/quiz config` takes effect from the *next* question: changing the timeout
- * mid-question would move a deadline players are already racing, and changing
- * the filters cannot retroactively alter what was asked. So this writes the
- * config and leaves `deadline` alone.
+ * Moving a deadline players are already racing would be unfair.
  */
 const applyConfig = assign<
   SessionContext,

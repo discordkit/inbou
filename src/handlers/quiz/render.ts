@@ -310,13 +310,7 @@ export const leaderboardEmbed = (
   color: INDIGO
 });
 
-/**
- * One player's standing, for `/quiz scores @someone`.
- *
- * Answers "how am I doing" rather than "who is winning", so it leads with the
- * player rather than their rank — a rank of 7th means little without knowing
- * how many people play here.
- */
+/** Leads with the player, not their rank: 7th means little without a total. */
 export const standingEmbed = (
   userId: string,
   standing: {
@@ -336,15 +330,8 @@ export const standingEmbed = (
 /**
  * A private second look at a question you got wrong.
  *
- * The reveal already taught this once, in public, at the moment the question
- * closed. This exists because that moment passes — in a busy channel the reveal
- * scrolls away while people are still typing, and the person who most needs it
- * is the one who was still working on their answer.
- *
- * Shows what they typed beside the right answer, which the reveal does not do
- * for one person specifically: it lists everybody's attempts together, and
- * picking your own out of a crowd is exactly the work somebody reviewing does
- * not want to do.
+ * The reveal taught this once publicly, then scrolled away — and it lists
+ * everybody's attempts together, so finding your own is work.
  */
 export const reviewEmbed = (
   miss: { question: Question; answer: string; questionNumber: number },
@@ -396,13 +383,7 @@ ${question.example.eng}`
   };
 };
 
-/**
- * The private nudge `/hint` gives.
- *
- * Deliberately short of the answer: the reading and the meaning are enough to
- * unstick someone without handing them the conjugation, so a hint costs the
- * rest of the channel nothing.
- */
+/** Short of the answer on purpose: enough to unstick, not to win. */
 export const hintEmbed = (question: Question): Embed => ({
   title: `Hint`,
   description: withReading(question.dictionary, question.reading),
@@ -415,12 +396,9 @@ export const hintEmbed = (question: Question): Embed => ({
 });
 
 /**
- * What the channel is shown before the first question.
+ * The rules, posted once before the first question.
  *
- * A session starts with a burst of rules nobody agreed to — how many guesses,
- * how long each question stays open, what is being drilled. Posting them once,
- * with a pause before question one, means the first question is not also the
- * moment everyone works out how the game runs.
+ * Otherwise question one is also the moment everyone works out how it runs.
  */
 export const introEmbed = (
   settings: {

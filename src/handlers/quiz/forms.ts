@@ -64,17 +64,12 @@ export const isBasic = (form: Form): form is BasicForm => BASIC.has(form);
 /**
  * Which forms a word type can be asked about.
  *
- * Adjectives and nouns have no voice or modality — there is no passive of 高い
- * — so asking for one would be asking for a form that does not exist. The
- * conjugator returns no such rows for them either; this is the same fact
- * stated where the question generator can act on it.
+ * Adjectives and nouns have no voice or modality — there is no passive of 高い.
  *
- * The three lists differ in their conditionals, which is a real grammatical
- * split rather than a gap in the data. Verbs and い-adjectives take both
- * 〜たら and 〜ば; な-adjectives and nouns take なら, which the conjugator
- * emits as its one `Conditional` row and this module surfaces as
- * `conditional-nara`. Promising な-adjectives a 〜ば form would let the
- * generator ask for something the conjugator cannot produce.
+ * The conditionals differ by a real grammatical split, not a data gap: verbs
+ * and い-adjectives take 〜たら and 〜ば, while な-adjectives and nouns take
+ * なら. Promising a な-adjective a 〜ば form would ask for something the
+ * conjugator cannot produce.
  */
 export const formsFor = (wordType: WordType): readonly Form[] => {
   // Not `FORMS`: that list is every form the quiz knows, including なら, which

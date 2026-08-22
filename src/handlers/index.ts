@@ -10,6 +10,7 @@ import {
   type FlowDeps,
   type SessionPort
 } from "./quiz/flow.js";
+import { conjugationQuiz } from "./quiz/conjugation.js";
 import type { Word } from "./quiz/question.js";
 import { d1Scores, noScores } from "./scores.js";
 import type { QuizSession } from "./session.js";
@@ -67,15 +68,14 @@ const sessionFor = (env: Env, channelId: string): SessionPort =>
 const depsFor = (env: Env, channelId: string): FlowDeps => ({
   discord: discordEffects,
   session: sessionFor(env, channelId),
+  kind: conjugationQuiz,
   scores: env.SCORES === undefined ? noScores : d1Scores(env.SCORES),
   words
 });
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
-    // Workers have no `process.env`, so the REST session cannot pick the token
-    // up on its own. Set it per request: the isolate is shared between
-    // invocations, but this is idempotent and cheap.
+    // Workers have no `process.env`. Idempotent, so per-request is fine.
     discord.setToken(`Bot ${env.DISCORD_BOT_TOKEN}`);
 
     const event = await request.json<ForwardedEvent>();

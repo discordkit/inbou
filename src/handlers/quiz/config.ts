@@ -8,13 +8,8 @@ import type { VerbClass } from "./wordClass.js";
 /**
  * Reading a session's settings out of what someone typed.
  *
- * Pure, and separate from the command handler on purpose: the parsing rules are
- * where a typo turns into a confusing session, so they are worth testing
- * without a Discord interaction to construct. The handler receives already
- * parsed values.
- *
- * Every option is optional and every one has a default, because `/quiz start`
- * with no arguments has to work — that is the common case in a club channel.
+ * Every option is optional with a default: `/quiz start` bare is the common
+ * case in a club channel.
  */
 
 /** What a `/quiz start` or `/quiz config` resolves to. */
@@ -41,13 +36,7 @@ const WORD_TYPES: Record<string, WordType | undefined> = {
   noun: `noun`
 };
 
-/**
- * Verb-class names a player might reasonably type.
- *
- * `godan` expands to every godan row rather than being rejected: someone
- * filtering for godan practice means all of them, and asking them to name nine
- * consonant rows would be a worse experience than accepting the shorthand.
- */
+/** `godan` expands to all nine rows rather than making anyone name them. */
 const GODAN_ROWS: VerbClass[] = [
   `godan-u`,
   `godan-k`,
@@ -77,14 +66,7 @@ const BASICS: Form[] = [
   `past-negative`
 ];
 
-/**
- * Split a comma-separated option into its parts.
- *
- * Each part keeps what the player typed alongside a lowercased form for
- * matching. Error messages quote the original: telling someone `n7` is invalid
- * when they typed `N7` makes them doubt what they wrote, which is the opposite
- * of what an actionable message does.
- */
+/** Keeps the original spelling so an error can quote what they actually typed. */
 const parts = (raw: string): Array<{ typed: string; key: string }> =>
   raw
     .split(`,`)
@@ -95,14 +77,8 @@ const parts = (raw: string): Array<{ typed: string; key: string }> =>
 /**
  * A comma-separated option, mapped one part at a time.
  *
- * `expand` returns the values a part means, or null if it is not one — `godan`
- * expands to nine classes, and an empty result means "no filter", which is how
- * `any` and `all` are expressed.
- *
- * A schema rather than a hand-rolled function because these options *parse*
- * rather than merely validate: a string goes in and a different shape comes
- * out. `pipe(string, rawTransform)` says exactly that, and keeps each failure
- * message beside the rule that produced it.
+ * `expand` returns what a part means, null if it is not valid, or an empty
+ * array for "no filter" — which is how `any` and `all` are expressed.
  */
 const listOf = <T>(
   expand: (key: string) => readonly T[] | null,
@@ -110,9 +86,8 @@ const listOf = <T>(
 ): v.GenericSchema<string, T[]> =>
   v.pipe(
     v.string(),
-    // The help text lives on the schema, so the error a player sees and the
-    // description Discord shows on the option come from one place. Two copies
-    // of "what is allowed here" is how they end up disagreeing.
+    // On the schema so the error text and Discord's option description are
+    // one string. See OPTION_HELP.
     v.description(allowed),
     v.rawTransform<string, T[]>(({ dataset, addIssue, NEVER }) => {
       const out: T[] = [];
@@ -157,13 +132,7 @@ const formsSchema = listOf<Form>(
   `Use \`basics\`, \`all\`, or one of: ${FORMS.join(`, `)}.`
 );
 
-/**
- * Session length: a number of questions, or endless.
- *
- * Bounded because a session is a shared channel activity — a 500-question
- * session would hold the channel hostage, and `endless` already covers "keep
- * going until we stop".
- */
+/** Bounded: a 500-question session would hold the channel hostage. */
 const lengthSchema = v.pipe(
   v.string(),
   v.rawTransform<string, number | null>(({ dataset, addIssue, NEVER }) => {
@@ -189,11 +158,10 @@ const lengthSchema = v.pipe(
 );
 
 /**
- * A timeout, written the way people write durations.
+ * `90s`, `2m`, or a bare number of seconds.
  *
- * Accepts `90s`, `2m`, or a bare number of seconds. Bounded at both ends: under
- * thirty seconds nobody can type a conjugation in time, and over ten minutes
- * the session has stalled rather than being slow.
+ * Bounded both ways: under 30s nobody can type a conjugation, over 10m the
+ * session has stalled rather than being slow.
  */
 const timeoutSchema = v.pipe(
   v.string(),
@@ -216,12 +184,7 @@ const timeoutSchema = v.pipe(
   })
 );
 
-/**
- * How many attempts each player gets per question.
- *
- * Bounded above because more attempts than there are plausible conjugations
- * turns the race into brute force, and the point taper would bottom out anyway.
- */
+/** Bounded above, or the race becomes brute force. */
 const guessesSchema = v.pipe(
   v.string(),
   v.rawTransform<string, number>(({ dataset, addIssue, NEVER }) => {
@@ -251,11 +214,8 @@ export interface RawOptions {
 }
 
 /**
- * The settings a session starts with when nothing is specified.
- *
- * N5 because that is what the club practises, and nouns are left out because
- * they only conjugate the copula — a session full of 犬だ / 犬でした is not the
- * drill anyone came for. Both are reachable by asking.
+ * N5 because that is what the club practises. Nouns are off by default: they
+ * only conjugate the copula, so 犬だ / 犬でした is not the drill anyone wants.
  */
 export const DEFAULT_SETTINGS: QuizSettings = {
   filters: {
@@ -268,14 +228,9 @@ export const DEFAULT_SETTINGS: QuizSettings = {
 };
 
 /**
- * Read a set of options over a base.
+ * Read a set of options over a base, so an unmentioned option keeps its value.
  *
- * `base` is what the settings currently are — the defaults for `/quiz start`,
- * the running session's settings for `/quiz config` — so an option nobody
- * mentioned keeps its value rather than resetting.
- *
- * Returns every error rather than the first, since a player who mistyped two
- * options should be told both at once.
+ * Returns every error rather than the first: two typos should be told at once.
  */
 export const parseSettings = (
   raw: RawOptions,
@@ -285,13 +240,7 @@ export const parseSettings = (
   const filters: Filters = { ...base.filters };
   const session: SessionConfig = { ...base.session };
 
-  /**
-   * Parse one option, or record why it could not be.
-   *
-   * Every option is attempted even after one fails, so a player who mistyped
-   * two of them is told both at once rather than discovering the second after
-   * fixing the first.
-   */
+  /** Every option is attempted even after one fails. */
   const read = <T>(
     option: keyof RawOptions,
     schema: v.GenericSchema<string, T>,
@@ -344,10 +293,8 @@ export const isSettings = (
 /**
  * What each option accepts, in the words the player is shown.
  *
- * Read off the schemas rather than written out again, so the description
- * Discord displays on an option, the text in an error message and the rule
- * that enforces it cannot drift apart. `scripts/register-commands.mjs` imports
- * this.
+ * Read off the schemas so the description, the error text and the rule cannot
+ * drift. `commands.spec.ts` checks the registration script against it.
  */
 export const OPTION_HELP: Record<keyof RawOptions, string> = {
   level: v.getDescription(levelSchema) ?? ``,

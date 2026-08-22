@@ -1,3 +1,4 @@
+import type { BaseQuestion } from "./kind.js";
 import {
   formsFor,
   formTable,
@@ -48,10 +49,7 @@ export interface Filters {
  * Everything the round needs is here, so the session object never has to reach
  * back into the corpus — which is what keeps it cheap to wake.
  */
-export interface Question {
-  wordId: string;
-  /** What the channel is shown. */
-  prompt: string;
+export interface Question extends BaseQuestion {
   /** The form being asked for. */
   form: Form;
   /** The kana answer, which is what typed answers are folded onto. */
@@ -207,13 +205,12 @@ const isKana = (ch: string): boolean => {
 /**
  * Write a conjugated form in kanji, if the word has a kanji spelling.
  *
- * The conjugator works on the reading, so 売る + non-past-negative gives
- * うらない. The kanji form replaces the leading kana that the kanji spells:
- * 売る's reading is うる and its kanji is 売る, so the shared trailing kana is
- * る, the kanji covers う, and 売 + らない is the answer.
+ * The conjugator works on the reading, so 売る gives うらない. The kanji
+ * replaces the leading kana it spells: 売る reads うる, the shared tail is る,
+ * so 売 covers う and the answer is 売 + らない.
  *
- * Returns undefined when the split cannot be made confidently, since a wrong
- * kanji answer would reject a correct one.
+ * Undefined when the split is not confident — a wrong kanji answer would
+ * reject a correct one.
  */
 const spliceKanji = (word: Word, conjugated: string): string | undefined => {
   const kanji = word.kanji;

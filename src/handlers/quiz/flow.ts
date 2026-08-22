@@ -1,15 +1,13 @@
 import { diagnostics } from "../diagnostics.js";
 import type { DiscordEffects } from "../discord.js";
 import type { ScorePort } from "../scores.js";
-import { judge, looksLikeAnswer } from "./answer.js";
+import type { QuizKind } from "./kind.js";
 import type { QuizSettings } from "./config.js";
 import { generate, isQuestion, type Question, type Word } from "./question.js";
 import {
   introEmbed,
   noWordsMessage,
   questionButtons,
-  questionEmbed,
-  revealEmbed,
   scoresEmbed,
   standingsEmbed,
   type AttemptLine
@@ -18,14 +16,8 @@ import {
 /**
  * Running a round, without knowing it is Discord on the other end.
  *
- * Everything here talks to {@link DiscordEffects} rather than to the client, so
- * the whole flow — post a question, mark a guess, reveal, move on — can be
- * driven by a recording stub in a plain Node test. That is the boundary: the
- * platform lives at the edge, and the decisions live here.
- *
- * The session object is reached through {@link SessionPort} for the same
- * reason. It is a Durable Object in production, and an ordinary object in a
- * test.
+ * Every dependency is an interface, so a whole round runs against stubs in
+ * plain Node: the platform lives at the edge and the decisions live here.
  */
 
 /** What the flow needs from a session, which a Durable Object stub satisfies. */
@@ -114,6 +106,13 @@ export interface FlowDeps {
    */
   scores: ScorePort;
   words: readonly Word[];
+  /**
+   * What kind of quiz this is: how answers are graded and how they are shown.
+   *
+   * The flow below never reads a question's fields, so a second quiz kind
+   * needs no change here.
+   */
+  kind: QuizKind<Question>;
   /** Injected so tests can pin which question is chosen. */
   random?: () => number;
 }
@@ -186,19 +185,9 @@ export const handleAnswer = async (
   const question = view.context.question;
   if (question === null) return;
 
-  const expected = {
-    kana: question.answer,
-    ...(question.answerKanji === undefined
-      ? {}
-      : { kanji: question.answerKanji }),
-    stem: question.stem
-  };
+  if (!deps.kind.grader.isAttempt(content, question)) return;
 
-  // Ordinary conversation must not score. Every message in the channel reaches
-  // here, so without this "lol same" takes a ❌ and costs someone an attempt.
-  if (!looksLikeAnswer(content, expected)) return;
-
-  const verdict = judge(content, expected);
+  const verdict = deps.kind.grader.grade(content, question);
 
   const result = await deps.session.submit(
     userId,
@@ -237,7 +226,7 @@ export const handleResume = async (
     await deps.session.resume();
     await deps.discord.post(
       channelId,
-      questionEmbed(
+      deps.kind.present.question(
         pending,
         view.context.questionNumber,
         view.context.config.length
@@ -269,23 +258,23 @@ export const handleTimeout = async (
   if (question !== null) {
     await deps.discord.post(
       channelId,
-      revealEmbed(question, { winner: null }, view.context.attempts)
+      deps.kind.present.reveal(
+        question,
+        { winner: null },
+        view.context.attempts
+      )
     );
   }
   await advance(deps, channelId);
 };
 
 /**
- * Close out a finished session: post the final standings and bank them.
+ * Close out a finished session: bank the scores, then post the standings.
  *
- * Every path that ends a session goes through here. There are three of them —
- * the last question answered, the last question timing out, and `/quiz end` —
- * and a leaderboard that only recorded some of them would be quietly wrong in
- * a way nobody could spot from the numbers.
- *
- * The scores are recorded before the embed is posted so a failed post cannot
- * lose them; `record` reports its own failures and never throws, so the
- * standings still reach the channel either way.
+ * Every path that ends a session goes through here — answered, timed out, or
+ * `/quiz end` — because a leaderboard missing some of them would be wrong in a
+ * way nobody could spot from the numbers. Banking first means a failed post
+ * cannot lose them.
  */
 export const finish = async (
   deps: FlowDeps,
@@ -299,11 +288,8 @@ export const finish = async (
 ): Promise<void> => {
   // No guild means a DM, which has no leaderboard to write to.
   if (outcome.guildId !== null) {
-    // Guarded rather than trusted. `d1Scores` swallows its own failures, but
-    // that is its promise to keep, not a fact this function can rely on — and
-    // if it ever breaks, the session people just played must still end with
-    // the standings they earned. The leaderboard is a record of play, not part
-    // of it.
+    // Guarded rather than trusted: a broken port must not cost people the
+    // session they just played.
     try {
       await deps.scores.record(
         outcome.guildId,
@@ -337,7 +323,7 @@ const closeRound = async (
   if (closed !== undefined) {
     await deps.discord.post(
       channelId,
-      revealEmbed(
+      deps.kind.present.reveal(
         closed,
         {
           winner: result.outcome.userId ?? null,
@@ -434,7 +420,11 @@ const advance = async (deps: FlowDeps, channelId: string): Promise<void> => {
   await deps.session.next(result);
   await deps.discord.post(
     channelId,
-    questionEmbed(result, settings.questionNumber + 1, settings.config.length),
+    deps.kind.present.question(
+      result,
+      settings.questionNumber + 1,
+      settings.config.length
+    ),
     questionButtons()
   );
 };

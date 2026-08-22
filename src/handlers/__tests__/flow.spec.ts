@@ -1,5 +1,6 @@
 import type { Embed } from "@discordkit/client";
 import { describe, expect, it } from "vitest";
+import { conjugationQuiz } from "../quiz/conjugation.js";
 import type { DiscordEffects } from "../discord.js";
 import { DEFAULT_SETTINGS } from "../quiz/config.js";
 import {
@@ -201,6 +202,7 @@ const deps = (words: readonly Word[] = [uru]) => {
   return {
     ...rec,
     session,
+    kind: conjugationQuiz,
     scores: banked.scores,
     recorded: banked.recorded,
     words,

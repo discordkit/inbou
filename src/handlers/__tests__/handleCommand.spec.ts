@@ -1,6 +1,7 @@
 import type { Embed } from "@discordkit/client";
 import type { Interaction } from "@discordkit/client/interactions/types/Interaction";
 import { describe, expect, it } from "vitest";
+import { conjugationQuiz } from "../quiz/conjugation.js";
 import { handleCommand, type CommandDeps } from "../commands.js";
 import type { DiscordEffects } from "../discord.js";
 import type { SessionPort } from "../quiz/flow.js";
@@ -112,6 +113,7 @@ const deps = (
     deps: {
       discord: rec.discord,
       session: sessionAt(state, extra),
+      kind: conjugationQuiz,
       scores,
       words: [word],
       random: () => 0

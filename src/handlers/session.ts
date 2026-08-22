@@ -95,13 +95,7 @@ interface SessionEnv {
 }
 
 export class QuizSession extends DurableObject<SessionEnv> {
-  /**
-   * Rebuild the machine from storage.
-   *
-   * Storage rather than an instance field: hibernation resets the isolate, and
-   * a field would silently come back empty on the next wake — losing scores
-   * mid-game with nothing in the logs.
-   */
+  /** Storage rather than a field: hibernation resets the isolate. */
   async #load(): Promise<ReturnType<typeof restore> | null> {
     const persisted = await this.ctx.storage.get<PersistedSession>(KEY);
     return persisted === undefined ? null : restore(persisted);
@@ -111,13 +105,9 @@ export class QuizSession extends DurableObject<SessionEnv> {
     const snapshot = actor.getSnapshot();
     await this.ctx.storage.put(KEY, persist(actor));
 
-    // The alarm is the question timer, and it follows the machine's state. A
-    // DO's JS timers die with its isolate, so an evicted session would stop
-    // timing out with no error anywhere — the same reasoning as the connection
-    // timers in the bot Worker.
-    // `paused` arms it too: the wait between questions runs on the same alarm,
-    // because a Worker's JS timers die with the isolate and a paused session
-    // would otherwise never resume.
+    // The question timer, following the machine's state. JS timers die with
+    // the isolate, so an evicted session would stop timing out silently.
+    // `paused` arms it too — the wait between questions is the same alarm.
     const deadline =
       snapshot.value === `asking` || snapshot.value === `paused`
         ? snapshot.context.deadline
@@ -156,22 +146,16 @@ export class QuizSession extends DurableObject<SessionEnv> {
   }
 
   /**
-   * When the stored alarm will fire, or null if none is set.
+   * When the stored alarm will fire. Exposed for tests.
    *
-   * Exposed for tests. The machine's `deadline` is what the rules decided; this
-   * is what the runtime will actually do, and the two drifting apart is exactly
-   * the bug worth catching — a stale alarm closes the NEXT question early.
+   * `deadline` is what the rules decided; this is what the runtime will do, and
+   * the two drifting apart is the stale-alarm bug.
    */
   async pendingAlarm(): Promise<number | null> {
     return this.ctx.storage.getAlarm();
   }
 
-  /**
-   * Record a typed answer.
-   *
-   * `correct` is decided by the caller, which owns the scorer. This object only
-   * applies the consequence.
-   */
+  /** `correct` is decided by the caller; this only applies the consequence. */
   async submit(
     userId: string,
     typed: string,
@@ -193,19 +177,15 @@ export class QuizSession extends DurableObject<SessionEnv> {
       };
     }
     if (before.value !== `asking`) {
-      // Nothing is being asked. `revealing` means the question already closed,
-      // and `paused` is the intro or a standings break — scoring then would
-      // hand a point to whoever typed during the countdown, for a question the
-      // channel has not been shown.
+      // `paused` covers the intro and standings breaks, where the channel has
+      // not been shown the question yet.
       return {
         outcome: { kind: `ignored`, reason: `finished` },
         needsNext: false
       };
     }
-    // Out of attempts. The count comes from the session's own config rather
-    // than a hard-coded one-per-player: this object used to reject every second
-    // guess, which made the machine's `outOfGuesses` guard unreachable and
-    // multi-guess quietly not work at all.
+    // From the session's own config, never a hard-coded count: a stale copy
+    // here once made the machine's `outOfGuesses` guard unreachable.
     const used = before.context.attempts.filter(
       (a) => a.userId === userId
     ).length;
@@ -223,9 +203,7 @@ export class QuizSession extends DurableObject<SessionEnv> {
 
     if (!correct) return { outcome: { kind: `wrong` }, needsNext: false };
 
-    // What THIS answer earned, not the running total. Reporting the total made
-    // the reveal say "20 points" for a four-point answer on question ten, which
-    // is precisely the confusion the per-answer figure exists to remove.
+    // What THIS answer earned, not the running total.
     const earned =
       (after.context.scores[userId] ?? 0) -
       (before.context.scores[userId] ?? 0);
@@ -243,12 +221,7 @@ export class QuizSession extends DurableObject<SessionEnv> {
     };
   }
 
-  /**
-   * Open the question already stored, without advancing past it.
-   *
-   * Used when a pause ends over a question nobody has seen yet — the intro
-   * holds question one, which is already stored and counted.
-   */
+  /** Open the stored question without advancing — the intro holds question one. */
   async resume(): Promise<SessionView | null> {
     const actor = await this.#load();
     if (actor === null) return null;
@@ -257,12 +230,7 @@ export class QuizSession extends DurableObject<SessionEnv> {
     return view(actor.getSnapshot());
   }
 
-  /**
-   * Move to the next question.
-   *
-   * Separate from {@link submit} because the caller has to generate the
-   * question in between, and it needs the corpus to do that.
-   */
+  /** Separate from {@link submit}: the caller generates the question between. */
   async next(question: Question): Promise<SessionView> {
     const actor = await this.#load();
     if (actor === null) throw new Error(`no session in this channel`);
@@ -271,25 +239,14 @@ export class QuizSession extends DurableObject<SessionEnv> {
     return view(actor.getSnapshot());
   }
 
-  /**
-   * Hold before the next question, so the channel can read what just happened.
-   *
-   * Runs on the same alarm as the question timeout. A `setTimeout` would not
-   * survive the isolate being evicted, and a paused session that never resumes
-   * looks exactly like the bot having stopped.
-   */
+  /** Hold before the next question, on the same alarm as the timeout. */
   async pause(ms: number): Promise<void> {
     const actor = await this.#load();
     if (actor === null) return;
     actor.send({ type: `PAUSE`, until: Date.now() + ms });
     await this.#save(actor);
   }
-  /**
-   * Apply new settings, from the next question onward.
-   *
-   * Never mid-question: moving a deadline players are already racing would be
-   * unfair, and new filters cannot change what has already been asked.
-   */
+  /** From the next question onward — never moving a deadline mid-race. */
   async configure(settings: {
     session: SessionConfig;
     filters: Filters;
@@ -331,19 +288,13 @@ export class QuizSession extends DurableObject<SessionEnv> {
     await this.ctx.storage.deleteAlarm();
   }
 
-  /**
-   * The question timed out.
-   *
-   * Runs from the alarm, so it is the one path that fires without anyone
-   * sending a message.
-   */
+  /** The one path that fires without anyone sending a message. */
   override async alarm(): Promise<void> {
     const actor = await this.#load();
     if (actor === null) return;
 
     const state = actor.getSnapshot().value;
-    // A pause ending is not a timeout — the question already closed. Both wake
-    // the Worker the same way; it reads the state to know which happened.
+    // A pause ending is not a timeout; the state says which happened.
     if (state === `asking`) {
       actor.send({ type: `TIMEOUT` });
       await this.#save(actor);
@@ -351,10 +302,8 @@ export class QuizSession extends DurableObject<SessionEnv> {
       return;
     }
 
-    // Hand the rest back to the Worker. This object can close the question,
-    // but posting the reveal is a REST call and choosing the next question
-    // needs the corpus — neither belongs in an object that wakes from
-    // hibernation on every question.
+    // Posting the reveal is a REST call and the next question needs the
+    // corpus; neither belongs in an object that hibernates every question.
     const { channelId } = actor.getSnapshot().context;
     await this.env.SELF.fetch(`https://handlers/event`, {
       method: `POST`,

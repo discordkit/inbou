@@ -10,13 +10,7 @@ import {
   readOptions,
   readUserOption
 } from "./quiz/options.js";
-import {
-  BUTTON,
-  hintEmbed,
-  leaderboardEmbed,
-  reviewEmbed,
-  standingEmbed
-} from "./quiz/render.js";
+import { BUTTON, leaderboardEmbed, standingEmbed } from "./quiz/render.js";
 
 /**
  * Slash commands.
@@ -172,7 +166,7 @@ const review = async (
   const miss = view.context.misses[userId];
   if (miss !== undefined) {
     await deps.discord.reply(interaction, {
-      embed: reviewEmbed(miss, true),
+      embed: deps.kind.present.review(miss, true),
       ephemeral: true
     });
     return;
@@ -191,7 +185,7 @@ const review = async (
   }
 
   await deps.discord.reply(interaction, {
-    embed: reviewEmbed(
+    embed: deps.kind.present.review(
       { question, answer: ``, questionNumber: view.context.questionNumber },
       false
     ),
@@ -265,7 +259,7 @@ const hint = async (
   }
 
   await deps.discord.reply(interaction, {
-    embed: hintEmbed(question),
+    embed: deps.kind.present.hint(question),
     ephemeral: true
   });
 };

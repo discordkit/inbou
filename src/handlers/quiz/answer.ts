@@ -3,22 +3,17 @@ import { toHiragana } from "wanakana";
 /**
  * Deciding whether a typed message is the right conjugation.
  *
- * A channel is not an input box. The reference implementation converts romaji
- * to kana in the field before anything is scored, so its checker only ever
- * sees kana; ours receives whatever the player typed — romaji, kana, kanji,
- * katakana, with stray spaces and trailing punctuation. Everything below
- * exists to make those spellings agree without accepting an answer that is
- * genuinely a different word.
+ * A channel is not an input box: answers arrive as romaji, kana, kanji or
+ * katakana, with stray spaces and trailing punctuation. Everything here makes
+ * those spellings agree without accepting a genuinely different word.
  */
 
 /**
  * Trim what a chat message adds and a conjugation never contains.
  *
- * NFKC first, so full-width letters and digits collapse onto their ASCII
- * forms. Whitespace goes entirely rather than being collapsed: Japanese does
- * not write word boundaries, so a space inside an answer is always noise.
- * Trailing sentence punctuation is stripped because people finish messages
- * that way — but only trailing, since nothing in a conjugation ends on it.
+ * Japanese does not write word boundaries, so an internal space is always
+ * noise and is removed rather than collapsed. Punctuation is stripped only at
+ * the end, since nothing in a conjugation ends on it.
  */
 export const normalize = (text: string): string =>
   text
@@ -29,25 +24,19 @@ export const normalize = (text: string): string =>
 /**
  * Is this plausibly romaji rather than Japanese?
  *
- * Only ASCII letters count. The test gates conversion, so it has to be
- * conservative in one direction: converting something that was already kana
- * would corrupt it, while declining to convert real romaji only costs the
- * player a rejected answer they can retype.
+ * Conservative on purpose: converting something already kana would corrupt it,
+ * while declining to convert real romaji only costs a retype.
  */
 const looksRomaji = (text: string): boolean => /^[a-z]+$/iu.test(text);
 
 /**
  * Collapse the IME spelling of ん before converting.
  *
- * wanakana resolves a lone `n` to ん eagerly, so it reads `nn` as two of them
- * — `yonnda` becomes よんんだ. Japanese IMEs behave the other way round:
- * because they cannot commit `n` until the next key arrives, typing it twice
- * is the standard way to force a single ん, and anyone trained on one types
- * `yonnda` by reflex. Rewriting `nn` to `n` before conversion accepts that
- * habit.
+ * wanakana reads `nn` as two ん, so `yonnda` becomes よんんだ. Japanese IMEs
+ * treat a doubled `n` as the way to commit a single ん, so anyone trained on
+ * one types it by reflex.
  *
- * Only where a vowel cannot follow, so `nna` — which must stay んな — is left
- * alone.
+ * Not before a vowel, where `nna` must stay んな.
  */
 const collapseDoubledN = (text: string): string =>
   text.replace(/nn(?![aiueoy])/giu, `n`);

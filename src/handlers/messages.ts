@@ -18,16 +18,13 @@ export const handleMessage = async (
   deps: FlowDeps,
   message: MessageCreate
 ): Promise<void> => {
-  // Ignore bots, including ourselves. The bot posts the answer in its reveal
-  // embed, so without this it would answer its own question.
+  // Including ourselves: the reveal embed contains the answer.
   if (message.author.bot === true) return;
 
   const content = message.content.trim();
   if (content === ``) return;
 
-  // A slash command is an interaction, not a message, so anything starting
-  // with `/` here is someone typing rather than invoking — and it is certainly
-  // not a conjugation.
+  // A real slash command arrives as an interaction, not a message.
   if (content.startsWith(`/`)) return;
 
   await handleAnswer(
