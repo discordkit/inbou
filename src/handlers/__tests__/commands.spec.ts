@@ -72,6 +72,29 @@ describe(`the options registered with Discord`, () => {
       .map(([name]) => name);
     expect(tooLong).toEqual([]);
   });
+
+  it(`registers only commands the handler actually routes`, () => {
+    // WHY: a registered command with no handler is offered by Discord and then
+    // answers "I do not have a handler for that yet" — a visible fault nothing
+    // else catches. `/ping` shipped that way. The checks above compare option
+    // descriptions, which cannot see a whole command going unrouted.
+    const handler = readFileSync(`src/handlers/commands.ts`, `utf8`);
+    const routed = new Set(
+      [...handler.matchAll(/name === `(?<name>[a-z]+)`/gu)].map(
+        (match) => match.groups?.name ?? ``
+      )
+    );
+
+    // Top-level entries only — a subcommand is nested inside one of these, and
+    // the router reaches those through `invocation.subcommand`. Matched by
+    // indentation, with `\r?` because the file is checked out with CRLF here.
+    const registered = [
+      ...script.matchAll(/^ {2}\{\r?\n {4}name: `(?<name>[a-z]+)`/gmu)
+    ].map((match) => match.groups?.name ?? ``);
+
+    expect(registered.length).toBeGreaterThan(0);
+    expect(registered.filter((name) => !routed.has(name))).toEqual([]);
+  });
 });
 
 /** The numbers a description names, which is the part that must agree. */

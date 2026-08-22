@@ -86,10 +86,6 @@ const settingOptions = [
 /** The command set. This list is the source of truth; Discord mirrors it. */
 const commands = [
   {
-    name: `ping`,
-    description: `Check that the bot is awake.`
-  },
-  {
     name: `feedback`,
     description: `Report a problem or suggest an idea.`,
     options: [
