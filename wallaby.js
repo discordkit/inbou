@@ -15,6 +15,8 @@
 /** The specs that need workerd, mirroring `WORKERD_TESTS` in vite.config.ts. */
 const WORKERD_TESTS = [
   `!src/handlers/__tests__/session.spec.ts`,
+  `!src/handlers/__tests__/scores.spec.ts`,
+  `!src/handlers/__tests__/scenarios.spec.ts`,
   `!src/__tests__/worker.spec.ts`
 ];
 
