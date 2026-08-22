@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🦜 鸚法
+# 🦜 鸚法「いんぼう」
 
 [![CI status][ci_badge]][ci] [![License][license_badge]][license]
 
@@ -10,7 +10,7 @@ A Japanese practice bot for Discord, built on [discordkit][discordkit] and deplo
 
 ---
 
-**鸚法** (_inbou_) is a pun on 鸚鵡返し (_ōmugaeshi_, parroting something back) and 文法 (_bunpō_, grammar) — repetition being how a language sticks, and a nod to Coca Bird, the cockatiel emoji character mascot of the server it was built for.
+**鸚法** (_inbou_, "parrot method") is a pun on 鸚鵡返し (_ōmugaeshi_, parroting something back) and 文法 (_bunpō_, grammar) — repetition being how a language sticks, and a nod to Coca Bird, the cockatiel emoji character mascot of the server it was built for.
 
 ## 🎯 What it does
 
@@ -149,7 +149,7 @@ identically and keeps no leaderboard, rather than refusing to start.
 | Register commands | `vp run commands:register` | Pushes the command list to Discord.                         |
 | Migrate scores    | `vp run scores:migrate`    | Applies the D1 schema locally. Add `--remote` for live.     |
 | Rebuild corpus    | `vp run corpus:build`      | Regenerates the word list from JMdict. Rarely needed.       |
-| Deploy            | `wrangler deploy`          | Needs your own Cloudflare account.                          |
+| Deploy            | `vp run deploy`            | Build, migrate, deploy both Workers, register commands.     |
 
 Slash commands are registered over REST and persist on Discord's side, so `commands:register` is a deliberate step rather than something the bot does at boot. Re-running it replaces the whole set, which is what makes a removed command disappear.
 
@@ -174,6 +174,56 @@ curl http://localhost:5173/health
 
 That reports the connection state and starts it, because reading the state requires the object. `/cdn-cgi/handler/scheduled` runs the same code path through the cron handler. Both are idempotent: a live connection short-circuits, so neither costs a Gateway session.
 
+## 🚀 Releasing
+
+Releases are driven by [bumpy][bumpy]. Every PR carries a **bump file** — a
+small markdown note in `.bumpy/` saying what changed and how far the version
+moves. CI fails a PR without one, so the changelog can never fall behind the
+code.
+
+```bash
+vp exec bumpy add     # interactive: pick a bump level, write a summary
+```
+
+Merging that PR opens a **Version PR** with the version bump and the changelog
+entry. Merging _the Version PR_ tags a release and deploys. Nothing reaches
+production without a version and a changelog line.
+
+### What deploying actually does
+
+`vp run deploy` runs [`scripts/deploy.mjs`](scripts/deploy.mjs), in this order:
+
+1. **`vp build`** — Vite's build, not wrangler's. Wrangler bundles on its own
+   and would apply neither the `?raw` SQL import nor the `__BUILD__` define, so
+   `/feedback` would report `dev` as the build for every production report.
+2. **D1 migrations**, before the Worker that reads the table. Idempotent.
+3. **The handlers Worker, then the bot Worker.** This order is load-bearing:
+   the bot declares a service binding to `inbou-handlers`, and Cloudflare fails
+   a deploy that binds a Worker which does not exist yet.
+4. **Slash commands last**, so Discord never offers a command the running code
+   cannot answer.
+
+### Required secrets
+
+| Secret                   | Used for                                  |
+| ------------------------ | ----------------------------------------- |
+| `CLOUDFLARE_API_TOKEN`   | Deploying both Workers and applying D1    |
+| `CLOUDFLARE_ACCOUNT_ID`  | Same                                      |
+| `DISCORD_BOT_TOKEN`      | Registering slash commands after deploy   |
+| `DISCORD_APPLICATION_ID` | Same                                      |
+| `BUMPY_GH_TOKEN`         | So the Version PR triggers CI (see below) |
+
+The Cloudflare token needs **Workers Scripts: Edit**, **D1: Edit**, **Workers
+KV Storage: Edit**, **Account Settings: Read**, and **User Details: Read**.
+
+`BUMPY_GH_TOKEN` is a fine-grained PAT, and it is not optional here. GitHub
+does not trigger workflows from PRs created with the default token, and `main`
+requires the `Check & Test` check to merge — so a Version PR opened without it
+would sit forever with checks that never run.
+
+Secrets currently live at repo level. Moving them to a `production` GitHub
+Environment restricted to `main` would be worthwhile hardening.
+
 ### Dependency versions
 
 Two conventions, on purpose. The **toolchain is pinned exactly** — the
@@ -192,6 +242,7 @@ The test pool runs inside workerd but with permissive module resolution — Vite
 
 [MIT][license] © [Drake Costa][personal-website]
 
+[bumpy]: https://github.com/dmno-dev/bumpy
 [discordkit]: https://github.com/discordkit/discordkit
 [portal]: https://discord.com/developers/applications
 [ci_badge]: https://github.com/discordkit/inbou/actions/workflows/ci.yml/badge.svg

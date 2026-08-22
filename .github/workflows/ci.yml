@@ -6,10 +6,11 @@ on:
   pull_request:
     branches: [main]
 
-# Least privilege: the job only checks out and runs checks. It needs no secrets
-# — the tests drive workerd locally and never reach Discord.
+# Least privilege. No secrets: the tests drive workerd locally and never reach
+# Discord. `pull-requests: write` is only so bumpy can post its release plan.
 permissions:
   contents: read
+  pull-requests: write
 
 # A newer commit on the same ref supersedes an in-flight run.
 concurrency:
@@ -23,6 +24,10 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v6
+        with:
+          # bumpy compares against `main` to see what changed; a shallow clone
+          # has no merge base to compare against.
+          fetch-depth: 0
 
       - uses: voidzero-dev/setup-vp@v1
         with:
@@ -37,3 +42,11 @@ jobs:
       # module resolution is permissive enough that a Node builtin slips
       # through it unnoticed; only the real bundle catches one.
       - run: vp run check:bundle
+
+      # Last, deliberately. This gate fails a PR with no bump file, and a
+      # failing step skips the rest of the job — running it first would cost a
+      # contributor all their test signal over a missing changelog entry.
+      - name: Release plan
+        run: yarn dlx @varlock/bumpy@1.18.1 ci check
+        env:
+          GH_TOKEN: ${{ github.token }}

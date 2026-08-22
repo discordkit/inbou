@@ -241,6 +241,13 @@ export default defineConfig({
         command: `wrangler d1 migrations apply inbou-scores --config wrangler.handlers.jsonc --local`,
         cache: false
       },
+      // Build, migrate, deploy both Workers in binding order, register
+      // commands. Run by `bumpy publish` when a version PR merges — see
+      // scripts/deploy.mjs for why each step is where it is.
+      deploy: {
+        command: `varlock run -- node scripts/deploy.mjs`,
+        cache: false
+      },
       // Rebuilds the committed word corpus from JMdict. Deliberate rather than
       // automatic: it downloads ~14 MB and the output is checked in, so a
       // normal build and CI never touch the network.
