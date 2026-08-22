@@ -34,12 +34,21 @@ discord.setToken(`Bot ${token}`);
 const SUB_COMMAND = 1;
 const STRING = 3;
 
-/** The settings every `/quiz` subcommand that configures a session accepts. */
+/**
+ * The settings every `/quiz` subcommand that configures a session accepts.
+ *
+ * These descriptions duplicate `OPTION_HELP` in `src/handlers/quiz/config.ts`,
+ * and that is deliberate rather than an oversight. Importing it would pull in
+ * `config.ts` -> `forms.js`, and plain Node cannot resolve the `.js` specifiers
+ * the app uses for its bundler — the script would fail at run time while
+ * typechecking cleanly. `commands.spec.ts` asserts the two stay in step
+ * instead, which catches drift at the same moment a change is made.
+ */
 const settingOptions = [
   {
     type: STRING,
     name: `level`,
-    description: `JLPT levels, e.g. N5 or "N5,N4". Use "any" for no filter.`
+    description: `JLPT levels, comma separated. Use N5 to N1, or \`any\`.`
   },
   {
     type: STRING,
