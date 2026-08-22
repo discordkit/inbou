@@ -25,10 +25,15 @@
     {
       "binding": "SCORES",
       "database_name": "inbou-scores",
-      // Replaced by the real id from `wrangler d1 create inbou-scores`. Local
-      // development does not use it: Miniflare creates its own database from
-      // the binding, so the quiz runs and the tests pass without an account.
-      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      // From `wrangler d1 create inbou-scores`. Local development does not use
+      // it: Miniflare creates its own database from the binding, so the quiz
+      // runs and the tests pass without an account.
+      //
+      // Note that `wrangler d1 create` appends its binding to the config named
+      // by `main` — wrangler.jsonc, the bot Worker — which is the wrong half of
+      // the split and uses a binding name derived from the database. The
+      // leaderboard belongs here, read as `SCORES`.
+      "database_id": "91749b56-33d2-495e-a775-3c4a787a7c33",
       "migrations_dir": "migrations"
     }
   ],
