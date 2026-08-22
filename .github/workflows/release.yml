@@ -74,6 +74,12 @@ jobs:
     timeout-minutes: 15
     permissions:
       contents: write
+    # Records a GitHub Deployment, so the repo's Environments panel shows what
+    # is live and when it shipped. Also the place to attach protection rules
+    # and to scope these secrets to, rather than leaving them repo-wide.
+    environment:
+      name: production
+      url: https://inbou.saeris.workers.dev
     steps:
       - uses: actions/checkout@v6
         with:
@@ -100,5 +106,9 @@ jobs:
           BUMPY_GH_TOKEN: ${{ secrets.BUMPY_GH_TOKEN }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # For `commands:register`, which calls Discord's REST API from this
+          # runner. NOT what the deployed Workers read — they take their own
+          # copies from Cloudflare Worker secrets, set once and persisting
+          # across deploys. Setting them here would not reach the Workers.
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
           DISCORD_APPLICATION_ID: ${{ secrets.DISCORD_APPLICATION_ID }}
