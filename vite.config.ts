@@ -8,6 +8,65 @@ import { defineConfig } from "vite-plus";
 // organization's TypeScript.
 import { lint, fmt } from "@saeris/configs";
 
+/**
+ * Wake the bot when the dev server starts.
+ *
+ * The Gateway connection lives in a Durable Object, and a Durable Object only
+ * runs when something addresses it. In production the cron trigger does that
+ * every five minutes; locally Miniflare never fires crons on a schedule, so
+ * nothing wakes it on its own.
+ *
+ * Interacting with Discord does not help, which is the surprising part: a slash
+ * command arrives at the *handlers* Worker over HTTP and never touches the bot
+ * Worker's object. So the bot stays offline no matter how much you use it, and
+ * the only way back was a manual `curl`.
+ *
+ * This sends that request once the server is listening. `start()` is
+ * idempotent — a live connection short-circuits — so a reload costs nothing.
+ */
+const wakeBotInDev = () => ({
+  name: `inbou:wake-bot`,
+  apply: `serve` as const,
+  configureServer(server: {
+    httpServer: { once: (event: string, fn: () => void) => void } | null;
+    config: {
+      logger: { info: (msg: string) => void; warn: (msg: string) => void };
+    };
+    resolvedUrls?: { local?: string[] } | null;
+  }) {
+    const wake = async (): Promise<void> => {
+      // Read off the server rather than hardcoded: Vite moves to the next free
+      // port when 5173 is taken, and a fixed URL would quietly wake nothing.
+      const base = server.resolvedUrls?.local?.[0];
+      if (base === undefined) return;
+      try {
+        const response = await fetch(new URL(`/health`, base));
+        // Read defensively rather than asserted: this is a response body, and
+        // the log line is not worth a crash if the shape ever changes.
+        const body: unknown = await response.json();
+        const state =
+          typeof body === `object` && body !== null && `state` in body
+            ? String((body as Record<`state`, unknown>).state)
+            : `woken`;
+        server.config.logger.info(`  bot: ${state}`);
+      } catch (error) {
+        // Never fatal. A dev server that refuses to start because Discord is
+        // unreachable would be worse than a bot that is briefly offline.
+        server.config.logger.warn(
+          `  bot did not wake: ${error instanceof Error ? error.message : String(error)}`
+        );
+      }
+    };
+
+    // `listening` rather than the hook returning: the port is not bound yet
+    // when this runs. The short delay lets Vite print its banner first and the
+    // Worker environments finish initialising before the request lands.
+    server.httpServer?.once(`listening`, () => {
+      setTimeout(() => void wake(), 100);
+    });
+  }
+});
+
 // Hoisted out of the config object: inferring this conditional inline makes
 // TypeScript deep-compare the whole literal against `UserConfig`, which blows
 // the instantiation depth limit once the shared lint/fmt configs are present.
@@ -21,7 +80,8 @@ const plugins =
           // derives it from the wrangler `name`, so renaming the Worker would
           // silently detach any per-environment config keyed on `worker`.
           viteEnvironment: { name: `worker` }
-        })
+        }),
+        wakeBotInDev()
       ]
     : [];
 

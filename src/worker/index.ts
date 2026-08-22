@@ -39,9 +39,13 @@ export default {
    * nothing when the bot is already running.
    *
    * **Crons do not fire on a schedule in local dev.** Miniflare exposes them as
-   * an endpoint instead, so a freshly started dev server leaves the object
-   * asleep and the bot offline until something addresses it. Either request is
-   * enough to bring it up:
+   * an endpoint instead, so nothing would wake the object locally — and nothing
+   * on the Discord side can either. Events travel one way, this Worker to the
+   * handlers, so a slash command never reaches back here; and with the socket
+   * asleep no events arrive to forward in the first place.
+   *
+   * A plugin in `vite.config.ts` requests `/health` once the dev server is
+   * listening, which breaks that loop. By hand, either of these does the same:
    *
    *     curl http://localhost:5173/health
    *     curl "http://localhost:5173/cdn-cgi/handler/scheduled?format=json"

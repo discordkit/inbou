@@ -77,15 +77,26 @@ The bot needs two **privileged** intents enabled under **Bot → Privileged Gate
 
 Slash commands are registered over REST and persist on Discord's side, so `commands:register` is a deliberate step rather than something the bot does at boot. Re-running it replaces the whole set, which is what makes a removed command disappear.
 
-### The bot starts offline in dev
+### Waking the bot in dev
 
-The Gateway connection lives in a Durable Object, and a Durable Object only wakes when something addresses it. In production the cron trigger does that every five minutes — but **Miniflare does not fire crons on a schedule locally**, so a freshly started dev server leaves the bot offline until you poke it:
+`vp run dev` brings the bot online on its own and prints the state it reached:
+
+```
+➤  bot: connecting
+Connected as 鸚法「いんぼう」
+```
+
+That comes from a small plugin in `vite.config.ts`, and it exists because the connection cannot start itself. The Gateway socket lives in a Durable Object, which only runs when something addresses it. In production the cron trigger does that every five minutes; **Miniflare never fires crons on a schedule locally**, so nothing would.
+
+**Using the bot does not wake it,** which is the part that surprises people. Events flow one way — the bot Worker forwards to the handlers Worker, never back — so a slash command reaches the handlers over HTTP and never touches the object holding the socket. With the socket asleep no events arrive at all, so there is nothing to forward. The wake has to come from outside that loop.
+
+If you need to do it by hand — a bot evicted mid-session, or a dev server started some other way:
 
 ```bash
 curl http://localhost:5173/health
 ```
 
-That reports the connection state and, because reading it requires the object, starts the connection. `/cdn-cgi/handler/scheduled` runs the same code path if you would rather exercise the cron itself. Both are idempotent: a live connection short-circuits, so neither costs a Gateway session.
+That reports the connection state and starts it, because reading the state requires the object. `/cdn-cgi/handler/scheduled` runs the same code path through the cron handler. Both are idempotent: a live connection short-circuits, so neither costs a Gateway session.
 
 ## 🧪 Two checks, and why both
 
