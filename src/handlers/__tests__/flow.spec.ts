@@ -11,6 +11,7 @@ import {
 } from "../quiz/flow.js";
 import { begin, type SessionActor } from "../quiz/machine.js";
 import type { Word } from "../quiz/question.js";
+import type { ScorePort } from "../scores.js";
 
 /**
  * A round, driven end to end without Discord.
@@ -54,8 +55,8 @@ const sessionStub = (): SessionPort & { timeout: () => void } => {
   let actor: SessionActor | null = null;
 
   return {
-    begin: async (channelId, question, config, filters) => {
-      actor = begin(channelId, question, config, filters, Date.now());
+    begin: async (channelId, guildId, question, config, filters) => {
+      actor = begin(channelId, guildId, question, config, filters, Date.now());
     },
     current: async () => {
       if (actor === null) return null;
@@ -73,7 +74,14 @@ const sessionStub = (): SessionPort & { timeout: () => void } => {
       if (before.value !== `asking`) {
         return { outcome: { kind: `ignored` }, needsNext: false };
       }
-      if (before.context.attempts.some((a) => a.userId === userId)) {
+      // Read from the session's own config, never a hard-coded count. This
+      // stub used to allow exactly one guess each, which is how it kept
+      // passing while multi-guess was broken in the real object — a stub that
+      // models a rule instead of delegating to it proves nothing.
+      const used = before.context.attempts.filter(
+        (a) => a.userId === userId
+      ).length;
+      if (used >= before.context.config.guesses) {
         return { outcome: { kind: `ignored` }, needsNext: false };
       }
 
@@ -126,11 +134,39 @@ const sessionStub = (): SessionPort & { timeout: () => void } => {
     end: async () => {
       if (actor === null) return null;
       actor.send({ type: `END` });
-      return Object.entries(actor.getSnapshot().context.scores).map(
-        ([userId, points]) => ({ userId, points })
-      );
+      const { context } = actor.getSnapshot();
+      return {
+        guildId: context.guildId,
+        standings: Object.entries(context.scores).map(([userId, points]) => ({
+          userId,
+          points
+        })),
+        correct: context.correct
+      };
     }
   };
+};
+
+/**
+ * A `ScorePort` that remembers what it was told.
+ *
+ * The leaderboard is the one part of a session that outlives it, so what
+ * matters in a flow test is *that* a finished session was recorded, once, with
+ * the right guild — not what a database did with it afterwards.
+ */
+const scoreStub = () => {
+  const recorded: {
+    guildId: string;
+    results: readonly { userId: string; points: number; correct: number }[];
+  }[] = [];
+  const scores: ScorePort = {
+    record: async (guildId, results) => {
+      recorded.push({ guildId, results });
+    },
+    top: async () => [],
+    forUser: async () => null
+  };
+  return { scores, recorded };
 };
 
 const uru: Word = {
@@ -155,11 +191,22 @@ const taberu: Word = {
   gloss: `to eat`
 };
 
+const GUILD = `guild-1`;
+
 const deps = (words: readonly Word[] = [uru]) => {
   const rec = recorder();
   const session = sessionStub();
-  return { ...rec, session, words, random: () => 0 } satisfies FlowDeps & {
+  const banked = scoreStub();
+  return {
+    ...rec,
+    session,
+    scores: banked.scores,
+    recorded: banked.recorded,
+    words,
+    random: () => 0
+  } satisfies FlowDeps & {
     session: { timeout: () => void };
+    recorded: ReturnType<typeof scoreStub>[`recorded`];
   };
 };
 
@@ -173,7 +220,7 @@ const play = async (
   d: Awaited<ReturnType<typeof deps>>,
   settings = DEFAULT_SETTINGS
 ): Promise<void> => {
-  await startSession(d, `chan`, settings);
+  await startSession(d, `chan`, GUILD, settings);
   await handleResume(d, `chan`);
 };
 
@@ -183,7 +230,7 @@ describe(`starting a session`, () => {
     // of. The intro states the guess count, the clock and the scoring, so the
     // first question is not also the moment everyone works out the rules.
     const d = deps();
-    const started = await startSession(d, `chan`, DEFAULT_SETTINGS);
+    const started = await startSession(d, `chan`, GUILD, DEFAULT_SETTINGS);
 
     expect(started).toBe(true);
     expect(d.posts).toHaveLength(1);
@@ -198,7 +245,7 @@ describe(`starting a session`, () => {
     // isolate, so the wait runs on the session's alarm and this returns —
     // posting the question here would make the intro purely decorative.
     const d = deps();
-    await startSession(d, `chan`, DEFAULT_SETTINGS);
+    await startSession(d, `chan`, GUILD, DEFAULT_SETTINGS);
 
     expect(d.posts).toHaveLength(1);
     expect((await d.session.current())?.state).toBe(`paused`);
@@ -208,7 +255,7 @@ describe(`starting a session`, () => {
     // WHY: question one is stored and counted before anyone sees it, so
     // resuming with the ordinary "next question" path would jump to two.
     const d = deps();
-    await startSession(d, `chan`, DEFAULT_SETTINGS);
+    await startSession(d, `chan`, GUILD, DEFAULT_SETTINGS);
     await handleResume(d, `chan`);
 
     expect(JSON.stringify(d.posts[1]?.embed)).toContain(`Question 1 of 10`);
@@ -220,7 +267,7 @@ describe(`starting a session`, () => {
     // Failing silently would look like the bot ignoring the command, and only
     // the player can fix it.
     const d = deps([]);
-    const started = await startSession(d, `chan`, DEFAULT_SETTINGS);
+    const started = await startSession(d, `chan`, GUILD, DEFAULT_SETTINGS);
 
     expect(started).toBe(false);
     expect(d.posts).toHaveLength(0);
@@ -264,14 +311,23 @@ describe(`answering`, () => {
     expect(d.reactions[0]?.emoji).toBe(`⭕`);
   });
 
-  it(`ignores a second guess from the same player`, async () => {
-    // WHY: one guess each. Reacting twice would suggest the second was counted.
+  it(`ignores guesses past the configured limit`, async () => {
+    // WHY: attempts are capped per player per question, and the cap is a
+    // setting rather than a constant. Reacting to a fourth guess would suggest
+    // it counted, and letting them continue would turn the race into brute
+    // force — the point taper bottoms out but the question stays winnable.
     const d = deps();
-    await play(d);
+    await play(d, {
+      ...DEFAULT_SETTINGS,
+      session: { ...DEFAULT_SETTINGS.session, guesses: 2 }
+    });
     await handleAnswer(d, `chan`, `m1`, `drake`, `うった`);
-    await handleAnswer(d, `chan`, `m2`, `drake`, `うる`);
+    await handleAnswer(d, `chan`, `m2`, `drake`, `うりません`);
+    await handleAnswer(d, `chan`, `m3`, `drake`, `うる`);
 
-    expect(d.reactions).toHaveLength(1);
+    // Two ❌ and nothing for the third, which was correct but too late.
+    expect(d.reactions).toHaveLength(2);
+    expect(d.reactions.every((r) => r.emoji === `❌`)).toBe(true);
   });
 
   it(`ignores messages when the channel is not playing`, async () => {
@@ -383,5 +439,76 @@ describe(`side chatter`, () => {
     await handleAnswer(d, `chan`, `m2`, `drake`, `うる`);
 
     expect(d.reactions).toEqual([{ messageId: `m2`, emoji: `⭕` }]);
+  });
+});
+
+describe(`banking a finished session`, () => {
+  it(`records the session once, against the guild it was played in`, async () => {
+    // WHY: the leaderboard is the only thing that outlives a session, and it
+    // is written exactly once — at the end. Recording twice would double
+    // everyone's score; recording against the wrong guild would leak a club's
+    // standings into another server.
+    const d = deps();
+    await play(d, {
+      ...DEFAULT_SETTINGS,
+      session: { ...DEFAULT_SETTINGS.session, length: 1 }
+    });
+    await handleAnswer(d, `chan`, `m1`, `u1`, `うる`);
+
+    expect(d.recorded).toHaveLength(1);
+    expect(d.recorded[0]?.guildId).toBe(GUILD);
+    expect(d.recorded[0]?.results).toEqual([
+      { userId: `u1`, points: 4, correct: 1 }
+    ]);
+  });
+
+  it(`records a session that ended by timing out`, async () => {
+    // WHY: this is the path the guild id exists for. A timeout arrives from
+    // the session object's own alarm, which knows only its channel — reading
+    // the guild off the event would silently drop every session that ended
+    // this way, and those are exactly the quiet ones nobody notices.
+    const d = deps();
+    await play(d, {
+      ...DEFAULT_SETTINGS,
+      session: { ...DEFAULT_SETTINGS.session, length: 1 }
+    });
+    d.session.timeout();
+    await handleTimeout(d, `chan`);
+
+    expect(d.recorded).toHaveLength(1);
+    expect(d.recorded[0]?.guildId).toBe(GUILD);
+  });
+
+  it(`keeps no leaderboard for a session with no guild`, async () => {
+    // WHY: a DM has no guild to score against. Recording under a made-up key
+    // would build a leaderboard nobody can ever see, and writing null as a
+    // guild id would collapse every DM in the world into one table.
+    const d = deps();
+    await startSession(d, `chan`, null, {
+      ...DEFAULT_SETTINGS,
+      session: { ...DEFAULT_SETTINGS.session, length: 1 }
+    });
+    await handleResume(d, `chan`);
+    await handleAnswer(d, `chan`, `m1`, `u1`, `うる`);
+
+    expect(d.recorded).toEqual([]);
+  });
+
+  it(`counts correct answers separately from points`, async () => {
+    // WHY: points taper with wrong guesses, so they measure speed as much as
+    // knowledge. Someone who answers correctly after two misses has still
+    // answered correctly, and the leaderboard says so.
+    const d = deps();
+    await play(d, {
+      ...DEFAULT_SETTINGS,
+      session: { ...DEFAULT_SETTINGS.session, length: 1 }
+    });
+    await handleAnswer(d, `chan`, `m1`, `u1`, `うります`);
+    await handleAnswer(d, `chan`, `m2`, `u1`, `うった`);
+    await handleAnswer(d, `chan`, `m3`, `u1`, `うる`);
+
+    expect(d.recorded[0]?.results).toEqual([
+      { userId: `u1`, points: 2, correct: 1 }
+    ]);
   });
 });

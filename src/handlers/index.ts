@@ -11,6 +11,7 @@ import {
   type SessionPort
 } from "./quiz/flow.js";
 import type { Word } from "./quiz/question.js";
+import { d1Scores, noScores } from "./scores.js";
 import type { QuizSession } from "./session.js";
 
 // Re-exported so the runtime can construct the class this Worker's
@@ -38,6 +39,15 @@ export interface Env {
   DISCORD_BOT_TOKEN: string;
   /** One quiz session per channel, keyed by channel id. */
   SESSION: DurableObjectNamespace<QuizSession>;
+  /**
+   * Cross-session scores.
+   *
+   * Optional because the quiz does not need it: a deployment without the
+   * binding plays identically and simply keeps no leaderboard, which is what
+   * `noScores` provides. Making it required would turn a missing migration
+   * into a bot that cannot run a session at all.
+   */
+  SCORES?: D1Database;
 }
 
 /**
@@ -57,6 +67,7 @@ const sessionFor = (env: Env, channelId: string): SessionPort =>
 const depsFor = (env: Env, channelId: string): FlowDeps => ({
   discord: discordEffects,
   session: sessionFor(env, channelId),
+  scores: env.SCORES === undefined ? noScores : d1Scores(env.SCORES),
   words
 });
 

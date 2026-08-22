@@ -1,4 +1,5 @@
 import type { DiscordEffects } from "../discord.js";
+import type { ScorePort } from "../scores.js";
 import { judge, looksLikeAnswer } from "./answer.js";
 import type { QuizSettings } from "./config.js";
 import { generate, isQuestion, type Question, type Word } from "./question.js";
@@ -30,6 +31,7 @@ import {
 export interface SessionPort {
   begin: (
     channelId: string,
+    guildId: string | null,
     question: Question,
     config: QuizSettings[`session`],
     filters: QuizSettings[`filters`]
@@ -78,7 +80,11 @@ export interface SessionPort {
    * handler rather than as a callable method.
    */
   timeout?: (() => void) | undefined;
-  end: () => Promise<Array<{ userId: string; points: number }> | null>;
+  end: () => Promise<{
+    guildId: string | null;
+    standings: Array<{ userId: string; points: number }>;
+    correct: Record<string, number>;
+  } | null>;
 }
 
 /** How long the channel gets to read the intro before question one. */
@@ -94,6 +100,13 @@ export const STANDINGS_EVERY = 10;
 export interface FlowDeps {
   discord: DiscordEffects;
   session: SessionPort;
+  /**
+   * The cross-session leaderboard.
+   *
+   * Injected like `discord` so a flow test needs no database. `noScores` is a
+   * working implementation that keeps nothing, which is what a DM gets.
+   */
+  scores: ScorePort;
   words: readonly Word[];
   /** Injected so tests can pin which question is chosen. */
   random?: () => number;
@@ -110,6 +123,8 @@ export interface FlowDeps {
 export const startSession = async (
   deps: FlowDeps,
   channelId: string,
+  /** Null in a DM. Stored with the session so the leaderboard survives however it ends. */
+  guildId: string | null,
   settings: QuizSettings
 ): Promise<boolean> => {
   const result = generate(deps.words, settings.filters, deps.random);
@@ -120,6 +135,7 @@ export const startSession = async (
 
   await deps.session.begin(
     channelId,
+    guildId,
     result,
     settings.session,
     settings.filters
@@ -253,6 +269,45 @@ export const handleTimeout = async (
   await advance(deps, channelId);
 };
 
+/**
+ * Close out a finished session: post the final standings and bank them.
+ *
+ * Every path that ends a session goes through here. There are three of them —
+ * the last question answered, the last question timing out, and `/quiz end` —
+ * and a leaderboard that only recorded some of them would be quietly wrong in
+ * a way nobody could spot from the numbers.
+ *
+ * The scores are recorded before the embed is posted so a failed post cannot
+ * lose them; `record` reports its own failures and never throws, so the
+ * standings still reach the channel either way.
+ */
+export const finish = async (
+  deps: FlowDeps,
+  channelId: string,
+  outcome: {
+    guildId: string | null;
+    standings: Array<{ userId: string; points: number }>;
+    correct: Record<string, number>;
+  },
+  questionNumber: number
+): Promise<void> => {
+  // No guild means a DM, which has no leaderboard to write to.
+  if (outcome.guildId !== null) {
+    await deps.scores.record(
+      outcome.guildId,
+      outcome.standings.map((entry) => ({
+        userId: entry.userId,
+        points: entry.points,
+        correct: outcome.correct[entry.userId] ?? 0
+      }))
+    );
+  }
+  await deps.discord.post(
+    channelId,
+    scoresEmbed(outcome.standings, questionNumber)
+  );
+};
+
 /** Post the reveal, then either ask again or show the final standings. */
 const closeRound = async (
   deps: FlowDeps,
@@ -281,10 +336,13 @@ const closeRound = async (
   }
 
   if (result.final !== undefined) {
-    await deps.discord.post(
-      channelId,
-      scoresEmbed(result.final, view?.context.questionNumber ?? 0)
-    );
+    // The machine reached `finished` on this answer. `end` is what carries the
+    // guild and the correct counts, so it is called even though the standings
+    // are already in hand.
+    const outcome = await deps.session.end();
+    if (outcome !== null) {
+      await finish(deps, channelId, outcome, view?.context.questionNumber ?? 0);
+    }
     return;
   }
 
@@ -302,12 +360,9 @@ const closeRound = async (
 const advance = async (deps: FlowDeps, channelId: string): Promise<void> => {
   const view = await deps.session.current();
   if (view === null || view.state === `finished`) {
-    const standings = await deps.session.end();
-    if (standings !== null) {
-      await deps.discord.post(
-        channelId,
-        scoresEmbed(standings, view?.context.questionNumber ?? 0)
-      );
+    const outcome = await deps.session.end();
+    if (outcome !== null) {
+      await finish(deps, channelId, outcome, view?.context.questionNumber ?? 0);
     }
     return;
   }
@@ -321,12 +376,9 @@ const advance = async (deps: FlowDeps, channelId: string): Promise<void> => {
     settings.config.length !== null &&
     settings.questionNumber >= settings.config.length
   ) {
-    const standings = await deps.session.end();
-    if (standings !== null) {
-      await deps.discord.post(
-        channelId,
-        scoresEmbed(standings, settings.questionNumber)
-      );
+    const outcome = await deps.session.end();
+    if (outcome !== null) {
+      await finish(deps, channelId, outcome, settings.questionNumber);
     }
     return;
   }
