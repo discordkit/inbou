@@ -1,3 +1,4 @@
+import * as v from "valibot";
 import type { RawOptions } from "./config.js";
 
 /**
@@ -9,6 +10,11 @@ import type { RawOptions } from "./config.js";
  * the command handler and, more usefully, makes it testable — an interaction
  * payload is tedious to construct, and the nesting is exactly where a mistake
  * silently drops every option a player typed.
+ *
+ * This is the one place the bot reads data it did not construct, so the shape
+ * is checked rather than asserted. A cast would compile against a payload that
+ * had drifted and then read `undefined` from it, which surfaces as a command
+ * that quietly runs with defaults.
  */
 
 /** The nested option shape Discord sends, narrowed to what is read here. */
@@ -17,6 +23,20 @@ export interface InteractionOption {
   value?: string | number | boolean;
   options?: InteractionOption[];
 }
+
+/**
+ * The same shape, as a schema.
+ *
+ * Recursive via `v.lazy`, because a subcommand's options are options. Only the
+ * fields this module reads are described — Discord sends more, and demanding a
+ * complete model would fail on additions that do not concern the quiz.
+ */
+export const interactionOptionSchema: v.GenericSchema<InteractionOption> =
+  v.object({
+    name: v.string(),
+    value: v.optional(v.union([v.string(), v.number(), v.boolean()])),
+    options: v.optional(v.array(v.lazy(() => interactionOptionSchema)))
+  });
 
 /** The subcommand invoked, and the options belonging to it. */
 export interface Invocation {
@@ -43,10 +63,13 @@ const isSubcommand = (option: InteractionOption): boolean =>
  * parsing — Discord's own types would let `length` arrive as a number, and
  * having two paths into the same validation is how they drift apart.
  */
-export const readOptions = (
-  options: readonly InteractionOption[] | undefined
-): Invocation => {
-  const list = options ?? [];
+export const readOptions = (options: unknown): Invocation => {
+  // Validated rather than cast: this is data Discord sent, not data the bot
+  // built. A payload that failed the shape reads as a command with no options,
+  // which is the same as someone typing `/quiz start` — a safe default rather
+  // than a crash mid-interaction.
+  const parsed = v.safeParse(v.array(interactionOptionSchema), options ?? []);
+  const list = parsed.success ? parsed.output : [];
   const sub = list.find(isSubcommand);
   const own = sub === undefined ? list : (sub.options ?? []);
 
@@ -71,4 +94,17 @@ export const readOptions = (
     ...(sub === undefined ? {} : { subcommand: sub.name }),
     options: raw
   };
+};
+
+/**
+ * The custom id a component interaction carries.
+ *
+ * `interaction.data` is a union — an application command has `name` and
+ * `options`, a component has `customId` — so reading one arm without checking
+ * is how a drifted payload becomes a button that silently routes nowhere.
+ * Returns null when the shape is not a component's, which the caller reports.
+ */
+export const readCustomId = (data: unknown): string | null => {
+  const parsed = v.safeParse(v.object({ customId: v.string() }), data);
+  return parsed.success ? parsed.output.customId : null;
 };

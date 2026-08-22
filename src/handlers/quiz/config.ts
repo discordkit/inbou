@@ -1,3 +1,4 @@
+import { boundedInteger } from "@discordkit/core/validations/boundedInteger";
 import * as v from "valibot";
 import { FORMS, type Form, type WordType } from "./forms.js";
 import type { Filters } from "./question.js";
@@ -109,6 +110,10 @@ const listOf = <T>(
 ): v.GenericSchema<string, T[]> =>
   v.pipe(
     v.string(),
+    // The help text lives on the schema, so the error a player sees and the
+    // description Discord shows on the option come from one place. Two copies
+    // of "what is allowed here" is how they end up disagreeing.
+    v.description(allowed),
     v.rawTransform<string, T[]>(({ dataset, addIssue, NEVER }) => {
       const out: T[] = [];
       for (const { typed, key } of parts(dataset.value)) {
@@ -164,14 +169,22 @@ const lengthSchema = v.pipe(
   v.rawTransform<string, number | null>(({ dataset, addIssue, NEVER }) => {
     const value = dataset.value.trim().toLowerCase();
     if (value === `endless` || value === `infinite`) return null;
-    const n = Number(value);
-    if (!Number.isInteger(n) || n < 1 || n > 50) {
+
+    // `boundedInteger` from @discordkit/core does the bound; its own message is
+    // wrapped away because it surfaces straight into a Discord reply, and it
+    // reports the input's string length rather than its value (99 renders as
+    // "2"). Reported upstream; the bound itself is correct.
+    const parsed = v.safeParse(
+      boundedInteger({ min: 1, max: 50 }),
+      Number(value)
+    );
+    if (!parsed.success) {
       addIssue({
         message: `\`${dataset.value}\` is not a session length. Use 1 to 50, or \`endless\`.`
       });
       return NEVER;
     }
-    return n;
+    return parsed.output;
   })
 );
 
@@ -189,13 +202,17 @@ const timeoutSchema = v.pipe(
     const amount = match === null ? Number.NaN : Number(match[1]);
     const ms = match?.[2] === `m` ? amount * 60_000 : amount * 1000;
 
-    if (!Number.isFinite(ms) || ms < 30_000 || ms > 600_000) {
+    const parsed = v.safeParse(
+      boundedInteger({ min: 30_000, max: 600_000 }),
+      ms
+    );
+    if (!parsed.success) {
       addIssue({
         message: `\`${dataset.value}\` is not a timeout. Use 30s to 10m.`
       });
       return NEVER;
     }
-    return ms;
+    return parsed.output;
   })
 );
 
@@ -208,14 +225,17 @@ const timeoutSchema = v.pipe(
 const guessesSchema = v.pipe(
   v.string(),
   v.rawTransform<string, number>(({ dataset, addIssue, NEVER }) => {
-    const n = Number(dataset.value.trim());
-    if (!Number.isInteger(n) || n < 1 || n > 10) {
+    const parsed = v.safeParse(
+      boundedInteger({ min: 1, max: 10 }),
+      Number(dataset.value.trim())
+    );
+    if (!parsed.success) {
       addIssue({
         message: `\`${dataset.value}\` is not a guess count. Use 1 to 10.`
       });
       return NEVER;
     }
-    return n;
+    return parsed.output;
   })
 );
 
@@ -320,3 +340,21 @@ export const parseSettings = (
 export const isSettings = (
   result: QuizSettings | { errors: SettingError[] }
 ): result is QuizSettings => !(`errors` in result);
+
+/**
+ * What each option accepts, in the words the player is shown.
+ *
+ * Read off the schemas rather than written out again, so the description
+ * Discord displays on an option, the text in an error message and the rule
+ * that enforces it cannot drift apart. `scripts/register-commands.mjs` imports
+ * this.
+ */
+export const OPTION_HELP: Record<keyof RawOptions, string> = {
+  level: v.getDescription(levelSchema) ?? ``,
+  type: v.getDescription(typeSchema) ?? ``,
+  class: v.getDescription(classSchema) ?? ``,
+  forms: v.getDescription(formsSchema) ?? ``,
+  length: `Questions per session, 1 to 50, or \`endless\`.`,
+  timeout: `How long each question stays open, 30s to 10m.`,
+  guesses: `Attempts per player per question, 1 to 10.`
+};

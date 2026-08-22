@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { readOptions } from "../quiz/options.js";
+import { readCustomId, readOptions } from "../quiz/options.js";
 
 describe(`readOptions: unwrapping a slash command`, () => {
   it(`finds options nested under a subcommand`, () => {
@@ -60,5 +60,27 @@ describe(`readOptions: unwrapping a slash command`, () => {
     ]);
 
     expect(invocation.options).toEqual({});
+  });
+});
+
+describe(`validating what Discord actually sent`, () => {
+  it(`falls back to no options when the payload is the wrong shape`, () => {
+    // WHY: this is the one place the bot reads data it did not build. A cast
+    // would compile against a drifted payload and then read `undefined` from
+    // it, which surfaces as a command quietly running with defaults and no way
+    // to tell that is what happened. Validating makes the fallback deliberate.
+    expect(readOptions(`not an array`)).toEqual({ options: {} });
+    expect(readOptions([{ notAnOption: true }])).toEqual({ options: {} });
+    expect(readOptions(null)).toEqual({ options: {} });
+  });
+
+  it(`reads a component's custom id, and only a component's`, () => {
+    // WHY: `interaction.data` is a union — a command carries `name`, a
+    // component carries `customId`. Reading one arm without checking is how a
+    // button silently routes nowhere while the player sees "this interaction
+    // failed".
+    expect(readCustomId({ customId: `quiz:hint` })).toBe(`quiz:hint`);
+    expect(readCustomId({ name: `quiz`, options: [] })).toBeNull();
+    expect(readCustomId(undefined)).toBeNull();
   });
 });

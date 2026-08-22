@@ -4,7 +4,7 @@ import { diagnostics } from "./diagnostics.js";
 import type { DiscordEffects } from "./discord.js";
 import { isSettings, parseSettings } from "./quiz/config.js";
 import { startSession, type FlowDeps } from "./quiz/flow.js";
-import { readOptions } from "./quiz/options.js";
+import { readCustomId, readOptions } from "./quiz/options.js";
 import { BUTTON, hintEmbed, scoresEmbed } from "./quiz/render.js";
 
 /**
@@ -170,8 +170,7 @@ export const handleCommand = async (
   // without typing — which matters in a channel where typing is how you answer.
   if (interaction.type === InteractionType.MESSAGE_COMPONENT) {
     if (channelId === undefined || channelId === null) return;
-    const customId = (interaction.data as { customId?: string } | undefined)
-      ?.customId;
+    const customId = readCustomId(interaction.data);
 
     if (customId === BUTTON.hint) {
       await hint(deps, interaction);
