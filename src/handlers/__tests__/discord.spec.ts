@@ -38,6 +38,17 @@ const server = setupServer(
       return HttpResponse.json({ id: `posted-1` });
     }
   ),
+  http.post(
+    `${API}/interactions/:interaction/:token/callback`,
+    async ({ request, params }) => {
+      seen.push({
+        method: `POST`,
+        url: `/interactions/${String(params.interaction)}/callback`,
+        body: await request.json()
+      });
+      return new HttpResponse(null, { status: 204 });
+    }
+  ),
   http.put(
     `${API}/channels/:channel/messages/:message/reactions/:emoji/@me`,
     ({ request, params }) => {
@@ -145,6 +156,83 @@ describe(`the Discord effects layer`, () => {
 
       await expect(
         discordEffects.react(`chan-1`, `msg-1`, `❌`)
+      ).resolves.toBeUndefined();
+    });
+  });
+
+  describe(`plain text`, () => {
+    it(`posts content without an embed`, async () => {
+      // WHY: `say` is what reports a filter that matched nothing, so a player
+      // who mistyped their level learns why nothing happened. Sending it as an
+      // embed would be heavier than the message deserves.
+      const id = await discordEffects.say(`chan-1`, `No words match that.`);
+
+      expect(id).toBe(`posted-1`);
+      expect(seen[0]?.body).toEqual({ content: `No words match that.` });
+    });
+
+    it(`returns null rather than throwing when refused`, async () => {
+      // WHY: same contract as `post`. A failed notice must not abandon the
+      // round it was reporting on.
+      server.use(
+        http.post(`${API}/channels/:channel/messages`, () =>
+          HttpResponse.json({ message: `Missing Access` }, { status: 403 })
+        )
+      );
+
+      await expect(discordEffects.say(`chan-1`, `hello`)).resolves.toBeNull();
+    });
+  });
+
+  describe(`replying to an interaction`, () => {
+    const interaction = {
+      id: `interaction-1`,
+      token: `tok`
+    } as unknown as Parameters<typeof discordEffects.reply>[0];
+
+    it(`marks a reply ephemeral, which is what makes /hint private`, async () => {
+      // WHY: the ephemeral flag is the only reason `/hint` and `/review` work
+      // at all — Discord offers no other way to answer one person in a busy
+      // channel. Losing the flag would broadcast the answer to everyone
+      // racing, and nothing else in the system would notice.
+      await discordEffects.reply(interaction, {
+        content: `A hint`,
+        ephemeral: true
+      });
+
+      const body = seen[0]?.body as { data?: { flags?: number } };
+      expect(body.data?.flags).toBe(64);
+    });
+
+    it(`omits the flag when the reply is public`, async () => {
+      // WHY: the counterpart. Always setting it would make every reply
+      // invisible to the channel, including ones meant to be seen.
+      await discordEffects.reply(interaction, { content: `Session ended.` });
+
+      const body = seen[0]?.body as { data?: { flags?: number } };
+      expect(body.data?.flags).toBeUndefined();
+    });
+
+    it(`sends an embed when given one`, async () => {
+      // WHY: `/review` and `/hint` reply with an embed rather than text, so a
+      // reply that dropped it would answer with an empty message.
+      await discordEffects.reply(interaction, { embed, ephemeral: true });
+
+      const body = seen[0]?.body as { data?: { embeds?: unknown[] } };
+      expect(body.data?.embeds).toHaveLength(1);
+    });
+
+    it(`does not throw when the interaction has already expired`, async () => {
+      // WHY: an interaction token is valid for three seconds. A slow session
+      // read can miss that window, and the round must continue regardless.
+      server.use(
+        http.post(`${API}/interactions/:interaction/:token/callback`, () =>
+          HttpResponse.json({ message: `Unknown interaction` }, { status: 404 })
+        )
+      );
+
+      await expect(
+        discordEffects.reply(interaction, { content: `late` })
       ).resolves.toBeUndefined();
     });
   });

@@ -5,10 +5,15 @@ import {
   BUTTON,
   classLabel,
   hintEmbed,
+  introEmbed,
+  leaderboardEmbed,
   questionButtons,
   questionEmbed,
   revealEmbed,
+  reviewEmbed,
   scoresEmbed,
+  standingEmbed,
+  standingsEmbed,
   withReading
 } from "../quiz/render.js";
 
@@ -220,5 +225,131 @@ describe(`questionButtons`, () => {
     expect(row?.type).toBe(ComponentType.ActionRow);
     const buttons = Array.isArray(row?.components) ? row.components : [];
     expect(buttons.every((b) => b.type === ComponentType.Button)).toBe(true);
+  });
+});
+
+describe(`leaderboardEmbed`, () => {
+  const standing = (userId: string, points: number, sessions = 1) => ({
+    userId,
+    points,
+    correct: 2,
+    sessions
+  });
+
+  it(`shows points and accuracy for each player`, () => {
+    // WHY: points reward speed as much as knowledge, so a careful player needs
+    // the correct count beside them to see their own progress.
+    const embed = leaderboardEmbed([
+      standing(`drake`, 20),
+      standing(`mika`, 9)
+    ]);
+
+    expect(embed.description).toContain(`<@drake>`);
+    expect(embed.description).toContain(`20`);
+    expect(embed.description).toContain(`2 correct`);
+  });
+
+  it(`tells an empty server how to start`, () => {
+    // WHY: an empty leaderboard is a normal state, not an error. Saying only
+    // "nobody has played" leaves the reader with nothing to do about it.
+    expect(leaderboardEmbed([]).description).toContain(`/quiz start`);
+  });
+
+  it(`writes one session in the singular`, () => {
+    // WHY: "1 sessions" is the kind of detail that makes a bot feel unfinished.
+    expect(leaderboardEmbed([standing(`drake`, 4, 1)]).description).toContain(
+      `1 session`
+    );
+    expect(
+      leaderboardEmbed([standing(`drake`, 4, 1)]).description
+    ).not.toContain(`1 sessions`);
+  });
+});
+
+describe(`standingEmbed`, () => {
+  it(`reports one player's totals`, () => {
+    const embed = standingEmbed(`drake`, {
+      points: 12,
+      correct: 4,
+      sessions: 3
+    });
+
+    expect(embed.description).toContain(`<@drake>`);
+    expect(embed.description).toContain(`12`);
+  });
+
+  it(`says when somebody has never played here`, () => {
+    // WHY: `/quiz scores @newcomer` is a normal thing to type. Showing zeroes
+    // would be indistinguishable from having played and scored nothing.
+    expect(standingEmbed(`newcomer`, null).description).toContain(`not`);
+  });
+});
+
+describe(`reviewEmbed`, () => {
+  const miss = { question: uru, answer: `うらなかった`, questionNumber: 7 };
+
+  it(`shows what they typed beside the right answer`, () => {
+    // WHY: this is the whole point of `/review` — the public reveal lists
+    // everybody's attempts together, so finding your own is work.
+    const embed = reviewEmbed(miss, true);
+
+    expect(embed.title).toBe(`Your last miss`);
+    expect(JSON.stringify(embed)).toContain(`うらなかった`);
+    expect(JSON.stringify(embed)).toContain(`売らない`);
+  });
+
+  it(`omits the typed answer for somebody who did not attempt it`, () => {
+    // WHY: the fallback is for a latecomer who missed the reveal. Showing them
+    // an empty "You typed ❌" line would read as though they had answered.
+    const embed = reviewEmbed({ ...miss, answer: `` }, false);
+
+    expect(embed.title).toBe(`Last question`);
+    expect(embed.fields?.some((f) => f.name === `You typed`)).toBe(false);
+  });
+});
+
+describe(`introEmbed`, () => {
+  const settings = {
+    filters: { levels: [5], types: [`verb`, `adj-i`] as const },
+    session: { length: 10, timeoutMs: 60_000, guesses: 3 }
+  };
+
+  it(`states the rules the session will actually run by`, () => {
+    // WHY: the numbers here are read off the session's own config. Hard-coding
+    // any of them would promise the channel one thing and play another.
+    const embed = introEmbed(
+      { ...settings, filters: { ...settings.filters, types: [`verb`] } },
+      10
+    );
+
+    expect(JSON.stringify(embed)).toContain(`60s`);
+    expect(JSON.stringify(embed)).toContain(`10 seconds`);
+    // Points for a first-guess answer is guesses + 1.
+    expect(JSON.stringify(embed)).toContain(`4 points`);
+  });
+
+  it(`says Endless rather than a number for an endless session`, () => {
+    // WHY: `null` length means endless, and printing it raw would show "null".
+    const embed = introEmbed(
+      {
+        ...settings,
+        filters: { ...settings.filters, types: [`verb`] },
+        session: { ...settings.session, length: null }
+      },
+      10
+    );
+
+    expect(JSON.stringify(embed)).toContain(`Endless`);
+  });
+});
+
+describe(`standingsEmbed`, () => {
+  it(`reports progress partway through a session`, () => {
+    // WHY: posted every tenth question so a long run has a visible shape. It
+    // must read as an update, not as the session having ended.
+    const embed = standingsEmbed([{ userId: `drake`, points: 8 }], 10, 30);
+
+    expect(JSON.stringify(embed)).toContain(`drake`);
+    expect(embed.title).not.toContain(`complete`);
   });
 });

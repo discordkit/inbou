@@ -3,6 +3,7 @@ import type { Interaction } from "@discordkit/client/interactions/types/Interact
 import { describe, expect, it } from "vitest";
 import { conjugationQuiz } from "../quiz/conjugation.js";
 import { handleCommand, type CommandDeps } from "../commands.js";
+import { BUTTON } from "../quiz/render.js";
 import type { DiscordEffects } from "../discord.js";
 import type { SessionPort } from "../quiz/flow.js";
 import type { Question, Word } from "../quiz/question.js";
@@ -340,5 +341,113 @@ describe(`commands the bot does not have`, () => {
 
     expect(replies[0]?.content).toContain(`do not have a handler`);
     expect(replies[0]?.ephemeral).toBe(true);
+  });
+});
+
+describe(`the buttons under a question`, () => {
+  /** A component interaction, which carries a customId instead of a name. */
+  const press = (customId: string): Interaction =>
+    ({
+      type: 3,
+      channelId: `chan`,
+      guildId: `g1`,
+      member: { user: { id: `drake` } },
+      data: { customId }
+    }) as unknown as Interaction;
+
+  it(`gives a hint from the Hint button`, async () => {
+    // WHY: the buttons exist so nobody has to type a command in a channel
+    // where typing is how you answer. They must do exactly what the slash
+    // command does, including staying private.
+    const { deps: d, replies } = deps(`asking`, scoresWith(), { question });
+    await handleCommand(d, press(BUTTON.hint));
+
+    expect(replies[0]?.embed?.title).toBe(`Hint`);
+    expect(replies[0]?.ephemeral).toBe(true);
+  });
+
+  it(`ends the session from the End button`, async () => {
+    const { deps: d, replies } = deps(`asking`, scoresWith(), { question });
+    await handleCommand(d, press(BUTTON.end));
+
+    expect(replies[0]?.content).toContain(`ended`);
+  });
+
+  it(`answers an unrecognised button instead of going quiet`, async () => {
+    // WHY: a stale message keeps its buttons forever. Pressing one after the
+    // ids have changed must not leave the interaction unanswered, which shows
+    // "the application did not respond".
+    const { deps: d } = deps(`asking`, scoresWith(), { question });
+    await expect(
+      handleCommand(d, press(`quiz:obsolete`))
+    ).resolves.toBeUndefined();
+  });
+});
+
+describe(`asking for a hint`, () => {
+  const hintCommand = (): Interaction =>
+    ({
+      type: 2,
+      channelId: `chan`,
+      guildId: `g1`,
+      member: { user: { id: `drake` } },
+      data: { name: `hint` }
+    }) as unknown as Interaction;
+
+  it(`gives the reading and meaning, privately`, async () => {
+    // WHY: ephemeral is the whole design. A public hint would end the race for
+    // everybody still working on the answer.
+    const {
+      deps: d,
+      replies,
+      posts
+    } = deps(`asking`, scoresWith(), {
+      question
+    });
+    await handleCommand(d, hintCommand());
+
+    expect(replies[0]?.ephemeral).toBe(true);
+    expect(JSON.stringify(replies[0]?.embed)).toContain(`to sell`);
+    expect(posts).toEqual([]);
+  });
+
+  it(`refuses when no question is open`, async () => {
+    // WHY: `revealing` means the answer is already on screen, and hinting at a
+    // question nobody is being asked would be nonsense.
+    const { deps: d, replies } = deps(`revealing`, scoresWith(), { question });
+    await handleCommand(d, hintCommand());
+
+    expect(replies[0]?.content).toContain(`No question is open`);
+    expect(replies[0]?.embed).toBeUndefined();
+  });
+});
+
+describe(`reconfiguring a running session`, () => {
+  const configure = (options: unknown[]): Interaction =>
+    ({
+      type: 2,
+      channelId: `chan`,
+      guildId: `g1`,
+      data: { name: `quiz`, options: [{ name: `config`, options }] }
+    }) as unknown as Interaction;
+
+  it(`applies settings from the next question`, async () => {
+    // WHY: `/quiz config` never takes effect mid-question — moving a deadline
+    // players are already racing would be unfair. The reply says so.
+    const { deps: d, replies } = deps(`asking`, scoresWith(), { question });
+    await handleCommand(d, configure([{ name: `timeout`, value: `2m` }]));
+
+    expect(replies[0]?.content).toContain(`next question`);
+    expect(replies[0]?.ephemeral).toBe(true);
+  });
+
+  it(`reports a bad value instead of applying it`, async () => {
+    // WHY: silently ignoring a typo would leave the session running settings
+    // nobody chose, with the player believing they had changed them.
+    const { deps: d, replies } = deps(`asking`, scoresWith(), { question });
+    await handleCommand(d, configure([{ name: `timeout`, value: `9h` }]));
+
+    expect(replies[0]?.content).toContain(`9h`);
+    expect(replies[0]?.content).not.toContain(`next question`);
   });
 });
