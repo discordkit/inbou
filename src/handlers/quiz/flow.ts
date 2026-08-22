@@ -1,3 +1,4 @@
+import { diagnostics } from "../diagnostics.js";
 import type { DiscordEffects } from "../discord.js";
 import type { ScorePort } from "../scores.js";
 import { judge, looksLikeAnswer } from "./answer.js";
@@ -293,14 +294,26 @@ export const finish = async (
 ): Promise<void> => {
   // No guild means a DM, which has no leaderboard to write to.
   if (outcome.guildId !== null) {
-    await deps.scores.record(
-      outcome.guildId,
-      outcome.standings.map((entry) => ({
-        userId: entry.userId,
-        points: entry.points,
-        correct: outcome.correct[entry.userId] ?? 0
-      }))
-    );
+    // Guarded rather than trusted. `d1Scores` swallows its own failures, but
+    // that is its promise to keep, not a fact this function can rely on — and
+    // if it ever breaks, the session people just played must still end with
+    // the standings they earned. The leaderboard is a record of play, not part
+    // of it.
+    try {
+      await deps.scores.record(
+        outcome.guildId,
+        outcome.standings.map((entry) => ({
+          userId: entry.userId,
+          points: entry.points,
+          correct: outcome.correct[entry.userId] ?? 0
+        }))
+      );
+    } catch (error) {
+      diagnostics.SCORES_UNAVAILABLE({
+        action: `record a finished session`,
+        detail: error instanceof Error ? error.message : String(error)
+      });
+    }
   }
   await deps.discord.post(
     channelId,

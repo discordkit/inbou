@@ -1,3 +1,4 @@
+import type { Embed } from "@discordkit/client";
 import { describe, expect, it } from "vitest";
 import type { DiscordEffects } from "../discord.js";
 import { DEFAULT_SETTINGS } from "../quiz/config.js";
@@ -28,7 +29,7 @@ import type { ScorePort } from "../scores.js";
 
 /** Records what the bot would have sent. */
 const recorder = () => {
-  const posts: { channelId: string; embed: unknown }[] = [];
+  const posts: { channelId: string; embed: Embed }[] = [];
   const says: { channelId: string; content: string }[] = [];
   const reactions: { messageId: string; emoji: string }[] = [];
 
@@ -510,5 +511,46 @@ describe(`banking a finished session`, () => {
     expect(d.recorded[0]?.results).toEqual([
       { userId: `u1`, points: 2, correct: 1 }
     ]);
+  });
+});
+
+describe(`when something downstream is broken`, () => {
+  it(`still posts the standings when the leaderboard write fails`, async () => {
+    // WHY: the leaderboard is a record of play, not part of it. A database
+    // outage must not swallow the result of a session people just spent ten
+    // minutes on — they should see who won even if nobody can look it up
+    // later.
+    const d = deps();
+    d.scores.record = async () => Promise.reject(new Error(`D1 unavailable`));
+    await play(d, {
+      ...DEFAULT_SETTINGS,
+      session: { ...DEFAULT_SETTINGS.session, length: 1 }
+    });
+
+    await expect(
+      handleAnswer(d, `chan`, `m1`, `u1`, `うる`)
+    ).resolves.toBeUndefined();
+    expect(d.posts.map((post) => post.embed.title)).toContain(
+      `Session complete`
+    );
+  });
+
+  it(`ends the session even when posting the reveal fails`, async () => {
+    // WHY: Discord returns 403 for a missing permission and 429 when rate
+    // limited, and neither should strand a session `asking` forever — the
+    // channel would be stuck with a question that can never close.
+    const d = deps();
+    await play(d, {
+      ...DEFAULT_SETTINGS,
+      session: { ...DEFAULT_SETTINGS.session, length: 1 }
+    });
+    d.discord.post = async () => Promise.resolve(null);
+
+    await handleAnswer(d, `chan`, `m1`, `u1`, `うる`);
+
+    const view = await d.session.current();
+    expect(view?.state).toBe(`finished`);
+    // The scores were still banked, because recording happens first.
+    expect(d.recorded).toHaveLength(1);
   });
 });
