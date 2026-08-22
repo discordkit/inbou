@@ -1,5 +1,11 @@
 # Changelog
 
+
+## 1.0.1
+<sub>2026-08-22</sub>
+
+- [#4](https://github.com/discordkit/inbou/pull/4)  *(patch)* Thanks [@Saeris](https://github.com/Saeris)! - Record deployments in a production GitHub Environment
+
 ## 1.0.0
 <sub>2026-08-22</sub>
 
