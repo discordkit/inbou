@@ -1,3 +1,4 @@
+import * as v from "valibot";
 import { FORMS, type Form, type WordType } from "./forms.js";
 import type { Filters } from "./question.js";
 import { DEFAULT_CONFIG, type SessionConfig } from "./machine.js";
@@ -90,71 +91,66 @@ const parts = (raw: string): Array<{ typed: string; key: string }> =>
     .filter((p) => p !== ``)
     .map((typed) => ({ typed, key: typed.toLowerCase() }));
 
-const parseLevels = (raw: string): number[] | SettingError => {
-  const levels: number[] = [];
-  for (const { typed, key } of parts(raw)) {
-    if (key === `any` || key === `all`) return [];
-    const match = /^n?([1-5])$/u.exec(key);
-    if (match === null) {
-      return {
-        option: `level`,
-        message: `\`${typed}\` is not a JLPT level. Use N5 to N1, or \`any\`.`
-      };
-    }
-    levels.push(Number(match[1]));
-  }
-  return levels;
-};
+/**
+ * A comma-separated option, mapped one part at a time.
+ *
+ * `expand` returns the values a part means, or null if it is not one — `godan`
+ * expands to nine classes, and an empty result means "no filter", which is how
+ * `any` and `all` are expressed.
+ *
+ * A schema rather than a hand-rolled function because these options *parse*
+ * rather than merely validate: a string goes in and a different shape comes
+ * out. `pipe(string, rawTransform)` says exactly that, and keeps each failure
+ * message beside the rule that produced it.
+ */
+const listOf = <T>(
+  expand: (key: string) => readonly T[] | null,
+  allowed: string
+): v.GenericSchema<string, T[]> =>
+  v.pipe(
+    v.string(),
+    v.rawTransform<string, T[]>(({ dataset, addIssue, NEVER }) => {
+      const out: T[] = [];
+      for (const { typed, key } of parts(dataset.value)) {
+        const values = expand(key);
+        if (values === null) {
+          addIssue({ message: `\`${typed}\` is not valid. ${allowed}` });
+          return NEVER;
+        }
+        // An empty expansion means "everything", which is the empty filter.
+        if (values.length === 0) return [];
+        out.push(...values);
+      }
+      return out;
+    })
+  );
 
-const parseTypes = (raw: string): WordType[] | SettingError => {
-  const types: WordType[] = [];
-  for (const { typed, key } of parts(raw)) {
-    const type = WORD_TYPES[key];
-    if (type === undefined) {
-      return {
-        option: `type`,
-        message: `\`${typed}\` is not a word type. Use verb, adj-i, adj-na or noun.`
-      };
-    }
-    types.push(type);
-  }
-  return types;
-};
+/** JLPT levels. `any` clears the filter, which is how unlevelled words become reachable. */
+const levelSchema = listOf<number>((key) => {
+  if (key === `any` || key === `all`) return [];
+  const match = /^n?([1-5])$/u.exec(key);
+  return match === null ? null : [Number(match[1])];
+}, `Use N5 to N1, or \`any\`.`);
 
-const parseClasses = (raw: string): VerbClass[] | SettingError => {
-  const classes: VerbClass[] = [];
-  for (const { typed, key } of parts(raw)) {
-    const expanded = VERB_CLASSES[key];
-    if (expanded === undefined) {
-      return {
-        option: `class`,
-        message: `\`${typed}\` is not a verb class. Use ichidan, godan, suru or kuru.`
-      };
-    }
-    classes.push(...expanded);
-  }
-  return classes;
-};
+const typeSchema = listOf<WordType>((key) => {
+  const type = WORD_TYPES[key];
+  return type === undefined ? null : [type];
+}, `Use verb, adj-i, adj-na or noun.`);
 
-const parseForms = (raw: string): Form[] | SettingError => {
-  const forms: Form[] = [];
-  for (const { typed, key } of parts(raw)) {
+const classSchema = listOf<VerbClass>(
+  (key) => VERB_CLASSES[key] ?? null,
+  `Use ichidan, godan, suru or kuru.`
+);
+
+const formsSchema = listOf<Form>(
+  (key) => {
     if (key === `all`) return [];
-    if (key === `basics`) {
-      forms.push(...BASICS);
-      continue;
-    }
+    if (key === `basics`) return BASICS;
     const form = FORMS.find((f) => f === key);
-    if (form === undefined) {
-      return {
-        option: `forms`,
-        message: `\`${typed}\` is not a form. Use \`basics\`, \`all\`, or one of: ${FORMS.join(`, `)}.`
-      };
-    }
-    forms.push(form);
-  }
-  return forms;
-};
+    return form === undefined ? null : [form];
+  },
+  `Use \`basics\`, \`all\`, or one of: ${FORMS.join(`, `)}.`
+);
 
 /**
  * Session length: a number of questions, or endless.
@@ -163,18 +159,21 @@ const parseForms = (raw: string): Form[] | SettingError => {
  * session would hold the channel hostage, and `endless` already covers "keep
  * going until we stop".
  */
-const parseLength = (raw: string): number | null | SettingError => {
-  const value = raw.trim().toLowerCase();
-  if (value === `endless` || value === `infinite`) return null;
-  const n = Number(value);
-  if (!Number.isInteger(n) || n < 1 || n > 50) {
-    return {
-      option: `length`,
-      message: `\`${raw}\` is not a session length. Use 1 to 50, or \`endless\`.`
-    };
-  }
-  return n;
-};
+const lengthSchema = v.pipe(
+  v.string(),
+  v.rawTransform<string, number | null>(({ dataset, addIssue, NEVER }) => {
+    const value = dataset.value.trim().toLowerCase();
+    if (value === `endless` || value === `infinite`) return null;
+    const n = Number(value);
+    if (!Number.isInteger(n) || n < 1 || n > 50) {
+      addIssue({
+        message: `\`${dataset.value}\` is not a session length. Use 1 to 50, or \`endless\`.`
+      });
+      return NEVER;
+    }
+    return n;
+  })
+);
 
 /**
  * A timeout, written the way people write durations.
@@ -183,20 +182,22 @@ const parseLength = (raw: string): number | null | SettingError => {
  * thirty seconds nobody can type a conjugation in time, and over ten minutes
  * the session has stalled rather than being slow.
  */
-const parseTimeout = (raw: string): number | SettingError => {
-  const value = raw.trim().toLowerCase();
-  const match = /^(\d+)(s|m|)$/u.exec(value);
-  const amount = match === null ? Number.NaN : Number(match[1]);
-  const ms = match?.[2] === `m` ? amount * 60_000 : amount * 1000;
+const timeoutSchema = v.pipe(
+  v.string(),
+  v.rawTransform<string, number>(({ dataset, addIssue, NEVER }) => {
+    const match = /^(\d+)(s|m|)$/u.exec(dataset.value.trim().toLowerCase());
+    const amount = match === null ? Number.NaN : Number(match[1]);
+    const ms = match?.[2] === `m` ? amount * 60_000 : amount * 1000;
 
-  if (!Number.isFinite(ms) || ms < 30_000 || ms > 600_000) {
-    return {
-      option: `timeout`,
-      message: `\`${raw}\` is not a timeout. Use 30s to 10m.`
-    };
-  }
-  return ms;
-};
+    if (!Number.isFinite(ms) || ms < 30_000 || ms > 600_000) {
+      addIssue({
+        message: `\`${dataset.value}\` is not a timeout. Use 30s to 10m.`
+      });
+      return NEVER;
+    }
+    return ms;
+  })
+);
 
 /**
  * How many attempts each player gets per question.
@@ -204,19 +205,19 @@ const parseTimeout = (raw: string): number | SettingError => {
  * Bounded above because more attempts than there are plausible conjugations
  * turns the race into brute force, and the point taper would bottom out anyway.
  */
-const parseGuesses = (raw: string): number | SettingError => {
-  const n = Number(raw.trim());
-  if (!Number.isInteger(n) || n < 1 || n > 10) {
-    return {
-      option: `guesses`,
-      message: `\`${raw}\` is not a guess count. Use 1 to 10.`
-    };
-  }
-  return n;
-};
-
-const isError = (value: unknown): value is SettingError =>
-  typeof value === `object` && value !== null && `option` in value;
+const guessesSchema = v.pipe(
+  v.string(),
+  v.rawTransform<string, number>(({ dataset, addIssue, NEVER }) => {
+    const n = Number(dataset.value.trim());
+    if (!Number.isInteger(n) || n < 1 || n > 10) {
+      addIssue({
+        message: `\`${dataset.value}\` is not a guess count. Use 1 to 10.`
+      });
+      return NEVER;
+    }
+    return n;
+  })
+);
 
 /** The options a command can carry, as raw strings. */
 export interface RawOptions {
@@ -261,48 +262,58 @@ export const parseSettings = (
   base: QuizSettings = DEFAULT_SETTINGS
 ): QuizSettings | { errors: SettingError[] } => {
   const errors: SettingError[] = [];
-  const settings: QuizSettings = {
-    filters: { ...base.filters },
-    session: { ...base.session }
+  const filters: Filters = { ...base.filters };
+  const session: SessionConfig = { ...base.session };
+
+  /**
+   * Parse one option, or record why it could not be.
+   *
+   * Every option is attempted even after one fails, so a player who mistyped
+   * two of them is told both at once rather than discovering the second after
+   * fixing the first.
+   */
+  const read = <T>(
+    option: keyof RawOptions,
+    schema: v.GenericSchema<string, T>,
+    apply: (value: T) => void
+  ): void => {
+    const value = raw[option];
+    if (value === undefined) return;
+
+    const result = v.safeParse(schema, value);
+    if (result.success) {
+      apply(result.output);
+      return;
+    }
+    errors.push({
+      option,
+      message: result.issues[0]?.message ?? `\`${value}\` is not valid.`
+    });
   };
 
-  if (raw.level !== undefined) {
-    const levels = parseLevels(raw.level);
-    if (isError(levels)) errors.push(levels);
-    else settings.filters = { ...settings.filters, levels };
-  }
-  if (raw.type !== undefined) {
-    const types = parseTypes(raw.type);
-    if (isError(types)) errors.push(types);
-    else settings.filters = { ...settings.filters, types };
-  }
-  if (raw.class !== undefined) {
-    const classes = parseClasses(raw.class);
-    if (isError(classes)) errors.push(classes);
-    else settings.filters = { ...settings.filters, classes };
-  }
-  if (raw.forms !== undefined) {
-    const forms = parseForms(raw.forms);
-    if (isError(forms)) errors.push(forms);
-    else settings.filters = { ...settings.filters, forms };
-  }
-  if (raw.length !== undefined) {
-    const length = parseLength(raw.length);
-    if (isError(length)) errors.push(length);
-    else settings.session = { ...settings.session, length };
-  }
-  if (raw.timeout !== undefined) {
-    const timeoutMs = parseTimeout(raw.timeout);
-    if (isError(timeoutMs)) errors.push(timeoutMs);
-    else settings.session = { ...settings.session, timeoutMs };
-  }
-  if (raw.guesses !== undefined) {
-    const guesses = parseGuesses(raw.guesses);
-    if (isError(guesses)) errors.push(guesses);
-    else settings.session = { ...settings.session, guesses };
-  }
+  read(`level`, levelSchema, (levels) => {
+    filters.levels = levels;
+  });
+  read(`type`, typeSchema, (types) => {
+    filters.types = types;
+  });
+  read(`class`, classSchema, (classes) => {
+    filters.classes = classes;
+  });
+  read(`forms`, formsSchema, (forms) => {
+    filters.forms = forms;
+  });
+  read(`length`, lengthSchema, (length) => {
+    session.length = length;
+  });
+  read(`timeout`, timeoutSchema, (timeoutMs) => {
+    session.timeoutMs = timeoutMs;
+  });
+  read(`guesses`, guessesSchema, (guesses) => {
+    session.guesses = guesses;
+  });
 
-  return errors.length > 0 ? { errors } : settings;
+  return errors.length > 0 ? { errors } : { filters, session };
 };
 
 /** Narrow {@link parseSettings}'s return. */
