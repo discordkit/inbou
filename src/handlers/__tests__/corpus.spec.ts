@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import corpus from "../quiz/corpus.json";
+import corpus from "../quiz/corpus.json" with { type: "json" };
 import { formTable, formsFor, type WordType } from "../quiz/forms.js";
 import { judge } from "../quiz/answer.js";
 import { pose, type Word } from "../quiz/question.js";

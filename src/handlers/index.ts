@@ -3,7 +3,7 @@ import { handleCommand } from "./commands.js";
 import { discordEffects } from "./discord.js";
 import type { ForwardedEvent } from "./events.js";
 import { handleMessage } from "./messages.js";
-import corpus from "./quiz/corpus.json";
+import corpus from "./quiz/corpus.json" with { type: "json" };
 import {
   handleResume,
   handleTimeout,
