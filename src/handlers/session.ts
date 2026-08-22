@@ -38,6 +38,22 @@ import type { Filters, Question } from "./quiz/question.js";
 const KEY = `session`;
 
 /** A snapshot flattened for callers that only need to render it. */
+/**
+ * What a finished session leaves behind.
+ *
+ * Returned by {@link QuizSession.end} rather than assembled by the caller: the
+ * points, the guild and the correct counts all live in the machine's context,
+ * and reading them separately would mean three round trips to the object for
+ * one fact about one moment.
+ */
+export interface SessionOutcome {
+  /** Null in a DM, where there is no leaderboard to write to. */
+  guildId: string | null;
+  standings: Array<{ userId: string; points: number }>;
+  /** How many each player answered correctly, keyed by user id. */
+  correct: Record<string, number>;
+}
+
 export interface SessionView {
   state: `asking` | `revealing` | `paused` | `finished`;
   context: SessionContext;
@@ -116,11 +132,19 @@ export class QuizSession extends DurableObject<SessionEnv> {
   /** Begin a session, replacing any already running in this channel. */
   async begin(
     channelId: string,
+    guildId: string | null,
     question: Question,
     config: SessionConfig,
     filters: Filters
   ): Promise<SessionView> {
-    const actor = begin(channelId, question, config, filters, Date.now());
+    const actor = begin(
+      channelId,
+      guildId,
+      question,
+      config,
+      filters,
+      Date.now()
+    );
     await this.#save(actor);
     return view(actor.getSnapshot());
   }
@@ -280,13 +304,25 @@ export class QuizSession extends DurableObject<SessionEnv> {
     await this.#save(actor);
   }
 
-  /** End the session early, returning the final standings. */
-  async end(): Promise<Array<{ userId: string; points: number }> | null> {
+  /**
+   * End the session early, returning the final standings.
+   *
+   * The guild and the per-player correct counts come back with the points
+   * because this is the moment the session becomes a leaderboard entry, and
+   * the caller cannot recover either afterwards — `clear` drops the state, and
+   * the guild was never on the event that ends a timed-out session.
+   */
+  async end(): Promise<SessionOutcome | null> {
     const actor = await this.#load();
     if (actor === null) return null;
     actor.send({ type: `END` });
     await this.#save(actor);
-    return leaderboard(actor.getSnapshot().context);
+    const { context } = actor.getSnapshot();
+    return {
+      guildId: context.guildId,
+      standings: leaderboard(context),
+      correct: context.correct
+    };
   }
 
   /** Forget the session entirely, so the channel can start fresh. */

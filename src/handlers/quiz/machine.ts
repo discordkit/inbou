@@ -82,6 +82,16 @@ export const pointsFor = (wrongGuesses: number, guesses: number): number =>
 
 export interface SessionContext {
   channelId: string;
+  /**
+   * The guild this session belongs to, for the cross-session leaderboard.
+   *
+   * Held here rather than read from the event that ends the session, because
+   * the two are not equivalent: a session can end on the timeout path, and that
+   * event comes from the object's own alarm, which knows only its channel.
+   * Reading the guild per-event would silently drop exactly those sessions from
+   * the leaderboard. Null in a DM, where there is no guild to score against.
+   */
+  guildId: string | null;
   config: SessionConfig;
   /**
    * The filters this session draws questions from.
@@ -97,6 +107,14 @@ export interface SessionContext {
   question: Question | null;
   attempts: Attempt[];
   scores: Scores;
+  /**
+   * How many questions each player has answered correctly this session.
+   *
+   * Kept alongside the points rather than derived from `attempts`, which holds
+   * only the open question — the count has to outlive the question it came
+   * from to mean anything at the end.
+   */
+  correct: Scores;
   /** Consecutive timeouts, cleared by any answered question. */
   timeoutStreak: number;
   /** Epoch ms when the open question expires. Only set while `asking`. */
@@ -192,6 +210,7 @@ export const sessionMachine = setup({
     events: {} as SessionEvent,
     input: {} as {
       channelId: string;
+      guildId: string | null;
       question: Question;
       config: SessionConfig;
       filters: Filters;
@@ -204,12 +223,14 @@ export const sessionMachine = setup({
   initial: `asking`,
   context: ({ input }) => ({
     channelId: input.channelId,
+    guildId: input.guildId,
     config: input.config,
     filters: input.filters,
     questionNumber: 1,
     question: input.question,
     attempts: [],
     scores: {},
+    correct: {},
     timeoutStreak: 0,
     deadline: input.now + input.config.timeoutMs,
     closedBy: null
@@ -243,6 +264,13 @@ export const sessionMachine = setup({
                     [event.userId]:
                       (context.scores[event.userId] ?? 0) +
                       pointsFor(missed, context.config.guesses)
+                  };
+                },
+                correct: ({ context, event }) => {
+                  if (event.type !== `ANSWER`) return context.correct;
+                  return {
+                    ...context.correct,
+                    [event.userId]: (context.correct[event.userId] ?? 0) + 1
                   };
                 },
                 // An answered question means the room is awake.
@@ -411,6 +439,7 @@ export interface PersistedSession {
 /** Ignored by {@link restore}; see the note there. */
 const RESTORE_INPUT = {
   channelId: ``,
+  guildId: null,
   question: null as unknown as Question,
   config: DEFAULT_CONFIG,
   filters: { levels: [], types: [], classes: [], forms: [] } as Filters,
@@ -442,13 +471,14 @@ export const restore = (persisted: PersistedSession): SessionActor => {
 /** Begin a session. */
 export const begin = (
   channelId: string,
+  guildId: string | null,
   question: Question,
   config: SessionConfig,
   filters: Filters,
   now: number
 ): SessionActor => {
   const actor = createActor(sessionMachine, {
-    input: { channelId, question, config, filters, now }
+    input: { channelId, guildId, question, config, filters, now }
   });
   actor.start();
   return actor;

@@ -24,6 +24,7 @@ const sessionEnv = env as unknown as {
 const session = (name: string): DurableObjectStub<QuizSession> =>
   sessionEnv.SESSION.get(sessionEnv.SESSION.idFromName(name));
 
+const GUILD = `guild-1`;
 const ANY_FILTERS = { levels: [], types: [], classes: [], forms: [] };
 
 const question = (id: string): Question => ({
@@ -56,7 +57,13 @@ describe(`quizSession in the handlers Worker`, () => {
     // empty on the next wake and quietly lose the scores mid-game.
     const stub = session(`round-trip`);
     await stub.clear();
-    await stub.begin(`chan-1`, question(`1`), DEFAULT_CONFIG, ANY_FILTERS);
+    await stub.begin(
+      `chan-1`,
+      GUILD,
+      question(`1`),
+      DEFAULT_CONFIG,
+      ANY_FILTERS
+    );
 
     const state = await stub.current();
     expect(state?.context.channelId).toBe(`chan-1`);
@@ -73,7 +80,7 @@ describe(`quizSession in the handlers Worker`, () => {
     await a.clear();
     await b.clear();
 
-    await a.begin(`chan-a`, question(`1`), DEFAULT_CONFIG, ANY_FILTERS);
+    await a.begin(`chan-a`, GUILD, question(`1`), DEFAULT_CONFIG, ANY_FILTERS);
     await a.submit(`mika`, `うらない`, true);
 
     // Four points: correct on the first of three guesses.
@@ -84,7 +91,7 @@ describe(`quizSession in the handlers Worker`, () => {
   it(`scores the first correct answer and closes the question`, async () => {
     const stub = session(`scoring`);
     await stub.clear();
-    await stub.begin(`chan`, question(`1`), DEFAULT_CONFIG, ANY_FILTERS);
+    await stub.begin(`chan`, GUILD, question(`1`), DEFAULT_CONFIG, ANY_FILTERS);
 
     const wrong = await stub.submit(`drake`, `うった`, false);
     expect(wrong.outcome).toEqual({ kind: `wrong` });
@@ -113,7 +120,7 @@ describe(`quizSession in the handlers Worker`, () => {
     // reaction, no score, no explanation.
     const stub = session(`multi-guess`);
     await stub.clear();
-    await stub.begin(`chan`, question(`1`), DEFAULT_CONFIG, ANY_FILTERS);
+    await stub.begin(`chan`, GUILD, question(`1`), DEFAULT_CONFIG, ANY_FILTERS);
 
     const first = await stub.submit(`saeris`, `いきません`, false);
     const second = await stub.submit(`saeris`, `いきなかった`, false);
@@ -136,7 +143,7 @@ describe(`quizSession in the handlers Worker`, () => {
     // scoring it would hand a point to whoever typed during the countdown.
     const stub = session(`answer-while-paused`);
     await stub.clear();
-    await stub.begin(`chan`, question(`1`), DEFAULT_CONFIG, ANY_FILTERS);
+    await stub.begin(`chan`, GUILD, question(`1`), DEFAULT_CONFIG, ANY_FILTERS);
     await stub.pause(10_000);
 
     const result = await stub.submit(`mika`, `うらない`, true);
@@ -150,6 +157,7 @@ describe(`quizSession in the handlers Worker`, () => {
     await stub.clear();
     await stub.begin(
       `chan`,
+      GUILD,
       question(`1`),
       { ...DEFAULT_CONFIG, guesses: 2 },
       ANY_FILTERS
@@ -173,7 +181,7 @@ describe(`quizSession in the handlers Worker`, () => {
     // arbitrary.
     const stub = session(`per-answer-points`);
     await stub.clear();
-    await stub.begin(`chan`, question(`1`), DEFAULT_CONFIG, ANY_FILTERS);
+    await stub.begin(`chan`, GUILD, question(`1`), DEFAULT_CONFIG, ANY_FILTERS);
     await stub.submit(`mika`, `うらない`, true);
     await stub.next(question(`2`));
 
@@ -193,6 +201,7 @@ describe(`quizSession in the handlers Worker`, () => {
     await stub.clear();
     await stub.begin(
       `chan`,
+      GUILD,
       question(`1`),
       { ...DEFAULT_CONFIG, length: 1 },
       ANY_FILTERS
@@ -220,6 +229,7 @@ describe(`quizSession in the handlers Worker`, () => {
     await stub.clear();
     await stub.begin(
       `chan`,
+      GUILD,
       question(`1`),
       {
         ...DEFAULT_CONFIG,
@@ -242,6 +252,7 @@ describe(`quizSession in the handlers Worker`, () => {
     await stub.clear();
     await stub.begin(
       `chan`,
+      GUILD,
       question(`1`),
       {
         ...DEFAULT_CONFIG,
@@ -263,7 +274,7 @@ describe(`quizSession in the handlers Worker`, () => {
     // early, cutting the round short for no visible reason.
     const stub = session(`alarm-cleared`);
     await stub.clear();
-    await stub.begin(`chan`, question(`1`), DEFAULT_CONFIG, ANY_FILTERS);
+    await stub.begin(`chan`, GUILD, question(`1`), DEFAULT_CONFIG, ANY_FILTERS);
     await stub.submit(`mika`, `うらない`, true);
 
     expect((await stub.current())?.context.deadline).toBeNull();

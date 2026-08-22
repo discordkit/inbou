@@ -33,9 +33,11 @@ const question = (id: string): Question => ({
 
 const NOW = 1_700_000_000_000;
 const ANY_FILTERS = { levels: [], types: [], classes: [], forms: [] };
+const GUILD = `guild-1`;
 const session = (config: Partial<SessionConfig> = {}) =>
   begin(
     `chan`,
+    GUILD,
     question(`1`),
     { ...DEFAULT_CONFIG, ...config },
     ANY_FILTERS,
