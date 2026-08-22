@@ -60,8 +60,9 @@ Two surfaces, deliberately. Flags for people who know what they want, buttons fo
 /quiz end                       — stop, post final scores
 /hint                           — ephemeral, private
 
-not built yet (step 6):
-/quiz scores  [user]            — guild leaderboard
+/quiz scores  [user]            — guild leaderboard, or one player's standing
+
+not built yet:
 /review                         — ephemeral recap of your last answer
 ```
 
@@ -212,17 +213,20 @@ One path for "something happened, act on it", whether it originated at the Gatew
 
 ### What each layer may depend on
 
-The split above is about reload cost. These boundaries are about testability, and they are why 148 of the 159 tests need neither a token nor workerd:
+The split above is about reload cost. These boundaries are about testability, and they are why 164 of the 186 tests need neither a token nor workerd:
 
-| Layer                                                      | Depends on                      | Tested with         |
-| ---------------------------------------------------------- | ------------------------------- | ------------------- |
-| `quiz/conjugate`, `answer`, `question`, `render`, `config` | nothing                         | plain functions     |
-| `quiz/machine`                                             | xstate only                     | machine transitions |
-| `quiz/flow`                                                | `DiscordEffects`, `SessionPort` | recording stub      |
-| `discord.ts`                                               | `@discordkit/client`            | MSW                 |
-| `session.ts`                                               | `cloudflare:workers`            | real Durable Object |
+| Layer                                                      | Depends on                      | Tested with             |
+| ---------------------------------------------------------- | ------------------------------- | ----------------------- |
+| `quiz/conjugate`, `answer`, `question`, `render`, `config` | nothing                         | plain functions         |
+| `quiz/machine`                                             | xstate only                     | machine transitions     |
+| `quiz/flow`                                                | `DiscordEffects`, `SessionPort` | recording stub          |
+| `discord.ts`                                               | `@discordkit/client`            | MSW                     |
+| `session.ts`                                               | `cloudflare:workers`            | real Durable Object     |
+| `scores.ts`                                                | a `D1Database`                  | real D1, real migration |
 
-`flow.ts` is the load-bearing one: it decides _what_ to post but depends on an interface, so a whole round — question, reaction, reveal, next question, standings — runs end to end in Node. `discord.ts` is the only module that reaches for the client, and `session.ts` the only one that needs the runtime.
+`flow.ts` is the load-bearing one: it decides _what_ to post but depends on interfaces, so a whole round — question, reaction, reveal, next question, standings, and banking the result — runs end to end in Node. `discord.ts` is the only module that reaches for the client, `session.ts` the only one that needs the runtime, and `scores.ts` the only one that writes SQL.
+
+`scores.spec.ts` applies the real migration file rather than creating its own table. A test that wrote its own schema would keep passing after the migration drifted from it, which is the one failure that file exists to catch.
 
 The test setup mirrors this. `vite.config.ts` declares two Vitest projects: `unit` runs in Node, `workers` in the Cloudflare pool. Wallaby watches `unit`, because it instruments files with a coverage probe that cannot cross the process boundary into workerd. **`vp test` still runs both** — a change can pass the watch loop and fail the runtime project.
 
@@ -232,11 +236,39 @@ The test setup mirrors this. `vite.config.ts` declares two Vitest projects: `uni
 
 So questions are generated in the request path, which is already warm, and handed to the object already resolved. The object stores a few hundred bytes.
 
-| Store          | Holds         | Notes                                                                                                             |
-| -------------- | ------------- | ----------------------------------------------------------------------------------------------------------------- |
-| Durable Object | Session state | One per channel, in the **handlers** Worker. Current question, per-player guesses, scores, config, timeout alarm. |
-| D1             | Guild scores  | Cross-session leaderboard. A 30-question session writes ~30 rows against 100k/day.                                |
-| open           | Word corpus   | Read-only, never written at runtime. Bundle, D1, or static assets.                                                |
+| Store          | Holds         | Notes                                                                                                                                    |
+| -------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Durable Object | Session state | One per channel, in the **handlers** Worker. Current question, per-player guesses, scores, config, timeout alarm.                        |
+| D1             | Guild scores  | Cross-session leaderboard. One row per player per session, not per answer — a 30-question session writes as many rows as it had players. |
+| open           | Word corpus   | Read-only, never written at runtime. Bundle, D1, or static assets.                                                                       |
+
+### What survives a session
+
+The session object holds a session. D1 holds what outlasts it, and the two are
+deliberately different shapes: the object keeps per-question detail it discards
+at the end, while D1 keeps one aggregated row per player per guild — points,
+correct answers, sessions played, last played.
+
+Aggregated rather than append-only because a leaderboard reads far more often
+than it writes. Running totals make `/quiz scores` a single indexed scan instead
+of a `GROUP BY` over every answer ever given, and the cost — individual sessions
+are not recoverable — is something nothing asks for.
+
+**The guild id is stored with the session, not read from the event.** A session
+can end three ways: the last question answered, the last question timing out, or
+`/quiz end`. The timeout arrives from the object's own alarm, which knows only
+its channel — so reading the guild off the event would silently drop exactly
+those sessions from the leaderboard, and they are the quiet ones nobody notices.
+Storing it at `begin` means every path has it.
+
+All four end paths go through one `finish` function for the same reason. A
+leaderboard that recorded only some of them would be wrong in a way that is
+invisible from the numbers themselves.
+
+**A missing binding is not an error.** `SCORES` is optional: without it the quiz
+plays identically and keeps no leaderboard, which is also what a DM gets — there
+is no guild to score against. Making it required would turn an unapplied
+migration into a bot that cannot run a session at all.
 
 **The timeout runs on a Durable Object alarm**, not `setTimeout` — the same reasoning as the connection timers in `src/worker/alarmScheduler.ts`. A DO's JS timers die with its isolate, so an evicted session would silently stop timing out.
 
@@ -299,7 +331,7 @@ Sequenced so each step is verifiable on its own and nothing blocks on an open qu
 3. ~~**Corpus pipeline**~~ — done; see section 9.
 4. ~~**Session DO**~~ — done. Rules are an XState machine in `quiz/machine.ts`; the object persists it and keeps the alarm in step.
 5. ~~**Discord surface**~~ — done, and played live. Commands, embeds, reactions, ephemeral hint.
-6. **Leaderboard** — D1 schema, `/quiz scores` and `/review`. Scores currently live only for the length of a session.
+6. ~~**Leaderboard**~~ **Done, except `/review`.** D1 holds one aggregated row per player per guild; `/quiz scores` reads it. See "What survives a session" below.
 7. **Compound forms** — grammar layer over the primitive, wired to the existing notes.
 
 ## 8. Still open

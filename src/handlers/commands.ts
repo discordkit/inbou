@@ -3,9 +3,14 @@ import type { Interaction } from "@discordkit/client/interactions/types/Interact
 import { diagnostics } from "./diagnostics.js";
 import type { DiscordEffects } from "./discord.js";
 import { isSettings, parseSettings } from "./quiz/config.js";
-import { startSession, type FlowDeps } from "./quiz/flow.js";
-import { readCustomId, readOptions } from "./quiz/options.js";
-import { BUTTON, hintEmbed, scoresEmbed } from "./quiz/render.js";
+import { finish, startSession, type FlowDeps } from "./quiz/flow.js";
+import { readCustomId, readOptions, readUserOption } from "./quiz/options.js";
+import {
+  BUTTON,
+  hintEmbed,
+  leaderboardEmbed,
+  standingEmbed
+} from "./quiz/render.js";
 
 /**
  * Slash commands.
@@ -60,7 +65,8 @@ const start = async (
     content: `Starting a session…`,
     ephemeral: true
   });
-  await startSession(deps, channelId, settings);
+  // `guildId` is absent in a DM, where there is no leaderboard to write to.
+  await startSession(deps, channelId, interaction.guildId ?? null, settings);
 };
 
 /** `/quiz config` — change the running session's settings from the next question. */
@@ -112,17 +118,60 @@ const end = async (
     return;
   }
 
-  const standings = await deps.session.end();
+  const outcome = await deps.session.end();
   await deps.discord.reply(interaction, {
     content: `Session ended.`,
     ephemeral: true
   });
-  if (standings !== null) {
-    await deps.discord.post(
-      channelId,
-      scoresEmbed(standings, view.context.questionNumber)
-    );
+  // Through `finish` rather than posting directly, so a session stopped early
+  // banks its scores the same way one that ran to the end does. Ending a
+  // session is not the same as discarding it.
+  if (outcome !== null) {
+    await finish(deps, channelId, outcome, view.context.questionNumber);
   }
+};
+
+/**
+ * `/quiz scores` — the guild leaderboard, or one player's standing.
+ *
+ * Public rather than ephemeral: a leaderboard nobody else can see defeats the
+ * point of keeping one. `/hint` is private because seeing it would end the
+ * race; standings are the opposite.
+ */
+const scores = async (
+  deps: CommandDeps,
+  interaction: Interaction,
+  channelId: string,
+  options: unknown
+): Promise<void> => {
+  const guildId = interaction.guildId;
+  if (guildId === undefined) {
+    await deps.discord.reply(interaction, {
+      content: `Scores are kept per server, so this only works in one.`,
+      ephemeral: true
+    });
+    return;
+  }
+
+  const userId = readUserOption(options);
+  if (userId !== null) {
+    const standing = await deps.scores.forUser(guildId, userId);
+    // The interaction still needs acknowledging — the embed is public, and an
+    // unanswered interaction shows "the application did not respond".
+    await deps.discord.reply(interaction, {
+      content: `Posted below.`,
+      ephemeral: true
+    });
+    await deps.discord.post(channelId, standingEmbed(userId, standing));
+    return;
+  }
+
+  const top = await deps.scores.top(guildId);
+  await deps.discord.reply(interaction, {
+    content: `Posted below.`,
+    ephemeral: true
+  });
+  await deps.discord.post(channelId, leaderboardEmbed(top));
 };
 
 /**
@@ -215,6 +264,9 @@ export const handleCommand = async (
         return;
       case `end`:
         await end(deps, interaction, channelId);
+        return;
+      case `scores`:
+        await scores(deps, interaction, channelId, interaction.data?.options);
         return;
       default:
         break;

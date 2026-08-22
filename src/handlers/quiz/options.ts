@@ -97,6 +97,24 @@ export const readOptions = (options: unknown): Invocation => {
 };
 
 /**
+ * The `user` option on `/quiz scores`, if one was given.
+ *
+ * Read separately rather than added to {@link readOptions}, which maps only the
+ * options that configure a session — widening it would mean every settings
+ * parse had to ignore a field that is not a setting. A Discord USER option
+ * arrives as a snowflake string, and the id is all the leaderboard needs, so
+ * the `resolved` map alongside it can stay unread.
+ */
+export const readUserOption = (options: unknown): string | null => {
+  const parsed = v.safeParse(v.array(interactionOptionSchema), options ?? []);
+  if (!parsed.success) return null;
+  const sub = parsed.output.find(isSubcommand);
+  const own = sub === undefined ? parsed.output : (sub.options ?? []);
+  const user = own.find((option) => option.name === `user`);
+  return user?.value === undefined ? null : String(user.value);
+};
+
+/**
  * The custom id a component interaction carries.
  *
  * `interaction.data` is a union — an application command has `name` and

@@ -1,5 +1,4 @@
 import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { OPTION_HELP } from "../quiz/config.js";
 
@@ -17,12 +16,10 @@ import { OPTION_HELP } from "../quiz/config.js";
  * belongs in a unit test.
  */
 
-const script = readFileSync(
-  fileURLToPath(
-    new URL(`../../../scripts/register-commands.mjs`, import.meta.url)
-  ),
-  `utf8`
-);
+// Resolved from the repo root rather than from `import.meta.url`: the project
+// types the Workers runtime, whose `URL` is not Node's, so `fileURLToPath`
+// rejects it. Vitest runs with the root as its working directory.
+const script = readFileSync(`scripts/register-commands.mjs`, `utf8`);
 
 /** The `settingOptions` array, as name -> description. */
 const registered = (): Record<string, string> => {

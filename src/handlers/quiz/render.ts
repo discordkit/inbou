@@ -279,6 +279,61 @@ export const scoresEmbed = (
 });
 
 /**
+ * The guild's standing leaderboard, across every session.
+ *
+ * Separate from {@link scoresEmbed}, which reports one session. The two answer
+ * different questions — "who won just now" and "who plays here" — and merging
+ * them would make the first one wrong every time somebody new joined.
+ *
+ * Accuracy is shown alongside points because points reward speed as much as
+ * knowledge: someone who answers carefully and correctly deserves to see that
+ * reflected somewhere, and the taper alone does not show it.
+ */
+export const leaderboardEmbed = (
+  standings: ReadonlyArray<{
+    userId: string;
+    points: number;
+    correct: number;
+    sessions: number;
+  }>,
+  guildName?: string
+): Embed => ({
+  title: guildName === undefined ? `Leaderboard` : `${guildName} leaderboard`,
+  description:
+    standings.length === 0
+      ? `Nobody has finished a session here yet. Start one with \`/quiz start\`.`
+      : standings.map(
+          (s, i) =>
+            `${i === 0 ? `🥇` : i === 1 ? `🥈` : i === 2 ? `🥉` : `　`} <@${s.userId}> — **${String(s.points)}** · ${String(s.correct)} correct in ${String(s.sessions)} session${s.sessions === 1 ? `` : `s`}`
+        ).join(`
+`),
+  color: INDIGO
+});
+
+/**
+ * One player's standing, for `/quiz scores @someone`.
+ *
+ * Answers "how am I doing" rather than "who is winning", so it leads with the
+ * player rather than their rank — a rank of 7th means little without knowing
+ * how many people play here.
+ */
+export const standingEmbed = (
+  userId: string,
+  standing: {
+    points: number;
+    correct: number;
+    sessions: number;
+  } | null
+): Embed => ({
+  title: `Standing`,
+  description:
+    standing === null
+      ? `<@${userId}> has not finished a session here yet.`
+      : `<@${userId}> — **${String(standing.points)}** points, ${String(standing.correct)} correct across ${String(standing.sessions)} session${standing.sessions === 1 ? `` : `s`}.`,
+  color: INDIGO
+});
+
+/**
  * The private nudge `/hint` gives.
  *
  * Deliberately short of the answer: the reading and the meaning are enough to

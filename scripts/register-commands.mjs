@@ -33,6 +33,7 @@ discord.setToken(`Bot ${token}`);
 // Discord's option types. 1 is a subcommand, 3 a string.
 const SUB_COMMAND = 1;
 const STRING = 3;
+const USER = 6;
 
 /**
  * The settings every `/quiz` subcommand that configures a session accepts.
@@ -112,6 +113,18 @@ const commands = [
         type: SUB_COMMAND,
         name: `end`,
         description: `End the session and show the standings.`
+      },
+      {
+        type: SUB_COMMAND,
+        name: `scores`,
+        description: `Show this server's leaderboard.`,
+        options: [
+          {
+            type: USER,
+            name: `user`,
+            description: `Show one player's standing instead of the leaderboard.`
+          }
+        ]
       }
     ]
   }
