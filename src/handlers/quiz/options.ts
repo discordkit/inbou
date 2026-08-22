@@ -115,6 +115,30 @@ export const readUserOption = (options: unknown): string | null => {
 };
 
 /**
+ * Who invoked an interaction.
+ *
+ * Discord puts this in two places depending on where it happened: `member.user`
+ * in a guild, `user` in a DM. Reading only one works everywhere the developer
+ * tested and nowhere else, so both are tried.
+ *
+ * Returns null when neither is present, which the caller reports rather than
+ * guessing at — acting on the wrong person's behalf is worse than declining.
+ */
+export const readInvoker = (interaction: unknown): string | null => {
+  const parsed = v.safeParse(
+    v.object({
+      member: v.optional(
+        v.object({ user: v.optional(v.object({ id: v.string() })) })
+      ),
+      user: v.optional(v.object({ id: v.string() }))
+    }),
+    interaction
+  );
+  if (!parsed.success) return null;
+  return parsed.output.member?.user?.id ?? parsed.output.user?.id ?? null;
+};
+
+/**
  * The custom id a component interaction carries.
  *
  * `interaction.data` is a union — an application command has `name` and

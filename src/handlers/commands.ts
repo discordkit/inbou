@@ -4,11 +4,17 @@ import { diagnostics } from "./diagnostics.js";
 import type { DiscordEffects } from "./discord.js";
 import { isSettings, parseSettings } from "./quiz/config.js";
 import { finish, startSession, type FlowDeps } from "./quiz/flow.js";
-import { readCustomId, readOptions, readUserOption } from "./quiz/options.js";
+import {
+  readCustomId,
+  readInvoker,
+  readOptions,
+  readUserOption
+} from "./quiz/options.js";
 import {
   BUTTON,
   hintEmbed,
   leaderboardEmbed,
+  reviewEmbed,
   standingEmbed
 } from "./quiz/render.js";
 
@@ -132,6 +138,68 @@ const end = async (
 };
 
 /**
+ * `/review` — a private second look at the question you got wrong.
+ *
+ * Ephemeral for the same reason `/hint` is: a public recap would show the
+ * channel an answer somebody else is still racing for. Unlike `/hint` it is
+ * about a question that has already closed, so it teaches rather than helps.
+ *
+ * Falls back to the last question when the player has no misses — somebody who
+ * has just walked in and missed the reveal is a large part of who runs this.
+ */
+const review = async (
+  deps: CommandDeps,
+  interaction: Interaction
+): Promise<void> => {
+  const userId = readInvoker(interaction);
+  if (userId === null) {
+    await deps.discord.reply(interaction, {
+      content: `I could not tell who asked.`,
+      ephemeral: true
+    });
+    return;
+  }
+
+  const view = await deps.session.current();
+  if (view === null) {
+    await deps.discord.reply(interaction, {
+      content: `No session is running here. Start one with \`/quiz start\`.`,
+      ephemeral: true
+    });
+    return;
+  }
+
+  const miss = view.context.misses[userId];
+  if (miss !== undefined) {
+    await deps.discord.reply(interaction, {
+      embed: reviewEmbed(miss, true),
+      ephemeral: true
+    });
+    return;
+  }
+
+  // Nothing wrong yet. The open question is not shown — that would be `/hint`
+  // without the restraint, handing over the answer to a question still being
+  // raced. Only a question that has already closed can be reviewed.
+  const question = view.context.question;
+  if (question === null || view.state === `asking`) {
+    await deps.discord.reply(interaction, {
+      content: `Nothing to review yet. Once a question closes, \`/review\` shows it.`,
+      ephemeral: true
+    });
+    return;
+  }
+
+  await deps.discord.reply(interaction, {
+    embed: reviewEmbed(
+      { question, answer: ``, questionNumber: view.context.questionNumber },
+      false
+    ),
+    ephemeral: true
+  });
+};
+
+/**
  * `/quiz scores` — the guild leaderboard, or one player's standing.
  *
  * Public rather than ephemeral: a leaderboard nobody else can see defeats the
@@ -251,6 +319,11 @@ export const handleCommand = async (
 
   if (name === `hint`) {
     await hint(deps, interaction);
+    return;
+  }
+
+  if (name === `review`) {
+    await review(deps, interaction);
     return;
   }
 

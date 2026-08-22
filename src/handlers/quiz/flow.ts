@@ -50,6 +50,11 @@ export interface SessionPort {
       filters: QuizSettings[`filters`];
       attempts: AttemptLine[];
       scores: Record<string, number>;
+      /** The last question each player got wrong, for `/review`. */
+      misses: Record<
+        string,
+        { question: Question; answer: string; questionNumber: number }
+      >;
     };
   } | null>;
   submit: (

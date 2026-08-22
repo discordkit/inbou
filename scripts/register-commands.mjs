@@ -90,6 +90,10 @@ const commands = [
     description: `Check that the bot is awake.`
   },
   {
+    name: `review`,
+    description: `Privately show the last question you got wrong.`
+  },
+  {
     name: `hint`,
     description: `A private nudge on the current question.`
   },

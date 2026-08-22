@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import { handleCommand, type CommandDeps } from "../commands.js";
 import type { DiscordEffects } from "../discord.js";
 import type { SessionPort } from "../quiz/flow.js";
-import type { Word } from "../quiz/question.js";
+import type { Question, Word } from "../quiz/question.js";
 import type { ScorePort, Standing } from "../scores.js";
 
 /**
@@ -18,7 +18,8 @@ import type { ScorePort, Standing } from "../scores.js";
  */
 
 const recorder = () => {
-  const replies: { content?: string; ephemeral?: boolean }[] = [];
+  const replies: { content?: string; embed?: Embed; ephemeral?: boolean }[] =
+    [];
   const posts: { channelId: string; embed: Embed }[] = [];
   const discord: DiscordEffects = {
     post: async (channelId, embed) => {
@@ -34,9 +35,30 @@ const recorder = () => {
   return { discord, replies, posts };
 };
 
+const question: Question = {
+  wordId: `1`,
+  prompt: `売る → plain non-past negative`,
+  form: `non-past-negative`,
+  answer: `うらない`,
+  answerKanji: `売らない`,
+  stem: `うら`,
+  dictionary: `売る`,
+  reading: `うる`,
+  gloss: `to sell`,
+  type: `verb`,
+  verbClass: `godan-r`
+};
+
 /** A session port reporting whatever state the test needs. */
 const sessionAt = (
-  state: `asking` | `revealing` | `paused` | `finished` | null
+  state: `asking` | `revealing` | `paused` | `finished` | null,
+  extra: {
+    misses?: Record<
+      string,
+      { question: Question; answer: string; questionNumber: number }
+    >;
+    question?: Question | null;
+  } = {}
 ): SessionPort => ({
   begin: async () => undefined,
   current: async () =>
@@ -45,12 +67,13 @@ const sessionAt = (
       : {
           state,
           context: {
-            question: null,
+            question: extra.question ?? null,
             questionNumber: 3,
             config: { length: 10, timeoutMs: 60_000, guesses: 3 },
             filters: { levels: [5], types: [], classes: [], forms: [] },
             attempts: [],
-            scores: {}
+            scores: {},
+            misses: extra.misses ?? {}
           }
         },
   submit: async () => ({ outcome: { kind: `ignored` }, needsNext: false }),
@@ -80,14 +103,15 @@ const word: Word = {
 
 const deps = (
   state: Parameters<typeof sessionAt>[0],
-  scores: ScorePort = scoresWith()
+  scores: ScorePort = scoresWith(),
+  extra: Parameters<typeof sessionAt>[1] = {}
 ) => {
   const rec = recorder();
   return {
     ...rec,
     deps: {
       discord: rec.discord,
-      session: sessionAt(state),
+      session: sessionAt(state, extra),
       scores,
       words: [word],
       random: () => 0
@@ -211,6 +235,96 @@ describe(`the leaderboard`, () => {
 
     expect(posts[0]?.embed.description).toContain(`drake`);
     expect(posts[0]?.channelId).toBe(`chan`);
+  });
+});
+
+describe(`reviewing a question`, () => {
+  /** `/review` is a top-level command, and carries the invoker in `member`. */
+  const reviewIn = (guild = `g1`): Interaction =>
+    ({
+      type: 2,
+      channelId: `chan`,
+      ...(guild === `` ? {} : { guildId: guild }),
+      member: { user: { id: `drake` } },
+      data: { name: `review` }
+    }) as unknown as Interaction;
+
+  it(`shows the asking player their own miss, privately`, async () => {
+    // WHY: the reveal already taught this in public, but it scrolls away while
+    // people are still typing — and it lists everybody's attempts together, so
+    // finding your own is work. This shows one person theirs.
+    const { deps: d, replies } = deps(`asking`, scoresWith(), {
+      misses: {
+        drake: { question, answer: `うらなかった`, questionNumber: 7 }
+      }
+    });
+    await handleCommand(d, reviewIn());
+
+    expect(replies[0]?.ephemeral).toBe(true);
+    expect(replies[0]?.embed?.title).toBe(`Your last miss`);
+    expect(JSON.stringify(replies[0]?.embed)).toContain(`うらなかった`);
+  });
+
+  it(`shows one player's miss and not another's`, async () => {
+    // WHY: misses are keyed by user, and the whole point is that it is *your*
+    // recap. Showing somebody else's answer would be both useless and a small
+    // betrayal of the person who got it wrong.
+    const { deps: d, replies } = deps(`asking`, scoresWith(), {
+      misses: {
+        mika: { question, answer: `たべなかった`, questionNumber: 2 }
+      }
+    });
+    await handleCommand(d, reviewIn());
+
+    expect(JSON.stringify(replies[0])).not.toContain(`たべなかった`);
+  });
+
+  it(`refuses to show the question that is still open`, async () => {
+    // WHY: this is the difference between `/review` and cheating. A player with
+    // no misses running `/review` mid-question must not be handed the answer to
+    // the race everybody else is still running.
+    const { deps: d, replies } = deps(`asking`, scoresWith(), { question });
+    await handleCommand(d, reviewIn());
+
+    expect(replies[0]?.embed).toBeUndefined();
+    expect(replies[0]?.content).toContain(`Nothing to review yet`);
+    expect(JSON.stringify(replies[0])).not.toContain(`うらない`);
+  });
+
+  it(`falls back to the closed question for somebody who did not answer`, async () => {
+    // WHY: a latecomer who missed the reveal is much of who runs this. The
+    // question has closed, so showing it costs nobody anything.
+    const { deps: d, replies } = deps(`revealing`, scoresWith(), { question });
+    await handleCommand(d, reviewIn());
+
+    expect(replies[0]?.embed?.title).toBe(`Last question`);
+    expect(replies[0]?.ephemeral).toBe(true);
+  });
+
+  it(`says so when no session is running`, async () => {
+    // WHY: `/review` in a quiet channel is a normal mistake, and an unanswered
+    // interaction shows "the application did not respond".
+    const { deps: d, replies } = deps(null);
+    await handleCommand(d, reviewIn());
+
+    expect(replies[0]?.content).toContain(`No session`);
+  });
+
+  it(`works in a DM, where the invoker is on the interaction itself`, async () => {
+    // WHY: Discord puts the invoking user in `member.user` inside a guild and
+    // `user` in a DM. Reading only one works everywhere it was tested and
+    // nowhere else.
+    const { deps: d, replies } = deps(`revealing`, scoresWith(), {
+      misses: { drake: { question, answer: `うった`, questionNumber: 1 } }
+    });
+    await handleCommand(d, {
+      type: 2,
+      channelId: `chan`,
+      user: { id: `drake` },
+      data: { name: `review` }
+    } as unknown as Interaction);
+
+    expect(replies[0]?.embed?.title).toBe(`Your last miss`);
   });
 });
 

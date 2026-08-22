@@ -61,9 +61,7 @@ Two surfaces, deliberately. Flags for people who know what they want, buttons fo
 /hint                           — ephemeral, private
 
 /quiz scores  [user]            — guild leaderboard, or one player's standing
-
-not built yet:
-/review                         — ephemeral recap of your last answer
+/review                         — ephemeral: the last question you got wrong
 ```
 
 ### Defaults
@@ -265,6 +263,28 @@ All four end paths go through one `finish` function for the same reason. A
 leaderboard that recorded only some of them would be wrong in a way that is
 invisible from the numbers themselves.
 
+### What `/review` shows, and what it will not
+
+`/review` answers "what did I get wrong", not "what is the answer". It replies
+with the last question **that player** missed: what they typed, the right
+answer, and the same teaching fields the reveal carries.
+
+The reveal already taught this once, publicly, when the question closed. This
+exists because that moment passes — in a busy channel the reveal scrolls away
+while people are still typing, and it lists everybody's attempts together, so
+picking your own out is work.
+
+The miss is recorded when the wrong answer is typed rather than when the
+question closes. Both the question and the answer are in hand at that moment,
+and every path that closes a question would otherwise need its own copy of the
+rule. One entry per player, replaced by their next miss, so a long session does
+not grow a list nobody reads through every hibernation.
+
+**It will not show an open question.** A player with no misses gets the last
+_closed_ question instead — useful to somebody who just walked in — and nothing
+at all while a question is still being raced. That is the line between reviewing
+and cheating, and it is enforced rather than assumed.
+
 **A missing binding is not an error.** `SCORES` is optional: without it the quiz
 plays identically and keeps no leaderboard, which is also what a DM gets — there
 is no guild to score against. Making it required would turn an unapplied
@@ -331,7 +351,7 @@ Sequenced so each step is verifiable on its own and nothing blocks on an open qu
 3. ~~**Corpus pipeline**~~ — done; see section 9.
 4. ~~**Session DO**~~ — done. Rules are an XState machine in `quiz/machine.ts`; the object persists it and keeps the alarm in step.
 5. ~~**Discord surface**~~ — done, and played live. Commands, embeds, reactions, ephemeral hint.
-6. ~~**Leaderboard**~~ **Done, except `/review`.** D1 holds one aggregated row per player per guild; `/quiz scores` reads it. See "What survives a session" below.
+6. ~~**Leaderboard**~~ — done. D1 holds one aggregated row per player per guild; `/quiz scores` reads it, `/review` recaps a miss. See "What survives a session" below.
 7. **Compound forms** — grammar layer over the primitive, wired to the existing notes.
 
 ## 8. Still open

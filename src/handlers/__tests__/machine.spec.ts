@@ -291,3 +291,50 @@ describe(`leaderboard`, () => {
     expect(leaderboard(session().getSnapshot().context)).toEqual([]);
   });
 });
+
+describe(`remembering what somebody got wrong`, () => {
+  it(`keeps a player's miss after the question moves on`, async () => {
+    // WHY: `attempts` is cleared on every question and never held the question
+    // itself, so without this there is nothing left to review by the time
+    // anybody asks. The miss has to outlive the question it came from.
+    const actor = session();
+    actor.send(wrong(`drake`));
+    actor.send(right(`mika`));
+    actor.send({ type: `NEXT`, question: question(`2`), now: NOW });
+
+    const { misses } = actor.getSnapshot().context;
+    expect(misses.drake?.answer).toBe(`うった`);
+    expect(misses.drake?.question.wordId).toBe(`1`);
+    expect(misses.drake?.questionNumber).toBe(1);
+  });
+
+  it(`replaces an earlier miss with the most recent one`, async () => {
+    // WHY: "your last miss" means the latest, not the first. Keeping every one
+    // would also grow without bound across a long session, which a Durable
+    // Object carries through every hibernation.
+    const actor = session();
+    actor.send(wrong(`drake`));
+    actor.send({ type: `TIMEOUT` });
+    actor.send({ type: `NEXT`, question: question(`2`), now: NOW });
+    actor.send({
+      type: `ANSWER`,
+      userId: `drake`,
+      typed: `たべなかった`,
+      correct: false,
+      now: NOW
+    });
+
+    const { misses } = actor.getSnapshot().context;
+    expect(misses.drake?.answer).toBe(`たべなかった`);
+    expect(misses.drake?.questionNumber).toBe(2);
+  });
+
+  it(`records nothing for a player who answers correctly first time`, async () => {
+    // WHY: `/review` falls back to the last question when there is no miss.
+    // A correct answer recorded as one would show somebody their own right
+    // answer marked with a cross.
+    const actor = session();
+    actor.send(right(`mika`));
+    expect(actor.getSnapshot().context.misses.mika).toBeUndefined();
+  });
+});

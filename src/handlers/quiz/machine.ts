@@ -37,6 +37,25 @@ export interface Scores {
   [userId: string]: number;
 }
 
+/**
+ * A question somebody got wrong, kept so they can look at it again.
+ *
+ * Holds the question rather than a reference to it: `attempts` is cleared on
+ * every transition and the open question is replaced, so by the time anyone
+ * runs `/review` neither is still around to point at.
+ *
+ * One per player, replaced by their next miss. That bounds what the session
+ * carries across hibernation — a long session with many players would
+ * otherwise grow a list nobody reads.
+ */
+export interface Miss {
+  question: Question;
+  /** What they typed, folded to kana. */
+  answer: string;
+  /** 1-based, so the recap can say which question it was. */
+  questionNumber: number;
+}
+
 export interface Attempt {
   userId: string;
   /** What they typed, folded to kana for the round-end embed. */
@@ -115,6 +134,15 @@ export interface SessionContext {
    * from to mean anything at the end.
    */
   correct: Scores;
+  /**
+   * The last question each player got wrong, for `/review`.
+   *
+   * Recorded when the wrong answer is typed rather than when the question
+   * closes: at that moment the question and the answer are both in hand, and
+   * every path that closes a question would otherwise need its own copy of
+   * this — which is how the two drift apart.
+   */
+  misses: Record<string, Miss>;
   /** Consecutive timeouts, cleared by any answered question. */
   timeoutStreak: number;
   /** Epoch ms when the open question expires. Only set while `asking`. */
@@ -184,6 +212,35 @@ const recordAttempt = assign<
 });
 
 /**
+ * Keep the question somebody just got wrong.
+ *
+ * Separate from {@link recordAttempt} because the two have different
+ * lifetimes: an attempt belongs to the open question and is cleared with it,
+ * while a miss has to outlive the question to be worth reviewing.
+ */
+const recordMiss = assign<
+  SessionContext,
+  SessionEvent,
+  undefined,
+  SessionEvent,
+  never
+>({
+  misses: ({ context, event }) => {
+    if (event.type !== `ANSWER` || context.question === null) {
+      return context.misses;
+    }
+    return {
+      ...context.misses,
+      [event.userId]: {
+        question: context.question,
+        answer: event.typed,
+        questionNumber: context.questionNumber
+      }
+    };
+  }
+});
+
+/**
  * Apply new settings without disturbing the open question.
  *
  * `/quiz config` takes effect from the *next* question: changing the timeout
@@ -231,6 +288,7 @@ export const sessionMachine = setup({
     attempts: [],
     scores: {},
     correct: {},
+    misses: {},
     timeoutStreak: 0,
     deadline: input.now + input.config.timeoutMs,
     closedBy: null
@@ -280,7 +338,11 @@ export const sessionMachine = setup({
               })
             ]
           },
-          { actions: recordAttempt }
+          // Wrong, and attempts remain. Recorded as this player's miss so
+          // `/review` can show it after the question has moved on — replacing
+          // any earlier one, so what comes back is the most recent thing they
+          // got wrong rather than the first.
+          { actions: [recordAttempt, recordMiss] }
         ],
         TIMEOUT: {
           target: `revealing`,

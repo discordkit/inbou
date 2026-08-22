@@ -252,6 +252,26 @@ describe(`recovering from a bad state`, () => {
   });
 });
 
+describe(`what /review can still see`, () => {
+  it(`keeps a miss across the object going away and coming back`, async () => {
+    // WHY: the session object hibernates between questions, and a miss that
+    // lived in an instance field would come back empty on the next wake — so
+    // `/review` would work while testing locally and report nothing in a real
+    // channel, where hibernation actually happens.
+    const s = session(`chan-m`);
+    await s.begin(`chan-m`, `g1`, question(`m1`), DEFAULT_CONFIG, ANY_FILTERS);
+    await s.submit(`drake`, `うった`, false);
+    await s.submit(`mika`, `うらない`, true);
+    await s.next(question(`m2`, `たべない`));
+
+    // A fresh stub for the same id: whatever survives here came from storage.
+    const reopened = session(`chan-m`);
+    const view = await reopened.current();
+    expect(view?.context.misses.drake?.answer).toBe(`うった`);
+    expect(view?.context.misses.drake?.question.wordId).toBe(`m1`);
+  });
+});
+
 describe(`the leaderboard under real use`, () => {
   it(`merges a player's scores from different channels in one guild`, async () => {
     // WHY: scores are per guild, not per channel. Someone who plays in two

@@ -334,6 +334,69 @@ export const standingEmbed = (
 });
 
 /**
+ * A private second look at a question you got wrong.
+ *
+ * The reveal already taught this once, in public, at the moment the question
+ * closed. This exists because that moment passes — in a busy channel the reveal
+ * scrolls away while people are still typing, and the person who most needs it
+ * is the one who was still working on their answer.
+ *
+ * Shows what they typed beside the right answer, which the reveal does not do
+ * for one person specifically: it lists everybody's attempts together, and
+ * picking your own out of a crowd is exactly the work somebody reviewing does
+ * not want to do.
+ */
+export const reviewEmbed = (
+  miss: { question: Question; answer: string; questionNumber: number },
+  /** False when this is the last question rather than one they got wrong. */
+  attempted: boolean
+): Embed => {
+  const { question } = miss;
+  const fields: Embed[`fields`] = [];
+
+  if (attempted) {
+    fields.push({ name: `You typed`, value: `❌ ${miss.answer}` });
+  }
+
+  fields.push(
+    {
+      name: `Answer`,
+      value: withReading(
+        question.answerKanji ?? question.answer,
+        question.answer
+      )
+    },
+    {
+      name: `Dictionary`,
+      value: withReading(question.dictionary, question.reading),
+      inline: true
+    },
+    { name: `Target`, value: formLabel(question.form), inline: true },
+    { name: `Class`, value: classLabel(question), inline: true },
+    { name: `Meaning`, value: question.gloss }
+  );
+
+  if (question.example !== undefined) {
+    fields.push({
+      name: `Example`,
+      value: `${question.example.jpn}
+${question.example.eng}`
+    });
+  }
+
+  return {
+    title: attempted ? `Your last miss` : `Last question`,
+    description: attempted
+      ? `Question ${String(miss.questionNumber)}.`
+      : `You did not answer question ${String(miss.questionNumber)}.`,
+    // Vermilion for a miss, moss for a question they simply did not answer —
+    // the colour should not scold somebody who was not even playing.
+    color: attempted ? VERMILION : MOSS,
+    fields
+  };
+};
+
+/**
  * The private nudge `/hint` gives.
  *
  * Deliberately short of the answer: the reading and the meaning are enough to
