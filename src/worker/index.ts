@@ -37,6 +37,20 @@ export default {
    *
    * `start()` is idempotent — a live connection short-circuits — so this costs
    * nothing when the bot is already running.
+   *
+   * **Crons do not fire on a schedule in local dev.** Miniflare exposes them as
+   * an endpoint instead, so nothing would wake the object locally — and nothing
+   * on the Discord side can either. Events travel one way, this Worker to the
+   * handlers, so a slash command never reaches back here; and with the socket
+   * asleep no events arrive to forward in the first place.
+   *
+   * A plugin in `vite.config.ts` requests `/health` once the dev server is
+   * listening, which breaks that loop. By hand, either of these does the same:
+   *
+   *     curl http://localhost:5173/health
+   *     curl "http://localhost:5173/cdn-cgi/handler/scheduled?format=json"
+   *
+   * In production the cron does this every five minutes on its own.
    */
   async scheduled(_event: ScheduledController, env: Env): Promise<void> {
     await bot(env).start();

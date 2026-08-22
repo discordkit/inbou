@@ -1,5 +1,9 @@
 /**
- * Fail the build if the Worker bundle pulls in a Node builtin.
+ * Fail the build if either Worker bundle pulls in a Node builtin.
+ *
+ * Both are checked. They are separate Workers with separate configs and
+ * separate module graphs, so the app logic in the handlers Worker — and every
+ * dependency it pulls in — is invisible to a dry run of the bot Worker.
  *
  * This Worker runs on the bare Workers runtime — Web-standard `WebSocket`, no
  * Node builtins on the hot path — and `wrangler.jsonc` deliberately leaves
@@ -33,35 +37,63 @@ const wranglerBin = fileURLToPath(
   )
 );
 
-// Wrangler writes its warnings to STDERR, so both streams must be captured and
-// scanned — reading stdout alone silently misses the node-builtin warning.
-const result = spawnSync(
-  process.execPath,
-  [wranglerBin, `deploy`, `--dry-run`, `--outdir`, `.wrangler/dry-run`],
-  { encoding: `utf8` }
-);
+// Both Workers, because they have separate module graphs and separate configs.
+// Checking only the default one would leave the handlers Worker — where the
+// app logic and its dependencies live — entirely unverified.
+const WORKERS = [
+  { name: `bot`, config: `wrangler.jsonc`, outdir: `.wrangler/dry-run` },
+  {
+    name: `handlers`,
+    config: `wrangler.handlers.jsonc`,
+    outdir: `.wrangler/dry-run-handlers`
+  }
+];
 
-if (result.status !== 0) {
-  console.error(result.stdout ?? ``);
-  console.error(result.stderr ?? ``);
-  console.error(`wrangler dry-run failed, so the bundle could not be checked.`);
-  process.exit(1);
-}
+let failed = false;
 
-const output = `${result.stdout ?? ``}\n${result.stderr ?? ``}`;
-
-if (NODE_BUILTIN_WARNING.test(output)) {
-  const offending = output
-    .split(/\r?\n/)
-    .filter((line) => NODE_BUILTIN_WARNING.test(line))
-    .join(`\n`);
-  console.error(
-    `The Worker bundle pulled in a Node builtin, which the bare Workers runtime cannot provide:\n\n${offending}\n\n` +
-      `@discordkit/gateway must stay Node-free on the hot path. Replace the Node API with a Web-standard equivalent, ` +
-      `or if the dependency is genuinely unavoidable, move it off the Worker path rather than enabling nodejs_compat.`
+for (const worker of WORKERS) {
+  // Wrangler writes its warnings to STDERR, so both streams must be captured
+  // and scanned — reading stdout alone silently misses the node-builtin warning.
+  const result = spawnSync(
+    process.execPath,
+    [
+      wranglerBin,
+      `deploy`,
+      `--dry-run`,
+      `--config`,
+      worker.config,
+      `--outdir`,
+      worker.outdir
+    ],
+    { encoding: `utf8` }
   );
-  process.exit(1);
+
+  if (result.status !== 0) {
+    console.error(result.stdout ?? ``);
+    console.error(result.stderr ?? ``);
+    console.error(
+      `wrangler dry-run failed for the ${worker.name} Worker, so its bundle could not be checked.`
+    );
+    process.exit(1);
+  }
+
+  const output = `${result.stdout ?? ``}\n${result.stderr ?? ``}`;
+
+  if (NODE_BUILTIN_WARNING.test(output)) {
+    const offending = output
+      .split(/\r?\n/)
+      .filter((line) => NODE_BUILTIN_WARNING.test(line))
+      .join(`\n`);
+    console.error(
+      `The ${worker.name} Worker bundle pulled in a Node builtin, which the bare Workers runtime cannot provide:\n\n${offending}\n\n` +
+        `Both Workers must stay Node-free. Replace the Node API with a Web-standard equivalent, ` +
+        `or if the dependency is genuinely unavoidable, move it off the Worker path rather than enabling nodejs_compat.`
+    );
+    failed = true;
+  } else {
+    const size = /Total Upload: (.+)$/m.exec(output)?.[1] ?? `unknown`;
+    console.log(`${worker.name} Worker bundle is Node-free. ${size}`);
+  }
 }
 
-const size = /Total Upload: (.+)$/m.exec(output)?.[1] ?? `unknown`;
-console.log(`Worker bundle is Node-free. ${size}`);
+if (failed) process.exit(1);

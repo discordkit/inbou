@@ -3,24 +3,18 @@ import type { Scheduler } from "@discordkit/gateway";
 /**
  * A {@link Scheduler} backed by Durable Object alarms.
  *
- * **Why this exists.** A DO's JavaScript timers die with its isolate. If the
- * object is evicted mid-session, a `setTimeout`-driven heartbeat simply stops:
- * Discord sees no heartbeat, closes the socket, and the session is gone with no
- * error anywhere. An alarm is durable state — it survives eviction and wakes the
- * object back up, which is why the reference implementation
- * (`dcartertwo/discord-gateway-cloudflare-do`) drives its heartbeat this way.
+ * A DO's JavaScript timers die with its isolate, so an evicted object stops
+ * heartbeating and Discord closes the socket with no error anywhere. An alarm
+ * is durable state: it survives eviction and wakes the object back up.
  *
- * **Why it lives in the example rather than the package.** Alarms are a
- * Cloudflare primitive, not a platform pattern — no other runtime surveyed
- * (Node, Deno, Bun, Vercel, Netlify, Fastly) has an equivalent, and celld only
- * has one because it clones the DO model. `@discordkit/gateway` deliberately
- * keeps vendor APIs off its hot path, which `vp run check:bundle` enforces.
+ * It lives here rather than in `@discordkit/gateway` because alarms are a
+ * Cloudflare primitive with no equivalent on other runtimes, and the package
+ * keeps vendor APIs off its hot path — `vp run check:bundle` enforces that.
  *
- * **The multiplexing.** A DO has exactly ONE alarm slot, and alarms do not
- * repeat — each fire must re-arm the next. The connection meanwhile keeps
- * several timers pending at once (heartbeat, ACK timeout, reconnect backoff), so
- * this tracks them itself and keeps the alarm armed for whichever is due first.
- * `alarm()` then runs everything that has come due.
+ * **A DO has exactly one alarm slot and alarms do not repeat**, while the
+ * connection keeps several timers pending at once (heartbeat, ACK timeout,
+ * reconnect backoff). So this tracks them itself, arms the alarm for whichever
+ * is due first, and re-arms on every fire.
  *
  * @example
  * ```ts

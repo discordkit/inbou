@@ -1,0 +1,26 @@
+name: Bug report
+description: Something the bot did wrong.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Opened from `/feedback bug` in Discord, or by hand. Nothing is
+        submitted until you press the button at the bottom, so edit
+        anything below first.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what happened instead.
+      placeholder: I answered in kanji and it was marked wrong.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: >-
+        Filled in automatically by `/feedback`. Delete anything you would
+        rather not share — the report is still useful without it.
+      render: markdown

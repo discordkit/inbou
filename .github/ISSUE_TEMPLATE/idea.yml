@@ -1,0 +1,23 @@
+name: Idea
+description: Something the bot could do.
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Opened from `/feedback idea` in Discord, or by hand. Nothing is
+        submitted until you press the button at the bottom.
+  - type: textarea
+    id: idea
+    attributes:
+      label: The idea
+      description: What you would like, and what it would let you do.
+      placeholder: A way to practise only the forms I keep getting wrong.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Filled in automatically by `/feedback`. Optional.
+      render: markdown

@@ -1,6 +1,6 @@
 <div align="center">
 
-# 鸚法
+# 🦜 鸚法
 
 [![CI status][ci_badge]][ci] [![License][license_badge]][license]
 
@@ -10,7 +10,51 @@ A Japanese practice bot for Discord, built on [discordkit][discordkit] and deplo
 
 ---
 
-**鸚法** (_inbou_) puns on 鸚鵡返し (_ōmugaeshi_, parroting something back) and 文法 (_bunpō_, grammar) — repetition being how a language sticks, and a nod to Coca Bird, the cockatiel the server is named for.
+**鸚法** (_inbou_) is a pun on 鸚鵡返し (_ōmugaeshi_, parroting something back) and 文法 (_bunpō_, grammar) — repetition being how a language sticks, and a nod to Coca Bird, the cockatiel emoji character mascot of the server it was built for.
+
+## 🎯 What it does
+
+A conjugation drill for a channel. The bot posts a word and a target form; the
+first person to type the right answer takes the question.
+
+```
+Question 3 of 10
+たべます                      ← shown in polite non-past
+From    Non-past (polite)     Target  Non-past negative (plain)
+
+  saeris:  たべない  ⭕  +4
+```
+
+Answers are accepted in kana, kanji, katakana or romaji, so a club typing on
+mixed keyboard setups can all play. Ordinary conversation is ignored — a guess
+has to look like an attempt at the question before it costs anybody an attempt.
+
+| Command               | What it does                                                     |
+| --------------------- | ---------------------------------------------------------------- |
+| `/quiz start`         | Begin a session. Every setting is optional; see the table below. |
+| `/quiz config`        | Change the running session, from the next question on.           |
+| `/quiz end`           | Stop early and post the standings.                               |
+| `/quiz scores [user]` | The server leaderboard, or one player's standing.                |
+| `/hint`               | A private nudge: the reading and the meaning, never the answer.  |
+| `/review`             | Privately, the last question you got wrong.                      |
+| `/feedback bug\|idea` | Opens a pre-filled GitHub issue.                                 |
+
+| Setting   | Default             | Accepts                                            |
+| --------- | ------------------- | -------------------------------------------------- |
+| `level`   | N5                  | N5–N1, comma-separated, or `any`                   |
+| `type`    | verb, adj-i, adj-na | plus `noun`                                        |
+| `class`   | all                 | ichidan, godan, suru, kuru                         |
+| `forms`   | basics              | any of the 13 forms, `all`, `compounds`, or a name |
+| `length`  | 10                  | 1–50, or `endless`                                 |
+| `timeout` | 1m                  | 30s–10m                                            |
+| `guesses` | 3                   | 1–10                                               |
+
+Scoring tapers: a first-guess answer is worth `guesses + 1`, one less for each
+miss, never below one. Above N5, `forms:compounds` asks multi-word constructions
+— 〜なければならない, 〜てしまう, 〜ておく, 〜させられる, 〜たくない — which is
+where the difficulty is meant to come from rather than rarer vocabulary.
+
+The full design is in [docs/specs/conjugation-quiz.md](docs/specs/conjugation-quiz.md).
 
 ## 🏗️ How it works
 
@@ -30,7 +74,10 @@ bot Worker  (src/worker/)          ← the foundation; edits here reconnect
                     ▼
 handlers Worker  (src/handlers/)   ← app logic; edit freely, session survives
   ├─ commands.ts   slash commands
-  └─ messages.ts   prefix commands
+  ├─ messages.ts   typed answers
+  ├─ Durable Object (QuizSession)  one per channel
+  │    └─ state + the question timer, on an alarm
+  └─ D1 (SCORES)   the cross-session leaderboard
 ```
 
 Discord allows exactly **one Gateway session per bot**, and a Worker invocation cannot hold a socket open past the request that created it. A Durable Object can: it is addressable, single-instance, and — the part that matters — its alarms survive eviction. So the connection lives in the DO.
@@ -55,6 +102,8 @@ This is the pattern Discord bot frameworks converge on — keep the socket servi
 vp install
 ```
 
+### Environment
+
 Copy `.env.schema` to `.env` and fill it in. `.env` is gitignored; `.env.schema` is committed and declares the shape, which Varlock validates.
 
 | Variable                 | Required | Where to get it                                                                                                                                     |
@@ -65,6 +114,31 @@ Copy `.env.schema` to `.env` and fill it in. `.env` is gitignored; `.env.schema`
 
 The bot needs two **privileged** intents enabled under **Bot → Privileged Gateway Intents**: **Message Content** and **Server Members**. Without them Discord closes the connection with a fatal `4014`.
 
+### The leaderboard database
+
+Session scores live in the Durable Object and vanish with the session. The
+standing leaderboard is D1, which needs creating once:
+
+```bash
+wrangler d1 create inbou-scores
+```
+
+Put the returned id into `wrangler.handlers.jsonc` under the `SCORES` binding —
+**not** `wrangler.jsonc`, which is where `wrangler d1 create` writes it by
+default. The leaderboard belongs to the handlers Worker, and a binding on the
+wrong Worker fails silently: the bot plays perfectly and simply records nothing.
+
+Then apply the schema:
+
+```bash
+vp run scores:migrate            # local
+wrangler d1 migrations apply inbou-scores   --config wrangler.handlers.jsonc --remote
+```
+
+Local development needs neither step — Miniflare creates its own database from
+the binding — and the binding is optional at runtime. Without it the quiz plays
+identically and keeps no leaderboard, rather than refusing to start.
+
 ## 🔧 Running it
 
 | What              | Command                    | Notes                                                       |
@@ -73,9 +147,39 @@ The bot needs two **privileged** intents enabled under **Bot → Privileged Gate
 | Tests             | `vp test`                  | Drives a real Durable Object inside workerd.                |
 | Bundle check      | `vp run check:bundle`      | Fails if the bundle pulls in a Node builtin.                |
 | Register commands | `vp run commands:register` | Pushes the command list to Discord.                         |
+| Migrate scores    | `vp run scores:migrate`    | Applies the D1 schema locally. Add `--remote` for live.     |
+| Rebuild corpus    | `vp run corpus:build`      | Regenerates the word list from JMdict. Rarely needed.       |
 | Deploy            | `wrangler deploy`          | Needs your own Cloudflare account.                          |
 
 Slash commands are registered over REST and persist on Discord's side, so `commands:register` is a deliberate step rather than something the bot does at boot. Re-running it replaces the whole set, which is what makes a removed command disappear.
+
+### Waking the bot in dev
+
+`vp run dev` brings the bot online on its own and prints the state it reached:
+
+```
+➤  bot: connecting
+Connected as 鸚法「いんぼう」
+```
+
+That comes from a small plugin in `vite.config.ts`, and it exists because the connection cannot start itself. The Gateway socket lives in a Durable Object, which only runs when something addresses it. In production the cron trigger does that every five minutes; **Miniflare never fires crons on a schedule locally**, so nothing would.
+
+**Using the bot does not wake it,** which is the part that surprises people. Events flow one way — the bot Worker forwards to the handlers Worker, never back — so a slash command reaches the handlers over HTTP and never touches the object holding the socket. With the socket asleep no events arrive at all, so there is nothing to forward. The wake has to come from outside that loop.
+
+If you need to do it by hand — a bot evicted mid-session, or a dev server started some other way:
+
+```bash
+curl http://localhost:5173/health
+```
+
+That reports the connection state and starts it, because reading the state requires the object. `/cdn-cgi/handler/scheduled` runs the same code path through the cron handler. Both are idempotent: a live connection short-circuits, so neither costs a Gateway session.
+
+### Dependency versions
+
+Two conventions, on purpose. The **toolchain is pinned exactly** — the
+Cloudflare plugins, wrangler, vite-plus, vitest, xstate, nostics — because a
+minor bump there can change the bundle or how the tests resolve modules, and
+that should be a commit rather than a surprise. Ordinary libraries take a caret.
 
 ## 🧪 Two checks, and why both
 

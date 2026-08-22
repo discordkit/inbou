@@ -3,5 +3,54 @@
   "name": "inbou-handlers",
   "main": "src/handlers/index.ts",
   "compatibility_date": "2026-08-11",
-  "compatibility_flags": []
+  "compatibility_flags": [],
+  // Quiz sessions are Durable Objects on THIS side of the split, not the bot
+  // Worker's. A session needs durable per-channel state and a timer that
+  // survives eviction, and putting it here means editing quiz logic reloads
+  // only this Worker — the Gateway connection in the bot Worker is untouched,
+  // so a session start is not spent on every edit.
+  //
+  // The Worker also binds itself, so the session object's alarm can hand the timeout
+  // back to the request path. The object can close a question on its own, but
+  // posting the reveal needs a REST call and choosing the next question needs
+  // the corpus — neither belongs inside an object that wakes from hibernation
+  // constantly.
+  "services": [{ "binding": "SELF", "service": "inbou-handlers" }],
+  // Cross-session scores. The session object holds a session; this holds what
+  // survives it, which is the only thing a leaderboard can be built from.
+  // Reads dominate: a finished session writes one row per player, while
+  // `/quiz scores` reads on demand — comfortably inside the free tier's
+  // 100k writes and 5M reads per day.
+  "d1_databases": [
+    {
+      "binding": "SCORES",
+      "database_name": "inbou-scores",
+      // From `wrangler d1 create inbou-scores`. Local development does not use
+      // it: Miniflare creates its own database from the binding, so the quiz
+      // runs and the tests pass without an account.
+      //
+      // Note that `wrangler d1 create` appends its binding to the config named
+      // by `main` — wrangler.jsonc, the bot Worker — which is the wrong half of
+      // the split and uses a binding name derived from the database. The
+      // leaderboard belongs here, read as `SCORES`.
+      "database_id": "91749b56-33d2-495e-a775-3c4a787a7c33",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "SESSION",
+        "class_name": "QuizSession"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      // SQLite-backed, matching the bot Worker: it is the free-plan class and
+      // the only backend whose storage works locally under `wrangler dev`.
+      "tag": "v1",
+      "new_sqlite_classes": ["QuizSession"]
+    }
+  ]
 }
