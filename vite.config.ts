@@ -28,6 +28,7 @@ const plugins =
 /** The two tests that drive a real Durable Object. */
 const WORKERD_TESTS = [
   `src/handlers/__tests__/session.spec.ts`,
+  `src/handlers/__tests__/scores.spec.ts`,
   `src/__tests__/worker.spec.ts`
 ];
 
@@ -69,6 +70,11 @@ const workersProject = {
         durableObjects: {
           SESSION: { className: `QuizSession`, useSQLite: true }
         },
+        // The leaderboard. Same reason as the Durable Object above: the
+        // binding is declared in wrangler.handlers.jsonc, which this pool does
+        // not read. Miniflare creates the database in memory, so the schema
+        // has to be applied by the test itself — see `scores.spec.ts`.
+        d1Databases: { SCORES: `inbou-scores-test` },
         // The bot Worker binds `HANDLERS`, so the pool has to know about the
         // handlers Worker too — otherwise workerd refuses to start with
         // "binding HANDLERS refers to a service ... but no such service is
@@ -142,6 +148,14 @@ export default defineConfig({
       // command list in the script.
       "commands:register": {
         command: `varlock run -- node scripts/register-commands.mjs`,
+        cache: false
+      },
+      // Applies the leaderboard schema. Local by default — `--remote` targets
+      // the deployed database, which is a deliberate act against live data.
+      // The bot runs without this: a missing SCORES binding means no
+      // leaderboard, not a broken quiz.
+      "scores:migrate": {
+        command: `wrangler d1 migrations apply inbou-scores --config wrangler.handlers.jsonc --local`,
         cache: false
       },
       // Rebuilds the committed word corpus from JMdict. Deliberate rather than

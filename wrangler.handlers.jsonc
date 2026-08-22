@@ -16,6 +16,22 @@
   // the corpus — neither belongs inside an object that wakes from hibernation
   // constantly.
   "services": [{ "binding": "SELF", "service": "inbou-handlers" }],
+  // Cross-session scores. The session object holds a session; this holds what
+  // survives it, which is the only thing a leaderboard can be built from.
+  // Reads dominate: a finished session writes one row per player, while
+  // `/quiz scores` reads on demand — comfortably inside the free tier's
+  // 100k writes and 5M reads per day.
+  "d1_databases": [
+    {
+      "binding": "SCORES",
+      "database_name": "inbou-scores",
+      // Replaced by the real id from `wrangler d1 create inbou-scores`. Local
+      // development does not use it: Miniflare creates its own database from
+      // the binding, so the quiz runs and the tests pass without an account.
+      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      "migrations_dir": "migrations"
+    }
+  ],
   "durable_objects": {
     "bindings": [
       {

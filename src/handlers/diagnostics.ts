@@ -70,6 +70,21 @@ export const diagnostics = defineDiagnostics({
     },
 
     /**
+     * A leaderboard read or write failed.
+     *
+     * Reported rather than thrown, and deliberately not fatal: the leaderboard
+     * is a record of play, not part of it. A session whose scores fail to save
+     * has still been played, and taking the round down over a database write
+     * would lose the thing people actually came for.
+     */
+    SCORES_UNAVAILABLE: {
+      why: (p: { action: string; detail?: string }) =>
+        `The score store could not ${p.action}${p.detail === undefined ? `` : `: ${p.detail}`}.`,
+      fix: (_p: { action: string; detail?: string }) =>
+        `Check the D1 binding named SCORES exists in wrangler.handlers.jsonc and that migrations have been applied with \`vp run scores:migrate\`.`
+    },
+
+    /**
      * An interaction arrived that the bot does not model.
      *
      * Almost always means the registered command list and the handler have
