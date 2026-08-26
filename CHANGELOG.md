@@ -2,6 +2,12 @@
 
 
 
+
+## 1.1.1
+<sub>2026-08-26</sub>
+
+- [#11](https://github.com/discordkit/inbou/pull/11)  *(patch)* Thanks [@Saeris](https://github.com/Saeris)! - Add a privacy policy and terms of service
+
 ## 1.1.0
 <sub>2026-08-26</sub>
 
