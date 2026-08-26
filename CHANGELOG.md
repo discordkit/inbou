@@ -1,6 +1,14 @@
 # Changelog
 
 
+
+## 1.1.0
+<sub>2026-08-26</sub>
+
+- [#9](https://github.com/discordkit/inbou/pull/9)  *(minor)* Thanks [@Saeris](https://github.com/Saeris)! - Add /privacy: tracking opt-out and right to be forgotten
+- [#7](https://github.com/discordkit/inbou/pull/7)  *(patch)* Thanks [@Saeris](https://github.com/Saeris)! - Name the command registration scope instead of inferring it
+- [#10](https://github.com/discordkit/inbou/pull/10)  *(patch)* Thanks [@Saeris](https://github.com/Saeris)! - Roll back a failed deploy, and fix the remote migrate task
+
 ## 1.0.1
 <sub>2026-08-22</sub>
 
