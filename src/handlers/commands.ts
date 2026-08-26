@@ -20,7 +20,9 @@ import {
   forgetPreviewEmbed,
   forgottenEmbed,
   leaderboardEmbed,
+  optOutButtons,
   readForgetButton,
+  readOptOutButton,
   standingEmbed,
   trackingEmbed
 } from "./quiz/render.js";
@@ -413,6 +415,25 @@ export const handleCommand = async (
       return;
     }
 
+    // The follow-up offered after an erasure.
+    const optOut = customId === null ? null : readOptOutButton(customId);
+    if (optOut !== null) {
+      const presser = readInvoker(interaction);
+      if (presser === null || presser !== optOut) {
+        await deps.discord.reply(interaction, {
+          content: `That button is not yours.`,
+          ephemeral: true
+        });
+        return;
+      }
+      await deps.privacy.setTracking(interaction.guildId ?? ``, optOut, false);
+      await deps.discord.reply(interaction, {
+        embed: trackingEmbed(false),
+        ephemeral: true
+      });
+      return;
+    }
+
     const forget = customId === null ? null : readForgetButton(customId);
     if (forget !== null) {
       // The id names who it was built for. Ephemeral messages are private, so
@@ -426,14 +447,23 @@ export const handleCommand = async (
         });
         return;
       }
+      const guildId = interaction.guildId ?? ``;
       const erased = await deps.privacy.forget(
         forget.userId,
-        forget.everywhere
-          ? { kind: `everywhere` }
-          : { kind: `guild`, guildId: interaction.guildId ?? `` }
+        forget.everywhere ? { kind: `everywhere` } : { kind: `guild`, guildId }
+      );
+
+      // Erasure took the tracking preference with it, so the player is now
+      // tracked again whether or not they were before. Saying so — and
+      // offering the one-press way back out — is the difference between a
+      // deletion they understand and one that quietly resets their choice.
+      const trackedFromNow = await deps.privacy.isTracked(
+        guildId,
+        forget.userId
       );
       await deps.discord.reply(interaction, {
-        embed: forgottenEmbed(erased),
+        embed: forgottenEmbed(erased, trackedFromNow),
+        ...(trackedFromNow ? { components: optOutButtons(forget.userId) } : {}),
         ephemeral: true
       });
       return;

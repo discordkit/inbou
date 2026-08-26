@@ -65,15 +65,21 @@ you set one — your tracking preference. Everything else lives inside a running
 session and dies with it.
 
 `/privacy tracking off` keeps you playing while nothing is written to the
-leaderboard. You still race, and you still appear in the standings a session
-posts while it runs; those messages are not stored. It does not delete anything
-already recorded.
+leaderboard. **One row is stored** — the preference itself, so the choice
+survives between sessions — and the reply says so rather than implying nothing
+at all is kept. Everything else is ephemeral. It deletes nothing already
+recorded.
 
 `/privacy forget` deletes. It shows the counts first and waits for a
 confirmation, because it cannot be undone. `scope:everywhere` covers every
-server rather than just the current one, and the tracking preference is
-deleted too — keeping a record of the person who asked not to be recorded
-would be the wrong way round.
+server rather than just the current one.
+
+The tracking preference is deleted too, which has a consequence the reply
+states plainly: **the bot then treats you as new, and the next session records
+you again.** Keeping a record of the person who asked not to be recorded would
+be the wrong way round, but somebody who erased their data specifically to stop
+being recorded should not discover it quietly starting over — so the
+confirmation offers a one-press opt-out alongside it.
 
 Erasure is defined per store rather than per command
 ([`src/handlers/privacy.ts`](src/handlers/privacy.ts)), so a future quiz type
