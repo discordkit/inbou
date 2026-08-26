@@ -81,6 +81,10 @@ be the wrong way round, but somebody who erased their data specifically to stop
 being recorded should not discover it quietly starting over — so the
 confirmation offers a one-press opt-out alongside it.
 
+The full statement is in [docs/PRIVACY.md](docs/PRIVACY.md), alongside
+[docs/TERMS.md](docs/TERMS.md). Both are linked from the Discord developer
+portal.
+
 Erasure is defined per store rather than per command
 ([`src/handlers/privacy.ts`](src/handlers/privacy.ts)), so a future quiz type
 declares how it erases and `/privacy forget` covers it without changing.
@@ -352,6 +356,11 @@ that should be a commit rather than a surprise. Ordinary libraries take a caret.
 - **`vp run check:bundle`** proves it _deploys_.
 
 The test pool runs inside workerd but with permissive module resolution — Vitest itself needs Node interop — so `node:fs` resolves happily there. Only the real bundle tells the truth. Run both.
+
+## 📄 Privacy and terms
+
+- [Privacy policy](docs/PRIVACY.md) — what is stored, why, and how to remove it
+- [Terms of service](docs/TERMS.md) — what you can expect, and what you cannot
 
 ## 🥂 License
 
