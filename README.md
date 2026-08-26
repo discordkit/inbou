@@ -160,8 +160,8 @@ wrong Worker fails silently: the bot plays perfectly and simply records nothing.
 Then apply the schema:
 
 ```bash
-vp run scores:migrate            # local
-wrangler d1 migrations apply inbou-scores   --config wrangler.handlers.jsonc --remote
+vp run scores:migrate          # local
+vp run scores:migrate:remote   # the deployed database
 ```
 
 Local development needs neither step — Miniflare creates its own database from
@@ -252,6 +252,21 @@ production without a version and a changelog line.
    a deploy that binds a Worker which does not exist yet.
 4. **Slash commands last**, so Discord never offers a command the running code
    cannot answer.
+
+If any step after the first deploy fails, both Workers are rolled back to the
+versions they were serving beforehand, pinned by id. The schema, the code and
+the command list only work as a set — code expecting a column D1 does not have
+is broken, and so are commands the running code cannot answer.
+
+**Migrations are not rolled back, and must be additive.** Cloudflare restores a
+Worker version but leaves connected resources alone, so after a rollback the
+previous code runs against the _new_ schema. That is only safe if the new
+schema is a superset: add tables and columns, never drop or rename.
+`migrations.spec.ts` fails a migration that breaks the rule, which is what
+keeps the recovery path from becoming a second outage.
+
+Migrations run first for the same reason — a failure there has deployed
+nothing, so there is nothing to undo.
 
 ### Two kinds of secret, which is not obvious
 
