@@ -12,6 +12,7 @@ import {
 } from "./quiz/flow.js";
 import { conjugationQuiz } from "./quiz/conjugation.js";
 import type { Word } from "./quiz/question.js";
+import { alwaysTracked, inbouStores, privacyOver } from "./privacy.js";
 import { d1Scores, noScores } from "./scores.js";
 import type { QuizSession } from "./session.js";
 
@@ -70,6 +71,10 @@ const depsFor = (env: Env, channelId: string): FlowDeps => ({
   session: sessionFor(env, channelId),
   kind: conjugationQuiz,
   scores: env.SCORES === undefined ? noScores : d1Scores(env.SCORES),
+  privacy:
+    env.SCORES === undefined
+      ? alwaysTracked
+      : privacyOver(env.SCORES, inbouStores(env.SCORES)),
   words
 });
 

@@ -114,6 +114,44 @@ const settingOptions = [
 /** The command set. This list is the source of truth; Discord mirrors it. */
 const commands = [
   {
+    name: `privacy`,
+    description: `What the bot keeps about you, and how to stop it.`,
+    options: [
+      {
+        type: SUB_COMMAND,
+        name: `tracking`,
+        description: `Turn leaderboard scoring on or off for yourself.`,
+        options: [
+          {
+            type: STRING,
+            name: `state`,
+            description: `on or off. Omit to see the current setting.`,
+            choices: [
+              { name: `on`, value: `on` },
+              { name: `off`, value: `off` }
+            ]
+          }
+        ]
+      },
+      {
+        type: SUB_COMMAND,
+        name: `forget`,
+        description: `Delete everything stored about you. Asks first.`,
+        options: [
+          {
+            type: STRING,
+            name: `scope`,
+            description: `This server by default, or everywhere.`,
+            choices: [
+              { name: `this server`, value: `guild` },
+              { name: `everywhere`, value: `everywhere` }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     name: `feedback`,
     description: `Report a problem or suggest an idea.`,
     options: [

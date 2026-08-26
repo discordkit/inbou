@@ -38,6 +38,8 @@ has to look like an attempt at the question before it costs anybody an attempt.
 | `/hint`               | A private nudge: the reading and the meaning, never the answer.  |
 | `/review`             | Privately, the last question you got wrong.                      |
 | `/feedback bug\|idea` | Opens a pre-filled GitHub issue.                                 |
+| `/privacy tracking`   | Turn leaderboard scoring on or off for yourself.                 |
+| `/privacy forget`     | Delete everything stored about you. Asks first.                  |
 
 | Setting   | Default             | Accepts                                            |
 | --------- | ------------------- | -------------------------------------------------- |
@@ -55,6 +57,27 @@ miss, never below one. Above N5, `forms:compounds` asks multi-word constructions
 where the difficulty is meant to come from rather than rarer vocabulary.
 
 The full design is in [docs/specs/conjugation-quiz.md](docs/specs/conjugation-quiz.md).
+
+### What it stores, and how to stop it
+
+Two things persist: your points and correct-answer counts per server, and — if
+you set one — your tracking preference. Everything else lives inside a running
+session and dies with it.
+
+`/privacy tracking off` keeps you playing while nothing is written to the
+leaderboard. You still race, and you still appear in the standings a session
+posts while it runs; those messages are not stored. It does not delete anything
+already recorded.
+
+`/privacy forget` deletes. It shows the counts first and waits for a
+confirmation, because it cannot be undone. `scope:everywhere` covers every
+server rather than just the current one, and the tracking preference is
+deleted too — keeping a record of the person who asked not to be recorded
+would be the wrong way round.
+
+Erasure is defined per store rather than per command
+([`src/handlers/privacy.ts`](src/handlers/privacy.ts)), so a future quiz type
+declares how it erases and `/privacy forget` covers it without changing.
 
 ## 🏗️ How it works
 

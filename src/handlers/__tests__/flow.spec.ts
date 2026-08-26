@@ -1,6 +1,7 @@
 import type { Embed } from "@discordkit/client";
 import { describe, expect, it } from "vitest";
 import { conjugationQuiz } from "../quiz/conjugation.js";
+import type { PrivacyPort } from "../privacy.js";
 import type { DiscordEffects } from "../discord.js";
 import { DEFAULT_SETTINGS } from "../quiz/config.js";
 import {
@@ -193,9 +194,30 @@ const taberu: Word = {
   gloss: `to eat`
 };
 
+/**
+ * A privacy port with a settable opt-out list.
+ *
+ * The behaviour worth testing is that an opted-out player still plays and
+ * still appears in the standings, and only the durable write is withheld.
+ */
+const trackingStub = (optedOut: string[] = []) => {
+  const out = new Set(optedOut);
+  const port: PrivacyPort = {
+    isTracked: async (_guildId, userId) => !out.has(userId),
+    setTracking: async (_guildId, userId, tracked) => {
+      if (tracked) out.delete(userId);
+      else out.add(userId);
+    },
+    preview: async () => [],
+    forget: async () => []
+  };
+  return { port, out };
+};
+
 const GUILD = `guild-1`;
 
-const deps = (words: readonly Word[] = [uru]) => {
+const deps = (words: readonly Word[] = [uru], optedOut: string[] = []) => {
+  const tracking = trackingStub(optedOut);
   const rec = recorder();
   const session = sessionStub();
   const banked = scoreStub();
@@ -204,6 +226,7 @@ const deps = (words: readonly Word[] = [uru]) => {
     session,
     kind: conjugationQuiz,
     scores: banked.scores,
+    privacy: tracking.port,
     recorded: banked.recorded,
     words,
     random: () => 0
@@ -554,5 +577,53 @@ describe(`when something downstream is broken`, () => {
     expect(view?.state).toBe(`finished`);
     // The scores were still banked, because recording happens first.
     expect(d.recorded).toHaveLength(1);
+  });
+});
+
+describe(`opting out of the leaderboard`, () => {
+  const oneQuestion = {
+    ...DEFAULT_SETTINGS,
+    session: { ...DEFAULT_SETTINGS.session, length: 1 }
+  };
+
+  it(`keeps an opted-out player out of the durable record`, async () => {
+    // WHY: this is the whole promise. Someone who opted out can still play,
+    // and nothing about them is written when the session ends.
+    const d = deps([uru], [`u1`]);
+    await play(d, oneQuestion);
+    await handleAnswer(d, `chan`, `m1`, `u1`, `うる`);
+
+    expect(d.recorded).toHaveLength(1);
+    expect(d.recorded[0]?.results).toEqual([]);
+  });
+
+  it(`still shows them in the standings the session posts`, async () => {
+    // WHY: the opt-out is about the leaderboard, not about being erased from
+    // the game in progress. Vanishing from the standings would make a question
+    // look like nobody won it, which punishes the preference.
+    const d = deps([uru], [`u1`]);
+    await play(d, oneQuestion);
+    await handleAnswer(d, `chan`, `m1`, `u1`, `うる`);
+
+    const standings = d.posts.find(
+      (post) => post.embed.title === `Session complete`
+    );
+    expect(JSON.stringify(standings)).toContain(`u1`);
+  });
+
+  it(`records everybody else in the same session`, async () => {
+    // WHY: one person's preference must not cost the rest of the room their
+    // scores — a filter that dropped the whole batch would be easy to write.
+    const d = deps([uru], [`u1`]);
+    await play(d, {
+      ...DEFAULT_SETTINGS,
+      session: { ...DEFAULT_SETTINGS.session, length: 1, guesses: 5 }
+    });
+    await handleAnswer(d, `chan`, `m1`, `u1`, `うった`);
+    await handleAnswer(d, `chan`, `m2`, `u2`, `うる`);
+
+    const users = d.recorded[0]?.results.map((r) => r.userId) ?? [];
+    expect(users).toContain(`u2`);
+    expect(users).not.toContain(`u1`);
   });
 });

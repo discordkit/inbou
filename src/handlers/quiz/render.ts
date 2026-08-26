@@ -162,6 +162,30 @@ export const BUTTON = {
 } as const;
 
 /**
+ * The confirm button on `/privacy forget`.
+ *
+ * Carries the user and scope, because the deletion is irreversible and a
+ * `customId` is a plain string. The handler checks the id names whoever
+ * pressed it, so a crafted press cannot erase somebody else.
+ */
+export const forgetButton = (userId: string, everywhere: boolean): string =>
+  `privacy:forget:${userId}:${everywhere ? `everywhere` : `guild`}`;
+
+export const readForgetButton = (
+  customId: string
+): { userId: string; everywhere: boolean } | null => {
+  const match =
+    /^privacy:forget:(?<userId>\d+):(?<scope>everywhere|guild)$/u.exec(
+      customId
+    );
+  if (match?.groups === undefined) return null;
+  return {
+    userId: match.groups.userId ?? ``,
+    everywhere: match.groups.scope === `everywhere`
+  };
+};
+
+/**
  * The controls under a question.
  *
  * `/hint` still works, but a button is where someone stuck on a conjugation
@@ -424,6 +448,105 @@ export const feedbackEmbed = (kind: `bug` | `idea`, url: string): Embed => ({
     `Nothing is sent until you press Submit on GitHub, and you can edit or`,
     `delete anything first.`
   ].join(`
+`),
+  color: INDIGO
+});
+
+/** The confirm control on a deletion preview. */
+export const forgetButtons = (
+  userId: string,
+  everywhere: boolean
+): ActionRow[] => [
+  {
+    type: ComponentType.ActionRow,
+    components: [
+      {
+        type: ComponentType.Button,
+        style: ButtonStyle.Danger,
+        label: everywhere ? `Delete everywhere` : `Delete`,
+        customId: forgetButton(userId, everywhere)
+      }
+    ]
+  }
+];
+
+/**
+ * What `/privacy forget` is about to delete.
+ *
+ * Shown before anything goes, and it names counts rather than saying "your
+ * data" — somebody deciding whether to erase seven sessions of progress should
+ * be told it is seven.
+ */
+export const forgetPreviewEmbed = (
+  found: ReadonlyArray<{ label: string; rows: number }>,
+  everywhere: boolean
+): Embed => {
+  const total = found.reduce((sum, entry) => sum + entry.rows, 0);
+  return {
+    title: everywhere ? `Forget me everywhere` : `Forget me in this server`,
+    description:
+      total === 0
+        ? `There is nothing stored about you ${everywhere ? `in any server` : `here`}.`
+        : [
+            `This deletes, permanently:`,
+            ``,
+            ...found
+              .filter((entry) => entry.rows > 0)
+              .map((entry) => `• ${String(entry.rows)} × ${entry.label}`),
+            ``,
+            everywhere
+              ? `Across every server this bot is in.`
+              : `In this server only. Use \`scope:everywhere\` for all of them.`
+          ].join(`
+`),
+    color: total === 0 ? MOSS : VERMILION
+  };
+};
+
+/** What `/privacy forget` actually removed. */
+export const forgottenEmbed = (
+  erased: ReadonlyArray<{ label: string; rows: number }>
+): Embed => {
+  const total = erased.reduce((sum, entry) => sum + entry.rows, 0);
+  return {
+    title: `Forgotten`,
+    description:
+      total === 0
+        ? `There was nothing to delete.`
+        : [
+            ...erased
+              .filter((entry) => entry.rows > 0)
+              .map(
+                (entry) => `• ${String(entry.rows)} × ${entry.label} deleted`
+              ),
+            ``,
+            `A session running right now keeps your answers until it ends;`,
+            `those are not written to the leaderboard.`
+          ].join(`
+`),
+    color: MOSS
+  };
+};
+
+/** The current tracking preference, and how to change it. */
+export const trackingEmbed = (tracked: boolean): Embed => ({
+  title: tracked ? `Tracking is on` : `Tracking is off`,
+  description: tracked
+    ? [
+        `Your scores are saved to this server's leaderboard when a session ends.`,
+        ``,
+        `\`/privacy tracking off\` stops that. You can still play — only the`,
+        `saving stops, and nothing already stored is removed.`
+      ].join(`
+`)
+    : [
+        `Nothing you score here is saved to the leaderboard.`,
+        ``,
+        `You can still play, and you still appear in the standings a session`,
+        `posts while it runs — those messages are not stored.`,
+        ``,
+        `\`/privacy tracking on\` starts saving again.`
+      ].join(`
 `),
   color: INDIGO
 });

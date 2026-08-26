@@ -2,6 +2,7 @@ import type { Embed } from "@discordkit/client";
 import type { Interaction } from "@discordkit/client/interactions/types/Interaction";
 import { describe, expect, it } from "vitest";
 import { conjugationQuiz } from "../quiz/conjugation.js";
+import type { PrivacyPort } from "../privacy.js";
 import { handleCommand, type CommandDeps } from "../commands.js";
 import { BUTTON } from "../quiz/render.js";
 import type { DiscordEffects } from "../discord.js";
@@ -103,11 +104,30 @@ const word: Word = {
   gloss: `to sell`
 };
 
+const trackingStub = (optedOut: string[] = []) => {
+  const out = new Set(optedOut);
+  const erased: { userId: string; everywhere: boolean }[] = [];
+  const port: PrivacyPort = {
+    isTracked: async (_guildId, userId) => !out.has(userId),
+    setTracking: async (_guildId, userId, tracked) => {
+      if (tracked) out.delete(userId);
+      else out.add(userId);
+    },
+    preview: async () => [{ label: `leaderboard scores`, rows: 3 }],
+    forget: async (userId, scope) => {
+      erased.push({ userId, everywhere: scope.kind === `everywhere` });
+      return [{ label: `leaderboard scores`, rows: 3 }];
+    }
+  };
+  return { port, out, erased };
+};
+
 const deps = (
   state: Parameters<typeof sessionAt>[0],
   scores: ScorePort = scoresWith(),
   extra: Parameters<typeof sessionAt>[1] = {}
 ) => {
+  const tracking = trackingStub();
   const rec = recorder();
   return {
     ...rec,
@@ -116,6 +136,7 @@ const deps = (
       session: sessionAt(state, extra),
       kind: conjugationQuiz,
       scores,
+      privacy: tracking.port,
       words: [word],
       random: () => 0
     } satisfies CommandDeps
@@ -527,5 +548,66 @@ describe(`reporting feedback`, () => {
     const text = replies[0]?.embed?.description ?? ``;
     expect(text).toContain(`user id`);
     expect(text).toContain(`Nothing is sent until`);
+  });
+});
+
+describe(`the privacy commands`, () => {
+  const privacyIn = (sub: string, opts: unknown[] = []): Interaction =>
+    ({
+      type: 2,
+      channelId: `chan`,
+      guildId: `g1`,
+      member: { user: { id: `drake` } },
+      data: { name: `privacy`, options: [{ name: sub, options: opts }] }
+    }) as unknown as Interaction;
+
+  it(`asks before deleting anything`, async () => {
+    // WHY: erasure cannot be undone. A command that deleted on invocation
+    // would turn a mistyped command into permanent loss.
+    const { deps: d, replies } = deps(null);
+    await handleCommand(d, privacyIn(`forget`));
+
+    expect(replies[0]?.ephemeral).toBe(true);
+    expect(replies[0]?.embed?.title).toContain(`Forget me`);
+    // A confirm button, not a completed deletion.
+    expect(JSON.stringify(replies[0])).toContain(`privacy:forget:drake`);
+  });
+
+  it(`names the counts so the choice is informed`, async () => {
+    const { deps: d, replies } = deps(null);
+    await handleCommand(d, privacyIn(`forget`));
+
+    expect(JSON.stringify(replies[0]?.embed)).toContain(`leaderboard scores`);
+  });
+
+  it(`stays private throughout`, async () => {
+    // WHY: asking to be forgotten should not announce itself to the channel.
+    const { deps: d, replies, posts } = deps(null);
+    await handleCommand(
+      d,
+      privacyIn(`tracking`, [{ name: `state`, value: `off` }])
+    );
+
+    expect(replies[0]?.ephemeral).toBe(true);
+    expect(posts).toEqual([]);
+  });
+
+  it(`turns tracking off and reports it back`, async () => {
+    const { deps: d, replies } = deps(null);
+    await handleCommand(
+      d,
+      privacyIn(`tracking`, [{ name: `state`, value: `off` }])
+    );
+
+    expect(replies[0]?.embed?.title).toBe(`Tracking is off`);
+  });
+
+  it(`reports the current setting when given no state`, async () => {
+    // WHY: "what is my setting" is a question worth answering without having
+    // to change it to find out.
+    const { deps: d, replies } = deps(null);
+    await handleCommand(d, privacyIn(`tracking`));
+
+    expect(replies[0]?.embed?.title).toBe(`Tracking is on`);
   });
 });
