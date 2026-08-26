@@ -106,11 +106,11 @@ vp install
 
 Copy `.env.schema` to `.env` and fill it in. `.env` is gitignored; `.env.schema` is committed and declares the shape, which Varlock validates.
 
-| Variable                 | Required | Where to get it                                                                                                                                     |
-| ------------------------ | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `DISCORD_BOT_TOKEN`      | yes      | [Developer Portal][portal] → your app → **Bot → Reset Token**. Authenticates both the Gateway connection and the REST calls.                        |
-| `DISCORD_APPLICATION_ID` | yes      | Same app → **General Information**. Public; it appears in invite URLs.                                                                              |
-| `DISCORD_GUILD_ID`       | no       | The server to register commands into while developing. Guild commands appear immediately; global ones can take up to an hour. Needs Developer Mode. |
+| Variable                 | Required | Where to get it                                                                                                                                                                            |
+| ------------------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `DISCORD_BOT_TOKEN`      | yes      | [Developer Portal][portal] → your app → **Bot → Reset Token**. Authenticates both the Gateway connection and the REST calls.                                                               |
+| `DISCORD_APPLICATION_ID` | yes      | Same app → **General Information**. Public; it appears in invite URLs.                                                                                                                     |
+| `DISCORD_GUILD_ID`       | no       | A development shortcut: registers commands to this one server, where they appear instantly and shadow the global set. Leave it unset for the registration users get. Needs Developer Mode. |
 
 The bot needs two **privileged** intents enabled under **Bot → Privileged Gateway Intents**: **Message Content** and **Server Members**. Without them Discord closes the connection with a fatal `4014`.
 
@@ -146,12 +146,33 @@ identically and keeps no leaderboard, rather than refusing to start.
 | Local dev         | `vp run dev`               | Runs both Workers and the DO in real workerd via Miniflare. |
 | Tests             | `vp test`                  | Drives a real Durable Object inside workerd.                |
 | Bundle check      | `vp run check:bundle`      | Fails if the bundle pulls in a Node builtin.                |
-| Register commands | `vp run commands:register` | Pushes the command list to Discord.                         |
+| Register commands | `vp run commands:register` | Dev: pushes to `DISCORD_GUILD_ID`, instantly.               |
+| Publish commands  | `vp run commands:publish`  | Global: every guild that has the bot. What users get.       |
 | Migrate scores    | `vp run scores:migrate`    | Applies the D1 schema locally. Add `--remote` for live.     |
 | Rebuild corpus    | `vp run corpus:build`      | Regenerates the word list from JMdict. Rarely needed.       |
 | Deploy            | `vp run deploy`            | Build, migrate, deploy both Workers, register commands.     |
 
-Slash commands are registered over REST and persist on Discord's side, so `commands:register` is a deliberate step rather than something the bot does at boot. Re-running it replaces the whole set, which is what makes a removed command disappear.
+Slash commands are registered over REST and persist on Discord's side, so this is a deliberate step rather than something the bot does at boot. Re-running it replaces the whole set, which is what makes a removed command disappear.
+
+### Two scopes, and why the distinction bites
+
+**Global is the real one.** Commands belong to the _application_, not to a
+server, so one global registration covers every guild that installs the bot —
+including guilds that install it later. There is no per-server step, ever. A
+client holding a stale command has it read-repaired on first use rather than
+waiting out a propagation delay.
+
+**Guild is a development shortcut.** A private copy scoped to one server that
+updates instantly. It also **shadows** the global command of the same name
+there, indefinitely, until cleared — so the server you test in becomes the one
+place the published command list is not what runs. `vp run
+commands:clear-guild` hands it back.
+
+`vp run deploy` always publishes globally, whatever the environment holds.
+That is not a detail: the scope used to depend on `DISCORD_GUILD_ID` being
+absent, so a release from a machine with a dev `.env` published to one server
+and exited 0, leaving every real user without commands. Named rather than
+inferred now, with a test that fails if the deploy stops passing `--global`.
 
 ### Waking the bot in dev
 

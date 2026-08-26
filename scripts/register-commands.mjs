@@ -7,10 +7,21 @@
  * Discord's side — so this runs on demand rather than at boot. Re-running it
  * replaces the whole set, which is what makes a removed command disappear.
  *
- * Set `DISCORD_GUILD_ID` while developing: guild commands appear immediately,
- * while global ones can take up to an hour to propagate.
+ * Two scopes, for two different jobs:
  *
- *   varlock run -- node scripts/register-commands.mjs
+ * **Global** is the real one. Commands belong to the application, so a global
+ * registration covers every guild that installs the bot, including ones that
+ * install it later — there is no per-server step, ever. A user who runs a
+ * command Discord has not caught up on gets it read-repaired on the spot.
+ *
+ * **Guild** is a development shortcut: a private copy scoped to one server that
+ * updates instantly. It also *shadows* the global command of the same name in
+ * that server until cleared, so the place you test is the one place the
+ * published command list is not what runs.
+ *
+ *   vp run commands:register      # honours DISCORD_GUILD_ID — the dev loop
+ *   vp run commands:publish       # always global, whatever the environment holds
+ *   vp run commands:clear-guild   # remove the guild copy so global takes over
  */
 import {
   bulkOverwriteGlobalApplicationCommands,
@@ -22,9 +33,26 @@ const token = process.env.DISCORD_BOT_TOKEN;
 const application = process.env.DISCORD_APPLICATION_ID;
 const guild = process.env.DISCORD_GUILD_ID;
 
+/**
+ * Publishing must not depend on a variable being absent.
+ *
+ * Without this the scope came from whether `DISCORD_GUILD_ID` happened to be
+ * set wherever the deploy ran, so a release from a machine holding a dev `.env`
+ * published to one server and reported success — leaving every real user with
+ * no commands at all. The safe path is now the one you have to name.
+ */
+const forceGlobal = process.argv.includes(`--global`);
+const clearGuild = process.argv.includes(`--clear-guild`);
+
 if (!token || !application) {
   throw new Error(
     `DISCORD_BOT_TOKEN and DISCORD_APPLICATION_ID must both be set to register commands. Add them to .env and run through \`varlock run --\`.`
+  );
+}
+
+if (clearGuild && !guild) {
+  throw new Error(
+    `--clear-guild needs DISCORD_GUILD_ID set, so it knows which server to clear.`
   );
 }
 
@@ -160,18 +188,46 @@ const commands = [
   }
 ];
 
-const registered = guild
-  ? await bulkOverwriteGuildApplicationCommands({
-      application,
-      guild,
-      body: commands
-    })
-  : await bulkOverwriteGlobalApplicationCommands({
-      application,
-      body: commands
-    });
+const list = (registered) => {
+  for (const command of registered) console.log(`  /${command.name}`);
+};
 
-console.log(
-  `Registered ${registered.length} command(s) ${guild ? `to guild ${guild}` : `globally`}:`
-);
-for (const command of registered) console.log(`  /${command.name}`);
+if (clearGuild) {
+  // Bulk-overwriting with an empty list is the documented way to delete a
+  // whole set, and nothing else removes a guild registration.
+  await bulkOverwriteGuildApplicationCommands({
+    application,
+    guild,
+    body: []
+  });
+  console.log(`Cleared the guild registration for ${guild}.`);
+  console.log(``);
+  console.log(
+    `That server now sees the global commands, the same as everyone else.`
+  );
+} else if (guild && !forceGlobal) {
+  const registered = await bulkOverwriteGuildApplicationCommands({
+    application,
+    guild,
+    body: commands
+  });
+  console.log(`Registered ${registered.length} command(s) to guild ${guild}:`);
+  list(registered);
+  console.log(``);
+  console.log(`This is the development shortcut: it appears immediately, and`);
+  console.log(`it SHADOWS the global commands in that one server. Users`);
+  console.log(`elsewhere see nothing new until you:`);
+  console.log(`  vp run commands:publish       # register globally`);
+  console.log(`  vp run commands:clear-guild   # drop this dev copy`);
+} else {
+  const registered = await bulkOverwriteGlobalApplicationCommands({
+    application,
+    body: commands
+  });
+  console.log(`Registered ${registered.length} command(s) globally:`);
+  list(registered);
+  console.log(``);
+  console.log(
+    `Every guild that has installed the bot, and every one that installs it later.`
+  );
+}

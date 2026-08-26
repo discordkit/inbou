@@ -229,8 +229,27 @@ export default defineConfig({
       // Commands live on Discord's side, so registering is a deliberate action
       // rather than something the bot does at boot. Re-run after changing the
       // command list in the script.
+      //
+      // Three tasks rather than one, because the scope must be named rather
+      // than inferred: publishing used to depend on `DISCORD_GUILD_ID` being
+      // absent, so a deploy from a machine with a dev `.env` silently shipped
+      // to one server.
+      //
+      // Development. Honours DISCORD_GUILD_ID, so the copy appears instantly.
       "commands:register": {
         command: `varlock run -- node scripts/register-commands.mjs`,
+        cache: false
+      },
+      // Publishing. Global whatever the environment holds — every guild that
+      // has installed the bot, and every one that installs it later.
+      "commands:publish": {
+        command: `varlock run -- node scripts/register-commands.mjs --global`,
+        cache: false
+      },
+      // Removes the development copy, which otherwise shadows the global
+      // commands in that one server indefinitely.
+      "commands:clear-guild": {
+        command: `varlock run -- node scripts/register-commands.mjs --clear-guild`,
         cache: false
       },
       // Applies the leaderboard schema. Local by default — `--remote` targets
