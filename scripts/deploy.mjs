@@ -53,6 +53,14 @@ run(`Deploy bot Worker`, `wrangler`, [
 
 // Last, so Discord never offers a command the running code cannot answer.
 // Registering first would reopen exactly the `/ping` gap, in production.
-run(`Register slash commands`, `node`, [`scripts/register-commands.mjs`]);
+//
+// `--global` is not optional here. Without it the scope came from whether
+// `DISCORD_GUILD_ID` happened to be set wherever this ran, so a deploy from a
+// machine holding a dev `.env` published to one server and exited 0 — every
+// other guild left with no commands, and nothing anywhere saying so.
+run(`Register slash commands`, `node`, [
+  `scripts/register-commands.mjs`,
+  `--global`
+]);
 
 console.log(`\n✓ Deployed.`);

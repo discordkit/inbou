@@ -97,6 +97,28 @@ describe(`the options registered with Discord`, () => {
   });
 });
 
+describe(`what a deploy publishes`, () => {
+  const deploy = readFileSync(`scripts/deploy.mjs`, `utf8`);
+
+  it(`registers globally, not to whichever guild the environment names`, () => {
+    // WHY: the scope used to come from whether DISCORD_GUILD_ID happened to be
+    // set wherever the deploy ran. A release from a machine holding a dev
+    // `.env` published to one server, exited 0, and left every other guild
+    // with no commands — succeeding loudly while failing completely.
+    const call = /register-commands\.mjs`[^)]*\)/su.exec(deploy)?.[0] ?? ``;
+
+    expect(call).not.toBe(``);
+    expect(call).toContain(`--global`);
+  });
+
+  it(`cannot be redirected by DISCORD_GUILD_ID`, () => {
+    // WHY: the closing check the bug report asks for. `--global` has to win
+    // over the environment inside the script, not merely be passed to it.
+    expect(script).toContain(`forceGlobal`);
+    expect(script).toMatch(/guild && !forceGlobal/u);
+  });
+});
+
 /** The numbers a description names, which is the part that must agree. */
 const numbersIn = (text: string): string =>
   (text.match(/\d+/gu) ?? []).join(`,`);
