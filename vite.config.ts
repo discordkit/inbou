@@ -261,6 +261,14 @@ export default defineConfig({
         command: `wrangler d1 migrations apply inbou-scores --config wrangler.handlers.jsonc --local`,
         cache: false
       },
+      // Separate task rather than a flag on the one above: `--local` is baked
+      // into that command, so `vp run scores:migrate --remote` passes both and
+      // wrangler rejects it. Named apart, the destructive one cannot be reached
+      // by appending an argument to the safe one.
+      "scores:migrate:remote": {
+        command: `wrangler d1 migrations apply inbou-scores --config wrangler.handlers.jsonc --remote`,
+        cache: false
+      },
       // Build, migrate, deploy both Workers in binding order, register
       // commands. Run by `bumpy publish` when a version PR merges — see
       // scripts/deploy.mjs for why each step is where it is.
