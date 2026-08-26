@@ -162,6 +162,30 @@ export const BUTTON = {
 } as const;
 
 /**
+ * The confirm button on `/privacy forget`.
+ *
+ * Carries the user and scope, because the deletion is irreversible and a
+ * `customId` is a plain string. The handler checks the id names whoever
+ * pressed it, so a crafted press cannot erase somebody else.
+ */
+export const forgetButton = (userId: string, everywhere: boolean): string =>
+  `privacy:forget:${userId}:${everywhere ? `everywhere` : `guild`}`;
+
+export const readForgetButton = (
+  customId: string
+): { userId: string; everywhere: boolean } | null => {
+  const match =
+    /^privacy:forget:(?<userId>[^:]+):(?<scope>everywhere|guild)$/u.exec(
+      customId
+    );
+  if (match?.groups === undefined) return null;
+  return {
+    userId: match.groups.userId ?? ``,
+    everywhere: match.groups.scope === `everywhere`
+  };
+};
+
+/**
  * The controls under a question.
  *
  * `/hint` still works, but a button is where someone stuck on a conjugation
@@ -424,6 +448,160 @@ export const feedbackEmbed = (kind: `bug` | `idea`, url: string): Embed => ({
     `Nothing is sent until you press Submit on GitHub, and you can edit or`,
     `delete anything first.`
   ].join(`
+`),
+  color: INDIGO
+});
+
+/** The confirm control on a deletion preview. */
+export const forgetButtons = (
+  userId: string,
+  everywhere: boolean
+): ActionRow[] => [
+  {
+    type: ComponentType.ActionRow,
+    components: [
+      {
+        type: ComponentType.Button,
+        style: ButtonStyle.Danger,
+        label: everywhere ? `Delete everywhere` : `Delete`,
+        customId: forgetButton(userId, everywhere)
+      }
+    ]
+  }
+];
+
+/**
+ * What `/privacy forget` is about to delete.
+ *
+ * Shown before anything goes, and it names counts rather than saying "your
+ * data" — somebody deciding whether to erase seven sessions of progress should
+ * be told it is seven.
+ */
+export const forgetPreviewEmbed = (
+  found: ReadonlyArray<{ label: string; rows: number }>,
+  everywhere: boolean
+): Embed => {
+  const total = found.reduce((sum, entry) => sum + entry.rows, 0);
+  return {
+    title: everywhere ? `Forget me everywhere` : `Forget me in this server`,
+    description:
+      total === 0
+        ? `There is nothing stored about you ${everywhere ? `in any server` : `here`}.`
+        : [
+            `This deletes, permanently:`,
+            ``,
+            ...found
+              .filter((entry) => entry.rows > 0)
+              .map((entry) => `• ${String(entry.rows)} × ${entry.label}`),
+            ``,
+            everywhere
+              ? `Across every server this bot is in.`
+              : `In this server only. Use \`scope:everywhere\` for all of them.`
+          ].join(`
+`),
+    color: total === 0 ? MOSS : VERMILION
+  };
+};
+
+/**
+ * What `/privacy forget` removed, and what that means from here.
+ *
+ * The consequence needs saying out loud: erasure includes the tracking
+ * preference, so the next session records the player again as though the bot
+ * had never seen them. Somebody who deleted their data to stop being recorded
+ * would otherwise find it quietly starting over, having been told only that
+ * the deletion succeeded.
+ */
+export const forgottenEmbed = (
+  erased: ReadonlyArray<{ label: string; rows: number }>,
+  /** False when they were already opted out and want to stay that way. */
+  trackedFromNow: boolean
+): Embed => {
+  const total = erased.reduce((sum, entry) => sum + entry.rows, 0);
+  const removed = erased.filter((entry) => entry.rows > 0);
+
+  return {
+    title: `Forgotten`,
+    description: [
+      ...(total === 0
+        ? [`There was nothing stored about you.`]
+        : removed.map(
+            (entry) => `• ${String(entry.rows)} × ${entry.label} deleted`
+          )),
+      ``,
+      ...(trackedFromNow
+        ? [
+            `**From now the bot treats you as new.** Your tracking preference`,
+            `was part of what was deleted, so the next session you play will`,
+            `be recorded to the leaderboard again.`,
+            ``,
+            `If you would rather it did not, opt out below — that stores one`,
+            `row saying "do not track", and nothing else.`
+          ]
+        : [`You remain opted out, so nothing new is recorded.`]),
+      ...(total === 0
+        ? []
+        : [
+            ``,
+            `A session running right now keeps your answers until it ends.`,
+            `Those are never written to the leaderboard.`
+          ])
+    ].join(`
+`),
+    color: MOSS
+  };
+};
+
+/** The follow-up offered after an erasure: stay untracked rather than reset. */
+export const optOutButtons = (userId: string): ActionRow[] => [
+  {
+    type: ComponentType.ActionRow,
+    components: [
+      {
+        type: ComponentType.Button,
+        style: ButtonStyle.Secondary,
+        label: `Also stop tracking me`,
+        customId: `privacy:optout:${userId}`
+      }
+    ]
+  }
+];
+
+export const readOptOutButton = (customId: string): string | null =>
+  /^privacy:optout:(?<userId>[^:]+)$/u.exec(customId)?.groups?.userId ?? null;
+
+/**
+ * The current tracking preference, what it stores, and both ways out.
+ *
+ * The opted-out copy is the load-bearing one. "Off" does not mean nothing is
+ * kept — one row is, recording the preference itself — and somebody choosing
+ * privacy deserves to know precisely what that costs rather than to assume
+ * either more or less than is true.
+ */
+export const trackingEmbed = (tracked: boolean): Embed => ({
+  title: tracked ? `Tracking is on` : `Tracking is off`,
+  description: tracked
+    ? [
+        `Your points and correct-answer counts are saved to this server's`,
+        `leaderboard when a session ends.`,
+        ``,
+        `\`/privacy tracking off\` stops that. You can still play — only the`,
+        `saving stops, and nothing already stored is removed.`
+      ].join(`
+`)
+    : [
+        `**Only this preference is stored** — one row saying "do not track",`,
+        `so the bot can remember your choice between sessions.`,
+        ``,
+        `Everything else you do is ephemeral. You still play, still race, and`,
+        `still appear in the standings a session posts while it runs; those`,
+        `messages are not stored, and nothing is written to the leaderboard`,
+        `when the session ends.`,
+        ``,
+        `Two ways out:`,
+        `• \`/privacy tracking on\` — start saving scores again`,
+        `• \`/privacy forget\` — delete everything, this preference included`
+      ].join(`
 `),
   color: INDIGO
 });

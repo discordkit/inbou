@@ -1,5 +1,6 @@
 import { diagnostics } from "../diagnostics.js";
 import type { DiscordEffects } from "../discord.js";
+import type { PrivacyPort } from "../privacy.js";
 import type { ScorePort } from "../scores.js";
 import type { QuizKind } from "./kind.js";
 import type { QuizSettings } from "./config.js";
@@ -105,6 +106,8 @@ export interface FlowDeps {
    * working implementation that keeps nothing, which is what a DM gets.
    */
   scores: ScorePort;
+  /** Consent, so an opted-out player is not written to that leaderboard. */
+  privacy: PrivacyPort;
   words: readonly Word[];
   /**
    * What kind of quiz this is: how answers are graded and how they are shown.
@@ -291,13 +294,25 @@ export const finish = async (
     // Guarded rather than trusted: a broken port must not cost people the
     // session they just played.
     try {
+      const guildId = outcome.guildId;
+      // Opted-out players are dropped here rather than earlier, so they still
+      // played, still raced, and still appear in the standings just posted.
+      // Only the durable record is withheld — which is what they opted out of.
+      const tracked = await Promise.all(
+        outcome.standings.map(async (entry) =>
+          (await deps.privacy.isTracked(guildId, entry.userId)) ? entry : null
+        )
+      );
+
       await deps.scores.record(
         outcome.guildId,
-        outcome.standings.map((entry) => ({
-          userId: entry.userId,
-          points: entry.points,
-          correct: outcome.correct[entry.userId] ?? 0
-        }))
+        tracked
+          .filter((entry) => entry !== null)
+          .map((entry) => ({
+            userId: entry.userId,
+            points: entry.points,
+            correct: outcome.correct[entry.userId] ?? 0
+          }))
       );
     } catch (error) {
       diagnostics.SCORES_UNAVAILABLE({

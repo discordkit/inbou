@@ -16,6 +16,7 @@
 const WORKERD_TESTS = [
   `!src/handlers/__tests__/session.spec.ts`,
   `!src/handlers/__tests__/scores.spec.ts`,
+  `!src/handlers/__tests__/privacy.spec.ts`,
   `!src/handlers/__tests__/scenarios.spec.ts`,
   `!src/__tests__/worker.spec.ts`
 ];

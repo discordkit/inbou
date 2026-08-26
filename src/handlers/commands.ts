@@ -2,6 +2,7 @@ import { InteractionType } from "@discordkit/client";
 import type { Interaction } from "@discordkit/client/interactions/types/Interaction";
 import { diagnostics } from "./diagnostics.js";
 import { feedbackUrl, type FeedbackKind } from "./feedback.js";
+import type { Scope } from "./privacy.js";
 import type { DiscordEffects } from "./discord.js";
 import { isSettings, parseSettings } from "./quiz/config.js";
 import { finish, startSession, type FlowDeps } from "./quiz/flow.js";
@@ -15,8 +16,15 @@ import {
 import {
   BUTTON,
   feedbackEmbed,
+  forgetButtons,
+  forgetPreviewEmbed,
+  forgottenEmbed,
   leaderboardEmbed,
-  standingEmbed
+  optOutButtons,
+  readForgetButton,
+  readOptOutButton,
+  standingEmbed,
+  trackingEmbed
 } from "./quiz/render.js";
 
 /**
@@ -201,6 +209,75 @@ const review = async (
 };
 
 /**
+ * `/privacy` — what the bot keeps, and how to stop it.
+ *
+ * Ephemeral throughout. Somebody asking to be forgotten should not have to
+ * announce it to the channel, and the reply names their own stored counts.
+ */
+const privacy = async (
+  deps: CommandDeps,
+  interaction: Interaction,
+  subcommand: string,
+  options: unknown
+): Promise<void> => {
+  const userId = readInvoker(interaction);
+  if (userId === null) {
+    await deps.discord.reply(interaction, {
+      content: `I could not tell who asked.`,
+      ephemeral: true
+    });
+    return;
+  }
+
+  const guildId = interaction.guildId;
+  const everywhere = readTextOption(options, `scope`) === `everywhere`;
+
+  // Everything except an everywhere-erasure is per guild, and a DM has none.
+  if (guildId === undefined && !everywhere) {
+    await deps.discord.reply(interaction, {
+      content: `That is a per-server setting, so it only works in a server. \`/privacy forget scope:everywhere\` works anywhere.`,
+      ephemeral: true
+    });
+    return;
+  }
+
+  const scope: Scope = everywhere
+    ? { kind: `everywhere` }
+    : { kind: `guild`, guildId: guildId ?? `` };
+
+  if (subcommand === `forget`) {
+    // Previewed rather than deleted, because this cannot be undone and the
+    // player is entitled to know what they are giving up first.
+    const found = await deps.privacy.preview(userId, scope);
+    const total = found.reduce((sum, entry) => sum + entry.rows, 0);
+    await deps.discord.reply(interaction, {
+      embed: forgetPreviewEmbed(found, everywhere),
+      ...(total === 0 ? {} : { components: forgetButtons(userId, everywhere) }),
+      ephemeral: true
+    });
+    return;
+  }
+
+  if (subcommand === `tracking`) {
+    const setting = readTextOption(options, `state`);
+    if (setting === `on` || setting === `off`) {
+      await deps.privacy.setTracking(guildId ?? ``, userId, setting === `on`);
+    }
+    const tracked = await deps.privacy.isTracked(guildId ?? ``, userId);
+    await deps.discord.reply(interaction, {
+      embed: trackingEmbed(tracked),
+      ephemeral: true
+    });
+    return;
+  }
+
+  await deps.discord.reply(interaction, {
+    content: `Use \`/privacy tracking\` or \`/privacy forget\`.`,
+    ephemeral: true
+  });
+};
+
+/**
  * `/quiz scores` — the guild leaderboard, or one player's standing.
  *
  * Public rather than ephemeral: a leaderboard nobody else can see defeats the
@@ -338,6 +415,60 @@ export const handleCommand = async (
       return;
     }
 
+    // The follow-up offered after an erasure.
+    const optOut = customId === null ? null : readOptOutButton(customId);
+    if (optOut !== null) {
+      const presser = readInvoker(interaction);
+      if (presser === null || presser !== optOut) {
+        await deps.discord.reply(interaction, {
+          content: `That button is not yours.`,
+          ephemeral: true
+        });
+        return;
+      }
+      await deps.privacy.setTracking(interaction.guildId ?? ``, optOut, false);
+      await deps.discord.reply(interaction, {
+        embed: trackingEmbed(false),
+        ephemeral: true
+      });
+      return;
+    }
+
+    const forget = customId === null ? null : readForgetButton(customId);
+    if (forget !== null) {
+      // The id names who it was built for. Ephemeral messages are private, so
+      // this is belt and braces — but the action is irreversible, and one
+      // comparison is a cheap way to be sure it is self-service only.
+      const presser = readInvoker(interaction);
+      if (presser === null || presser !== forget.userId) {
+        await deps.discord.reply(interaction, {
+          content: `That button is not yours.`,
+          ephemeral: true
+        });
+        return;
+      }
+      const guildId = interaction.guildId ?? ``;
+      const erased = await deps.privacy.forget(
+        forget.userId,
+        forget.everywhere ? { kind: `everywhere` } : { kind: `guild`, guildId }
+      );
+
+      // Erasure took the tracking preference with it, so the player is now
+      // tracked again whether or not they were before. Saying so — and
+      // offering the one-press way back out — is the difference between a
+      // deletion they understand and one that quietly resets their choice.
+      const trackedFromNow = await deps.privacy.isTracked(
+        guildId,
+        forget.userId
+      );
+      await deps.discord.reply(interaction, {
+        embed: forgottenEmbed(erased, trackedFromNow),
+        ...(trackedFromNow ? { components: optOutButtons(forget.userId) } : {}),
+        ephemeral: true
+      });
+      return;
+    }
+
     diagnostics.UNKNOWN_INTERACTION({ name: customId ?? `unnamed component` });
     return;
   }
@@ -364,6 +495,16 @@ export const handleCommand = async (
 
   if (name === `review`) {
     await review(deps, interaction);
+    return;
+  }
+
+  if (name === `privacy`) {
+    await privacy(
+      deps,
+      interaction,
+      invocation.subcommand ?? ``,
+      interaction.data?.options
+    );
     return;
   }
 

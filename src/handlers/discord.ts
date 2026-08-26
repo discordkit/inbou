@@ -36,7 +36,12 @@ export interface DiscordEffects {
   /** Reply to an interaction, privately when `ephemeral`. */
   reply: (
     interaction: Interaction,
-    body: { content?: string; embed?: Embed; ephemeral?: boolean }
+    body: {
+      content?: string;
+      embed?: Embed;
+      ephemeral?: boolean;
+      components?: ActionRow[];
+    }
   ) => Promise<void>;
 }
 
@@ -121,7 +126,7 @@ export const discordEffects: DiscordEffects = {
     }
   },
 
-  reply: async (interaction, { content, embed, ephemeral }) => {
+  reply: async (interaction, { content, embed, ephemeral, components }) => {
     try {
       await createInteractionResponse(
         {
@@ -132,6 +137,7 @@ export const discordEffects: DiscordEffects = {
             data: {
               ...(content === undefined ? {} : { content }),
               ...(embed === undefined ? {} : { embeds: [embed] }),
+              ...(components === undefined ? {} : { components }),
               // EPHEMERAL is the only flag an interaction response may set, and
               // it is the one thing that makes a private reply possible at all.
               ...(ephemeral === true ? { flags: MessageFlag.EPHEMERAL } : {})
