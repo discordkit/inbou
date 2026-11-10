@@ -47,6 +47,6 @@ jobs:
       # failing step skips the rest of the job — running it first would cost a
       # contributor all their test signal over a missing changelog entry.
       - name: Release plan
-        run: yarn dlx @varlock/bumpy@1.18.1 ci check
+        run: yarn dlx @varlock/bumpy@1.19.0 ci check
         env:
           GH_TOKEN: ${{ github.token }}

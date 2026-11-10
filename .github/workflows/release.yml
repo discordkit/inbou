@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  BUMPY: "@varlock/bumpy@1.18.1"
+  BUMPY: "@varlock/bumpy@1.19.0"
 
 jobs:
   # What would a release do right now? Read-only, no credentials — the answer

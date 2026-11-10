@@ -1250,6 +1250,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@varlock/bumpy@npm:1.19.0":
+  version: 1.19.0
+  resolution: "@varlock/bumpy@npm:1.19.0"
+  bin:
+    bumpy: dist/cli.mjs
+  checksum: 10/0845be8324a823bf4952cf81636fafef2855e8c986fba2389d18f9554a39286e80edcf4fba1b4a2119953638888ff3b064f28b5cada0e4d006cdf17641391bd9
+  languageName: node
+  linkType: hard
+
 "@varlock/native-helper-darwin@npm:1.24.0":
   version: 1.24.0
   resolution: "@varlock/native-helper-darwin@npm:1.24.0"
@@ -1942,6 +1951,7 @@ __metadata:
     "@discordkit/core": "npm:^4.2.0"
     "@discordkit/gateway": "npm:^1.0.3"
     "@saeris/configs": "npm:1.6.1"
+    "@varlock/bumpy": "npm:1.19.0"
     msw: "npm:^3.0.4"
     nostics: "npm:1.3.0"
     typescript: "npm:^6.0.3"
