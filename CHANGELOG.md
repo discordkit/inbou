@@ -3,6 +3,12 @@
 
 
 
+
+## 1.1.2
+<sub>2026-11-10</sub>
+
+- [#13](https://github.com/discordkit/inbou/pull/13)  *(patch)* Thanks [@Saeris](https://github.com/Saeris)! - Upgrade the toolchain to Vite+ 1.5 and Vitest 5, and refresh dependencies
+
 ## 1.1.1
 <sub>2026-08-26</sub>
 
