@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { buildCompound, COMPOUNDS } from "../quiz/compound.js";
 import { DEFAULT_SETTINGS, isSettings, parseSettings } from "../quiz/config.js";
 import { generate, isQuestion, type Word } from "../quiz/question.js";

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import corpus from "../quiz/corpus.json" with { type: "json" };
 import { formTable, formsFor, type WordType } from "../quiz/forms.js";
 import { judge } from "../quiz/answer.js";

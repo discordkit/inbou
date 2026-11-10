@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { readCustomId, readOptions } from "../quiz/options.js";
 
 describe(`readOptions: unwrapping a slash command`, () => {

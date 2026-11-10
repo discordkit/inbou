@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { judge, looksLikeAnswer, normalize } from "../quiz/answer.js";
 
 /** 売らない, the plain non-past negative of 売る — the worked example in the spec. */

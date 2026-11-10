@@ -1,7 +1,14 @@
 import { discord as client } from "@discordkit/client";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
-import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  describe,
+  expect,
+  it
+} from "vite-plus/test";
 import { discordEffects } from "../discord.js";
 import type { Embed } from "../quiz/render.js";
 import { questionButtons } from "../quiz/render.js";

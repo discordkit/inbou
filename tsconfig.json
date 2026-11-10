@@ -7,9 +7,6 @@
     // runtime provides, not npm packages, so they only resolve with these type
     // packages loaded. Node's globals are deliberately absent: this Worker runs
     // on the bare Workers runtime, and typing it otherwise would hide that.
-    "types": [
-      "@cloudflare/workers-types",
-      "@cloudflare/vitest-pool-workers/types"
-    ]
+    "types": ["@cloudflare/workers-types", "@cloudflare/vitest-plugin/types"]
   }
 }

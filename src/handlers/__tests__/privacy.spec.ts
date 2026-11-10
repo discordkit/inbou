@@ -1,5 +1,5 @@
 import { env } from "cloudflare:workers";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vite-plus/test";
 import scoresSchema from "../../../migrations/0001_scores.sql?raw";
 import privacySchema from "../../../migrations/0002_privacy.sql?raw";
 import { inbouStores, privacyOver, type Erasable } from "../privacy.js";
