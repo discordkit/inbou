@@ -1,5 +1,5 @@
 import { env } from "cloudflare:workers";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vite-plus/test";
 // Inlined at build time by Vite. workerd has no filesystem, so the migration
 // cannot be read at run time — and reading it is the point: a test that wrote
 // its own CREATE TABLE would keep passing after the real migration drifted.

@@ -1,6 +1,6 @@
 import { execSync } from "node:child_process";
 import { cloudflare } from "@cloudflare/vite-plugin";
-import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { cloudflareTest } from "@cloudflare/vitest-plugin";
 // `defineConfig` comes from vite-plus rather than `vitest/config`: `run.tasks`
 // is a vite-plus extension and does not typecheck under the stock Vitest type.
 import { defineConfig } from "vite-plus";
@@ -117,6 +117,11 @@ const WORKERD_TESTS = [
 // Workers pool plugin's types are large, and inlining them inside the config
 // literal pushes the comparison past TypeScript's limit.
 const workersProject = {
+  // Vitest v4 compatibility: keep this inline project independent of the root config.
+  // Remove to inherit root options, including plugins and setup files.
+  // https://viteplus.dev/guide/vitest-v5#remove-unneeded-compatibility-settings
+  // https://vitest.dev/guide/migration/#inline-projects-inherit-the-root-config-by-default
+  extends: false,
   test: {
     name: `workers`,
     include: WORKERD_TESTS,
@@ -175,16 +180,16 @@ const workersProject = {
   ]
 };
 
-// @ts-expect-error -- TS2321: excessive stack depth. The Cloudflare plugin's
-// types are large enough that adding the shared `lint`/`fmt` configs pushes
-// comparison against `UserConfig` past the instantiation limit. Each half
-// typechecks on its own; only the combination trips it, and the runtime shape
-// is correct. Revisit when either package slims its types down.
 export default defineConfig({
   // Read by `/feedback`, so a report can name the build it came from. The
   // module guards against this being absent, which is the case under test.
   define: { __BUILD__: JSON.stringify(BUILD) },
   test: {
+    // Vitest v4 compatibility: keep separate Vite servers for inline projects.
+    // Remove when plugins and config hooks can run once for shared projects.
+    // https://viteplus.dev/guide/vitest-v5#remove-unneeded-compatibility-settings
+    // https://vitest.dev/guide/migration/#inline-projects-share-the-vite-server-by-default
+    sharedViteServer: false,
     // Two projects, split by what they actually need. Everything the quiz
     // decides — conjugating, scoring, choosing a question, the session rules —
     // is pure and runs in plain Node; only the Durable Objects need workerd,
@@ -198,6 +203,11 @@ export default defineConfig({
     // 1 with "$_$wp is not defined". Point Wallaby at the `unit` project.
     projects: [
       {
+        // Vitest v4 compatibility: keep this inline project independent of the root config.
+        // Remove to inherit root options, including plugins and setup files.
+        // https://viteplus.dev/guide/vitest-v5#remove-unneeded-compatibility-settings
+        // https://vitest.dev/guide/migration/#inline-projects-inherit-the-root-config-by-default
+        extends: false,
         test: {
           name: `unit`,
           include: [`src/**/__tests__/*.spec.ts`],

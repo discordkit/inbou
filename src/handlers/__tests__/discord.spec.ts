@@ -1,7 +1,14 @@
 import { discord as client } from "@discordkit/client";
-import { http, HttpResponse } from "msw";
+import { http, HttpResponse } from "msw/http";
 import { setupServer } from "msw/node";
-import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  describe,
+  expect,
+  it
+} from "vite-plus/test";
 import { discordEffects } from "../discord.js";
 import type { Embed } from "../quiz/render.js";
 import { questionButtons } from "../quiz/render.js";
@@ -68,7 +75,8 @@ const embed: Embed = { title: `Question 1`, description: `## うります` };
 
 describe(`the Discord effects layer`, () => {
   beforeAll(() => {
-    server.listen({ onUnhandledRequest: `error` });
+    // A request that no handler covers fails, so it never reaches the real Discord API.
+    server.listen({ onUnhandledFrame: `error` });
     client.setToken(`Bot test-token`);
   });
   afterEach(() => {

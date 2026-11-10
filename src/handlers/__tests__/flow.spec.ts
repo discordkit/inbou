@@ -1,5 +1,5 @@
 import type { Embed } from "@discordkit/client";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { conjugationQuiz } from "../quiz/conjugation.js";
 import type { PrivacyPort } from "../privacy.js";
 import type { DiscordEffects } from "../discord.js";

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { formTable } from "../quiz/forms.js";
 import { classify } from "../quiz/wordClass.js";
 

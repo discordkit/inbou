@@ -1,5 +1,5 @@
 import { env } from "cloudflare:workers";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import type { Question } from "../quiz/question.js";
 import { DEFAULT_CONFIG } from "../quiz/machine.js";
 import type { QuizSession } from "../session.js";

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { DEFAULT_SETTINGS, isSettings, parseSettings } from "../quiz/config.js";
 
 /** Parse and assert it succeeded, so tests read as the settings they produce. */
