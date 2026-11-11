@@ -1,0 +1,331 @@
+# 問題1 文法形式の判断 — choose the form that fits the blank.
+#
+# Markup: {漢字|かな} gives a kanji its reading; （n） is the blank for slot n.
+# Spaces between phrases, as on the paper. Dialogues are one line per speaker.
+#
+# Every wrong option must be wrong IN THIS SENTENCE. When another particle or
+# word would also be right (家から 出ます beside 家を 出ます), it stays out of the
+# pool. Only `status: reviewed` items ship; see docs/specs/jlpt-mock-tests.md.
+#
+# Keep options to the part that varies. If every option would end in です, put
+# です in the sentence. Keep it in the options only when the ending itself is
+# what varies (です, でした, ですか). Every character in an option is read four
+# times, and the timer grows with it. `exam:build` prints a hint when all of an
+# item's options share an ending.
+
+- id: n5-b1-0001
+  type: form
+  status: draft
+  sentence: "{毎日|まいにち} バス（1） {学校|がっこう}へ {行|い}きます。"
+  en: I go to school by bus every day.
+  slots:
+    - answer: で
+      wrong: [を, が, と, に]
+      difficulty: 1
+      points: [particle-de-means]
+      note: "で marks the means: バスで, {電車|でんしゃ}で, ペンで."
+
+- id: n5-b1-0002
+  type: form
+  status: draft
+  sentence: "{日曜日|にちようび}に こうえん（1） テニスを しました。"
+  en: On Sunday I played tennis in the park.
+  slots:
+    - answer: で
+      wrong: [に, を, へ, が]
+      difficulty: 1
+      points: [particle-de-place]
+      note: "で marks where an action happens. に marks where something simply is."
+
+- id: n5-b1-0003
+  type: form
+  status: draft
+  sentence: "{毎朝|まいあさ} 7{時|じ}（1） {起|お}きます。"
+  en: I get up at seven every morning.
+  slots:
+    - answer: に
+      wrong: [で, を, と, が]
+      difficulty: 1
+      points: [particle-ni-time]
+      note: "に marks a point in time: 7{時|じ}に, {日曜日|にちようび}に."
+
+- id: n5-b1-0004
+  type: form
+  status: draft
+  sentence: "{私|わたし}は {毎朝|まいあさ} 8{時|じ}に {家|いえ}（1） {出|で}ます。"
+  en: I leave home at eight every morning.
+  slots:
+    - answer: を
+      wrong: [に, で, へ, が]
+      difficulty: 2
+      points: [particle-o-through]
+      note: "を marks a place you leave or get off: {家|いえ}を {出|で}る, バスを おりる."
+
+- id: n5-b1-0005
+  type: form
+  status: draft
+  sentence: "テーブルの {上|うえ}に りんご（1） バナナなどが あります。"
+  en: There are apples, bananas and so on on the table.
+  slots:
+    - answer: や
+      wrong: [は, を, へ, で]
+      difficulty: 2
+      points: [particle-ya-and]
+      note: "や lists some items out of many, and often comes with など. と lists every item."
+
+- id: n5-b1-0006
+  type: form
+  status: draft
+  sentence: "つくえの {上|うえ}（1） {本|ほん}が あります。"
+  en: There is a book on the desk.
+  slots:
+    - answer: に
+      wrong: [で, を, へ, が]
+      difficulty: 1
+      points: [particle-ni-existence]
+      note: "に marks where something is, with ある and いる."
+
+- id: n5-b1-0007
+  type: form
+  status: draft
+  sentence: "きのう {友|とも}だち（1） えいがを {見|み}に {行|い}きました。"
+  en: Yesterday I went to see a film with a friend.
+  slots:
+    - answer: と
+      wrong: [を, で, へ, に]
+      difficulty: 1
+      points: [particle-to-with]
+      note: "と marks the person you do something with."
+
+- id: n5-b1-0008
+  type: form
+  status: draft
+  sentence: |-
+    Ａ「もう ひるごはんを {食|た}べましたか。」
+    Ｂ「いいえ、（1） {食|た}べて いません。」
+  en: "A: Have you eaten lunch already? B: No, not yet."
+  slots:
+    - answer: まだ
+      wrong: [もう, とても, すぐ, だんだん]
+      difficulty: 1
+      points: [adverb-mada, form-mada-te-inai]
+      note: "まだ with a negative means not yet: まだ {食|た}べて いません."
+
+- id: n5-b1-0009
+  type: form
+  status: draft
+  sentence: "きのうの テストは あまり（1）です。"
+  en: Yesterday's test was not very difficult.
+  slots:
+    - answer: むずかしくなかった
+      wrong: [むずかしかった, むずかしい, むずかしくない]
+      difficulty: 2
+      points: [adverb-amari, form-adjective-past-negative]
+      note: "あまり goes with a negative, and きのう asks for the past: 〜くなかったです."
+
+- id: n5-b1-0010
+  type: form
+  status: draft
+  sentence: "ごはんを（1）{前|まえ}に、{手|て}を あらいます。"
+  en: I wash my hands before I eat.
+  slots:
+    - answer: "{食|た}べる"
+      wrong: ["{食|た}べた", "{食|た}べて", "{食|た}べ", "{食|た}べない"]
+      difficulty: 2
+      points: [form-mae-ni]
+      note: "まえに follows the dictionary form: {食|た}べる まえに."
+
+- id: n5-b1-0011
+  type: form
+  status: draft
+  sentence: "{父|ちち}は テレビを（1）ながら ごはんを {食|た}べます。"
+  en: My father eats while watching TV.
+  slots:
+    - answer: "{見|み}"
+      wrong: ["{見|み}る", "{見|み}て", "{見|み}た", "{見|み}ない"]
+      difficulty: 2
+      points: [form-nagara]
+      note: "ながら follows the ます stem: {見|み}ながら, {飲|の}みながら."
+
+- id: n5-b1-0012
+  type: form
+  status: draft
+  sentence: "{日曜日|にちようび}に デパートへ くつを（1）に {行|い}きます。"
+  en: On Sunday I am going to the department store to buy shoes.
+  slots:
+    - answer: "{買|か}い"
+      wrong: ["{買|か}う", "{買|か}って", "{買|か}った", "{買|か}わ"]
+      difficulty: 2
+      points: [form-ni-iku]
+      note: "〜に {行|い}く takes the ます stem: {買|か}いに {行|い}く."
+
+- id: n5-b1-0013
+  type: form
+  status: draft
+  sentence: |-
+    Ａ「あした いっしょに えいがを（1）か。」
+    Ｂ「いいですね。{行|い}きましょう。」
+  en: "A: Would you like to see a film with me tomorrow? B: Sounds good. Let's go."
+  slots:
+    - answer: "{見|み}ません"
+      wrong: ["{見|み}ました", "{見|み}て います", "{見|み}ませんでした"]
+      difficulty: 2
+      points: [form-masen-ka]
+      note: "〜ませんか invites someone: won't you …? いいですね accepts."
+
+- id: n5-b1-0014
+  type: form
+  status: draft
+  sentence: |-
+    Ａ「きのうの パーティーは（1）でしたか。」
+    Ｂ「とても たのしかったです。」
+  en: "A: How was yesterday's party? B: It was a lot of fun."
+  slots:
+    - answer: どう
+      wrong: [どこ, だれ, いつ, なに]
+      difficulty: 1
+      points: [question-dou]
+      note: "どう asks how something was. いかが asks the same, more politely."
+
+- id: n5-b1-0015
+  type: form
+  status: draft
+  sentence: |-
+    {店|みせ}の {人|ひと}「いらっしゃいませ。」
+    キム「すみません、この かばんは（1）ですか。」
+    {店|みせ}の {人|ひと}「3,000{円|えん}です。」
+  en: "Clerk: Welcome. Kim: Excuse me, how much is this bag? Clerk: It's 3,000 yen."
+  slots:
+    - answer: いくら
+      wrong: [いくつ, どれ, なん, いつ]
+      difficulty: 1
+      points: [question-ikura]
+      note: "いくら asks a price. いくつ asks how many, or how old."
+
+- id: n5-b1-0016
+  type: form
+  status: draft
+  sentence: |-
+    Ａ「すみません、トイレは どこですか。」
+    Ｂ「（1）です。あの ドアの {右|みぎ}です。」
+  en: "A: Excuse me, where is the toilet? B: Over there, to the right of that door."
+  slots:
+    - answer: あそこ
+      wrong: [ここ, どこ, あの, この]
+      difficulty: 2
+      points: [demonstrative-place]
+      note: "あそこ is a place away from both speakers. あの before ドア points the same way."
+
+- id: n5-b1-0017
+  type: form
+  status: draft
+  sentence: "{私|わたし}は {日本|にほん}の うた（1） すきです。"
+  en: I like Japanese songs.
+  slots:
+    - answer: が
+      wrong: [を, に, で, へ]
+      difficulty: 2
+      points: [particle-ga-object]
+      note: "すき takes が, not を: {日本|にほん}の うたが すきです."
+
+- id: n5-b1-0018
+  type: form
+  status: draft
+  sentence: "{銀行|ぎんこう}は {午前|ごぜん}9{時|じ}から {午後|ごご}3{時|じ}（1）です。"
+  en: The bank is open from 9 a.m. to 3 p.m.
+  slots:
+    - answer: まで
+      wrong: [から, より, で, に]
+      difficulty: 1
+      points: [particle-kara-made]
+      note: "から marks the start and まで the end: 9{時|じ}から 3{時|じ}まで."
+
+- id: n5-b1-0019
+  type: form
+  status: draft
+  sentence: "{電車|でんしゃ}は バス（1） はやいです。"
+  en: The train is faster than the bus.
+  slots:
+    - answer: より
+      wrong: [から, まで, で, と]
+      difficulty: 2
+      points: [particle-yori-comparison]
+      note: "より marks what is compared against: than."
+
+- id: n5-b1-0020
+  type: form
+  status: draft
+  sentence: |-
+    （{店|みせ}で）
+    キム「すみません、この パンを {二|ふた}つ（1）。」
+    {店|みせ}の {人|ひと}「はい、400{円|えん}です。」
+  en: "(At a shop) Kim: Excuse me, two of this bread, please. Clerk: Certainly, that's 400 yen."
+  slots:
+    - answer: ください
+      wrong: [あげます, どうぞ, くれます, ありますか]
+      difficulty: 1
+      points: [phrase-o-kudasai]
+      note: "〜を ください asks for something: please give me …"
+
+- id: n5-b1-0021
+  type: form
+  status: draft
+  sentence: "{日曜日|にちようび}（1） {土曜日|どようび}（1）、{休|やす}みです。"
+  en: Both Sunday and Saturday are days off.
+  slots:
+    - answer: も／も
+      wrong: [は／は, に／に, を／を, の／の]
+      difficulty: 3
+      points: [particle-mo-also]
+      note: "Aも Bも means both A and B. With a negative it means neither."
+
+- id: n5-b1-0022
+  type: form
+  status: draft
+  sentence: "この りんごは {三|みっ}つ（1） 500{円|えん}です。"
+  en: These apples are 500 yen for three.
+  slots:
+    - answer: で
+      wrong: [に, と, を, へ]
+      difficulty: 3
+      points: [particle-de-total]
+      note: "で marks a total: {三|みっ}つで 500{円|えん}, ぜんぶで 1,000{円|えん}."
+
+- id: n5-b1-0023
+  type: form
+  status: draft
+  sentence: "きのう {母|はは}（1） でんわを かけました。"
+  en: Yesterday I phoned my mother.
+  slots:
+    - answer: に
+      wrong: [を, で, から, や]
+      difficulty: 2
+      points: [particle-ni-recipient]
+      note: "に marks the person an action goes to: {母|はは}に でんわを かける, {友|とも}だちに あう."
+
+- id: n5-b1-0024
+  type: form
+  status: draft
+  sentence: "すみません、もう すこし ゆっくり（1） ください。"
+  en: Excuse me, please speak a little more slowly.
+  slots:
+    - answer: "{話|はな}して"
+      wrong: ["{話|はな}す", "{話|はな}し", "{話|はな}した", "{話|はな}さない"]
+      difficulty: 1
+      points: [form-te-kudasai]
+      note: "〜て ください asks someone to do something: {話|はな}して ください."
+
+- id: n5-b1-0025
+  type: form
+  status: draft
+  sentence: |-
+    Ａ「しゅくだいは もう {出|だ}しましたか。」
+    Ｂ「いいえ、まだ（1）。」
+  en: "A: Have you handed in your homework already? B: No, not yet."
+  slots:
+    - answer: "{出|だ}して いません"
+      wrong:
+        ["{出|だ}しました", "{出|だ}しませんでした", "{出|だ}して いました"]
+      difficulty: 3
+      points: [form-mada-te-inai]
+      note: "まだ 〜て いません means have not … yet. まだ does not take the past negative here."

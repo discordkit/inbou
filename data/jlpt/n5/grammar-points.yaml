@@ -1,0 +1,271 @@
+# N5 grammar points that items refer to by id.
+#
+# Starts from Jonathan Waller's N5 grammar list (tanos.co.uk) and adds what the
+# official sample paper actually tests most: particles split by function,
+# question words, こそあど words, adverbs and set phrases. Cross-checked against
+# Wikibooks, JLPT Sensei, Bunpro, Genki I and Minna no Nihongo I. A list of
+# grammar point names is a set of facts; the meanings are our own words.
+#
+# Ids are permanent once an item uses them. Add freely; never rename.
+
+# ── Particles ────────────────────────────────────────────────────────────────
+- { id: particle-wa-topic, pattern: は, meaning: marks the topic }
+- {
+    id: particle-wa-contrast,
+    pattern: は,
+    meaning: marks a contrast,
+    often in a negative
+  }
+- {
+    id: particle-ga-subject,
+    pattern: が,
+    meaning: marks the subject,
+    or new information
+  }
+- {
+    id: particle-ga-object,
+    pattern: が,
+    meaning: "marks the object of すき, じょうず, わかる, ほしい, ある"
+  }
+- { id: particle-o-object, pattern: を, meaning: marks the direct object }
+- {
+    id: particle-o-through,
+    pattern: を,
+    meaning: "marks a place left or passed through (でる, わたる, あるく)"
+  }
+- { id: particle-ni-time, pattern: に, meaning: marks a point in time }
+- { id: particle-ni-destination, pattern: に, meaning: marks a destination }
+- {
+    id: particle-ni-existence,
+    pattern: に,
+    meaning: "marks where something is (ある, いる)"
+  }
+- {
+    id: particle-ni-recipient,
+    pattern: に,
+    meaning: "marks the person something goes to (あげる, あう, でんわする)"
+  }
+- {
+    id: particle-ni-frequency,
+    pattern: に,
+    meaning: "per: いちにちに さんかい"
+  }
+- { id: particle-he-direction, pattern: へ, meaning: marks a direction }
+- { id: particle-de-place, pattern: で, meaning: marks where an action happens }
+- {
+    id: particle-de-means,
+    pattern: で,
+    meaning: "marks a means or tool: by, with"
+  }
+- {
+    id: particle-de-total,
+    pattern: で,
+    meaning: "marks a total or a scope: みっつで, ぜんぶで"
+  }
+- { id: particle-to-and, pattern: と, meaning: "and, listing every item" }
+- { id: particle-to-with, pattern: と, meaning: "with a person" }
+- {
+    id: particle-ya-and,
+    pattern: や,
+    meaning: "and, listing some items of many"
+  }
+- { id: particle-mo-also, pattern: も, meaning: also, too }
+- {
+    id: particle-no-possessive,
+    pattern: の,
+    meaning: "of, 's: links two nouns"
+  }
+- { id: particle-no-pronoun, pattern: の, meaning: "one, the one: わたしの" }
+- { id: particle-kara-from, pattern: から, meaning: from a starting point }
+- { id: particle-made-until, pattern: まで, meaning: until, as far as }
+- { id: particle-kara-made, pattern: から〜まで, meaning: from … to … }
+- { id: particle-yori-comparison, pattern: より, meaning: than }
+- { id: particle-ka-question, pattern: か, meaning: makes a question }
+- { id: particle-ka-or, pattern: か, meaning: or }
+- { id: particle-dake-only, pattern: だけ, meaning: only, just }
+- { id: particle-ne-agreement, pattern: ね, meaning: seeks agreement }
+- {
+    id: particle-yo-assertion,
+    pattern: よ,
+    meaning: tells the listener something new
+  }
+
+# ── Question words ───────────────────────────────────────────────────────────
+- { id: question-nani, pattern: なに／なん, meaning: what }
+- { id: question-dare, pattern: だれ, meaning: who }
+- { id: question-donata, pattern: どなた, meaning: "who (polite)" }
+- { id: question-doko, pattern: どこ, meaning: where }
+- {
+    id: question-dochira,
+    pattern: どちら,
+    meaning: "which of two; where (polite)"
+  }
+- { id: question-itsu, pattern: いつ, meaning: when }
+- { id: question-dou, pattern: どう, meaning: how }
+- { id: question-ikaga, pattern: いかが, meaning: "how (polite)" }
+- { id: question-donna, pattern: どんな, meaning: what kind of }
+- { id: question-dore, pattern: どれ, meaning: which of three or more }
+- { id: question-dono, pattern: どの, meaning: "which (before a noun)" }
+- { id: question-ikura, pattern: いくら, meaning: how much }
+- { id: question-ikutsu, pattern: いくつ, meaning: how many; how old }
+- { id: question-doushite, pattern: どうして, meaning: why }
+
+# ── こそあど words ───────────────────────────────────────────────────────────
+- {
+    id: demonstrative-pronoun,
+    pattern: これ／それ／あれ,
+    meaning: this one / that one / that one over there
+  }
+- {
+    id: demonstrative-adnominal,
+    pattern: この／その／あの,
+    meaning: "this / that / that … over there (before a noun)"
+  }
+- {
+    id: demonstrative-place,
+    pattern: ここ／そこ／あそこ,
+    meaning: here / there / over there
+  }
+- {
+    id: demonstrative-direction,
+    pattern: こちら／そちら／あちら,
+    meaning: "this way / that way (also polite for here and there)"
+  }
+
+# ── Adverbs ──────────────────────────────────────────────────────────────────
+- { id: adverb-mou, pattern: もう, meaning: already }
+- {
+    id: adverb-mada,
+    pattern: まだ,
+    meaning: "still; not yet (with a negative)"
+  }
+- { id: adverb-amari, pattern: あまり〜ない, meaning: not very, not much }
+- { id: adverb-zenzen, pattern: ぜんぜん〜ない, meaning: not at all }
+- { id: adverb-yoku, pattern: よく, meaning: often; well }
+- { id: adverb-totemo, pattern: とても, meaning: very }
+- { id: adverb-sukoshi, pattern: すこし, meaning: a little }
+- { id: adverb-chotto, pattern: ちょっと, meaning: a little; a moment }
+- { id: adverb-takusan, pattern: たくさん, meaning: a lot }
+- { id: adverb-itsumo, pattern: いつも, meaning: always, usually }
+- { id: adverb-tokidoki, pattern: ときどき, meaning: sometimes }
+- { id: adverb-mata, pattern: また, meaning: again }
+- { id: adverb-dandan, pattern: だんだん, meaning: gradually }
+- { id: adverb-sugu, pattern: すぐ, meaning: soon, at once }
+- { id: adverb-issho-ni, pattern: いっしょに, meaning: together }
+- { id: adverb-ichiban, pattern: いちばん, meaning: the most }
+
+# ── Conjunctions ─────────────────────────────────────────────────────────────
+- { id: conjunction-soshite, pattern: そして, meaning: and, and then }
+- { id: conjunction-sorekara, pattern: それから, meaning: after that }
+- { id: conjunction-demo, pattern: でも, meaning: but }
+- { id: conjunction-dakara, pattern: だから, meaning: so, therefore }
+- { id: conjunction-ga-but, pattern: 〜が、〜, meaning: "…, but …" }
+
+# ── Forms and patterns ───────────────────────────────────────────────────────
+- {
+    id: form-masen-ka,
+    pattern: 〜ませんか,
+    meaning: "won't you …? (an invitation)"
+  }
+- { id: form-mashou, pattern: 〜ましょう, meaning: "let's …" }
+- {
+    id: form-mashou-ka,
+    pattern: 〜ましょうか,
+    meaning: "shall I …? (an offer); shall we …?"
+  }
+- { id: form-te-kudasai, pattern: 〜てください, meaning: please do … }
+- {
+    id: form-naide-kudasai,
+    pattern: 〜ないでください,
+    meaning: please do not …
+  }
+- { id: form-te-mo-ii, pattern: 〜てもいいです, meaning: you may … }
+- { id: form-te-wa-ikenai, pattern: 〜てはいけません, meaning: you must not … }
+- {
+    id: form-te-iru,
+    pattern: 〜ている,
+    meaning: is …ing; a state that continues
+  }
+- { id: form-mada-te-inai, pattern: まだ〜ていません, meaning: have not … yet }
+- { id: form-ta-koto-ga-aru, pattern: 〜たことがある, meaning: have … before }
+- { id: form-tai, pattern: 〜たい, meaning: want to … }
+- { id: form-hoshii, pattern: 〜がほしい, meaning: want something }
+- {
+    id: form-tari-tari,
+    pattern: 〜たり〜たりする,
+    meaning: do things such as … and …
+  }
+- { id: form-te-kara, pattern: 〜てから, meaning: after doing … }
+- { id: form-ta-ato-de, pattern: 〜たあとで, meaning: after … }
+- {
+    id: form-mae-ni,
+    pattern: 〜まえに,
+    meaning: "before … (with the dictionary form)"
+  }
+- {
+    id: form-nagara,
+    pattern: 〜ながら,
+    meaning: "while … (with the ます stem)"
+  }
+- {
+    id: form-ni-iku,
+    pattern: 〜にいく／くる,
+    meaning: "go / come to do … (with the ます stem)"
+  }
+- { id: form-tsumori, pattern: 〜つもりです, meaning: intend to … }
+- { id: form-hou-ga-ii, pattern: 〜ほうがいい, meaning: had better … }
+- { id: form-deshou, pattern: 〜でしょう, meaning: probably …; … right? }
+- { id: form-naru, pattern: 〜く／〜になる, meaning: become … }
+- {
+    id: form-adjective-negative,
+    pattern: 〜くない／〜じゃない,
+    meaning: is not …
+  }
+- { id: form-adjective-past, pattern: 〜かった／〜でした, meaning: was … }
+- {
+    id: form-adjective-past-negative,
+    pattern: 〜くなかった／〜じゃなかった,
+    meaning: was not …
+  }
+- {
+    id: form-te-link,
+    pattern: 〜くて／〜で,
+    meaning: "links an adjective or noun to what follows: and"
+  }
+- {
+    id: form-n-desu,
+    pattern: 〜んです,
+    meaning: explains or asks for an explanation
+  }
+- { id: form-no-ga-suki, pattern: 〜のがすきです, meaning: like doing … }
+- {
+    id: form-no-ga-jouzu,
+    pattern: 〜のがじょうずです,
+    meaning: be good at doing …
+  }
+- {
+    id: form-ga-aru-iru,
+    pattern: 〜があります／います,
+    meaning: "there is … (things / people and animals)"
+  }
+- {
+    id: comparison-no-hou-ga,
+    pattern: 〜より〜のほうが,
+    meaning: … is more … than …
+  }
+- {
+    id: comparison-ichiban,
+    pattern: 〜のなかで〜がいちばん,
+    meaning: of …,
+    … is the most …
+  }
+
+# ── Set phrases ──────────────────────────────────────────────────────────────
+- { id: phrase-o-kudasai, pattern: 〜をください, meaning: please give me … }
+- { id: phrase-douzo, pattern: どうぞ, meaning: please, go ahead; here you are }
+- { id: phrase-sumimasen, pattern: すみません, meaning: excuse me; sorry }
+- {
+    id: phrase-ikaga-desu-ka,
+    pattern: 〜はいかがですか,
+    meaning: would you like …?
+  }
