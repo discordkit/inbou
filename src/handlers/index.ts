@@ -1,7 +1,17 @@
 import { discord } from "@discordkit/client";
-import { handleCommand } from "./commands.js";
-import { discordEffects } from "./discord.js";
+import { handleCommand, type CommandDeps } from "./commands.js";
+import { discordEffects, v2Effects } from "./discord.js";
 import type { ForwardedEvent } from "./events.js";
+import { handleExamInteraction } from "./exam/commands.js";
+import examCorpus from "./exam/corpus.json" with { type: "json" };
+import {
+  handleResume as handleExamResume,
+  handleTimeout as handleExamTimeout,
+  type ExamDeps,
+  type ExamPort
+} from "./exam/flow.js";
+import type { Item } from "./exam/items.js";
+import type { ExamSession } from "./exam/session.js";
 import { handleMessage } from "./messages.js";
 import corpus from "./quiz/corpus.json" with { type: "json" };
 import {
@@ -20,6 +30,8 @@ import type { QuizSession } from "./session.js";
 // `durable_objects` binding names. Quiz sessions live here rather than in the
 // bot Worker so that editing them never restarts the Gateway connection.
 export { QuizSession } from "./session.js";
+// The same, for mock tests. A separate class: see docs/specs/jlpt-mock-tests.md.
+export { ExamSession } from "./exam/session.js";
 
 /**
  * The reloadable half of the bot.
@@ -41,6 +53,8 @@ export interface Env {
   DISCORD_BOT_TOKEN: string;
   /** One quiz session per channel, keyed by channel id. */
   SESSION: DurableObjectNamespace<QuizSession>;
+  /** One mock test per channel, keyed by channel id. */
+  EXAM: DurableObjectNamespace<ExamSession>;
   /**
    * Cross-session scores.
    *
@@ -78,6 +92,40 @@ const depsFor = (env: Env, channelId: string): FlowDeps => ({
   words
 });
 
+/** The mock test for one channel. */
+const examFor = (env: Env, channelId: string): ExamPort =>
+  env.EXAM.get(env.EXAM.idFromName(channelId));
+
+/** Is anything still running? A finished session only waits to be replaced. */
+const running = async (
+  session: Pick<ExamPort, `current`> | Pick<SessionPort, `current`>
+): Promise<boolean> => {
+  const view = await session.current();
+  return view !== null && view.state !== `finished`;
+};
+
+/** The quiz's dependencies, plus what it needs to know about mock tests. */
+const commandDepsFor = (env: Env, channelId: string): CommandDeps => ({
+  ...depsFor(env, channelId),
+  examRunning: async () => running(examFor(env, channelId))
+});
+
+/**
+ * Reviewed mock-test items, read once per isolate like the word corpus.
+ * `exam:build` validated them, and ships no drafts.
+ */
+const items = examCorpus.items as Item[];
+
+const examDepsFor = (env: Env, channelId: string): ExamDeps => ({
+  discord: discordEffects,
+  cards: v2Effects,
+  session: examFor(env, channelId),
+  items,
+  random: Math.random,
+  now: Date.now,
+  quizRunning: async () => running(sessionFor(env, channelId))
+});
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     // Workers have no `process.env`. Idempotent, so per-request is fine.
@@ -88,10 +136,15 @@ export default {
     try {
       switch (event.type) {
         case `INTERACTION_CREATE`: {
-          const channelId = event.data.channelId;
-          // A command outside a channel has no session to act on. `handleCommand`
-          // says so; the deps just need somewhere to point.
-          await handleCommand(depsFor(env, channelId ?? `dm`), event.data);
+          const channelId = event.data.channelId ?? `dm`;
+          // Mock tests first; anything they do not recognise is the quiz's.
+          // A command outside a channel has no session to act on. The routers
+          // say so; the deps just need somewhere to point.
+          if (
+            await handleExamInteraction(examDepsFor(env, channelId), event.data)
+          )
+            break;
+          await handleCommand(commandDepsFor(env, channelId), event.data);
           break;
         }
         case `MESSAGE_CREATE`:
@@ -108,6 +161,20 @@ export default {
           // neither can be done from inside the object — one needs the corpus,
           // the other needs a REST call.
           await handleTimeout(depsFor(env, event.channelId), event.channelId);
+          break;
+        case `EXAM_RESUME`:
+          await handleExamResume(
+            examDepsFor(env, event.channelId),
+            event.channelId
+          );
+          break;
+        case `EXAM_TIMEOUT`:
+          // Unlike the quiz, the exam object only forwards: closing the
+          // question here returns the final ballot the reveal needs.
+          await handleExamTimeout(
+            examDepsFor(env, event.channelId),
+            event.channelId
+          );
           break;
       }
       return Response.json({ ok: true });

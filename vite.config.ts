@@ -110,6 +110,7 @@ const WORKERD_TESTS = [
   `src/handlers/__tests__/scores.spec.ts`,
   `src/handlers/__tests__/privacy.spec.ts`,
   `src/handlers/__tests__/scenarios.spec.ts`,
+  `src/handlers/exam/__tests__/session.spec.ts`,
   `src/__tests__/worker.spec.ts`
 ];
 
@@ -154,7 +155,8 @@ const workersProject = {
         // migration; without it the class gets the key-value backend and every
         // `ctx.storage.sql` call throws.
         durableObjects: {
-          SESSION: { className: `QuizSession`, useSQLite: true }
+          SESSION: { className: `QuizSession`, useSQLite: true },
+          EXAM: { className: `ExamSession`, useSQLite: true }
         },
         // The leaderboard. Same reason as the Durable Object above: the
         // binding is declared in wrangler.handlers.jsonc, which this pool does
@@ -291,6 +293,13 @@ export default defineConfig({
       // normal build and CI never touch the network.
       "corpus:build": {
         command: `node scripts/build-corpus.mjs`,
+        cache: false
+      },
+      // Checks the hand-written mock-test items and writes the reviewed ones.
+      // Local files only, but still deliberate: the output is committed, and
+      // `exam.spec.ts` fails if it falls out of step with the source.
+      "exam:build": {
+        command: `node scripts/build-exam.mjs`,
         cache: false
       }
     }

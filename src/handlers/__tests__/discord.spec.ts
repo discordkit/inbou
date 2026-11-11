@@ -9,7 +9,7 @@ import {
   expect,
   it
 } from "vite-plus/test";
-import { discordEffects } from "../discord.js";
+import { discordEffects, v2Effects } from "../discord.js";
 import type { Embed } from "../quiz/render.js";
 import { questionButtons } from "../quiz/render.js";
 
@@ -54,6 +54,17 @@ const server = setupServer(
         body: await request.json()
       });
       return new HttpResponse(null, { status: 204 });
+    }
+  ),
+  http.patch(
+    `${API}/channels/:channel/messages/:message`,
+    async ({ request, params }) => {
+      seen.push({
+        method: `PATCH`,
+        url: `/channels/${String(params.channel)}/messages/${String(params.message)}`,
+        body: await request.json()
+      });
+      return HttpResponse.json({ id: String(params.message) });
     }
   ),
   http.put(
@@ -189,6 +200,58 @@ describe(`the Discord effects layer`, () => {
       );
 
       await expect(discordEffects.say(`chan-1`, `hello`)).resolves.toBeNull();
+    });
+  });
+
+  describe(`components V2 messages`, () => {
+    // A minimal valid V2 layout: one container holding one line of text.
+    const card = [
+      {
+        type: 17,
+        components: [{ type: 10, content: `## 問題` }]
+      }
+    ] as Parameters<typeof v2Effects.post>[1];
+
+    it(`posts with the V2 flag, and without content or embeds`, async () => {
+      // WHY: Discord rejects a container without IS_COMPONENTS_V2, and
+      // rejects content or embeds with it. Either mistake loses the question.
+      const id = await v2Effects.post(`chan-1`, card);
+
+      expect(id).toBe(`posted-1`);
+      const body = seen[0]?.body as Record<string, unknown>;
+      expect(body.flags).toBe(1 << 15);
+      expect(body).not.toHaveProperty(`content`);
+      expect(body).not.toHaveProperty(`embeds`);
+    });
+
+    it(`names people without pinging them`, async () => {
+      // WHY: the results card mentions every player. A ping each, after every
+      // test, would drive people out of the channel.
+      // Asserted in Discord's own spelling: the client sends snake_case, and
+      // the wire is what Discord reads.
+      await v2Effects.post(`chan-1`, card);
+      expect(seen[0]?.body).toMatchObject({ allowed_mentions: { parse: [] } });
+    });
+
+    it(`restates the V2 flag when it edits`, async () => {
+      // WHY: an edit replaces the body. Without the flag, Discord reads the
+      // V2 layout as a legacy one and rejects it — and the closed question
+      // keeps its live buttons.
+      await v2Effects.edit(`chan-1`, `msg-1`, card);
+
+      expect(seen[0]?.method).toBe(`PATCH`);
+      expect(seen[0]?.url).toBe(`/channels/chan-1/messages/msg-1`);
+      expect(seen[0]?.body).toMatchObject({ flags: 1 << 15 });
+    });
+
+    it(`returns null rather than throwing when Discord refuses`, async () => {
+      // WHY: a failed post must not abandon the test in progress.
+      server.use(
+        http.post(`${API}/channels/:channel/messages`, () =>
+          HttpResponse.json({ message: `Missing Permissions` }, { status: 403 })
+        )
+      );
+      await expect(v2Effects.post(`chan-1`, card)).resolves.toBeNull();
     });
   });
 

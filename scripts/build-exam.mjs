@@ -1,0 +1,113 @@
+/**
+ * Build the mock-test corpus.
+ *
+ * Reads the hand-written items under `data/jlpt/n5/`, checks every one of them,
+ * and writes the reviewed ones to `src/handlers/exam/corpus.json`. Like the
+ * word corpus, it is built on purpose, never automatically, and the output is
+ * committed.
+ *
+ * Three rules worth knowing before changing anything:
+ *
+ *  - **Every item is checked, drafts included.** A draft with a broken blank is
+ *    a problem now, not when someone reviews it. One problem fails the build.
+ *  - **Only reviewed items ship.** Code cannot tell whether a wrong option is
+ *    really wrong in its sentence; a person has to. `--drafts` includes drafts
+ *    for a local preview, and must never be committed — `exam.spec.ts` fails if
+ *    it is.
+ *  - **The checks are the app's own.** `items.ts` imports only valibot so this
+ *    script can load it, and `blueprint.ts` only a type, so the coverage report
+ *    reads the same blueprint the draw does.
+ *
+ * Usage: `vp run exam:build`, or `vp run exam:build -- --drafts` to preview.
+ */
+import { readdirSync, readFileSync, writeFileSync } from "node:fs";
+import * as v from "valibot";
+import { parse } from "yaml";
+import { BLUEPRINTS } from "../src/handlers/exam/blueprint.ts";
+import {
+  corpusProblems,
+  grammarPointsSchema,
+  itemHints,
+  itemProblems,
+  itemsSchema
+} from "../src/handlers/exam/items.ts";
+
+const ROOT = `data/jlpt/n5`;
+const OUT = `src/handlers/exam/corpus.json`;
+const DRAFTS = process.argv.includes(`--drafts`);
+
+const read = (path) => parse(readFileSync(path, `utf8`));
+
+/** Parse with a schema, or stop with every issue and where it is. */
+const parseOrExit = (schema, data, file) => {
+  const result = v.safeParse(schema, data);
+  if (result.success) return result.output;
+  for (const issue of result.issues) {
+    const path = (issue.path ?? []).map((step) => step.key).join(`.`);
+    console.error(`${file} ${path}: ${issue.message}`);
+  }
+  process.exit(1);
+};
+
+const points = parseOrExit(
+  grammarPointsSchema,
+  read(`${ROOT}/grammar-points.yaml`),
+  `grammar-points.yaml`
+);
+const pointIds = new Set(points.map((point) => point.id));
+if (pointIds.size !== points.length) {
+  console.error(`grammar-points.yaml: a grammar point id is used twice`);
+  process.exit(1);
+}
+
+const items = readdirSync(`${ROOT}/bunpou`)
+  .filter((file) => file.endsWith(`.yaml`))
+  .sort()
+  .flatMap((file) =>
+    parseOrExit(itemsSchema, read(`${ROOT}/bunpou/${file}`), file)
+  );
+
+const problems = [
+  ...corpusProblems(items),
+  ...items.flatMap((item) => itemProblems(item, pointIds))
+];
+if (problems.length > 0) {
+  for (const problem of problems) console.error(problem);
+  console.error(`\n${String(problems.length)} problems. Nothing was written.`);
+  process.exit(1);
+}
+
+// Hints never fail the build: they need a reviewer's judgement.
+const hints = items.flatMap(itemHints);
+for (const hint of hints) console.log(`hint: ${hint}`);
+
+const shipped = items.filter((item) => DRAFTS || item.status === `reviewed`);
+writeFileSync(
+  OUT,
+  `${JSON.stringify({ level: `N5`, drafts: DRAFTS, items: shipped }, null, 2)}\n`
+);
+
+console.log(
+  `Wrote ${String(shipped.length)} of ${String(items.length)} items to ${OUT}${
+    DRAFTS ? ` — DRAFTS INCLUDED, do not commit` : ``
+  }.`
+);
+
+// Coverage: how many cards each deck holds at each difficulty, beside what one
+// test draws. A deck is playable when every level holds at least twice that,
+// so two tests in a row differ.
+for (const [test, plans] of Object.entries(BLUEPRINTS)) {
+  for (const plan of plans) {
+    const slots = shipped
+      .filter((item) => item.type === `form`)
+      .flatMap((item) => item.slots);
+    for (const level of [1, 2, 3]) {
+      const have = slots.filter((slot) => slot.difficulty === level).length;
+      const draw = plan.mix[level];
+      const mark = have >= draw * 2 ? `ok` : `short`;
+      console.log(
+        `${test} 問題${String(plan.mondai)} difficulty ${String(level)}: ${String(have)} cards, a test draws ${String(draw)} (${mark})`
+      );
+    }
+  }
+}

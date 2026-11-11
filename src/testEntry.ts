@@ -9,6 +9,7 @@
 
 export { InbouBot } from "./worker/bot.js";
 export { QuizSession } from "./handlers/session.js";
+export { ExamSession } from "./handlers/exam/session.js";
 
 // The pool requires a default export; nothing routes here.
 export default {

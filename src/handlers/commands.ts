@@ -41,6 +41,13 @@ import {
 /** What a command needs beyond the flow's own dependencies. */
 export interface CommandDeps extends FlowDeps {
   discord: DiscordEffects;
+  /**
+   * Is a mock test running in this channel?
+   *
+   * Typed answers and button votes in one channel at once would confuse
+   * everyone, so a quiz will not start over a test.
+   */
+  examRunning: () => Promise<boolean>;
 }
 
 const CHANNEL_MISSING = `That command only works in a channel.`;
@@ -71,6 +78,13 @@ const start = async (
   if (existing !== null && existing.state !== `finished`) {
     await deps.discord.reply(interaction, {
       content: `A session is already running here. Use \`/quiz end\` first.`,
+      ephemeral: true
+    });
+    return;
+  }
+  if (await deps.examRunning()) {
+    await deps.discord.reply(interaction, {
+      content: `A mock test is running here. Wait for it to finish, or press End test.`,
       ephemeral: true
     });
     return;

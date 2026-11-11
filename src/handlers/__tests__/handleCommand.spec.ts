@@ -138,7 +138,8 @@ const deps = (
       scores,
       privacy: tracking.port,
       words: [word],
-      random: () => 0
+      random: () => 0,
+      examRunning: async (): Promise<boolean> => false
     } satisfies CommandDeps
   };
 };
@@ -181,6 +182,18 @@ describe(`starting a session that cannot start`, () => {
     await handleCommand(d, command(`start`));
 
     expect(replies[0]?.content).not.toContain(`already running`);
+  });
+
+  it(`refuses to start while a mock test runs in the channel`, async () => {
+    // WHY: typed answers and button votes in one channel at once would
+    // confuse everyone, and the quiz would grade chat about the test.
+    const { deps: d, replies, posts } = deps(null);
+    d.examRunning = async () => true;
+    await handleCommand(d, command(`start`));
+
+    expect(replies[0]?.content).toContain(`mock test is running`);
+    expect(replies[0]?.ephemeral).toBe(true);
+    expect(posts).toEqual([]);
   });
 
   it(`reports bad options instead of starting with defaults`, async () => {
