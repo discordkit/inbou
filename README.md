@@ -58,6 +58,16 @@ where the difficulty is meant to come from rather than rarer vocabulary.
 
 The full design is in [docs/specs/conjugation-quiz.md](docs/specs/conjugation-quiz.md).
 
+### JLPT mock tests
+
+Practice in the shape of the real JLPT paper. The bot asks one question at a time with numbered buttons. Everyone votes privately, can change their vote until the question closes, and scores if they are right. Speed does not count, and harder questions are worth more. Each reveal teaches the point the question tested, and the end of a test shows everyone's score, with a private breakdown for each player.
+
+| Command         | What it does                                               |
+| --------------- | ---------------------------------------------------------- |
+| `/bunpou start` | An N5 grammar (文法) test. In progress: 問題1 only so far. |
+
+Every question is written and reviewed by hand. The design, and the plan for reading (`/dokkai`) and full-section tests (`/moshi`), is in [docs/specs/jlpt-mock-tests.md](docs/specs/jlpt-mock-tests.md).
+
 ### What it stores, and how to stop it
 
 Two things persist: your points and correct-answer counts per server, and — if
