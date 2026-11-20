@@ -5,7 +5,7 @@ import {
 } from "@discordkit/client";
 import type { Mondai, TestId } from "./blueprint.js";
 import { OPTION_COUNT, type ExamQuestion } from "./draw.js";
-import { BLANK, display, fill, partsOf } from "./items.js";
+import { bare, BLANK, display, fill, partsOf, readingsOf } from "./items.js";
 import type { Answer, Result, Tally } from "./machine.js";
 
 /**
@@ -96,6 +96,22 @@ export const heading2 = (text: string): string =>
     .map((line) => `## ${line}`)
     .join(`\n`);
 
+/**
+ * A sentence as the card shows it: large, as the paper prints it, with its
+ * readings in one small line below.
+ *
+ * Inline readings — 日曜日(にちようび)に — made sentences hard to read in the
+ * first live test. Below the sentence they play furigana's part without
+ * breaking it up, and the sentence keeps the paper's spacing.
+ */
+export const sentenceBlock = (markup: string): string => {
+  const readings = readingsOf(markup)
+    .map(({ base, reading }) => `${base} ${reading}`)
+    .join(` · `);
+  const sentence = heading2(bare(markup));
+  return readings === `` ? sentence : `${sentence}\n-# ${readings}`;
+};
+
 /** Fit a label inside Discord's limit. The full text is in the reveal. */
 export const fitLabel = (text: string): string =>
   text.length <= LABEL_MAX ? text : `${text.slice(0, LABEL_MAX - 1)}…`;
@@ -145,7 +161,7 @@ const questionBody = (
         },
         {
           type: ComponentType.TextDisplay,
-          content: heading2(display(question.prompt))
+          content: sentenceBlock(question.prompt)
         },
         { type: ComponentType.Separator, divider: true, spacing: 1 },
         {
@@ -191,15 +207,20 @@ export const questionMessage = (view: QuestionView): MessageComponent =>
 export const closedQuestionMessage = (view: QuestionView): MessageComponent =>
   questionBody(view, true);
 
-/** The sentence with its answer filled in and marked. */
+/**
+ * The sentence with its answer filled in and underlined, as markup.
+ *
+ * Underlined, not bold: the sentence is a heading, and a heading is already
+ * bold — the first live test showed a bold answer vanishing into it. Each part
+ * is marked on its own: a pair answer (は／は) fills two blanks, and one pair of
+ * markers around both would span the text between them.
+ */
 export const answeredSentence = (question: ExamQuestion): string => {
   const answer = question.options.at(question.correct) ?? ``;
-  // Each part bold on its own: a pair answer (は／は) fills two blanks, and one
-  // pair of asterisks around both would span the text between them.
   const marked = partsOf(answer)
-    .map((part) => `**${part}**`)
+    .map((part) => `__${part}__`)
     .join(`／`);
-  return display(fill(question.prompt, new Map([[question.slot, marked]])));
+  return fill(question.prompt, new Map([[question.slot, marked]]));
 };
 
 /** A bar wide enough to read at a glance. */
@@ -247,7 +268,7 @@ export const revealMessage = (
       components: [
         {
           type: ComponentType.TextDisplay,
-          content: heading2(answeredSentence(question))
+          content: sentenceBlock(answeredSentence(question))
         },
         {
           type: ComponentType.TextDisplay,
@@ -261,12 +282,19 @@ export const revealMessage = (
   ];
 };
 
-/** Before question one: what the test is and how it works. */
+/**
+ * Before question one: what the test is and how it works.
+ *
+ * A live countdown until the test starts, then an absolute time. Discord keeps
+ * ticking a relative timestamp forever, so the intro is edited once when
+ * question one opens — otherwise it says "starts 12 minutes ago" mid-test.
+ */
 export const introMessage = (
   test: TestId,
   questions: number,
-  /** Epoch seconds when question one opens. */
-  startsAt: number
+  /** Epoch seconds when question one opens, or opened. */
+  startsAt: number,
+  started = false
 ): MessageComponent => [
   {
     type: ComponentType.Container,
@@ -274,7 +302,11 @@ export const introMessage = (
     components: [
       {
         type: ComponentType.TextDisplay,
-        content: `## ${TEST_NAMES[test]} mock test\n${String(questions)} questions · starts <t:${String(startsAt)}:R>`
+        content: `## ${TEST_NAMES[test]} mock test\n${String(questions)} questions · ${
+          started
+            ? `started at <t:${String(startsAt)}:t>`
+            : `starts <t:${String(startsAt)}:R>`
+        }`
       },
       {
         type: ComponentType.TextDisplay,

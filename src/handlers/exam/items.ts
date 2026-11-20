@@ -190,12 +190,13 @@ export const fill = (
 export const BLANK = `（　）`;
 
 /**
- * Markup as Discord shows it: each kanji followed by its reading.
+ * Markup with each kanji followed by its reading: 毎朝(まいあさ).
  *
- * Discord cannot place text above text, so the reading follows in half-width
- * brackets — 毎朝(まいあさ). The paper's blank is full-width brackets around an
- * ideographic space, and the two must not look alike. This is the one place
- * that choice lives.
+ * For short text with no room for a line of its own: button labels, notes,
+ * private results. Sentences use {@link bare} with {@link readingsOf} below
+ * them instead — the first live test found inline readings made a whole
+ * sentence hard to read. Half-width brackets, so a reading never looks like
+ * the paper's full-width blank.
  */
 export const display = (markup: string): string =>
   parse(markup)
@@ -207,6 +208,43 @@ export const display = (markup: string): string =>
           : BLANK
     )
     .join(``);
+
+/**
+ * Markup as the paper prints it, minus the furigana: kanji without readings,
+ * blanks as the paper's blank. The readings go on their own line.
+ */
+export const bare = (markup: string): string =>
+  parse(markup)
+    .map((segment) =>
+      segment.kind === `text`
+        ? segment.text
+        : segment.kind === `ruby`
+          ? segment.base
+          : BLANK
+    )
+    .join(``);
+
+/**
+ * Every kanji's reading, once each, in the order they appear.
+ *
+ * Furigana sits above the kanji it reads, and so does this: 行(い)きます lists
+ * 行 い, not the whole word. Telling okurigana from a following particle would
+ * need a tokenizer, and the paper does not do it either.
+ */
+export const readingsOf = (
+  markup: string
+): Array<{ base: string; reading: string }> => {
+  const seen = new Set<string>();
+  const found: Array<{ base: string; reading: string }> = [];
+  for (const segment of parse(markup)) {
+    if (segment.kind !== `ruby`) continue;
+    const key = `${segment.base}|${segment.reading}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    found.push({ base: segment.base, reading: segment.reading });
+  }
+  return found;
+};
 
 /** The text a reader reads, without readings or blanks. For timing. */
 export const plain = (markup: string): string =>

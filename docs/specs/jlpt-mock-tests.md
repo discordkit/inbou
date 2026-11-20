@@ -175,7 +175,8 @@ Think of each question type as a deck of cards.
 
 ## 7. What Discord constrains
 
-- **No furigana.** Discord cannot place text above text. Every kanji is followed by its reading in half-width brackets: 毎朝(まいあさ). The paper's blank is the full-width （　）, so the two look different. Items store ruby markup, so this choice belongs to one render function and can change without touching the corpus.
+- **No furigana.** Discord cannot place text above text. A sentence is shown as the paper prints it, without readings, and its readings follow in one small line below: 日曜日 にちようび · 学校 がっこう. The first live test tried inline readings, 日曜日(にちようび)に, and they made sentences hard to read. Buttons, notes and private results keep inline readings in half-width brackets, because they have no room for a second line. Items store ruby markup, so this is a renderer choice and never touches the corpus.
+- **A heading is already bold.** The answer in a revealed sentence is underlined, not bold; a bold answer vanished into the heading in the first live test.
 - **Underscores mean italics.** The ★ line uses full-width underscores: ＿＿ ＿＿ ★ ＿＿.
 - **Components V2 is all or nothing.** A V2 message cannot have `content` or embeds, so the whole card is built from components. The accent colour shows the state: blue while open, green when revealed.
 - **Limits per message:** 40 components (nested ones count), 4,000 characters of text, 5 buttons per row, 80 characters per button label, 100 per `customId`. A 問題1 card uses about 12 components. An N5 passage is about 250 characters.
@@ -213,7 +214,7 @@ Later: `/goi`, whose 漢字読み and 表記 items can be generated from the JMd
 
 ## 10. Still open
 
-- **The reading bracket style.** Half-width brackets are the plan. Confirm by eye in the first live test.
+- **Word spacing for N5.** If sentences still read poorly with the readings line, add learner word spacing (particles separated) as an authoring step that rewrites the YAML, never at runtime. vscode-jisho's `spacing.ts` skips kana-only text, which is most of N5, so it would need a kana-aware pass or hand review.
 - **Timer constants.** Base time per type and time per character. Tune them in live play.
 - **The difficulty mix per deck.** 3 / 4 / 2 for 問題1 is a first guess.
 - **How to show 問題6 material** without tables: V2 sections, a code block, or an image.

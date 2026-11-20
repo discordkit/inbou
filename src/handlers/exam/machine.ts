@@ -43,10 +43,14 @@ export interface ExamInput {
   questions: ExamQuestion[];
   /** When the intro ends and question one opens. */
   introUntil: number;
+  /** The intro's message, edited once question one opens. Null if it failed. */
+  introId: string | null;
 }
 
 export interface ExamContext {
   testId: string;
+  /** The intro's message, so its countdown can be replaced once the test starts. */
+  introId: string | null;
   channelId: string;
   /** Null in a DM. Stored because the session can end on its alarm. */
   guildId: string | null;
@@ -145,6 +149,7 @@ export const examMachine = setup({
   initial: `paused`,
   context: ({ input }) => ({
     testId: input.testId,
+    introId: input.introId,
     channelId: input.channelId,
     guildId: input.guildId,
     test: input.test,
@@ -429,7 +434,8 @@ const RESTORE_INPUT: ExamInput = {
   guildId: null,
   test: `bunpou`,
   questions: [],
-  introUntil: 0
+  introUntil: 0,
+  introId: null
 };
 
 export const persist = (actor: ExamActor): PersistedExam => ({

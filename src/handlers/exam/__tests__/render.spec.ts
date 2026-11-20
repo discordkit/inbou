@@ -11,7 +11,8 @@ import {
   parseVote,
   questionMessage,
   resultsMessage,
-  revealMessage
+  revealMessage,
+  sentenceBlock
 } from "../render.js";
 
 /**
@@ -78,6 +79,26 @@ describe(`an open question`, () => {
     expect(labels).toEqual([`1 を`, `2 で`, `3 が`, `4 と`]);
   });
 
+  it(`shows the sentence clean, with each reading once in a line below`, () => {
+    // WHY: found in the first live test. Inline readings — 日曜日(にちようび)に —
+    // broke the sentence up and made it hard to read. Below it, they play
+    // furigana's part without getting in the way.
+    expect(
+      sentenceBlock(
+        `{日曜日|にちようび}に {学校|がっこう}（1） {日曜日|にちようび}`
+      )
+    ).toBe(
+      `## 日曜日に 学校（　） 日曜日\n-# 日曜日 にちようび · 学校 がっこう`
+    );
+  });
+
+  it(`adds no readings line to a sentence without kanji`, () => {
+    // WHY: an empty small line still takes vertical space on every card.
+    expect(sentenceBlock(`きのうの テストは あまり（1）です。`)).toBe(
+      `## きのうの テストは あまり（　）です。`
+    );
+  });
+
   it(`shows a dialogue large on every line, not only the first`, () => {
     // WHY: Discord's ## styles one line. With one heading, speaker A would
     // be large and speaker B small, as if B were a footnote.
@@ -106,16 +127,17 @@ describe(`a closed question`, () => {
 });
 
 describe(`the reveal`, () => {
-  it(`marks each half of a pair answer separately`, () => {
-    // WHY: one pair of ** around も／も would span the text between the two
-    // blanks and bold half the sentence.
+  it(`underlines each half of a pair answer separately`, () => {
+    // WHY: the sentence is a heading, and a heading is already bold, so a
+    // bold answer vanished in the first live test. And one pair of markers
+    // around も／も would span the text between the two blanks.
     const pair = question({
       prompt: `{日曜日|にちようび}（1） {土曜日|どようび}（1）、{休|やす}みです。`,
       options: [`も／も`, `は／は`, `に／に`, `を／を`],
       correct: 0
     });
     expect(answeredSentence(pair)).toBe(
-      `日曜日(にちようび)**も** 土曜日(どようび)**も**、休(やす)みです。`
+      `{日曜日|にちようび}__も__ {土曜日|どようび}__も__、{休|やす}みです。`
     );
   });
 

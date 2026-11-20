@@ -169,13 +169,30 @@ describe(`starting a test`, () => {
     await expect(tokenOfOpen(deps)).resolves.toBe(token);
   });
 
-  it(`answers privately first, then posts the intro, and holds question one`, async () => {
-    // WHY: Discord drops an interaction not answered within three seconds,
-    // and question one must wait for the intro to be read.
+  it(`posts the intro, then answers privately, and holds question one`, async () => {
+    // WHY: the intro goes first so a failed post can still be reported in
+    // the one reply an interaction allows. Question one waits for the intro
+    // to be read.
     const { deps, calls } = setup();
     await startTest(deps, interaction, `chan`, `guild`, `bunpou`);
-    expect(calls.map((call) => call.kind)).toEqual([`reply`, `post`]);
+    expect(calls.map((call) => call.kind)).toEqual([`post`, `reply`]);
     expect((await deps.session.current())?.state).toBe(`paused`);
+  });
+
+  it(`does not start where it cannot post, and says why`, async () => {
+    // WHY: found in the first live test. Without permission to post, every
+    // question failed too: the test ran invisibly, with no card and so no
+    // End button, and the channel could not start another one.
+    const { deps, calls } = setup();
+    deps.cards.post = async () => null;
+    await startTest(deps, interaction, `chan`, `guild`, `bunpou`);
+    await expect(deps.session.current()).resolves.toBeNull();
+    expect(calls).toEqual([
+      {
+        kind: `reply`,
+        content: expect.stringContaining(`Send Messages`) as string
+      }
+    ]);
   });
 });
 
@@ -184,8 +201,20 @@ describe(`running a test`, () => {
     // WHY: the intro holds question one unseen. Advancing past it would
     // quietly start every test at question two.
     const { deps, calls } = await started();
-    expect(bodyOf(calls.at(-1))).toContain(`1 / 3`);
+    const question = calls.find(
+      (call) => call.kind === `post` && call.id === `m2`
+    );
+    expect(bodyOf(question)).toContain(`1 / 3`);
     expect((await deps.session.current())?.context.messageId).toBe(`m2`);
+  });
+
+  it(`replaces the intro's countdown once question one opens`, async () => {
+    // WHY: found in the first live test. Discord ticks a relative timestamp
+    // forever, so the intro read "starts 12 minutes ago" mid-test.
+    const { calls } = await started();
+    const edit = calls.find((call) => call.kind === `edit` && call.id === `m1`);
+    expect(bodyOf(edit)).toContain(`started at <t:`);
+    expect(bodyOf(edit)).not.toContain(`:R>`);
   });
 
   it(`settles the question before posting its reveal`, async () => {

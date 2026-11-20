@@ -49,7 +49,8 @@ const started = (questions: ExamQuestion[]): ExamActor => {
     guildId: `guild`,
     test: `bunpou`,
     questions,
-    introUntil: 1_000
+    introUntil: 1_000,
+    introId: null
   });
   actor.send({ type: `RESUME`, now: 1_000 });
   return actor;
@@ -103,7 +104,8 @@ describe(`a vote`, () => {
       guildId: null,
       test: `bunpou`,
       questions: [question(1)],
-      introUntil: 1_000
+      introUntil: 1_000,
+      introId: null
     });
     expect(vote(actor, `ann`, 0).outcome).toBe(`not-open`);
   });

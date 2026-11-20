@@ -41,7 +41,8 @@ const input = (channelId: string, introUntil: number) => ({
   guildId: `guild`,
   test: `bunpou` as const,
   questions: [question(1), question(2)],
-  introUntil
+  introUntil,
+  introId: null
 });
 
 describe(`the exam session`, () => {

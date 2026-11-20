@@ -139,26 +139,37 @@ export const startTest = async (
     return;
   }
 
-  // The reply first: an interaction must be answered within three seconds.
-  await deps.discord.reply(interaction, {
-    content: `Starting the test…`,
-    ephemeral: true
-  });
-
+  // The intro goes out BEFORE the session begins, and before the reply. If the
+  // bot cannot post here, every question would fail the same way: a test
+  // would run invisibly, with no card and so no End button. Posting first
+  // turns that into one private message saying what to fix. One REST call
+  // fits easily inside the three seconds an interaction allows.
   const now = deps.now();
   const introUntil = now + INTRO_PAUSE_MS;
+  const intro = await deps.cards.post(
+    channelId,
+    introMessage(test, questions.length, Math.floor(introUntil / 1000))
+  );
+  if (intro === null) {
+    await refuse(
+      `I could not post in this channel, so the test did not start. Check that I have **View Channel** and **Send Messages** here.`
+    );
+    return;
+  }
+
   await deps.session.begin({
     testId: now.toString(36),
     channelId,
     guildId,
     test,
     questions,
-    introUntil
+    introUntil,
+    introId: intro
   });
-  await deps.cards.post(
-    channelId,
-    introMessage(test, questions.length, Math.floor(introUntil / 1000))
-  );
+  await deps.discord.reply(interaction, {
+    content: `Starting the test…`,
+    ephemeral: true
+  });
 };
 
 /** Post the open question, and note its message so the timeout can settle it. */
@@ -189,11 +200,24 @@ export const handleResume = async (
   const view = await deps.session.current();
   if (view === null || view.state !== `paused`) return;
 
-  const opened = view.context.posted
-    ? await deps.session.next()
-    : await deps.session.resume();
+  const opening = !view.context.posted;
+  const opened = opening
+    ? await deps.session.resume()
+    : await deps.session.next();
   if (opened?.state !== `asking`) return;
   await postQuestion(deps, channelId, opened);
+
+  // The test has started, so the intro's countdown has served its purpose.
+  // Left alone, Discord keeps ticking it: "starts 12 minutes ago". After the
+  // question, so question one is never kept waiting on a cosmetic edit.
+  const { introId, test, questions } = opened.context;
+  if (opening && introId !== null) {
+    await deps.cards.edit(
+      channelId,
+      introId,
+      introMessage(test, questions.length, Math.floor(deps.now() / 1000), true)
+    );
+  }
 };
 
 /** The question timer ended: settle it, reveal it, and move on. */

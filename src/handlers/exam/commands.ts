@@ -74,6 +74,12 @@ export const handleExamInteraction = async (
       );
       return true;
     }
+    // The End test button's twin. Needed when the card holding the button
+    // never reached the channel, or has scrolled out of reach.
+    if (subcommand === `end`) {
+      await endTest(deps, interaction, channelId);
+      return true;
+    }
     diagnostics.UNKNOWN_INTERACTION({ name: `${name} ${subcommand ?? ``}` });
     await deps.discord.reply(interaction, {
       content: `I do not have a handler for that yet.`,
