@@ -56,8 +56,18 @@ const statusOf = (error: unknown): number | undefined => {
   return undefined;
 };
 
+/**
+ * Take the token out of an interaction or webhook URL before it is logged.
+ *
+ * The client's errors carry the full request URL, and these routes put a
+ * token in the path — a credential that can post as the bot for fifteen
+ * minutes. Found in the first live test, printed whole in the dev log.
+ */
+export const redactTokens = (text: string): string =>
+  text.replace(/(\/(?:interactions|webhooks)\/\d+\/)[^/\s'"]+/gu, `$1<token>`);
+
 const detailOf = (error: unknown): string =>
-  error instanceof Error ? error.message : String(error);
+  redactTokens(error instanceof Error ? error.message : String(error));
 
 /**
  * A local validation failure, rather than one Discord rejected.

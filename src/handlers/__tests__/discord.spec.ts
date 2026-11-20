@@ -9,7 +9,7 @@ import {
   expect,
   it
 } from "vite-plus/test";
-import { discordEffects, v2Effects } from "../discord.js";
+import { discordEffects, redactTokens, v2Effects } from "../discord.js";
 import type { Embed } from "../quiz/render.js";
 import { questionButtons } from "../quiz/render.js";
 
@@ -306,5 +306,20 @@ describe(`the Discord effects layer`, () => {
         discordEffects.reply(interaction, { content: `late` })
       ).resolves.toBeUndefined();
     });
+  });
+});
+
+describe(`what the diagnostics log`, () => {
+  it(`never includes an interaction or webhook token`, () => {
+    // WHY: the client's errors carry the full request URL, and these routes
+    // put a token in the path that can post as the bot for fifteen minutes.
+    // The first live test printed one whole into the dev log.
+    const url = `Request to resource 'https://discord.com/api/v10/interactions/1573465431128150126/aW50ZXJhY3Rpb246c2VjcmV0/callback' failed:`;
+    expect(redactTokens(url)).toBe(
+      `Request to resource 'https://discord.com/api/v10/interactions/1573465431128150126/<token>/callback' failed:`
+    );
+    expect(redactTokens(`/webhooks/123/abc-DEF_9/messages/@original`)).toBe(
+      `/webhooks/123/<token>/messages/@original`
+    );
   });
 });
