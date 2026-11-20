@@ -93,21 +93,38 @@ console.log(
   }.`
 );
 
-// Coverage: how many cards each deck holds at each difficulty, beside what one
-// test draws. A deck is playable when every level holds at least twice that,
-// so two tests in a row differ.
+// Coverage: how many cards each deck holds, beside what one test draws. A
+// deck is playable when it holds at least twice that, so two tests in a row
+// differ. 問題1's cards are slots, 問題2's windows, and 問題3's whole passages.
+const unitsOf = (mondai) =>
+  shipped.flatMap((item) =>
+    mondai === 1 && item.type === `form`
+      ? item.slots
+      : mondai === 2 && item.type === `compose`
+        ? item.windows
+        : []
+  );
+const report = (label, have, draw) =>
+  console.log(
+    `${label}: ${String(have)} cards, a test draws ${String(draw)} (${have >= draw * 2 ? `ok` : `short`})`
+  );
+
 for (const [test, plans] of Object.entries(BLUEPRINTS)) {
   for (const plan of plans) {
-    const slots = shipped
-      .filter((item) => item.type === `form`)
-      .flatMap((item) => item.slots);
-    for (const level of [1, 2, 3]) {
-      const have = slots.filter((slot) => slot.difficulty === level).length;
-      const draw = plan.mix[level];
-      const mark = have >= draw * 2 ? `ok` : `short`;
-      console.log(
-        `${test} 問題${String(plan.mondai)} difficulty ${String(level)}: ${String(have)} cards, a test draws ${String(draw)} (${mark})`
-      );
+    if (plan.mondai === 3) {
+      const passages = shipped.filter(
+        (item) => item.type === `passage` && item.blanks.length >= plan.blanks
+      ).length;
+      report(`${test} 問題3 passages`, passages, 1);
+    } else {
+      const units = unitsOf(plan.mondai);
+      for (const level of [1, 2, 3]) {
+        report(
+          `${test} 問題${String(plan.mondai)} difficulty ${String(level)}`,
+          units.filter((unit) => unit.difficulty === level).length,
+          plan.mix[level]
+        );
+      }
     }
   }
 }

@@ -1,0 +1,136 @@
+# 問題2 文の組み立て — put four chunks in order; choose the one on ★.
+#
+# A sentence has `/` between its chunks. Spaces written around a `/` show as a
+# space; none, no space. Each window is a run of four chunks, counted from 0,
+# that has EXACTLY ONE valid order. The ★ lands on any of the four at random,
+# so one window gives four questions.
+#
+# The trap is a second valid order: 新聞を コーヒーを 飲みながら 読みます is
+# as good as コーヒーを 飲みながら 新聞を 読みます. Splitting particles into
+# their own chunks, as the paper does, is what pins an order down. A window may
+# not end the sentence: a chunk with 。 would give its own place away.
+
+- id: n5-b2-0001
+  type: compose
+  status: draft
+  sentence: "この / かばん/は / わたし/の / です。"
+  en: This bag is mine.
+  windows:
+    - start: 1
+      difficulty: 1
+      points: [particle-no-pronoun]
+      note: "わたしの stands for the thing that is mine: この かばんは わたしの です."
+
+- id: n5-b2-0002
+  type: compose
+  status: draft
+  sentence: "{私|わたし}は / なつやすみに / {日本|にほん}/へ / {行|い}き/たい/です。"
+  en: I want to go to Japan in the summer holidays.
+  windows:
+    - start: 2
+      difficulty: 1
+      points: [form-tai, particle-he-direction]
+      note: "〜たい follows the ます stem: {行|い}きたい. へ marks the direction: {日本|にほん}へ."
+
+- id: n5-b2-0003
+  type: compose
+  status: draft
+  sentence: "バスより / {電車|でんしゃ}/の/ほう/が / はやいです。"
+  en: The train is faster than the bus.
+  windows:
+    - start: 1
+      difficulty: 2
+      points: [comparison-no-hou-ga]
+      note: "Aより Bの ほうが …: B is more … than A."
+
+- id: n5-b2-0004
+  type: compose
+  status: draft
+  sentence: "わたしは / {日本|にほん}の / すし/を / {食|た}べた / こと/が / あります。"
+  en: I have eaten Japanese sushi.
+  windows:
+    - start: 2
+      difficulty: 2
+      points: [form-ta-koto-ga-aru]
+      note: "〜た ことが あります: have done … before. The た form comes before こと."
+    - start: 3
+      difficulty: 2
+      points: [form-ta-koto-ga-aru]
+      note: "〜た ことが あります: have done … before. こと takes が."
+
+- id: n5-b2-0005
+  type: compose
+  status: draft
+  sentence: "{手|て}を / あらって/から / ごはんを / {食|た}べます。"
+  en: I wash my hands, and then I eat.
+  windows:
+    - start: 0
+      difficulty: 1
+      points: [form-te-kara]
+      note: "〜てから: after doing …. The て form comes before から."
+
+- id: n5-b2-0006
+  type: compose
+  status: draft
+  sentence: "ここで / しゃしん/を / とら/ないで / ください。"
+  en: Please do not take photos here.
+  windows:
+    - start: 1
+      difficulty: 1
+      points: [form-naide-kudasai]
+      note: "〜ないで ください asks someone not to do something: とらない → とらないで ください."
+
+- id: n5-b2-0007
+  type: compose
+  status: draft
+  sentence: "あした / {友|とも}だち/と / {山|やま}/へ / {行|い}きます。"
+  en: Tomorrow I am going to the mountains with a friend.
+  windows:
+    - start: 1
+      difficulty: 1
+      points: [particle-to-with, particle-he-direction]
+      note: "と marks who you go with, へ where you go."
+
+- id: n5-b2-0008
+  type: compose
+  status: draft
+  sentence: "たんじょうびに / あたらしい / くつ/が / ほしい/です。"
+  en: For my birthday I want new shoes.
+  windows:
+    - start: 1
+      difficulty: 1
+      points: [form-hoshii]
+      note: "〜が ほしいです: want something. ほしい takes が."
+
+- id: n5-b2-0009
+  type: compose
+  status: draft
+  sentence: "なつやすみに / {国|くに}/へ / {帰|かえ}る / つもり/です。"
+  en: I plan to go back to my country in the summer holidays.
+  windows:
+    - start: 1
+      difficulty: 2
+      points: [form-tsumori]
+      note: "〜つもりです follows the dictionary form: {帰|かえ}る つもりです."
+
+- id: n5-b2-0010
+  type: compose
+  status: draft
+  sentence: "かぜの ときは / {早|はや}く / ねた / ほう/が / いいです。"
+  en: When you have a cold, you should go to bed early.
+  windows:
+    - start: 1
+      difficulty: 3
+      points: [form-hou-ga-ii]
+      note: "〜た ほうが いい: had better …. The た form comes before ほう."
+
+- id: n5-b2-0011
+  type: compose
+  status: draft
+  sentence: "これは / {母|はは}/が / {作|つく}った / ケーキ/です。"
+  en: This is a cake my mother made.
+  windows:
+    - start: 1
+      difficulty: 3
+      points: [clause-noun-modifier]
+      note: "A clause can describe a noun: {母|はは}が {作|つく}った ケーキ — the cake my mother made."

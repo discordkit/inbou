@@ -1,0 +1,109 @@
+# 問題3 文章の文法 — a short passage with numbered blanks.
+#
+# Blanks are （n）, numbered in the order a reader meets them. A test asks four
+# of a passage's blanks and shows the rest filled in, so a passage with five
+# or six varies between tests. Each blank's wrong options must be wrong in the
+# PASSAGE, not just the sentence: the paper tests whether a form fits the flow
+# — a conjunction that fits the sentence before, a tense that fits the day.
+
+- id: n5-b3-0001
+  type: passage
+  status: draft
+  intro: "リーさんは「{私|わたし}の しゅうまつ」の さくぶんを {書|か}いて、クラスの みんなの {前|まえ}で {読|よ}みます。"
+  text: |-
+    {私|わたし}は {毎週|まいしゅう} {土曜日|どようび}に {友|とも}だちと テニスを します。（1）、{先週|せんしゅう}の {土曜日|どようび}は {雨|あめ}でした。{私|わたし}たちは テニスを しないで、{駅|えき}の {近|ちか}くの きっさてんへ {行|い}きました。コーヒーを（2）、たくさん {話|はな}しました。きっさてん（3） ケーキも とても おいしかったです。{今度|こんど}は {家族|かぞく}（4） {行|い}きたいです。{来週|らいしゅう}は {天気|てんき}が いいでしょう。また テニスが（5）。
+  en: "Every Saturday I play tennis with my friends. But last Saturday it rained. We didn't play tennis, and went to a café near the station. We talked a lot while drinking coffee. The café's cake was very good too. Next time I want to go with my family. Next week the weather will probably be good, so we can play tennis again."
+  blanks:
+    - answer: でも
+      wrong: [だから, それから, そして]
+      difficulty: 1
+      points: [conjunction-demo]
+      note: "でも turns to something unexpected: tennis every Saturday, but last Saturday it rained."
+    - answer: "{飲|の}みながら"
+      wrong: ["{飲|の}みたいから", "{飲|の}みに", "{飲|の}みませんか"]
+      difficulty: 2
+      points: [form-nagara]
+      note: "〜ながら: two things at once. They talked while they drank coffee."
+    - answer: の
+      wrong: [を, に, へ]
+      difficulty: 1
+      points: [particle-no-possessive]
+      note: "の links two nouns: きっさてんの ケーキ, the café's cake."
+    - answer: と
+      wrong: [を, に, の]
+      difficulty: 1
+      points: [particle-to-with]
+      note: "と marks who you go with: {家族|かぞく}と {行|い}く. ({家族|かぞく}で {行|い}く, as a family, is natural too.)"
+    - answer: できます
+      wrong: [できました, できません, できませんでした]
+      difficulty: 2
+      points: [form-polite-tense]
+      note: "Next week is still to come, and good weather means tennis: できます."
+
+- id: n5-b3-0002
+  type: passage
+  status: draft
+  intro: "アンナさんが「{日本|にほん}の コンビニ」の さくぶんを {書|か}きました。"
+  text: |-
+    {日本|にほん}の コンビニは とても べんりです。{朝|あさ}（1） {夜|よる}まで あいて います。{食|た}べもの（2） {飲|の}みものが たくさん あります。{私|わたし}は {毎日|まいにち} {学校|がっこう}の {帰|かえ}りに コンビニへ おべんとうを（3） {行|い}きます。
+    {私|わたし}の {国|くに}には コンビニが（4）。{日本|にほん}に {来|き}て、はじめて コンビニに {入|はい}りました。はじめは つかいかたが わかりませんでした。（5）、{今|いま}は コンビニが だいすきです。
+  en: "Convenience stores in Japan are very handy. They are open from morning until night, and they have lots of food, drinks and more. Every day on my way home from school, I go to one to buy a bento. There are no convenience stores in my country. I first went into one after I came to Japan. At first I did not know how to use it. But now I love convenience stores."
+  blanks:
+    - answer: から
+      wrong: [まで, で, に]
+      difficulty: 1
+      points: [particle-kara-made]
+      note: "から marks the start and まで the end: {朝|あさ}から {夜|よる}まで."
+    - answer: や
+      wrong: [を, に, の]
+      difficulty: 1
+      points: [particle-ya-and]
+      note: "や lists some items out of many: {食|た}べものや {飲|の}みもの, and more."
+    - answer: "{買|か}いに"
+      wrong: ["{買|か}う", "{買|か}った", "{買|か}わない"]
+      difficulty: 2
+      points: [form-ni-iku]
+      note: "〜に {行|い}く: go to do something. It takes the ます stem: {買|か}いに {行|い}きます."
+    - answer: ありません
+      wrong: [あります, いません, ありました]
+      difficulty: 2
+      points: [form-ga-aru-iru]
+      note: "She first went into one in Japan, so there are none at home: ありません. Things take ある; people and animals take いる."
+    - answer: でも
+      wrong: [だから, そして, いつも]
+      difficulty: 1
+      points: [conjunction-demo]
+      note: "でも turns to the opposite: at first she could not use one, but now she loves them."
+
+- id: n5-b3-0003
+  type: passage
+  status: draft
+  intro: "ケンさんが {先生|せんせい}に メールを {書|か}きました。"
+  text: |-
+    {田中|たなか}{先生|せんせい}
+    こんにちは。ケンです。{来週|らいしゅう}の {月曜日|げつようび}、{学校|がっこう}を（1）。{国|くに}から {母|はは}が {来|く}る（2）、くうこうへ むかえに {行|い}きます。じゅぎょうの ノートは {友|とも}だちに（3） {読|よ}みます。しゅくだいは {火曜日|かようび}に {出|だ}しても（4）か。
+    よろしく おねがいします。
+    ケン
+  en: "Dear Tanaka-sensei, Hello, this is Ken. I will be absent from school next Monday. My mother is coming from my country, so I am going to the airport to meet her. I will borrow the class notes from a friend and read them. May I hand in my homework on Tuesday? Thank you. Ken"
+  blanks:
+    - answer: "{休|やす}みます"
+      wrong:
+        ["{休|やす}みました", "{休|やす}んで います", "{休|やす}みたかったです"]
+      difficulty: 2
+      points: [form-polite-tense]
+      note: "Next Monday is still to come: {休|やす}みます, not a past form."
+    - answer: ので
+      wrong: [けど, まで, が]
+      difficulty: 2
+      points: [conjunction-node]
+      note: "〜ので gives a reason, like から: his mother is coming, so he goes to meet her."
+    - answer: かりて
+      wrong: [かして, かりに, かります]
+      difficulty: 3
+      points: [verb-kariru-kasu]
+      note: "{友|とも}だちに かりる: borrow from a friend. かす, to lend, goes the other way."
+    - answer: いいです
+      wrong: [いけません, ください, なりません]
+      difficulty: 2
+      points: [form-te-mo-ii]
+      note: "〜ても いいですか asks for permission: may I …?"

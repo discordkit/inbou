@@ -13,14 +13,12 @@
 - {
     id: particle-wa-contrast,
     pattern: は,
-    meaning: marks a contrast,
-    often in a negative
+    meaning: "marks a contrast, often in a negative"
   }
 - {
     id: particle-ga-subject,
     pattern: が,
-    meaning: marks the subject,
-    or new information
+    meaning: "marks the subject, or new information"
   }
 - {
     id: particle-ga-object,
@@ -69,7 +67,7 @@
     pattern: や,
     meaning: "and, listing some items of many"
   }
-- { id: particle-mo-also, pattern: も, meaning: also, too }
+- { id: particle-mo-also, pattern: も, meaning: "also, too" }
 - {
     id: particle-no-possessive,
     pattern: の,
@@ -77,12 +75,12 @@
   }
 - { id: particle-no-pronoun, pattern: の, meaning: "one, the one: わたしの" }
 - { id: particle-kara-from, pattern: から, meaning: from a starting point }
-- { id: particle-made-until, pattern: まで, meaning: until, as far as }
+- { id: particle-made-until, pattern: まで, meaning: "until, as far as" }
 - { id: particle-kara-made, pattern: から〜まで, meaning: from … to … }
 - { id: particle-yori-comparison, pattern: より, meaning: than }
 - { id: particle-ka-question, pattern: か, meaning: makes a question }
 - { id: particle-ka-or, pattern: か, meaning: or }
-- { id: particle-dake-only, pattern: だけ, meaning: only, just }
+- { id: particle-dake-only, pattern: だけ, meaning: "only, just" }
 - { id: particle-ne-agreement, pattern: ね, meaning: seeks agreement }
 - {
     id: particle-yo-assertion,
@@ -139,27 +137,32 @@
     pattern: まだ,
     meaning: "still; not yet (with a negative)"
   }
-- { id: adverb-amari, pattern: あまり〜ない, meaning: not very, not much }
+- { id: adverb-amari, pattern: あまり〜ない, meaning: "not very, not much" }
 - { id: adverb-zenzen, pattern: ぜんぜん〜ない, meaning: not at all }
 - { id: adverb-yoku, pattern: よく, meaning: often; well }
 - { id: adverb-totemo, pattern: とても, meaning: very }
 - { id: adverb-sukoshi, pattern: すこし, meaning: a little }
 - { id: adverb-chotto, pattern: ちょっと, meaning: a little; a moment }
 - { id: adverb-takusan, pattern: たくさん, meaning: a lot }
-- { id: adverb-itsumo, pattern: いつも, meaning: always, usually }
+- { id: adverb-itsumo, pattern: いつも, meaning: "always, usually" }
 - { id: adverb-tokidoki, pattern: ときどき, meaning: sometimes }
 - { id: adverb-mata, pattern: また, meaning: again }
 - { id: adverb-dandan, pattern: だんだん, meaning: gradually }
-- { id: adverb-sugu, pattern: すぐ, meaning: soon, at once }
+- { id: adverb-sugu, pattern: すぐ, meaning: "soon, at once" }
 - { id: adverb-issho-ni, pattern: いっしょに, meaning: together }
 - { id: adverb-ichiban, pattern: いちばん, meaning: the most }
 
 # ── Conjunctions ─────────────────────────────────────────────────────────────
-- { id: conjunction-soshite, pattern: そして, meaning: and, and then }
+- { id: conjunction-soshite, pattern: そして, meaning: "and, and then" }
 - { id: conjunction-sorekara, pattern: それから, meaning: after that }
 - { id: conjunction-demo, pattern: でも, meaning: but }
-- { id: conjunction-dakara, pattern: だから, meaning: so, therefore }
+- { id: conjunction-dakara, pattern: だから, meaning: "so, therefore" }
 - { id: conjunction-ga-but, pattern: 〜が、〜, meaning: "…, but …" }
+- {
+    id: conjunction-node,
+    pattern: 〜ので,
+    meaning: "because, so (softer than から)"
+  }
 
 # ── Forms and patterns ───────────────────────────────────────────────────────
 - {
@@ -256,13 +259,32 @@
 - {
     id: comparison-ichiban,
     pattern: 〜のなかで〜がいちばん,
-    meaning: of …,
-    … is the most …
+    meaning: "of …, … is the most …"
+  }
+
+- {
+    id: form-polite-tense,
+    pattern: 〜ます／〜ました／〜ません,
+    meaning: "tense and polarity that fit the context"
+  }
+- {
+    id: clause-noun-modifier,
+    pattern: "[clause] + noun",
+    meaning: "a clause before a noun describes it: 母が 作った ケーキ"
+  }
+- {
+    id: verb-kariru-kasu,
+    pattern: かりる／かす,
+    meaning: "borrow from (に) or lend to (に)"
   }
 
 # ── Set phrases ──────────────────────────────────────────────────────────────
 - { id: phrase-o-kudasai, pattern: 〜をください, meaning: please give me … }
-- { id: phrase-douzo, pattern: どうぞ, meaning: please, go ahead; here you are }
+- {
+    id: phrase-douzo,
+    pattern: どうぞ,
+    meaning: "please, go ahead; here you are"
+  }
 - { id: phrase-sumimasen, pattern: すみません, meaning: excuse me; sorry }
 - {
     id: phrase-ikaga-desu-ka,

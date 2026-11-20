@@ -54,6 +54,11 @@ const KANA = /^[\p{Script=Hiragana}\p{Script=Katakana}ー]+$/u;
 
 const text = v.pipe(v.string(), v.minLength(1));
 
+// Every object below is strict: an unknown key fails rather than vanishing.
+// YAML ends an unquoted flow value at a comma, so `meaning: so, therefore`
+// stores "so" and a stray key "therefore". Twelve grammar point meanings were
+// cut short that way, silently, until this was strict.
+
 /**
  * One blank and its answers.
  *
@@ -61,7 +66,7 @@ const text = v.pipe(v.string(), v.minLength(1));
  * teaching note belong to the blank rather than the sentence, because two
  * blanks in one sentence can test different things.
  */
-const slotSchema = v.object({
+const slotSchema = v.strictObject({
   answer: text,
   /**
    * Three or more, each reviewed as wrong IN THIS SENTENCE. Three are drawn at
@@ -80,7 +85,7 @@ const slotSchema = v.object({
 const idSchema = v.pipe(v.string(), v.regex(/^n[1-5]-[bd][1-6]-\d{4}$/u));
 
 /** 問題1: choose the form that fits the blank. */
-export const formItemSchema = v.object({
+export const formItemSchema = v.strictObject({
   id: idSchema,
   type: v.literal(`form`),
   status: v.picklist([`draft`, `reviewed`]),
@@ -91,15 +96,91 @@ export const formItemSchema = v.object({
   slots: v.pipe(v.array(slotSchema), v.minLength(1))
 });
 
-export const itemSchema = v.variant(`type`, [formItemSchema]);
+/**
+ * One run of four chunks with exactly one valid order: a ★ question.
+ *
+ * Its own difficulty, points and note, like a slot: two windows in one
+ * sentence can test different things.
+ */
+const windowSchema = v.strictObject({
+  /** The window's first chunk, counted from 0. */
+  start: v.pipe(v.number(), v.integer(), v.minValue(0)),
+  difficulty: v.picklist([1, 2, 3]),
+  points: v.pipe(v.array(text), v.minLength(1)),
+  note: text
+});
+
+/** 問題2: put four chunks in order, and choose the one that lands on ★. */
+export const composeItemSchema = v.strictObject({
+  id: idSchema,
+  type: v.literal(`compose`),
+  status: v.picklist([`draft`, `reviewed`]),
+  /**
+   * The sentence with `/` between its chunks. Spaces written around a `/`
+   * show as a space; none, no space: `この / かばん/は / わたし/の / です。`
+   */
+  sentence: text,
+  en: text,
+  windows: v.pipe(v.array(windowSchema), v.minLength(1))
+});
+
+/** 問題3: a short passage with numbered blanks. */
+export const passageItemSchema = v.strictObject({
+  id: idSchema,
+  type: v.literal(`passage`),
+  status: v.picklist([`draft`, `reviewed`]),
+  /** The situation, above the passage: who wrote it, and for what. */
+  intro: v.optional(text),
+  /** Blanks are `（n）`, numbered by slot, as in 問題1. */
+  text: text,
+  /** The whole passage in English, shown after its last question. */
+  en: text,
+  /** Four or more. A test asks four and shows the rest filled in. */
+  blanks: v.pipe(v.array(slotSchema), v.minLength(4))
+});
+
+export const itemSchema = v.variant(`type`, [
+  formItemSchema,
+  composeItemSchema,
+  passageItemSchema
+]);
 export const itemsSchema = v.array(itemSchema);
 
 export type Slot = v.InferOutput<typeof slotSchema>;
+export type Window = v.InferOutput<typeof windowSchema>;
 export type FormItem = v.InferOutput<typeof formItemSchema>;
+export type ComposeItem = v.InferOutput<typeof composeItemSchema>;
+export type PassageItem = v.InferOutput<typeof passageItemSchema>;
 export type Item = v.InferOutput<typeof itemSchema>;
 
+/** How many chunks a ★ question arranges, as on the paper. */
+export const WINDOW_SIZE = 4;
+
+/** One chunk of a ★ sentence, and whether a space follows it. */
+export interface Chunk {
+  text: string;
+  spaceAfter: boolean;
+}
+
+/** Split a ★ sentence at its `/` marks, keeping the spacing the author wrote. */
+export const chunksOf = (sentence: string): Chunk[] => {
+  const pieces = sentence.split(`/`);
+  return pieces.map((piece, index) => {
+    const next = pieces.at(index + 1);
+    return {
+      text: piece.trim(),
+      spaceAfter:
+        next !== undefined && (/\s$/u.test(piece) || /^\s/u.test(next))
+    };
+  });
+};
+
+/** Chunks back into a sentence, with the spaces the author wrote. */
+export const joinChunks = (chunks: readonly Chunk[]): string =>
+  chunks.map((chunk) => `${chunk.text}${chunk.spaceAfter ? ` ` : ``}`).join(``);
+
 /** An entry in `grammar-points.yaml`, the list items refer to. */
-export const grammarPointSchema = v.object({
+export const grammarPointSchema = v.strictObject({
   id: v.pipe(v.string(), v.regex(/^[a-z0-9-]+$/u)),
   pattern: text,
   meaning: text
@@ -351,26 +432,30 @@ const slotProblems = (
   return problems;
 };
 
-/** Everything code can find wrong with one item. Empty means it may ship. */
-export const itemProblems = (
-  item: Item,
-  points: ReadonlySet<string>
+/**
+ * Text with numbered blanks, checked against its slots: every blank has a
+ * slot, and every slot appears as often as its answer has parts.
+ */
+const blankedProblems = (
+  markup: string,
+  slots: readonly Slot[],
+  points: ReadonlySet<string>,
+  where: string
 ): string[] => {
-  const where = item.id;
   const blanks = new Map<number, number>();
-  for (const segment of parse(item.sentence)) {
+  for (const segment of parse(markup)) {
     if (segment.kind === `blank`) {
       blanks.set(segment.slot, (blanks.get(segment.slot) ?? 0) + 1);
     }
   }
 
-  const problems = markupProblems(item.sentence, where);
+  const problems = markupProblems(markup, where);
   for (const slot of blanks.keys()) {
-    if (slot < 1 || slot > item.slots.length) {
+    if (slot < 1 || slot > slots.length) {
       problems.push(`${where}: blank （${String(slot)}） has no slot`);
     }
   }
-  item.slots.forEach((slot, index) => {
+  slots.forEach((slot, index) => {
     problems.push(
       ...slotProblems(
         slot,
@@ -382,6 +467,77 @@ export const itemProblems = (
     );
   });
   return problems;
+};
+
+/**
+ * A ★ sentence: its markup, and every window.
+ *
+ * Code checks the window's shape. Whether its four chunks have exactly one
+ * valid order is for the reviewer — that is the trap of this question type.
+ */
+const composeProblems = (
+  item: ComposeItem,
+  points: ReadonlySet<string>
+): string[] => {
+  const where = item.id;
+  const chunks = chunksOf(item.sentence);
+  const problems = markupProblems(item.sentence, where);
+
+  if (parse(item.sentence).some((segment) => segment.kind === `blank`)) {
+    problems.push(`${where}: a ★ sentence has no （n） blanks`);
+  }
+  chunks.forEach((chunk, index) => {
+    if (chunk.text === ``) {
+      problems.push(`${where}: chunk ${String(index + 1)} is empty`);
+    }
+  });
+  const starts = item.windows.map((window) => window.start);
+  if (new Set(starts).size !== starts.length) {
+    problems.push(`${where}: two windows start at the same chunk`);
+  }
+  for (const window of item.windows) {
+    const at = `${where} window at chunk ${String(window.start + 1)}`;
+    const inside = chunks.slice(window.start, window.start + WINDOW_SIZE);
+    if (inside.length < WINDOW_SIZE) {
+      problems.push(`${at}: runs past the end of the sentence`);
+      continue;
+    }
+    // The final chunk carries the 。, which would give its own place away.
+    if (window.start + WINDOW_SIZE >= chunks.length) {
+      problems.push(`${at}: ends the sentence; leave a chunk after it`);
+    }
+    // Two identical chunks would make two orders look the same, and the ★
+    // answer ambiguous.
+    if (new Set(inside.map((chunk) => chunk.text)).size !== WINDOW_SIZE) {
+      problems.push(`${at}: two of its chunks are the same`);
+    }
+    for (const point of window.points) {
+      if (!points.has(point)) {
+        problems.push(`${at}: grammar point "${point}" is not in the list`);
+      }
+    }
+  }
+  return problems;
+};
+
+/** Everything code can find wrong with one item. Empty means it may ship. */
+export const itemProblems = (
+  item: Item,
+  points: ReadonlySet<string>
+): string[] => {
+  switch (item.type) {
+    case `form`:
+      return blankedProblems(item.sentence, item.slots, points, item.id);
+    case `compose`:
+      return composeProblems(item, points);
+    case `passage`:
+      return [
+        ...(item.intro === undefined
+          ? []
+          : markupProblems(item.intro, `${item.id} intro`)),
+        ...blankedProblems(item.text, item.blanks, points, item.id)
+      ];
+  }
 };
 
 /** Problems that only show across the whole corpus. */
@@ -422,7 +578,12 @@ const sharedEnding = (texts: readonly string[]): string => {
  * shared です from an ending that is part of what varies. The reviewer decides.
  */
 export const itemHints = (item: Item): string[] =>
-  item.slots.flatMap((slot, index) => {
+  (item.type === `form`
+    ? item.slots
+    : item.type === `passage`
+      ? item.blanks
+      : []
+  ).flatMap((slot, index) => {
     const ending = sharedEnding([slot.answer, ...slot.wrong].map(plain));
     return ending === ``
       ? []

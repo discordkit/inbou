@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 import type { ExamQuestion } from "../draw.js";
 import {
-  answeredSentence,
   closedQuestionMessage,
   fitLabel,
   heading2,
@@ -12,6 +11,7 @@ import {
   questionMessage,
   resultsMessage,
   revealMessage,
+  passageBlock,
   sentenceBlock
 } from "../render.js";
 
@@ -29,6 +29,7 @@ const question = (overrides: Partial<ExamQuestion> = {}): ExamQuestion => ({
   mondai: 1,
   number: 3,
   prompt: `{毎日|まいにち} バス（1） {行|い}きます。`,
+  answered: `{毎日|まいにち} バス__で__ {行|い}きます。`,
   options: [`を`, `で`, `が`, `と`],
   correct: 1,
   difficulty: 1,
@@ -61,6 +62,41 @@ const buttons = (message: unknown): Record<string, unknown>[] => {
   walk(message);
   return found;
 };
+
+describe(`a passage question`, () => {
+  it(`shows the passage as a quote at reading size, with its readings below`, () => {
+    // WHY: two hundred characters at heading size would fill the screen. The
+    // quote bar runs down every line, since a quote stops at a line break.
+    expect(
+      passageBlock(`{私|わたし}は［14］です。
+また **［15］**。`)
+    ).toBe(
+      `> 私は［14］です。
+> また **［15］**。
+-# 私 わたし`
+    );
+  });
+
+  it(`puts the intro above the passage`, () => {
+    // WHY: the intro says who wrote the passage and why, which the blanks
+    // can depend on — a letter to a teacher is polite.
+    const card = JSON.stringify(
+      questionMessage(
+        view(
+          question({
+            mondai: 3,
+            intro: `ケンさんが メールを {書|か}きました。`,
+            prompt: `こんにちは。**［14］**。`
+          })
+        )
+      )
+    );
+    expect(card.indexOf(`ケンさんが`)).toBeGreaterThan(-1);
+    expect(card.indexOf(`ケンさんが`)).toBeLessThan(
+      card.indexOf(`> こんにちは`)
+    );
+  });
+});
 
 describe(`an open question`, () => {
   it(`is identical whichever option is correct`, () => {
@@ -127,18 +163,30 @@ describe(`a closed question`, () => {
 });
 
 describe(`the reveal`, () => {
-  it(`underlines each half of a pair answer separately`, () => {
-    // WHY: the sentence is a heading, and a heading is already bold, so a
-    // bold answer vanished in the first live test. And one pair of markers
-    // around も／も would span the text between the two blanks.
-    const pair = question({
-      prompt: `{日曜日|にちようび}（1） {土曜日|どようび}（1）、{休|やす}みです。`,
-      options: [`も／も`, `は／は`, `に／に`, `を／を`],
-      correct: 0
-    });
-    expect(answeredSentence(pair)).toBe(
-      `{日曜日|にちようび}__も__ {土曜日|どようび}__も__、{休|やす}みです。`
+  it(`shows the drawn answer underlined, without inline readings`, () => {
+    // WHY: the reveal is a heading; the underline is what marks the answer,
+    // and the readings belong on their own line as on the question card.
+    const reveal = JSON.stringify(
+      revealMessage(question(), {
+        counts: [0, 1, 0, 0],
+        correct: 1,
+        scorers: []
+      })
     );
+    expect(reveal).toContain(`## 毎日 バス__で__ 行きます。`);
+    expect(reveal).toContain(`-# 毎日 まいにち · 行 い`);
+  });
+
+  it(`leaves out the English line while a passage still has blanks to come`, () => {
+    // WHY: the passage's translation would answer the blanks still ahead.
+    const reveal = JSON.stringify(
+      revealMessage(question({ en: `` }), {
+        counts: [0, 1, 0, 0],
+        correct: 1,
+        scorers: []
+      })
+    );
+    expect(reveal).not.toContain(`\\n_`);
   });
 
   it(`says nobody answered rather than "0 of 0 correct"`, () => {

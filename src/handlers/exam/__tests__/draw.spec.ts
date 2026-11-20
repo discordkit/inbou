@@ -1,14 +1,22 @@
 import { describe, expect, it } from "vite-plus/test";
-import { BLUEPRINTS } from "../blueprint.js";
+import { BLUEPRINTS, type MixPlan } from "../blueprint.js";
 import {
+  composeQuestion,
   drawDeck,
   drawTest,
   formQuestion,
   OPTION_COUNT,
+  passageQuestions,
   timeoutFor,
   type Random
 } from "../draw.js";
-import type { Difficulty, FormItem } from "../items.js";
+import type {
+  ComposeItem,
+  Difficulty,
+  FormItem,
+  Item,
+  PassageItem
+} from "../items.js";
 
 /**
  * Drawing a test from the decks.
@@ -64,13 +72,18 @@ const deck = (count: Readonly<Record<Difficulty, number>>): FormItem[] => {
   return items;
 };
 
-const PLAN = BLUEPRINTS.bunpou[0];
+const PLAN = BLUEPRINTS.bunpou.find(
+  (plan): plan is MixPlan => plan.mondai === 1
+);
 if (PLAN === undefined) throw new Error(`bunpou has no 問題1 plan`);
 
-const levelsOf = (drawn: readonly { item: FormItem; slot: number }[]) => {
+const levelsOf = (drawn: readonly { item: Item; index: number }[]) => {
   const levels = { 1: 0, 2: 0, 3: 0 };
-  for (const { item: drawnItem, slot } of drawn) {
-    const level = drawnItem.slots[slot]?.difficulty;
+  for (const { item: drawnItem, index } of drawn) {
+    const level =
+      drawnItem.type === `form`
+        ? drawnItem.slots.at(index)?.difficulty
+        : undefined;
     if (level !== undefined) levels[level] += 1;
   }
   return levels;
@@ -146,8 +159,10 @@ describe(`drawing a deck`, () => {
     const plan = { mondai: 1 as const, mix: { 1: 9, 2: 0, 3: 0 } };
     for (let seed = 1; seed <= 20; seed += 1) {
       const drawn = drawDeck(items, plan, seeded(seed));
-      const same = drawn.filter(({ item: d }) =>
-        d.slots[0]?.points.includes(`same-point`)
+      const same = drawn.filter(
+        ({ item: d }) =>
+          d.type === `form` &&
+          d.slots.at(0)?.points.includes(`same-point`) === true
       );
       expect(same.length).toBeLessThanOrEqual(1);
     }
@@ -232,5 +247,201 @@ describe(`drawing a test`, () => {
       seeded(10)
     );
     expect(new Set(questions.map((q) => q.token)).size).toBe(questions.length);
+  });
+});
+
+describe(`a revealed answer`, () => {
+  it(`underlines each half of a pair answer separately`, () => {
+    // WHY: the reveal is a heading, already bold, so the answer is underlined
+    // — a bold one vanished in the first live test. One pair of markers
+    // around も／も would span the text between the two blanks.
+    const pair: FormItem = {
+      ...item(1, 3),
+      sentence: `{日曜日|にちようび}（1） {土曜日|どようび}（1）、{休|やす}みです。`,
+      slots: [
+        {
+          answer: `も／も`,
+          wrong: [`は／は`, `に／に`, `を／を`],
+          difficulty: 3,
+          points: [`p`],
+          note: `n`
+        }
+      ]
+    };
+    expect(formQuestion(pair, 0, 1, seeded(11)).answered).toBe(
+      `{日曜日|にちようび}__も__ {土曜日|どようび}__も__、{休|やす}みです。`
+    );
+  });
+});
+
+/** この かばんは わたしの です: one window, chunks 1 to 4. */
+const bag: ComposeItem = {
+  id: `n5-b2-0001`,
+  type: `compose`,
+  status: `reviewed`,
+  sentence: `この / かばん/は / わたし/の / です。`,
+  en: `This bag is mine.`,
+  windows: [{ start: 1, difficulty: 1, points: [`p`], note: `n` }]
+};
+const WINDOW = [`かばん`, `は`, `わたし`, `の`];
+
+describe(`a ★ question`, () => {
+  it(`hides the window behind four blanks, one of them starred`, () => {
+    // WHY: the chunks are the options. Any of them left in the sentence would
+    // give its place away.
+    const { prompt } = composeQuestion(bag, 0, 1, seeded(12));
+    expect(prompt).toMatch(
+      /^この (＿＿|＿★＿) (＿＿|＿★＿) (＿＿|＿★＿) (＿＿|＿★＿) です。$/u
+    );
+    // The pattern above leaves no room for a chunk between the blanks; this
+    // pins the star to exactly one of them.
+    expect(prompt.match(/★/gu)).toHaveLength(1);
+  });
+
+  it(`answers with the chunk at the star's position`, () => {
+    // WHY: the whole question is "which chunk lands on ★". An answer taken
+    // from any other position would mark right answers wrong.
+    const random = seeded(13);
+    for (let i = 0; i < 200; i += 1) {
+      const question = composeQuestion(bag, 0, 1, random);
+      const star = question.prompt
+        .replace(/^この /u, ``)
+        .split(` `)
+        .indexOf(`＿★＿`);
+      expect(question.options[question.correct]).toBe(WINDOW[star]);
+    }
+  });
+
+  it(`puts the star on each of the four positions about equally often`, () => {
+    // WHY: a star that favoured one position would make a repeated card ask
+    // the same thing, and a student could learn the position, not the order.
+    const random = seeded(14);
+    const positions = [0, 0, 0, 0];
+    const draws = 4000;
+    for (let i = 0; i < draws; i += 1) {
+      const star = composeQuestion(bag, 0, 1, random)
+        .prompt.replace(/^この /u, ``)
+        .split(` `)
+        .indexOf(`＿★＿`);
+      positions[star] = (positions[star] ?? 0) + 1;
+    }
+    for (const count of positions) {
+      expect(count).toBeGreaterThan(draws / 4 - 150);
+      expect(count).toBeLessThan(draws / 4 + 150);
+    }
+  });
+
+  it(`reveals the sentence with the window underlined, in its own spacing`, () => {
+    // WHY: the order is the lesson, so the reveal shows the whole window in
+    // place — with the sentence's own spacing, not the blanks'.
+    expect(composeQuestion(bag, 0, 1, seeded(15)).answered).toBe(
+      `この __かばんは わたしの__ です。`
+    );
+  });
+});
+
+/** A passage with five blanks, numbered in reading order. */
+const passage: PassageItem = {
+  id: `n5-b3-0001`,
+  type: `passage`,
+  status: `reviewed`,
+  text: `あ（1）い。か（2）き。さ（3）し。た（4）ち。な（5）に。`,
+  en: `The passage in English.`,
+  blanks: [1, 2, 3, 4, 5].map((n) => ({
+    answer: `A${String(n)}`,
+    wrong: [`W${String(n)}a`, `W${String(n)}b`, `W${String(n)}c`],
+    difficulty: 1 as const,
+    points: [`p`],
+    note: `n`
+  }))
+};
+
+describe(`a passage`, () => {
+  it(`asks its blanks in reading order, numbered straight on`, () => {
+    // WHY: a passage is read top to bottom. Asking blank 4 before blank 2
+    // would reveal the later answer before the earlier question.
+    const questions = passageQuestions(passage, 4, 14, seeded(16));
+    expect(questions.map((q) => q.number)).toEqual([14, 15, 16, 17]);
+    expect(questions.map((q) => q.slot).sort((a, b) => a - b)).toEqual(
+      questions.map((q) => q.slot)
+    );
+  });
+
+  it(`shows the unasked blank filled, earlier ones answered, later ones numbered`, () => {
+    // WHY: the passage should complete as the group goes on. A later blank
+    // shown filled would give its answer away; an earlier one left blank
+    // would hide what was just revealed.
+    const asked = passage.blanks.slice(0, 4);
+    const questions = passageQuestions(
+      { ...passage, blanks: asked.concat(passage.blanks.slice(4)) },
+      5,
+      14,
+      seeded(17)
+    );
+    expect(questions[1]?.prompt).toBe(
+      `あA1い。か**［15］**き。さ［16］し。た［17］ち。な［18］に。`
+    );
+    const four = passageQuestions(passage, 4, 14, seeded(18));
+    const unasked = [1, 2, 3, 4, 5].find(
+      (slot) => !four.some((q) => q.slot === slot)
+    );
+    expect(four[0]?.prompt).toContain(`A${String(unasked)}`);
+  });
+
+  it(`counts the passage toward the first question's time only`, () => {
+    // WHY: by the second blank the passage has been read. Giving every
+    // question the full reading time would make a passage group drag.
+    const long: PassageItem = {
+      ...passage,
+      text: `${`ながい ぶんしょうです。`.repeat(20)}あ（1）い。か（2）き。さ（3）し。た（4）ち。な（5）に。`
+    };
+    const [first, second] = passageQuestions(long, 4, 14, seeded(19));
+    expect(first?.timeoutMs ?? 0).toBeGreaterThan(
+      (second?.timeoutMs ?? 0) + 60_000
+    );
+  });
+
+  it(`gives the English only after its last question`, () => {
+    // WHY: the translation of the whole passage would answer the blanks
+    // still to come.
+    const questions = passageQuestions(passage, 4, 14, seeded(20));
+    expect(questions.map((q) => q.en)).toEqual([
+      ``,
+      ``,
+      ``,
+      `The passage in English.`
+    ]);
+  });
+});
+
+describe(`a full grammar test`, () => {
+  it(`draws 9 + 4 + 4, numbered 1 to 17, in the paper's order`, () => {
+    // WHY: the blueprint is the real N5 paper. A test that drew a different
+    // shape would not be practice for it.
+    const items: Item[] = [
+      ...deck({ 1: 5, 2: 5, 3: 5 }),
+      ...[1, 2, 3, 4, 5, 6].map((n): ComposeItem => ({
+        ...bag,
+        id: `n5-b2-${String(n).padStart(4, `0`)}`,
+        windows: [
+          {
+            start: 1,
+            difficulty: ((n % 3) + 1) as Difficulty,
+            points: [`c${String(n)}`],
+            note: `n`
+          }
+        ]
+      })),
+      passage
+    ];
+    const questions = drawTest(`bunpou`, items, seeded(21));
+    expect(questions.map((q) => q.number)).toEqual(
+      Array.from({ length: 17 }, (_, i) => i + 1)
+    );
+    expect(questions.map((q) => q.mondai)).toEqual([
+      ...Array.from({ length: 9 }, () => 1),
+      ...Array.from({ length: 4 }, () => 2),
+      ...Array.from({ length: 4 }, () => 3)
+    ]);
   });
 });

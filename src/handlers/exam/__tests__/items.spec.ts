@@ -1,14 +1,20 @@
+import * as v from "valibot";
 import { describe, expect, it } from "vite-plus/test";
 import {
   BLANK,
+  chunksOf,
   display,
   fill,
+  grammarPointSchema,
+  joinChunks,
   itemHints,
   itemProblems,
   corpusProblems,
   parse,
   plain,
-  type FormItem
+  type ComposeItem,
+  type FormItem,
+  type PassageItem
 } from "../items.js";
 
 /**
@@ -238,5 +244,116 @@ describe(`the item checks`, () => {
     expect(corpusProblems([item(), item()])).toEqual([
       `n5-b1-0001: id used twice`
     ]);
+  });
+});
+
+describe(`★ items`, () => {
+  const compose = (overrides: Partial<ComposeItem> = {}): ComposeItem => ({
+    id: `n5-b2-0001`,
+    type: `compose`,
+    status: `draft`,
+    sentence: `この / かばん/は / わたし/の / です。`,
+    en: `This bag is mine.`,
+    windows: [
+      { start: 1, difficulty: 1, points: [`particle-de-means`], note: `n` }
+    ],
+    ...overrides
+  });
+
+  it(`keeps the spacing written around each slash`, () => {
+    // WHY: the reveal shows the sentence as the paper spaces it. Spaces
+    // around a / are the only record of where a phrase ends.
+    const chunks = chunksOf(`この / かばん/は / わたし/の / です。`);
+    expect(chunks.map((chunk) => chunk.text)).toEqual([
+      `この`,
+      `かばん`,
+      `は`,
+      `わたし`,
+      `の`,
+      `です。`
+    ]);
+    expect(joinChunks(chunks)).toBe(`この かばんは わたしの です。`);
+  });
+
+  it(`passes a well-formed window`, () => {
+    expect(itemProblems(compose(), POINTS)).toEqual([]);
+  });
+
+  it(`catches a window that ends the sentence`, () => {
+    // WHY: the last chunk carries the 。, so it would give its own place away.
+    const problems = itemProblems(
+      compose({
+        windows: [
+          { start: 2, difficulty: 1, points: [`particle-de-means`], note: `n` }
+        ]
+      }),
+      POINTS
+    );
+    expect(problems.some((p) => p.includes(`ends the sentence`))).toBe(true);
+  });
+
+  it(`catches a window that runs past the end`, () => {
+    const problems = itemProblems(
+      compose({
+        windows: [
+          { start: 4, difficulty: 1, points: [`particle-de-means`], note: `n` }
+        ]
+      }),
+      POINTS
+    );
+    expect(problems.some((p) => p.includes(`runs past the end`))).toBe(true);
+  });
+
+  it(`catches two identical chunks in one window`, () => {
+    // WHY: two の would make two orders look the same, and which の is "the"
+    // ★ answer would be a coin toss.
+    const problems = itemProblems(
+      compose({ sentence: `わたし/の / ともだち/の / ほん/は / これです。` }),
+      POINTS
+    );
+    expect(
+      problems.some((p) => p.includes(`two of its chunks are the same`))
+    ).toBe(true);
+  });
+});
+
+describe(`passage items`, () => {
+  it(`checks the intro's kanji as well as the passage's`, () => {
+    // WHY: the intro is shown above the passage. A kanji there without a
+    // reading is as unreadable as one in the passage.
+    const passage: PassageItem = {
+      id: `n5-b3-0001`,
+      type: `passage`,
+      status: `draft`,
+      intro: `先生に メールを 書きました。`,
+      text: `あ（1）い（2）う（3）え（4）お。`,
+      en: `English.`,
+      blanks: [1, 2, 3, 4].map(() => ({
+        answer: `で`,
+        wrong: [`を`, `が`, `と`],
+        difficulty: 1 as const,
+        points: [`particle-de-means`],
+        note: `n`
+      }))
+    };
+    const problems = itemProblems(passage, POINTS);
+    expect(
+      problems.some((p) => p.includes(`intro: kanji 先 has no reading`))
+    ).toBe(true);
+  });
+});
+
+describe(`the schemas`, () => {
+  it(`reject a key they do not know`, () => {
+    // WHY: YAML ends an unquoted flow value at a comma, so
+    // \`meaning: so, therefore\` stores "so" and a stray key. Twelve meanings
+    // were cut short that way, silently, while the schema dropped the stray.
+    const parsed = v.safeParse(grammarPointSchema, {
+      id: `conjunction-dakara`,
+      pattern: `だから`,
+      meaning: `so`,
+      therefore: null
+    });
+    expect(parsed.success).toBe(false);
   });
 });

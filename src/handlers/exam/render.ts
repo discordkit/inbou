@@ -5,7 +5,7 @@ import {
 } from "@discordkit/client";
 import type { Mondai, TestId } from "./blueprint.js";
 import { OPTION_COUNT, type ExamQuestion } from "./draw.js";
-import { bare, BLANK, display, fill, partsOf, readingsOf } from "./items.js";
+import { bare, BLANK, display, readingsOf } from "./items.js";
 import type { Answer, Result, Tally } from "./machine.js";
 
 /**
@@ -81,7 +81,9 @@ export const TEST_NAMES: Readonly<Record<TestId, string>> = {
  * Markup, so the kanji carry readings as on the paper.
  */
 export const INSTRUCTIONS: Readonly<Record<Mondai, string>> = {
-  1: `${BLANK}に {何|なに}を {入|い}れますか。1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`
+  1: `${BLANK}に {何|なに}を {入|い}れますか。1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
+  2: `★に {入|はい}る ものは どれですか。1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
+  3: `［　］に {何|なに}を {入|い}れますか。ぶんしょうの いみを かんがえて、1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`
 };
 
 /**
@@ -104,12 +106,32 @@ export const heading2 = (text: string): string =>
  * first live test. Below the sentence they play furigana's part without
  * breaking it up, and the sentence keeps the paper's spacing.
  */
-export const sentenceBlock = (markup: string): string => {
+export const sentenceBlock = (markup: string): string =>
+  withReadings(heading2(bare(markup)), markup);
+
+/**
+ * A passage as the card shows it: a block quote at reading size, with its
+ * readings below like a sentence's.
+ *
+ * Not a heading: two hundred characters at heading size would fill the
+ * screen. The quote bar sets the passage apart from the question around it,
+ * and runs down every line, since a quote stops at a line break.
+ */
+export const passageBlock = (markup: string): string =>
+  withReadings(
+    bare(markup)
+      .split(`\n`)
+      .map((line) => `> ${line}`)
+      .join(`\n`),
+    markup
+  );
+
+/** Text followed by a small line of its kanji's readings, if it has any. */
+const withReadings = (text: string, markup: string): string => {
   const readings = readingsOf(markup)
     .map(({ base, reading }) => `${base} ${reading}`)
     .join(` · `);
-  const sentence = heading2(bare(markup));
-  return readings === `` ? sentence : `${sentence}\n-# ${readings}`;
+  return readings === `` ? text : `${text}\n-# ${readings}`;
 };
 
 /** Fit a label inside Discord's limit. The full text is in the reveal. */
@@ -159,9 +181,20 @@ const questionBody = (
           type: ComponentType.TextDisplay,
           content: `-# ${display(INSTRUCTIONS[question.mondai])}`
         },
+        ...(question.intro === undefined
+          ? []
+          : [
+              {
+                type: ComponentType.TextDisplay as const,
+                content: display(question.intro)
+              }
+            ]),
         {
           type: ComponentType.TextDisplay,
-          content: sentenceBlock(question.prompt)
+          content:
+            question.mondai === 3
+              ? passageBlock(question.prompt)
+              : sentenceBlock(question.prompt)
         },
         { type: ComponentType.Separator, divider: true, spacing: 1 },
         {
@@ -207,22 +240,6 @@ export const questionMessage = (view: QuestionView): MessageComponent =>
 export const closedQuestionMessage = (view: QuestionView): MessageComponent =>
   questionBody(view, true);
 
-/**
- * The sentence with its answer filled in and underlined, as markup.
- *
- * Underlined, not bold: the sentence is a heading, and a heading is already
- * bold — the first live test showed a bold answer vanishing into it. Each part
- * is marked on its own: a pair answer (は／は) fills two blanks, and one pair of
- * markers around both would span the text between them.
- */
-export const answeredSentence = (question: ExamQuestion): string => {
-  const answer = question.options.at(question.correct) ?? ``;
-  const marked = partsOf(answer)
-    .map((part) => `__${part}__`)
-    .join(`／`);
-  return fill(question.prompt, new Map([[question.slot, marked]]));
-};
-
 /** A bar wide enough to read at a glance. */
 const BAR_WIDTH = 10;
 
@@ -266,13 +283,17 @@ export const revealMessage = (
       type: ComponentType.Container,
       accentColor: MOSS,
       components: [
+        // The answer underlined, not bold: the sentence is a heading, and a
+        // bold answer vanished into it in the first live test.
         {
           type: ComponentType.TextDisplay,
-          content: sentenceBlock(answeredSentence(question))
+          content: sentenceBlock(question.answered)
         },
         {
           type: ComponentType.TextDisplay,
-          content: `✅ **${String(question.correct + 1)} ${answer}** · ${summary}\n_${question.en}_`
+          content: `✅ **${String(question.correct + 1)} ${answer}** · ${summary}${
+            question.en === `` ? `` : `\n_${question.en}_`
+          }`
         },
         { type: ComponentType.TextDisplay, content: display(question.note) },
         { type: ComponentType.Separator, divider: true, spacing: 1 },

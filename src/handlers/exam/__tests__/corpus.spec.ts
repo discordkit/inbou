@@ -3,14 +3,22 @@ import * as v from "valibot";
 import { describe, expect, it } from "vite-plus/test";
 import { parse } from "yaml";
 import corpus from "../corpus.json" with { type: "json" };
-import type { ExamQuestion } from "../draw.js";
 import {
+  composeQuestion,
+  formQuestion,
+  passageQuestions,
+  type ExamQuestion
+} from "../draw.js";
+import {
+  chunksOf,
   corpusProblems,
   display,
   grammarPointsSchema,
   itemProblems,
   itemsSchema,
-  type FormItem
+  WINDOW_SIZE,
+  type Item,
+  type Slot
 } from "../items.js";
 import { LABEL_MAX, questionMessage, revealMessage } from "../render.js";
 
@@ -58,29 +66,57 @@ const measure = (message: unknown): { components: number; text: number } => {
   return { components, text };
 };
 
+/** A slot whose pool holds only its three longest wrong options. */
+const longestPool = (slot: Slot): Slot => ({
+  ...slot,
+  wrong: [...slot.wrong].sort((a, b) => b.length - a.length).slice(0, 3)
+});
+
+/** Pinned: these lengths do not depend on the draw. */
+const zero = (): number => 0;
+
 /**
- * The longest question a slot can produce: its answer beside its three
- * longest wrong options. If that fits, every draw fits.
+ * Every question an item can produce, at its longest, through the real draw.
+ *
+ * Each pool is cut to its three longest options, and a passage asks every one
+ * of its blanks, so every question here is as long as any draw could make it.
+ * If these fit, every draw fits.
  */
-const longest = (item: FormItem, slotIndex: number): ExamQuestion => {
-  const slot = item.slots[slotIndex];
-  if (slot === undefined) throw new Error(`no slot`);
-  const wrong = [...slot.wrong].sort((a, b) => b.length - a.length).slice(0, 3);
-  return {
-    itemId: item.id,
-    slot: slotIndex + 1,
-    mondai: 1,
-    number: 99,
-    prompt: item.sentence,
-    options: [slot.answer, ...wrong],
-    correct: 0,
-    difficulty: slot.difficulty,
-    points: slot.points,
-    en: item.en,
-    note: slot.note,
-    token: `zzzzzz`,
-    timeoutMs: 999_000
-  };
+const longestQuestions = (item: Item): ExamQuestion[] => {
+  switch (item.type) {
+    case `form`: {
+      const longest = { ...item, slots: item.slots.map(longestPool) };
+      return item.slots.map((_, index) =>
+        formQuestion(longest, index, 99, zero)
+      );
+    }
+    case `compose`:
+      return item.windows.map((_, index) =>
+        composeQuestion(item, index, 99, zero)
+      );
+    case `passage`: {
+      const longest = { ...item, blanks: item.blanks.map(longestPool) };
+      return passageQuestions(longest, item.blanks.length, 90, zero);
+    }
+  }
+};
+
+/** Every option an item can offer, whatever the draw. */
+const optionsOf = (item: Item): string[] => {
+  switch (item.type) {
+    case `form`:
+      return item.slots.flatMap((slot) => [slot.answer, ...slot.wrong]);
+    case `passage`:
+      return item.blanks.flatMap((slot) => [slot.answer, ...slot.wrong]);
+    case `compose`: {
+      const chunks = chunksOf(item.sentence);
+      return item.windows.flatMap((window) =>
+        chunks
+          .slice(window.start, window.start + WINDOW_SIZE)
+          .map((chunk) => chunk.text)
+      );
+    }
+  }
 };
 
 describe(`the mock-test corpus`, () => {
@@ -99,13 +135,13 @@ describe(`the mock-test corpus`, () => {
     expect(problems).toEqual([]);
   });
 
-  it(`renders every slot inside Discord's limits`, () => {
+  it(`renders every question inside Discord's limits`, () => {
     // WHY: Discord rejects the whole message over a limit, and the question
-    // is lost mid-test. Checked on the longest variant of every slot.
+    // is lost mid-test. Checked on the longest variant of every slot, window
+    // and passage blank.
     const over: string[] = [];
     for (const item of items) {
-      item.slots.forEach((_, index) => {
-        const question = longest(item, index);
+      for (const question of longestQuestions(item)) {
         for (const message of [
           questionMessage({ question, total: 99, endsAt: 1_700_000_000 }),
           revealMessage(question, {
@@ -120,7 +156,7 @@ describe(`the mock-test corpus`, () => {
           if (text > TEXT_MAX)
             over.push(`${item.id}: ${String(text)} characters`);
         }
-      });
+      }
     }
     expect(over).toEqual([]);
   });
@@ -130,11 +166,9 @@ describe(`the mock-test corpus`, () => {
     // happy but could hide the very difference between two options. So no
     // option may be long enough to be trimmed. "4 " is the number prefix.
     const long = items.flatMap((item) =>
-      item.slots.flatMap((slot) =>
-        [slot.answer, ...slot.wrong]
-          .filter((option) => `4 ${display(option)}`.length > LABEL_MAX)
-          .map((option) => `${item.id}: ${option}`)
-      )
+      optionsOf(item)
+        .filter((option) => `4 ${display(option)}`.length > LABEL_MAX)
+        .map((option) => `${item.id}: ${option}`)
     );
     expect(long).toEqual([]);
   });

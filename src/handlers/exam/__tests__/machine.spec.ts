@@ -31,6 +31,7 @@ const question = (
   mondai: 1,
   number,
   prompt: `ぶん（1）です。`,
+  answered: `ぶん__あ__です。`,
   options: [`あ`, `い`, `う`, `え`],
   correct,
   difficulty,
