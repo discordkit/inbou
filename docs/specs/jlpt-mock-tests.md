@@ -120,22 +120,32 @@ Items live in YAML under `data/jlpt/n5/`, one file per question type. `grammar-p
 
 ### ★ items (問題2)
 
-A ★ item is a sentence split into parts, plus one or more **windows**: runs of four consecutive parts that have exactly one valid order.
+A ★ item is a sentence with `/` between its chunks, plus one or more **windows**: runs of four consecutive chunks that have exactly one valid order. Spaces written around a `/` show as a space, and none means no space, so the sentence keeps the paper's spacing.
 
 ```yaml
 - id: n5-b2-0001
   type: compose
-  parts: [この, かばん, は, わたし, の, です。]
-  windows: [1] # parts 1–4: かばん は わたし の
+  status: draft
+  sentence: "この / かばん/は / わたし/の / です。"
+  en: This bag is mine.
+  windows:
+    - start: 1 # chunks 1–4, counted from 0: かばん は わたし の
+      difficulty: 1
+      points: [particle-no-pronoun]
+      note: "わたしの stands for the thing that is mine."
 ```
 
-At ask time, the bot chooses a window, puts the ★ on one of its four positions at random, and shuffles the four chunks into the options. One item with one window gives four different questions, so a student cannot memorise "the answer is わたし".
+At ask time, the bot chooses a window, puts the ★ on one of its four positions at random, and shuffles the four chunks into the options. The card shows `この ＿＿ ＿＿ ＿★＿ ＿＿ です。`, and the reveal shows the whole sentence with the window underlined. One item with one window gives four different questions, so a student cannot memorise "the answer is わたし". Like a slot, each window has its own difficulty, points and note.
 
-The four chunks in a window must be different strings. If two chunks were both の, the answer would be ambiguous.
+Code checks the window's shape: it fits the sentence, its four chunks are different strings (two の would make the ★ answer ambiguous), and it does not end the sentence (the last chunk carries the 。, which would give its own place away). Whether the order is unique is the reviewer's call, and it is this type's trap. 新聞を コーヒーを 飲みながら 読みます is as good as コーヒーを 飲みながら 新聞を 読みます. Splitting particles into their own chunks, as the paper does, is what pins an order down.
 
 ### Passages (問題3)
 
-A passage has four or more blanks. The bot asks four of them, in order, and fills the others in with their answers. Each blank has its own answer, wrong pool, difficulty and points.
+A passage has an optional intro (who wrote it, and why), a text with four or more `（n）` blanks numbered in reading order, and the whole passage in English. Each blank is a slot, as in 問題1: its own answer, wrong pool, difficulty, points and note.
+
+A test asks four blanks, in reading order, numbered straight on from 問題2 (14 to 17 on a full test). Blanks it does not ask are shown filled from the start. A blank still to come shows its number, ［16］. The current one is in bold, and each one already revealed shows its answer, so the passage completes as the group goes on.
+
+The passage shows as a block quote at reading size, with its readings in a small line below. The reveal shows only the sentence that held the blank. The English for the whole passage comes after its last question, because earlier it would answer the blanks still ahead. The passage counts toward the first question's timer only: by the second blank it has been read.
 
 ### What code checks, and what a person checks
 
