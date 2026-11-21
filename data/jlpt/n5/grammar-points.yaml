@@ -638,3 +638,8 @@
     meaning: "choose: I'll have …",
     tofugu: suru#for-selecting-or-deciding-something
   }
+- {
+    id: phrase-greetings,
+    pattern: いってきます・ただいま,
+    meaning: "set greetings for leaving home, coming home and meals"
+  }

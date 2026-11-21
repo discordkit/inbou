@@ -511,3 +511,260 @@
       difficulty: 1
       points: [particle-ni-time]
       note: "に marks a day or a time: {金曜日|きんようび}に."
+
+- id: n5-b3-0011
+  type: passage
+  status: draft
+  intro: "マイクさんは「りょこう」の さくぶんを {書|か}きました。"
+  text: |-
+    {先月|せんげつ}、{友|とも}だちと {京都|きょうと}（1） {行|い}きました。{京都|きょうと}まで しんかんせん（2） {三時間|さんじかん} ぐらいでした。{京都|きょうと}には {古|ふる}い おてらが（3） あります。わたしたちは {有名|ゆうめい}な おてらを {三|みっ}つ（4）。とても しずか（5）、きれいでした。
+    ばんは {旅館|りょかん}に とまりました。{旅館|りょかん}の {料理|りょうり}は とても おいしかったです。それから、おふろ（6） {入|はい}りました。{日本|にほん}の おふろは {大|おお}きくて、{気持|きも}ちが よかったです。
+    つぎの {日|ひ}は {雨|あめ}でした（7）、どこへも {行|い}きませんでした。{旅館|りょかん}で ゆっくり {休|やす}みました。{京都|きょうと}は とても いい ところでした。こんどは {家族|かぞく}（8） いっしょに {行|い}きたいです。
+  en: "Last month I went to Kyoto with a friend. It took about three hours to Kyoto by bullet train. Kyoto has many old temples. We saw three famous temples. They were very quiet and beautiful. That night we stayed at a Japanese inn. The food at the inn was very good. After that, we got into the bath. Japanese baths are big, and it felt good. The next day it rained, so we didn't go anywhere. We rested at the inn. Kyoto was a very nice place. Next time I want to go with my family."
+  blanks:
+    - answer: へ
+      wrong: [を, で, が]
+      difficulty: 1
+      points: [particle-he-direction]
+      note: "へ marks the direction: {京都|きょうと}へ {行|い}きました. に would also be right, so it is not offered."
+    - answer: で
+      wrong: [に, を, が]
+      difficulty: 1
+      points: [particle-de-means]
+      note: "で marks the means: しんかんせんで, by bullet train."
+    - answer: たくさん
+      wrong: [とても, ぜんぜん, あまり]
+      difficulty: 1
+      points: [adverb-takusan]
+      note: "たくさん counts: many temples. ぜんぜん and あまり need a negative, and とても does not go with あります."
+    - answer: "{見|み}ました"
+      wrong: ["{見|み}ます", "{見|み}ましょう", "{見|み}て ください"]
+      difficulty: 1
+      points: [form-polite-tense]
+      note: "{先月|せんげつ} puts it in the past: {見|み}ました."
+    - answer: で
+      wrong: [な, に, だ]
+      difficulty: 2
+      points: [form-te-link]
+      note: "A な adjective joins the next one with で: しずかで、きれいでした. Quiet and beautiful."
+    - answer: に
+      wrong: [を, で, が]
+      difficulty: 2
+      points: [particle-ni-destination]
+      note: "{入|はい}る takes に for what you go into: おふろに {入|はい}ります."
+    - answer: から
+      wrong: [が, まで, を]
+      difficulty: 2
+      points: [conjunction-kara-reason]
+      note: "から gives the reason: it rained, so they stayed in. が would set up a contrast."
+    - answer: と
+      wrong: [に, を, で]
+      difficulty: 1
+      points: [particle-to-with]
+      note: "〜と いっしょに: together with someone."
+
+- id: n5-b3-0012
+  type: passage
+  status: draft
+  intro: "ユキさんは「わたしの {友|とも}だち」の さくぶんを {書|か}きました。"
+  text: |-
+    わたしの {友|とも}だちの エマさんは イギリス（1） {来|き}ました。エマさんは {去年|きょねん}の {九月|くがつ}から {日本|にほん}（2） {大学|だいがく}で {日本語|にほんご}を {勉強|べんきょう}して います。{日本語|にほんご}が とても {上手|じょうず}で、{漢字|かんじ}（3） たくさん {知|し}って います。エマさんは {料理|りょうり}を {作|つく}る（4） {好|す}きで、ときどき わたしの うちで イギリスの {料理|りょうり}を {作|つく}ります。
+    {先週|せんしゅう}の {土曜日|どようび}、エマさん（5） いっしょに {駅|えき}の {近|ちか}くの {店|みせ}で {買|か}いものを しました。エマさんは {赤|あか}い ぼうしを {買|か}いましたが、わたしは {何|なに}も（6）。
+    {来月|らいげつ}、エマさんは {国|くに}（7） {帰|かえ}ります。わたしは とても さびしいです。でも、{夏休|なつやす}みに わたしが イギリスに {行|い}きます。エマさんの {家族|かぞく}（8） {会|あ}いたいです。
+  en: "My friend Emma came from England. Since last September, Emma has been studying Japanese at a Japanese university. Emma's Japanese is very good, and Emma knows a lot of kanji too. Emma likes cooking, and sometimes cooks English food at my home. Last Saturday, Emma and I went shopping together at a shop near the station. Emma bought a red hat, but I didn't buy anything. Next month Emma is going back to England. I will be very lonely. But in the summer holidays I am going to England. I want to meet Emma's family."
+  blanks:
+    - answer: から
+      wrong: [まで, を, で]
+      difficulty: 1
+      points: [particle-kara-from]
+      note: "から marks where someone comes from: イギリスから {来|き}ました."
+    - answer: の
+      wrong: [に, で, が]
+      difficulty: 1
+      points: [particle-no-possessive]
+      note: "の joins two nouns: {日本|にほん}の {大学|だいがく}, a Japanese university."
+    - answer: も
+      wrong: [で, に, と]
+      difficulty: 2
+      points: [particle-mo-also]
+      note: "も: also. Emma is good at Japanese, and knows a lot of kanji too. を would also be right, so it is not offered."
+    - answer: のが
+      wrong: [のを, のに, ので]
+      difficulty: 3
+      points: [form-no-ga-suki]
+      note: "の turns {料理|りょうり}を {作|つく}る into a thing you like, and {好|す}き takes が. のを is a common mistake."
+    - answer: と
+      wrong: [に, を, で]
+      difficulty: 1
+      points: [particle-to-with]
+      note: "〜と いっしょに: together with someone."
+    - answer: "{買|か}いませんでした"
+      wrong: ["{買|か}いました", "{買|か}います", "{買|か}いましょう"]
+      difficulty: 2
+      points: [question-mo-negative, form-polite-tense]
+      note: "{何|なに}も needs a negative, and {先週|せんしゅう} needs the past: {買|か}いませんでした."
+    - answer: へ
+      wrong: [を, で, が]
+      difficulty: 1
+      points: [particle-he-direction]
+      note: "へ marks the direction: {国|くに}へ {帰|かえ}ります. に would also be right, so it is not offered."
+    - answer: に
+      wrong: [を, で, へ]
+      difficulty: 2
+      points: [particle-ni-recipient]
+      note: "{会|あ}う takes に for the person you meet: {家族|かぞく}に {会|あ}います. と would also be right, so it is not offered."
+
+- id: n5-b3-0013
+  type: passage
+  status: draft
+  intro: "ボブさんが {友|とも}だちの {田中|たなか}さんに メールを {書|か}きました。"
+  text: |-
+    {田中|たなか}さん
+    こんにちは、ボブです。{今週|こんしゅう}の {日曜日|にちようび}は ひまですか。わたしは {友|とも}だちと {二人|ふたり}で {山|やま}（1） のぼります。{田中|たなか}さんも いっしょに {行|い}き（2）。
+    {朝|あさ} {八時|はちじ}に {駅|えき}の {前|まえ}で {会|あ}いましょう。{駅|えき}（3） {山|やま}の {下|した}まで バスで {三十分|さんじゅっぷん} ぐらいです。{山|やま}の {上|うえ}は {少|すこ}し さむいです（4）、セーターを {持|も}って {来|き}て ください。おべんとうは わたし（5） {作|つく}ります。
+    {来|く}る（6）は、{金曜日|きんようび}（7） でんわを ください。{雨|あめ}（8） ときは {行|い}きません。
+    ボブ
+  en: "Tanaka-san, Hello, this is Bob. Are you free this Sunday? A friend and I are going to climb a mountain, just the two of us. Would you like to come with us? Let's meet in front of the station at eight in the morning. From the station to the foot of the mountain is about thirty minutes by bus. It is a little cold at the top, so please bring a sweater. I will make the lunches. If you are coming, please phone me on Friday. If it rains, we will not go. Bob"
+  blanks:
+    - answer: に
+      wrong: [で, が, と]
+      difficulty: 2
+      points: [particle-ni-destination]
+      note: "のぼる takes に for where you climb to: {山|やま}に のぼります. を would also be right, so it is not offered."
+    - answer: ませんか
+      wrong: [ました, ません, ましたか]
+      difficulty: 2
+      points: [form-masen-ka]
+      note: "〜ませんか invites someone: won't you come too?"
+    - answer: から
+      wrong: [まで, に, を]
+      difficulty: 1
+      points: [particle-kara-made]
+      note: "から〜まで: from … to …. まで already follows {山|やま}の {下|した}."
+    - answer: ので
+      wrong: [を, と, まで]
+      difficulty: 2
+      points: [conjunction-node]
+      note: "ので gives the reason: it is cold at the top, so bring a sweater. と cannot come before a request."
+    - answer: が
+      wrong: [を, に, で]
+      difficulty: 2
+      points: [particle-ga-subject]
+      note: "が marks who does it: わたしが {作|つく}ります, I am the one who makes them."
+    - answer: とき
+      wrong: [あと, ほう, ながら]
+      difficulty: 2
+      points: [form-toki]
+      note: "〜とき: when. {来|く}る ときは, if you are coming."
+    - answer: に
+      wrong: [で, を, と]
+      difficulty: 1
+      points: [particle-ni-time]
+      note: "に marks a day or a time: {金曜日|きんようび}に."
+    - answer: の
+      wrong: [な, に, で]
+      difficulty: 1
+      points: [particle-no-possessive]
+      note: "A noun takes の before とき: {雨|あめ}の とき."
+
+- id: n5-b3-0014
+  type: passage
+  status: draft
+  intro: "リサさんは「わたしの {一日|いちにち}」の さくぶんを {書|か}きました。"
+  text: |-
+    わたしは {毎朝|まいあさ} {六時半|ろくじはん}（1） {起|お}きます。{起|お}きて（2）、{犬|いぬ}と こうえんを さんぽします。それから、シャワーを あびて、{朝|あさ}ごはんを {食|た}べます。{朝|あさ}ごはんは いつも パン（3） コーヒーです。
+    {八時|はちじ}に {家|いえ}を {出|で}て、{電車|でんしゃ}で {会社|かいしゃ}へ {行|い}きます。わたしの {会社|かいしゃ}は {大|おお}きく（4）が、みんな やさしいです。{仕事|しごと}は {九時|くじ}（5） {五時|ごじ}までです。
+    {夜|よる}は うちで テレビを {見|み}（6）、ばんごはんを {食|た}べます。ねる（7）に、すこし {本|ほん}を {読|よ}みます。（8）、{十一時|じゅういちじ}ごろ ねます。
+  en: "Every morning I get up at half past six. After I get up, I walk in the park with my dog. Then I take a shower and eat breakfast. Breakfast is always bread and coffee. At eight I leave home and go to my company by train. My company is not big, but everyone is kind. Work is from nine to five. In the evening I eat dinner at home while watching TV. Before I go to bed, I read a little. And then I go to sleep at about eleven."
+  blanks:
+    - answer: に
+      wrong: [で, を, が]
+      difficulty: 1
+      points: [particle-ni-time]
+      note: "に marks a point in time: {六時半|ろくじはん}に {起|お}きます."
+    - answer: から
+      wrong: [まで, ので, より]
+      difficulty: 2
+      points: [form-te-kara]
+      note: "〜てから: after doing …. から follows the て form: {起|お}きて から."
+    - answer: と
+      wrong: [を, に, が]
+      difficulty: 1
+      points: [particle-to-and]
+      note: "と lists every item: パンと コーヒー. や would also be right, so it is not offered."
+    - answer: ありません
+      wrong: [あります, です, でした]
+      difficulty: 2
+      points: [form-adjective-negative]
+      note: "An い adjective's polite negative: {大|おお}きく ありません. が then sets up the contrast."
+    - answer: から
+      wrong: [まで, に, を]
+      difficulty: 1
+      points: [particle-kara-made]
+      note: "から〜まで: from … to …. まで already follows {五時|ごじ}."
+    - answer: ながら
+      wrong: [たり, に, ない]
+      difficulty: 2
+      points: [form-nagara]
+      note: "〜ながら: doing two things at once. It joins the ます stem: {見|み}ながら."
+    - answer: まえ
+      wrong: [あと, ほう, ながら]
+      difficulty: 2
+      points: [form-mae-ni]
+      note: "まえに follows the dictionary form: ねる まえに, before going to bed."
+    - answer: そして
+      wrong: [でも, だから, それとも]
+      difficulty: 1
+      points: [conjunction-soshite]
+      note: "そして adds the next thing in the day: and then."
+
+- id: n5-b3-0015
+  type: passage
+  status: draft
+  intro: "チャンさんは「かいもの」の さくぶんを {書|か}きました。"
+  text: |-
+    きのう、{母|はは}の たんじょうびの プレゼントを {買|か}い（1） デパートへ {行|い}きました。デパートは {駅|えき}の {前|まえ}（2） あります。
+    さんがいで くつを {見|み}ました。いい くつが（3） ありましたが、どれも {高|たか}かったです。それから、ごかい（4） {行|い}きました。ごかいには ハンカチや セーター（5）が ありました。わたしは {青|あお}い セーターを（6）。{七千円|ななせんえん}でした。その セーターは {軽|かる}（7）、あたたかいです。
+    {家|いえ}へ {帰|かえ}ってから、{母|はは}に セーターを あげました。{母|はは}は「ありがとう。」（8） {言|い}いました。
+  en: "Yesterday I went to a department store to buy a birthday present for my mother. The department store is in front of the station. On the third floor I looked at shoes. There were lots of good shoes, but they were all expensive. After that, I went to the fifth floor. On the fifth floor there were handkerchiefs, sweaters and so on. I bought a blue sweater. It was seven thousand yen. That sweater is light and warm. After I got home, I gave my mother the sweater. My mother said, 'Thank you.'"
+  blanks:
+    - answer: に
+      wrong: [で, を, と]
+      difficulty: 2
+      points: [form-ni-iku]
+      note: "〜に {行|い}く: go to do something. It joins the ます stem: {買|か}いに."
+    - answer: に
+      wrong: [で, を, へ]
+      difficulty: 2
+      points: [particle-ni-existence]
+      note: "ある takes に for where something is: {駅|えき}の {前|まえ}に あります."
+    - answer: たくさん
+      wrong: [とても, ぜんぜん, あまり]
+      difficulty: 1
+      points: [adverb-takusan]
+      note: "たくさん counts: many shoes. ぜんぜん and あまり need a negative."
+    - answer: へ
+      wrong: [を, で, が]
+      difficulty: 1
+      points: [particle-he-direction]
+      note: "へ marks the direction: ごかいへ {行|い}きました. に would also be right, so it is not offered."
+    - answer: など
+      wrong: [しか, まで, より]
+      difficulty: 2
+      points: [particle-ya-and]
+      note: "Aや Bなど: A, B and so on. など ends a list started with や."
+    - answer: "{買|か}いました"
+      wrong: ["{買|か}います", "{買|か}いましょう", "{買|か}って ください"]
+      difficulty: 1
+      points: [form-polite-tense]
+      note: "きのう puts it in the past: {買|か}いました."
+    - answer: くて
+      wrong: [い, かった, くない]
+      difficulty: 2
+      points: [form-te-link]
+      note: "An い adjective joins the next one with くて: {軽|かる}くて、あたたかい. Light and warm."
+    - answer: と
+      wrong: [に, で, が]
+      difficulty: 2
+      points: [particle-to-quote]
+      note: "と marks the words someone said: 「…」と {言|い}いました."
