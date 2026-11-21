@@ -11,10 +11,12 @@ import type { MessageCreate } from "@discordkit/gateway";
  * The two `SESSION_` events come from the session object's alarm rather than
  * the Gateway. The object can close a question but cannot post the reveal (a
  * REST call) or choose the next one (it does not carry the corpus), so it hands
- * both back here.
+ * both back here. The two `EXAM_` events do the same for a mock test.
  */
 export type ForwardedEvent =
   | { type: `INTERACTION_CREATE`; data: Interaction }
   | { type: `MESSAGE_CREATE`; data: MessageCreate }
   | { type: `SESSION_TIMEOUT`; channelId: string }
-  | { type: `SESSION_RESUME`; channelId: string };
+  | { type: `SESSION_RESUME`; channelId: string }
+  | { type: `EXAM_TIMEOUT`; channelId: string }
+  | { type: `EXAM_RESUME`; channelId: string };

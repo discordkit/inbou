@@ -223,6 +223,22 @@ const commands = [
         ]
       }
     ]
+  },
+  {
+    name: `bunpou`,
+    description: `JLPT N5 grammar mock test (文法).`,
+    options: [
+      {
+        type: SUB_COMMAND,
+        name: `start`,
+        description: `Start a grammar mock test in this channel.`
+      },
+      {
+        type: SUB_COMMAND,
+        name: `end`,
+        description: `End the test in this channel and show the results.`
+      }
+    ]
   }
 ];
 

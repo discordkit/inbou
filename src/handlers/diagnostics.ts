@@ -27,6 +27,14 @@ export const diagnostics = defineDiagnostics({
             : `Check the bot token and that the channel still exists.`
     },
 
+    /** A bug in a renderer, caught before the request left. */
+    COMPONENT_LAYOUT_INVALID: {
+      why: (p: { action: string; detail?: string }) =>
+        `The components for ${p.action} were not a valid layout${p.detail === undefined ? `` : `: ${p.detail}`}.`,
+      fix: (_p: { action: string; detail?: string }) =>
+        `A Components V2 message may not carry \`content\` or embeds, and is capped at 40 components and 4000 characters of text. See docs/specs/jlpt-mock-tests.md section 7.`
+    },
+
     /** The filters matched nothing — a mistake the channel can fix. */
     NO_WORDS_FOR_FILTERS: {
       why: (p: { levels: string; types: string }) =>

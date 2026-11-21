@@ -2,10 +2,12 @@ import {
   createInteractionResponse,
   createMessage,
   createReaction,
+  editMessage,
   InteractionCallbackType,
   MessageFlag,
   type ActionRow,
-  type Embed
+  type Embed,
+  type MessageComponent
 } from "@discordkit/client";
 import type { Interaction } from "@discordkit/client/interactions/types/Interaction";
 import { diagnostics } from "./diagnostics.js";
@@ -54,8 +56,67 @@ const statusOf = (error: unknown): number | undefined => {
   return undefined;
 };
 
+/**
+ * Take the token out of an interaction or webhook URL before it is logged.
+ *
+ * The client's errors carry the full request URL, and these routes put a
+ * token in the path — a credential that can post as the bot for fifteen
+ * minutes. Found in the first live test, printed whole in the dev log.
+ */
+export const redactTokens = (text: string): string =>
+  text.replace(/(\/(?:interactions|webhooks)\/\d+\/)[^/\s'"]+/gu, `$1<token>`);
+
 const detailOf = (error: unknown): string =>
-  error instanceof Error ? error.message : String(error);
+  redactTokens(error instanceof Error ? error.message : String(error));
+
+/**
+ * A local validation failure, rather than one Discord rejected.
+ *
+ * Valibot throws before the request leaves, so there is no status code. Told
+ * apart from a network failure because the fix is different: a layout error is
+ * a bug in our renderer, not a permission or an outage.
+ */
+const isValidationError = (error: unknown): boolean =>
+  statusOf(error) === undefined && detailOf(error).includes(`Invalid`);
+
+/**
+ * Components V2 messages, which the mock tests are built from.
+ *
+ * Separate from {@link DiscordEffects} rather than added to it: V2 is all or
+ * nothing per message (no `content`, no embeds), so the two kinds of message
+ * never share a call, and the quiz's recording stubs need not grow methods
+ * they never use.
+ *
+ * Same contract as the rest of this module: failures are reported, never
+ * thrown, because the test in progress matters more than one message.
+ */
+export interface V2Effects {
+  /** Post a V2 message. Returns its id, or null if it failed. */
+  post: (
+    channelId: string,
+    components: MessageComponent
+  ) => Promise<string | null>;
+  /**
+   * Replace a posted message's components.
+   *
+   * Used to settle a question when its timer ends. Discord renders `<t:…:R>`
+   * on the client forever, so a closed question that was never edited keeps
+   * counting up from its own deadline.
+   */
+  edit: (
+    channelId: string,
+    messageId: string,
+    components: MessageComponent
+  ) => Promise<void>;
+}
+
+/**
+ * Mentions in a V2 message name people without pinging them.
+ *
+ * A results card names every player; a ping for each one, after every test,
+ * would make people leave the channel.
+ */
+const NO_PINGS = { parse: [] };
 
 /**
  * The real implementation.
@@ -149,6 +210,62 @@ export const discordEffects: DiscordEffects = {
     } catch (error) {
       diagnostics.DISCORD_REQUEST_FAILED({
         action: `replying to an interaction`,
+        status: statusOf(error),
+        detail: detailOf(error)
+      });
+    }
+  }
+};
+
+export const v2Effects: V2Effects = {
+  post: async (channelId, components) => {
+    try {
+      const message = await createMessage({
+        channel: channelId,
+        body: {
+          // Required for Container, TextDisplay and Separator. With it set,
+          // Discord rejects `content` and `embeds`, so neither is sent.
+          flags: MessageFlag.IS_COMPONENTS_V2,
+          components,
+          allowedMentions: NO_PINGS
+        }
+      });
+      return (message as { id?: string }).id ?? null;
+    } catch (error) {
+      if (isValidationError(error)) {
+        diagnostics.COMPONENT_LAYOUT_INVALID({
+          action: `posting a mock-test message`,
+          detail: detailOf(error)
+        });
+      } else {
+        diagnostics.DISCORD_REQUEST_FAILED({
+          action: `posting a mock-test message`,
+          status: statusOf(error),
+          detail: detailOf(error)
+        });
+      }
+      return null;
+    }
+  },
+
+  edit: async (channelId, messageId, components) => {
+    try {
+      await editMessage({
+        channel: channelId,
+        message: messageId,
+        body: {
+          // Restated on every edit: the edit replaces the body, and without the
+          // flag Discord reads a V2 payload as a legacy one and rejects it.
+          flags: MessageFlag.IS_COMPONENTS_V2,
+          components,
+          allowedMentions: NO_PINGS
+        }
+      });
+    } catch (error) {
+      // Not rethrown. An unsettled question is untidy, and a vote on it is
+      // already rejected by its token.
+      diagnostics.DISCORD_REQUEST_FAILED({
+        action: `settling a closed question`,
         status: statusOf(error),
         detail: detailOf(error)
       });

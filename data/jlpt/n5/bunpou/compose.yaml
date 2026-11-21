@@ -1,0 +1,675 @@
+# 問題2 文の組み立て — put four chunks in order; choose the one on ★.
+#
+# A sentence has `/` between its chunks. Spaces written around a `/` show as a
+# space; none, no space. Each window is a run of four chunks, counted from 0,
+# that has EXACTLY ONE valid order. The ★ lands on any of the four at random,
+# so one window gives four questions.
+#
+# The trap is a second valid order: 新聞を コーヒーを 飲みながら 読みます is
+# as good as コーヒーを 飲みながら 新聞を 読みます. Splitting particles into
+# their own chunks, as the paper does, is what pins an order down. A window may
+# not end the sentence: a chunk with 。 would give its own place away.
+
+- id: n5-b2-0001
+  type: compose
+  status: reviewed
+  sentence: "この / かばん/は / わたし/の / です。"
+  en: This bag is mine.
+  windows:
+    - start: 1
+      difficulty: 1
+      points: [particle-no-pronoun]
+      note: "わたしの stands for the thing that is mine: この かばんは わたしの です."
+
+- id: n5-b2-0002
+  type: compose
+  status: reviewed
+  sentence: "{日本|にほん}/へ / {行|い}きたい / {人|ひと}/は / {手|て}/を / {上|あ}げて / ください。"
+  en: People who want to go to Japan, please raise your hand.
+  windows:
+    - start: 0
+      difficulty: 1
+      points: [form-tai, particle-he-direction, clause-noun-modifier]
+      note: "{日本|にほん}へ {行|い}きたい describes {人|ひと}. 〜たい follows the ます stem: {行|い}きたい."
+
+- id: n5-b2-0003
+  type: compose
+  status: reviewed
+  sentence: "バスより / {電車|でんしゃ}/の/ほう/が / はやいです。"
+  en: The train is faster than the bus.
+  windows:
+    - start: 1
+      difficulty: 2
+      points: [comparison-no-hou-ga]
+      note: "Aより Bの ほうが …: B is more … than A."
+
+- id: n5-b2-0004
+  type: compose
+  status: reviewed
+  sentence: "わたしは / {日本|にほん}の / すし/を / {食|た}べた / こと/が / あります。"
+  en: I have eaten Japanese sushi.
+  windows:
+    - start: 2
+      difficulty: 2
+      points: [form-ta-koto-ga-aru]
+      note: "〜た ことが あります: have done … before. The た form comes before こと."
+    - start: 3
+      difficulty: 2
+      points: [form-ta-koto-ga-aru]
+      note: "〜た ことが あります: have done … before. こと takes が."
+
+- id: n5-b2-0005
+  type: compose
+  status: reviewed
+  sentence: "{手|て}/を / あらって/から / ごはん/を / {食|た}べます。"
+  en: I wash my hands, and then I eat.
+  windows:
+    - start: 0
+      difficulty: 1
+      points: [form-te-kara]
+      note: "〜てから: after doing …. The て form comes before から."
+
+- id: n5-b2-0006
+  type: compose
+  status: reviewed
+  sentence: "{先生|せんせい}は / しゃしん/を / とらないで / ください/と / {言|い}いました。"
+  en: 'The teacher said, "Please don''t take photos."'
+  windows:
+    - start: 1
+      difficulty: 1
+      points: [form-naide-kudasai]
+      note: "〜ないで ください asks someone not to do something: とらない → とらないで ください. ください comes right after it."
+
+- id: n5-b2-0007
+  type: compose
+  status: reviewed
+  sentence: "あした / {友|とも}だち/と / いっしょに / {山|やま}/へ / {行|い}きます。"
+  en: Tomorrow I am going to the mountains together with a friend.
+  windows:
+    - start: 1
+      difficulty: 1
+      points: [particle-to-with, adverb-issho-ni]
+      note: "〜と いっしょに: together with someone. いっしょに comes right after と, as one phrase."
+
+- id: n5-b2-0008
+  type: compose
+  status: reviewed
+  sentence: "たんじょうびに / あたらしい / くつ/が / ほしい/です。"
+  en: For my birthday I want new shoes.
+  windows:
+    - start: 1
+      difficulty: 1
+      points: [form-hoshii]
+      note: "〜が ほしいです: want something. ほしい takes が."
+
+- id: n5-b2-0009
+  type: compose
+  status: reviewed
+  sentence: "なつやすみに / {国|くに}/へ / {帰|かえ}る / つもり/です。"
+  en: I plan to go back to my country in the summer holidays.
+  windows:
+    - start: 1
+      difficulty: 3
+      points: [form-tsumori]
+      note: "〜つもりです follows the dictionary form: {帰|かえ}る つもりです."
+
+- id: n5-b2-0010
+  type: compose
+  status: reviewed
+  sentence: "かぜの ときは / {早|はや}く / ねた / ほう/が / いいです。"
+  en: When you have a cold, you should go to bed early.
+  windows:
+    - start: 1
+      difficulty: 3
+      points: [form-hou-ga-ii]
+      note: "〜た ほうが いい: had better …. The た form comes before ほう."
+
+- id: n5-b2-0011
+  type: compose
+  status: reviewed
+  sentence: "これは / {母|はは}/が / {作|つく}った / ケーキ/です。"
+  en: This is a cake my mother made.
+  windows:
+    - start: 1
+      difficulty: 3
+      points: [clause-noun-modifier]
+      note: "A clause can describe a noun: {母|はは}が {作|つく}った ケーキ — the cake my mother made."
+
+- id: n5-b2-0012
+  type: compose
+  status: reviewed
+  sentence: "わたしは / {日本|にほん}の / アニメ/を / {見|み}る / の/が / {好|す}きです。"
+  en: I like watching Japanese anime.
+  windows:
+    - start: 2
+      difficulty: 2
+      points: [form-no-ga-suki]
+      note: "〜のが {好|す}きです: の turns アニメを {見|み}る into a thing you like."
+
+- id: n5-b2-0013
+  type: compose
+  status: reviewed
+  sentence: "{田中|たなか}さんは / わたし/より / せ/が / {高|たか}い/です。"
+  en: Tanaka-san is taller than me.
+  windows:
+    - start: 2
+      difficulty: 3
+      points: [particle-yori-comparison]
+      note: "Aより Bが {高|たか}い: より follows what is compared, here わたし, and せが {高|たか}い follows it."
+
+- id: n5-b2-0014
+  type: compose
+  status: reviewed
+  sentence: "つくえの / {上|うえ}/に / {日本語|にほんご}/の / {本|ほん}/が / あります。"
+  en: There is a Japanese book on the desk.
+  windows:
+    - start: 1
+      difficulty: 1
+      points: [particle-ni-existence]
+      note: "〜の {上|うえ}に Nが あります: where something is, then what is there."
+
+- id: n5-b2-0015
+  type: compose
+  status: reviewed
+  sentence: "ここ/は / {日本語|にほんご}/を / {勉強|べんきょう}する / {学校|がっこう}/です。"
+  en: This is a school where people study Japanese.
+  windows:
+    - start: 2
+      difficulty: 2
+      points: [clause-noun-modifier]
+      note: "{日本語|にほんご}を {勉強|べんきょう}する describes {学校|がっこう}, so it comes right before it."
+
+- id: n5-b2-0016
+  type: compose
+  status: reviewed
+  sentence: "{山田|やまだ}さん/に / {借|か}りた / {本|ほん}/を / まだ / {読|よ}んで / いません。"
+  en: I haven't read the book I borrowed from Yamada-san yet.
+  windows:
+    - start: 0
+      difficulty: 3
+      points: [verb-kariru-kasu, clause-noun-modifier]
+      note: "{山田|やまだ}さんに {借|か}りた describes {本|ほん}: the book borrowed from Yamada-san."
+
+- id: n5-b2-0017
+  type: compose
+  status: reviewed
+  sentence: "わたしは / きのう / {新|あたら}しい / くつ/を / {買|か}い/に / {行|い}きました。"
+  en: Yesterday I went to buy new shoes.
+  windows:
+    - start: 3
+      difficulty: 1
+      points: [form-ni-iku]
+      note: "〜を {買|か}いに {行|い}く: go to buy something. に follows the ます stem: {買|か}いに."
+
+- id: n5-b2-0018
+  type: compose
+  status: reviewed
+  sentence: "この / {料理|りょうり}/の / {作|つく}りかた/を / {教|おし}えて / ください。"
+  en: Please teach me how to make this dish.
+  windows:
+    - start: 1
+      difficulty: 2
+      points: [form-kata, form-te-kudasai]
+      note: "ます stem ＋ かた: the way of doing something. {作|つく}りかた, how to make it."
+
+- id: n5-b2-0019
+  type: compose
+  status: reviewed
+  sentence: "{雨|あめ}が / ふって / いる / とき/は / うち/で / {本|ほん}/を / {読|よ}みます。"
+  en: When it is raining, I read books at home.
+  windows:
+    - start: 1
+      difficulty: 2
+      points: [form-toki, form-te-iru]
+      note: "〜て いる とき: while something is going on. とき follows the verb that describes the time."
+
+- id: n5-b2-0020
+  type: compose
+  status: reviewed
+  sentence: "{日本|にほん}で / いちばん / {高|たか}い / {山|やま}/は / ふじさん/です。"
+  en: The highest mountain in Japan is Mount Fuji.
+  windows:
+    - start: 1
+      difficulty: 2
+      points: [comparison-ichiban]
+      note: "いちばん {高|たか}い describes {山|やま}: the highest mountain."
+
+- id: n5-b2-0021
+  type: compose
+  status: reviewed
+  sentence: "テーブルの / {上|うえ}/の / りんご/を / {食|た}べても / いいですか。"
+  en: May I eat the apple on the table?
+  windows:
+    - start: 1
+      difficulty: 1
+      points: [form-te-mo-ii]
+      note: "テーブルの {上|うえ}の りんご: the の phrases come before the noun they describe."
+
+- id: n5-b2-0022
+  type: compose
+  status: reviewed
+  sentence: "あそこで / {本|ほん}/を / {読|よ}んで / いる / {人|ひと}/は / {田中|たなか}さん/です。"
+  en: The person reading a book over there is Tanaka-san.
+  windows:
+    - start: 1
+      difficulty: 2
+      points: [clause-noun-modifier, form-te-iru]
+      note: "{本|ほん}を {読|よ}んで いる describes {人|ひと}: the person who is reading a book."
+
+- id: n5-b2-0023
+  type: compose
+  status: reviewed
+  sentence: "{休|やす}みの {日|ひ}は / {本|ほん}/を / {読|よ}んだり / {音楽|おんがく}/を / {聞|き}いたり / します。"
+  en: On my days off I do things like reading books and listening to music.
+  windows:
+    - start: 1
+      difficulty: 2
+      points: [form-tari-tari]
+      note: "〜たり 〜たり します lists some of the things you do: {本|ほん}を {読|よ}んだり、{音楽|おんがく}を {聞|き}いたり."
+
+- id: n5-b2-0024
+  type: compose
+  status: reviewed
+  sentence: "わたしは / いつも / {音楽|おんがく}/を / {聞|き}き/ながら / {勉強|べんきょう}します。"
+  en: I always study while listening to music.
+  windows:
+    - start: 2
+      difficulty: 2
+      points: [form-nagara]
+      note: "ながら joins the ます stem: {聞|き}きながら. The main action, {勉強|べんきょう}します, comes last."
+
+- id: n5-b2-0025
+  type: compose
+  status: reviewed
+  sentence: "まいばん / ねる / まえ/に / シャワー/を / あびます。"
+  en: Every night I take a shower before I go to bed.
+  windows:
+    - start: 1
+      difficulty: 2
+      points: [form-mae-ni]
+      note: "まえに follows the dictionary form: ねる まえに, before going to bed."
+
+- id: n5-b2-0026
+  type: compose
+  status: reviewed
+  sentence: "つくえの / {上|うえ}/に / ある / {本|ほん}/は / {山田|やまだ}さん/の / です。"
+  en: The book on the desk is Yamada-san's.
+  windows:
+    - start: 1
+      difficulty: 2
+      points: [clause-noun-modifier, particle-ni-existence]
+      note: "つくえの {上|うえ}に ある describes {本|ほん}: the book that is on the desk."
+
+- id: n5-b2-0027
+  type: compose
+  status: reviewed
+  sentence: "わたしの / {姉|あね}/は / {料理|りょうり}/を / {作|つく}る / の/が / {上手|じょうず}です。"
+  en: My older sister is good at cooking.
+  windows:
+    - start: 3
+      difficulty: 2
+      points: [form-no-ga-jouzu]
+      note: "の turns {料理|りょうり}を {作|つく}る into a thing you can be good at. It follows the dictionary form."
+
+- id: n5-b2-0028
+  type: compose
+  status: reviewed
+  sentence: "どうして / きのう / {学校|がっこう}/を / {休|やす}んだ / ん/ですか。"
+  en: Why were you absent from school yesterday?
+  windows:
+    - start: 2
+      difficulty: 3
+      points: [question-doushite, form-n-desu]
+      note: "どうして 〜んですか asks for a reason. ん follows the plain form: {休|やす}んだ んですか."
+
+- id: n5-b2-0029
+  type: compose
+  status: reviewed
+  sentence: "これは / {日本|にほん}/へ / {来|き}た / とき/に / {買|か}った / かばん/です。"
+  en: This is a bag I bought when I came to Japan.
+  windows:
+    - start: 1
+      difficulty: 3
+      points: [form-toki, clause-noun-modifier]
+      note: "{日本|にほん}へ {来|き}た とき says when it happened. Then {買|か}った describes かばん."
+
+- id: n5-b2-0030
+  type: compose
+  status: reviewed
+  sentence: "すみません、/ その / しお/を / とって / ください。"
+  en: Excuse me, please pass me that salt.
+  windows:
+    - start: 1
+      difficulty: 1
+      points: [form-te-kudasai, demonstrative-adnominal]
+      note: "その comes right before its noun: その しお. Then を, and the て form before ください."
+
+- id: n5-b2-0031
+  type: compose
+  status: reviewed
+  sentence: "わたしが / いちばん / {好|す}きな / たべもの/は / すし/です。"
+  en: The food I like best is sushi.
+  windows:
+    - start: 1
+      difficulty: 2
+      points: [adverb-ichiban, form-adjective-before-noun]
+      note: "いちばん {好|す}きな describes たべもの. A な adjective keeps な before a noun."
+
+- id: n5-b2-0032
+  type: compose
+  status: reviewed
+  sentence: "わたしは / まだ / その / えいが/を / {見|み}て / いません。"
+  en: I haven't seen that movie yet.
+  windows:
+    - start: 2
+      difficulty: 2
+      points: [form-mada-te-inai]
+      note: "まだ 〜て いません: not yet. その stays right before えいが."
+
+- id: n5-b2-0033
+  type: compose
+  status: reviewed
+  sentence: "この / クラス/で / いちばん / せ/が / {高|たか}い / {人|ひと}/は / リーさん/です。"
+  en: The tallest person in this class is Lee-san.
+  windows:
+    - start: 4
+      difficulty: 3
+      points: [clause-noun-modifier, comparison-ichiban]
+      note: "せが {高|たか}い describes {人|ひと}: the person who is tall. いちばん before it makes it the tallest."
+
+- id: n5-b2-0034
+  type: compose
+  status: reviewed
+  sentence: "{駅|えき}の {前|まえ}に / ある / {店|みせ}/で / パン/を / {買|か}いました。"
+  en: I bought bread at the shop in front of the station.
+  windows:
+    - start: 1
+      difficulty: 3
+      points: [clause-noun-modifier, particle-de-place]
+      note: "{駅|えき}の {前|まえ}に ある describes {店|みせ}. で marks where you buy it: {店|みせ}で パンを {買|か}いました."
+
+- id: n5-b2-0035
+  type: compose
+  status: reviewed
+  sentence: "コーヒー/と / こうちゃ/と / どちら/が / {好|す}きですか。"
+  en: Which do you like better, coffee or tea?
+  windows:
+    - start: 2
+      difficulty: 2
+      points: [question-dochira]
+      note: "AとBと どちらが 〜ですか asks which of two. どちらが comes after both."
+
+- id: n5-b2-0036
+  type: compose
+  status: reviewed
+  sentence: "この / {店|みせ}の / ケーキ/は / あまり / おいしく / ありません。"
+  en: The cakes at this shop are not very good.
+  windows:
+    - start: 2
+      difficulty: 2
+      points: [adverb-amari, form-adjective-negative]
+      note: "あまり comes before the word it softens, and needs a negative: あまり おいしく ありません."
+
+- id: n5-b2-0037
+  type: compose
+  status: reviewed
+  sentence: "わたしは / {学校|がっこう}/の / {先生|せんせい}/に / なりたい / です。"
+  en: I want to become a school teacher.
+  windows:
+    - start: 2
+      difficulty: 2
+      points: [form-naru, form-tai]
+      note: "〜に なりたい: want to become. に marks what you become: {先生|せんせい}に."
+
+- id: n5-b2-0038
+  type: compose
+  status: reviewed
+  sentence: "すみません、/ {赤|あか}い / りんご/を / {三|みっ}つ / ください。"
+  en: Excuse me, three red apples, please.
+  windows:
+    - start: 1
+      difficulty: 1
+      points: [phrase-o-kudasai, form-adjective-before-noun]
+      note: "Nを {三|みっ}つ ください: the number comes after を, right before ください."
+
+- id: n5-b2-0039
+  type: compose
+  status: reviewed
+  sentence: "{頭|あたま}/が / いたい / ので / {学校|がっこう}/を / {休|やす}みます。"
+  en: I have a headache, so I will stay home from school.
+  windows:
+    - start: 0
+      difficulty: 2
+      points: [conjunction-node]
+      note: "ので follows the reason: {頭|あたま}が いたい ので. What happens because of it comes after."
+
+- id: n5-b2-0040
+  type: compose
+  status: reviewed
+  sentence: "スポーツ/の / {中|なか}/で / {何|なに}/が / いちばん / {好|す}きですか。"
+  en: Of all sports, which do you like best?
+  windows:
+    - start: 2
+      difficulty: 3
+      points: [comparison-ichiban, question-nani]
+      note: "〜の {中|なか}で sets the group. {何|なに}が いちばん asks which one is the most."
+
+- id: n5-b2-0041
+  type: compose
+  status: reviewed
+  sentence: "すみません、/ ここ/に / なまえ/を / {書|か}いて / ください。"
+  en: Excuse me, please write your name here.
+  windows:
+    - start: 2
+      difficulty: 1
+      points: [form-te-kudasai]
+      note: "Nを 〜て ください: please do something with N. に marks where: ここに."
+
+- id: n5-b2-0042
+  type: compose
+  status: reviewed
+  sentence: "あの / {白|しろ}い / ぼうし/を / かぶって / いる / {人|ひと}/は / {山田|やまだ}さんです。"
+  en: The person wearing that white hat is Yamada-san.
+  windows:
+    - start: 2
+      difficulty: 2
+      points: [clause-noun-modifier, form-te-iru]
+      note: "ぼうしを かぶって いる describes {人|ひと}: the person who is wearing a hat."
+
+- id: n5-b2-0043
+  type: compose
+  status: reviewed
+  sentence: "わたしは / {夏|なつ}/より / {冬|ふゆ}/の / ほう/が / {好|す}きです。"
+  en: I like winter better than summer.
+  windows:
+    - start: 2
+      difficulty: 2
+      points: [comparison-no-hou-ga]
+      note: "Aより Bの ほうが: B more than A. より follows the thing compared."
+
+- id: n5-b2-0044
+  type: compose
+  status: reviewed
+  sentence: "この / りんご/は / {一|ひと}つ / いくら/ですか。"
+  en: How much is one of these apples?
+  windows:
+    - start: 1
+      difficulty: 2
+      points: [question-ikura]
+      note: "Nは {一|ひと}つ いくらですか: how much is one? The number comes before いくら."
+
+- id: n5-b2-0045
+  type: compose
+  status: reviewed
+  sentence: "この / こと/は / だれ/に/も / {言|い}わないで / ください。"
+  en: Please don't tell anyone about this.
+  windows:
+    - start: 3
+      difficulty: 3
+      points: [question-mo-negative, form-naide-kudasai]
+      note: "だれにも with a negative: nobody. 〜ないで ください: please do not."
+
+- id: n5-b2-0046
+  type: compose
+  status: reviewed
+  sentence: "あした / テスト/が / ある / から / {早|はや}く / ねます。"
+  en: I have a test tomorrow, so I will go to bed early.
+  windows:
+    - start: 1
+      difficulty: 2
+      points: [conjunction-kara-reason]
+      note: "から follows the reason: テストが ある から. What you do because of it comes after."
+
+- id: n5-b2-0047
+  type: compose
+  status: reviewed
+  sentence: "{田中|たなか}さんは / どんな / {音楽|おんがく}/が / {好|す}き/ですか。"
+  en: What kind of music does Tanaka-san like?
+  windows:
+    - start: 1
+      difficulty: 2
+      points: [question-donna, particle-ga-object]
+      note: "どんな comes right before its noun: どんな {音楽|おんがく}. {好|す}き takes が."
+
+- id: n5-b2-0048
+  type: compose
+  status: reviewed
+  sentence: "{子|こ}ども/の / とき/に / よく / この / {川|かわ}/で / あそびました。"
+  en: When I was a child, I often played in this river.
+  windows:
+    - start: 0
+      difficulty: 2
+      points: [form-toki]
+      note: "Nの とき: when … was. とき takes の after a noun: {子|こ}どもの とき."
+
+- id: n5-b2-0049
+  type: compose
+  status: reviewed
+  sentence: "{図書館|としょかん}では / {大|おお}きい / {声|こえ}/で / {話|はな}さないで / ください。"
+  en: Please do not talk loudly in the library.
+  windows:
+    - start: 1
+      difficulty: 2
+      points: [form-naide-kudasai, particle-de-means]
+      note: "{大|おお}きい {声|こえ}で: in a loud voice. で marks how you do it."
+
+- id: n5-b2-0050
+  type: compose
+  status: reviewed
+  sentence: "ごはん/を / {食|た}べた / あと/で / さんぽ/を / します。"
+  en: After I eat, I take a walk.
+  windows:
+    - start: 0
+      difficulty: 2
+      points: [form-ta-ato-de]
+      note: "〜た あとで: after doing …. It takes the た form: {食|た}べた あとで."
+
+- id: n5-b2-0051
+  type: compose
+  status: reviewed
+  sentence: "あの / {店|みせ}/は / ケーキ/が / とても / おいしいです。"
+  en: That shop's cakes are very good.
+  windows:
+    - start: 1
+      difficulty: 3
+      points: [particle-wa-topic, particle-ga-subject]
+      note: "Aは Bが 〜: as for A, its B is …. The shop is the topic, and its cakes are what is good."
+
+- id: n5-b2-0052
+  type: compose
+  status: reviewed
+  sentence: "この / かばん/は / あれ/より / {高|たか}いです。"
+  en: This bag is more expensive than that one.
+  windows:
+    - start: 1
+      difficulty: 2
+      points: [particle-yori-comparison, demonstrative-pronoun]
+      note: "Aは Bより: A is more … than B. あれ stands alone, so it can take より."
+
+- id: n5-b2-0053
+  type: compose
+  status: reviewed
+  sentence: "あしたは / どこ/へ/も / {行|い}かない / つもり/です。"
+  en: I don't plan to go anywhere tomorrow.
+  windows:
+    - start: 2
+      difficulty: 3
+      points: [form-tsumori, question-mo-negative]
+      note: "〜ない つもりです: intend not to. どこへも needs the negative: {行|い}かない."
+
+- id: n5-b2-0054
+  type: compose
+  status: reviewed
+  sentence: "わたしは / {毎朝|まいあさ} / {七時|しちじ}/の / バス/に / のります。"
+  en: Every morning I take the seven o'clock bus.
+  windows:
+    - start: 2
+      difficulty: 2
+      points: [particle-ni-destination, particle-no-possessive]
+      note: "{七時|しちじ}の バス: the seven o'clock bus. のる takes に."
+
+- id: n5-b2-0055
+  type: compose
+  status: reviewed
+  sentence: "{駅|えき}/の / {前|まえ}/で / {友|とも}だち/を / {待|ま}ちました。"
+  en: I waited for my friend in front of the station.
+  windows:
+    - start: 1
+      difficulty: 2
+      points: [particle-de-place, particle-no-possessive]
+      note: "{駅|えき}の {前|まえ}で: in front of the station. で marks where you wait."
+
+- id: n5-b2-0056
+  type: compose
+  status: reviewed
+  sentence: "わたしの / {好|す}きな / くだもの/は / りんご/です。"
+  en: My favourite fruit is apples.
+  windows:
+    - start: 1
+      difficulty: 1
+      points: [form-adjective-before-noun]
+      note: "{好|す}きな describes くだもの. A な adjective keeps な before a noun."
+
+- id: n5-b2-0057
+  type: compose
+  status: reviewed
+  sentence: "きょう/は / {日曜日|にちようび}/な/ので / {学校|がっこう}/は / {休|やす}みです。"
+  en: Today is Sunday, so there is no school.
+  windows:
+    - start: 2
+      difficulty: 3
+      points: [conjunction-node]
+      note: "After a noun, ので needs な: {日曜日|にちようび}なので."
+
+- id: n5-b2-0058
+  type: compose
+  status: reviewed
+  sentence: "テーブルの / {上|うえ}/に / りんご/や / バナナ/など/が / あります。"
+  en: There are apples, bananas and so on on the table.
+  windows:
+    - start: 1
+      difficulty: 2
+      points: [particle-ya-and, particle-ni-existence]
+      note: "{上|うえ}に says where. りんごや バナナなど lists some of the things there."
+
+- id: n5-b2-0059
+  type: compose
+  status: reviewed
+  sentence: "あなた/の / かさ/は / どれ/ですか。"
+  en: Which one is your umbrella?
+  windows:
+    - start: 0
+      difficulty: 1
+      points: [particle-no-possessive, question-dore]
+      note: "あなたの かさ: your umbrella. の joins two nouns."
+
+- id: n5-b2-0060
+  type: compose
+  status: reviewed
+  sentence: "この / へや/に/は / テレビ/が / ありません。"
+  en: There is no TV in this room.
+  windows:
+    - start: 1
+      difficulty: 3
+      points: [particle-ni-existence, particle-wa-contrast]
+      note: "には: に for where, with は added. テレビが ありません: there is no TV."

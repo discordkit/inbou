@@ -5,8 +5,13 @@ import type { Embed } from "@discordkit/client";
  *
  * The session machine, the Durable Object and the flow never read a question's
  * fields — they carry it, time it and score it. Everything that knows what a
- * question *is* lives behind this interface, so a second quiz (JLPT-style
- * multiple choice) plugs in without touching any of them.
+ * question *is* lives behind this interface, so another typed-answer quiz
+ * plugs in without touching any of them.
+ *
+ * Multiple-choice tests do NOT come through here. A typed race (the first
+ * right answer wins) and a button poll (everyone who is right scores) have
+ * opposite rules, so the JLPT mock tests have their own engine in `../exam/`.
+ * See docs/specs/jlpt-mock-tests.md, section 8.
  */
 
 /**

@@ -42,6 +42,12 @@
       {
         "name": "SESSION",
         "class_name": "QuizSession"
+      },
+      {
+        // Mock tests. A separate class, because the quiz is a race and a test
+        // is a poll — see docs/specs/jlpt-mock-tests.md.
+        "name": "EXAM",
+        "class_name": "ExamSession"
       }
     ]
   },
@@ -51,6 +57,11 @@
       // the only backend whose storage works locally under `wrangler dev`.
       "tag": "v1",
       "new_sqlite_classes": ["QuizSession"]
+    },
+    {
+      // Additive: a new class, nothing renamed or deleted.
+      "tag": "v2",
+      "new_sqlite_classes": ["ExamSession"]
     }
   ]
 }

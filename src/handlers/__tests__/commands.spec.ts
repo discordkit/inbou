@@ -78,7 +78,13 @@ describe(`the options registered with Discord`, () => {
     // answers "I do not have a handler for that yet" — a visible fault nothing
     // else catches. `/ping` shipped that way. The checks above compare option
     // descriptions, which cannot see a whole command going unrouted.
-    const handler = readFileSync(`src/handlers/commands.ts`, `utf8`);
+    // Two routers: the quiz's, and the mock tests' in front of it.
+    const handler = [
+      `src/handlers/commands.ts`,
+      `src/handlers/exam/commands.ts`
+    ]
+      .map((path) => readFileSync(path, `utf8`))
+      .join(`\n`);
     const routed = new Set(
       [...handler.matchAll(/name === `(?<name>[a-z]+)`/gu)].map(
         (match) => match.groups?.name ?? ``

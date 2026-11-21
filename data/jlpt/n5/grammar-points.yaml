@@ -1,0 +1,645 @@
+# N5 grammar points that items refer to by id.
+#
+# Starts from Jonathan Waller's N5 grammar list (tanos.co.uk) and adds what the
+# official sample paper actually tests most: particles split by function,
+# question words, こそあど words, adverbs and set phrases. Cross-checked against
+# Wikibooks, JLPT Sensei, Bunpro, Genki I and Minna no Nihongo I. A list of
+# grammar point names is a set of facts; the meanings are our own words.
+#
+# Ids are permanent once an item uses them. Add freely; never rename.
+#
+# `tofugu` names the Tofugu grammar article a student should read after missing the point: its page under tofugu.com/japanese-grammar/, then `#section` for one part of it. Leave it out when no article covers the point. `vp run exam:links` checks that every page and section exists.
+
+# ── Particles ────────────────────────────────────────────────────────────────
+- {
+    id: particle-wa-topic,
+    pattern: は,
+    meaning: marks the topic,
+    tofugu: particle-wa#as-a-topic-marker
+  }
+- {
+    id: particle-wa-contrast,
+    pattern: は,
+    meaning: "marks a contrast, often in a negative",
+    tofugu: particle-wa#for-contrast
+  }
+- {
+    id: particle-ga-subject,
+    pattern: が,
+    meaning: "marks the subject, or new information",
+    tofugu: particle-ga
+  }
+- {
+    id: particle-ga-object,
+    pattern: が,
+    meaning: "marks the object of すき, じょうず, わかる, ほしい, ある",
+    tofugu: particle-ga#with-verb-like-adjectives
+  }
+- {
+    id: particle-o-object,
+    pattern: を,
+    meaning: marks the direct object,
+    tofugu: particle-wo#for-direct-objects
+  }
+- {
+    id: particle-o-through,
+    pattern: を,
+    meaning: "marks a place left or passed through (でる, わたる, あるく)",
+    tofugu: particle-wo#with-movement-verbs
+  }
+- {
+    id: particle-ni-time,
+    pattern: に,
+    meaning: marks a point in time,
+    tofugu: particle-ni#for-points-in-time
+  }
+- {
+    id: particle-ni-destination,
+    pattern: に,
+    meaning: marks a destination,
+    tofugu: particle-ni#for-location
+  }
+- {
+    id: particle-ni-existence,
+    pattern: に,
+    meaning: "marks where something is (ある, いる)",
+    tofugu: particle-ni#for-location
+  }
+- {
+    id: particle-ni-recipient,
+    pattern: に,
+    meaning: "marks the person something goes to (あげる, あう, でんわする)",
+    tofugu: particle-ni#in-social-interactions-and-transactions
+  }
+- {
+    id: particle-ni-frequency,
+    pattern: に,
+    meaning: "per: いちにちに さんかい"
+  }
+- {
+    id: particle-he-direction,
+    pattern: へ,
+    meaning: marks a direction,
+    tofugu: particle-he#for-physical-destinations-and-directions
+  }
+- {
+    id: particle-de-place,
+    pattern: で,
+    meaning: marks where an action happens,
+    tofugu: particle-de#for-specifying-places
+  }
+- {
+    id: particle-de-means,
+    pattern: で,
+    meaning: "marks a means or tool: by, with",
+    tofugu: particle-de#for-means-of-an-action
+  }
+- {
+    id: particle-de-total,
+    pattern: で,
+    meaning: "marks a total or a scope: みっつで, ぜんぶで",
+    tofugu: particle-de#for-quantities-and-measurements
+  }
+- {
+    id: particle-to-and,
+    pattern: と,
+    meaning: "and, listing every item",
+    tofugu: particle-to#as-in-and
+  }
+- {
+    id: particle-to-with,
+    pattern: と,
+    meaning: "with a person",
+    tofugu: particle-to#as-in-with
+  }
+- {
+    id: particle-to-quote,
+    pattern: と（いう）,
+    meaning: marks what someone says or thinks,
+    tofugu: particle-to#for-marking-quotations
+  }
+- {
+    id: particle-ya-and,
+    pattern: や,
+    meaning: "and, listing some items of many",
+    tofugu: particle-ya
+  }
+- {
+    id: particle-mo-also,
+    pattern: も,
+    meaning: "also, too",
+    tofugu: particle-mo#particle--as-in-also
+  }
+- {
+    id: particle-no-possessive,
+    pattern: の,
+    meaning: "of, 's: links two nouns",
+    tofugu: particle-no-noun-modifier#ownership
+  }
+- {
+    id: particle-no-pronoun,
+    pattern: の,
+    meaning: "one, the one: わたしの",
+    tofugu: particle-no-noun-modifier#noun----noun
+  }
+- {
+    id: particle-kara-from,
+    pattern: から,
+    meaning: from a starting point,
+    tofugu: particle-kara
+  }
+- {
+    id: particle-made-until,
+    pattern: まで,
+    meaning: "until, as far as",
+    tofugu: particle-made
+  }
+- {
+    id: particle-kara-made,
+    pattern: から〜まで,
+    meaning: from … to …,
+    tofugu: particle-made
+  }
+- {
+    id: particle-yori-comparison,
+    pattern: より,
+    meaning: than,
+    tofugu: particle-yori-than
+  }
+- {
+    id: particle-ka-question,
+    pattern: か,
+    meaning: makes a question,
+    tofugu: particle-ka#for-asking-questions
+  }
+- {
+    id: particle-ka-or,
+    pattern: か,
+    meaning: or,
+    tofugu: particle-ka#for-alternatives
+  }
+- { id: particle-dake-only, pattern: だけ, meaning: "only, just", tofugu: dake }
+- {
+    id: particle-shika-nai,
+    pattern: しか〜ない,
+    meaning: "only, with a negative verb",
+    tofugu: dake#vs-
+  }
+- {
+    id: particle-ne-agreement,
+    pattern: ね,
+    meaning: seeks agreement,
+    tofugu: particle-ne
+  }
+- {
+    id: particle-yo-assertion,
+    pattern: よ,
+    meaning: tells the listener something new,
+    tofugu: particle-yo
+  }
+
+# ── Question words ───────────────────────────────────────────────────────────
+- {
+    id: question-nani,
+    pattern: なに／なん,
+    meaning: what,
+    tofugu: question-words#for-what
+  }
+- {
+    id: question-dare,
+    pattern: だれ,
+    meaning: who,
+    tofugu: question-words#for-who
+  }
+- {
+    id: question-donata,
+    pattern: どなた,
+    meaning: "who (polite)",
+    tofugu: question-words#for-who
+  }
+- {
+    id: question-doko,
+    pattern: どこ,
+    meaning: where,
+    tofugu: question-words#for-where
+  }
+- {
+    id: question-dochira,
+    pattern: どちら,
+    meaning: "which of two; where (polite)",
+    tofugu: kochira-sochira-achira-dochira#for-which-one-out-of-two-choices
+  }
+- {
+    id: question-itsu,
+    pattern: いつ,
+    meaning: when,
+    tofugu: question-words#for-when
+  }
+- {
+    id: question-dou,
+    pattern: どう,
+    meaning: how,
+    tofugu: question-words#for-how
+  }
+- {
+    id: question-ikaga,
+    pattern: いかが,
+    meaning: "how (polite)",
+    tofugu: question-words#for-how
+  }
+- {
+    id: question-donna,
+    pattern: どんな,
+    meaning: what kind of,
+    tofugu: question-words#for-what-kind-of-
+  }
+- {
+    id: question-dore,
+    pattern: どれ,
+    meaning: which of three or more,
+    tofugu: kore-sore-are-dore#for-which-one-out-of-three-or-more-choices
+  }
+- {
+    id: question-dono,
+    pattern: どの,
+    meaning: "which (before a noun)",
+    tofugu: kono-sono-ano-dono#for-which-out-of-three-or-more-options
+  }
+- {
+    id: question-ikura,
+    pattern: いくら,
+    meaning: how much,
+    tofugu: question-words#for-how-much-costprice
+  }
+- {
+    id: question-ikutsu,
+    pattern: いくつ,
+    meaning: how many; how old,
+    tofugu: question-words#for-how-many
+  }
+- {
+    id: question-doushite,
+    pattern: どうして,
+    meaning: why,
+    tofugu: question-words#for-why
+  }
+- {
+    id: question-mo-negative,
+    pattern: なにも・だれも・どこも,
+    meaning: "with a negative verb: nothing, nobody, nowhere",
+    tofugu: question-words#question-word---1
+  }
+- {
+    id: question-ka-indefinite,
+    pattern: なにか・だれか・どこか,
+    meaning: "something, someone, somewhere",
+    tofugu: particle-ka#for-indefinite-pronouns
+  }
+
+# ── こそあど words ───────────────────────────────────────────────────────────
+- {
+    id: demonstrative-pronoun,
+    pattern: これ／それ／あれ,
+    meaning: this one / that one / that one over there,
+    tofugu: kore-sore-are-dore
+  }
+- {
+    id: demonstrative-adnominal,
+    pattern: この／その／あの,
+    meaning: "this / that / that … over there (before a noun)",
+    tofugu: kono-sono-ano-dono
+  }
+- {
+    id: demonstrative-place,
+    pattern: ここ／そこ／あそこ,
+    meaning: here / there / over there,
+    tofugu: koko-soko-asoko-doko
+  }
+- {
+    id: demonstrative-direction,
+    pattern: こちら／そちら／あちら,
+    meaning: "this way / that way (also polite for here and there)",
+    tofugu: kochira-sochira-achira-dochira#for-directions-and-places
+  }
+
+# ── Adverbs ──────────────────────────────────────────────────────────────────
+- {
+    id: adverb-mou,
+    pattern: もう,
+    meaning: "already; with a negative, no longer",
+    tofugu: mou-already-not-anymore
+  }
+- {
+    id: adverb-mada,
+    pattern: まだ,
+    meaning: "still; not yet (with a negative)",
+    tofugu: mada
+  }
+- {
+    id: adverb-amari,
+    pattern: あまり〜ない,
+    meaning: "not very, not much",
+    tofugu: amarinai
+  }
+- { id: adverb-zenzen, pattern: ぜんぜん〜ない, meaning: not at all }
+- { id: adverb-yoku, pattern: よく, meaning: often; well }
+- { id: adverb-totemo, pattern: とても, meaning: very }
+- { id: adverb-sukoshi, pattern: すこし, meaning: a little }
+- { id: adverb-chotto, pattern: ちょっと, meaning: a little; a moment }
+- {
+    id: adverb-takusan,
+    pattern: たくさん,
+    meaning: a lot,
+    tofugu: plural-and-quantity#words-for-unspecified-quantity
+  }
+- { id: adverb-itsumo, pattern: いつも, meaning: "always, usually" }
+- { id: adverb-tokidoki, pattern: ときどき, meaning: sometimes }
+- { id: adverb-mata, pattern: また, meaning: again }
+- { id: adverb-dandan, pattern: だんだん, meaning: gradually }
+- { id: adverb-sugu, pattern: すぐ, meaning: "soon, at once" }
+- {
+    id: adverb-issho-ni,
+    pattern: いっしょに,
+    meaning: together,
+    tofugu: particle-to#as-in-with
+  }
+- {
+    id: adverb-ichiban,
+    pattern: いちばん,
+    meaning: the most,
+    tofugu: naka#for-out-of
+  }
+
+# ── Conjunctions ─────────────────────────────────────────────────────────────
+- { id: conjunction-soshite, pattern: そして, meaning: "and, and then" }
+- { id: conjunction-sorekara, pattern: それから, meaning: after that }
+- {
+    id: conjunction-demo,
+    pattern: でも,
+    meaning: but,
+    tofugu: da#in-the-middle-or-beginning-of-a-sentence
+  }
+- {
+    id: conjunction-dakara,
+    pattern: だから,
+    meaning: "so, therefore",
+    tofugu: da#in-the-middle-or-beginning-of-a-sentence
+  }
+- {
+    id: conjunction-ga-but,
+    pattern: 〜が、〜,
+    meaning: "…, but …",
+    tofugu: conjunctive-particle-ga-kedo#and--for-contrast
+  }
+- {
+    id: conjunction-node,
+    pattern: 〜ので,
+    meaning: "because, so (softer than から)",
+    tofugu: conjunctive-particle-node
+  }
+- {
+    id: conjunction-kara-reason,
+    pattern: 〜から,
+    meaning: "because, so",
+    tofugu: particle-kara#for-reasons
+  }
+
+# ── Forms and patterns ───────────────────────────────────────────────────────
+- {
+    id: form-masen-ka,
+    pattern: 〜ませんか,
+    meaning: "won't you …? (an invitation)",
+    tofugu: masu#and--for-politely-asking-questions
+  }
+- {
+    id: form-mashou,
+    pattern: 〜ましょう,
+    meaning: "let's …",
+    tofugu: verb-volitional-form-you#proposing-and-inviting
+  }
+- {
+    id: form-mashou-ka,
+    pattern: 〜ましょうか,
+    meaning: "shall I …? (an offer); shall we …?",
+    tofugu: verb-volitional-form-you#proposing-and-inviting
+  }
+- {
+    id: form-te-kudasai,
+    pattern: 〜てください,
+    meaning: please do …,
+    tofugu: kudasai
+  }
+- {
+    id: form-naide-kudasai,
+    pattern: 〜ないでください,
+    meaning: please do not …,
+    tofugu: kudasai
+  }
+- {
+    id: form-te-mo-ii,
+    pattern: 〜てもいいです,
+    meaning: you may …,
+    tofugu: temoii
+  }
+- { id: form-te-wa-ikenai, pattern: 〜てはいけません, meaning: you must not … }
+- {
+    id: form-te-iru,
+    pattern: 〜ている,
+    meaning: is …ing; a state that continues,
+    tofugu: verb-continuous-form-teiru
+  }
+- {
+    id: form-mada-te-inai,
+    pattern: まだ〜ていません,
+    meaning: have not … yet,
+    tofugu: verb-continuous-form-teiru#and--with-
+  }
+- {
+    id: form-ta-koto-ga-aru,
+    pattern: 〜たことがある,
+    meaning: have … before,
+    tofugu: takotogaaru
+  }
+- { id: form-tai, pattern: 〜たい, meaning: want to …, tofugu: tai-form }
+- {
+    id: form-hoshii,
+    pattern: 〜がほしい,
+    meaning: want something,
+    tofugu: particle-ga#with-verb-like-adjectives
+  }
+- {
+    id: form-tari-tari,
+    pattern: 〜たり〜たりする,
+    meaning: do things such as … and …,
+    tofugu: tarisuru
+  }
+- {
+    id: form-te-kara,
+    pattern: 〜てから,
+    meaning: after doing …,
+    tofugu: particle-kara#for-continuous-actions
+  }
+- {
+    id: form-ta-ato-de,
+    pattern: 〜たあとで,
+    meaning: after …,
+    tofugu: mae-ushiro
+  }
+- {
+    id: form-mae-ni,
+    pattern: 〜まえに,
+    meaning: "before … (with the dictionary form)",
+    tofugu: mae-ushiro
+  }
+- {
+    id: form-nagara,
+    pattern: 〜ながら,
+    meaning: "while … (with the ます stem)",
+    tofugu: verb-nagara
+  }
+- {
+    id: form-ni-iku,
+    pattern: 〜にいく／くる,
+    meaning: "go / come to do … (with the ます stem)",
+    tofugu: iku-kuru#for-to-gocome-to-do-something
+  }
+- {
+    id: form-tsumori,
+    pattern: 〜つもりです,
+    meaning: intend to …,
+    tofugu: tsumori
+  }
+- { id: form-hou-ga-ii, pattern: 〜ほうがいい, meaning: had better … }
+- {
+    id: form-deshou,
+    pattern: 〜でしょう,
+    meaning: probably …; … right?,
+    tofugu: deshou
+  }
+- { id: form-naru, pattern: 〜く／〜になる, meaning: become …, tofugu: naru }
+- {
+    id: form-adjective-negative,
+    pattern: 〜くない／〜じゃない,
+    meaning: is not …,
+    tofugu: i-adjective-negative-form-kunai
+  }
+- {
+    id: form-adjective-past,
+    pattern: 〜かった／〜でした,
+    meaning: was …,
+    tofugu: deshita
+  }
+- {
+    id: form-adjective-past-negative,
+    pattern: 〜くなかった／〜じゃなかった,
+    meaning: was not …,
+    tofugu: i-adjective-negative-form-kunai#in-the-past
+  }
+- {
+    id: form-te-link,
+    pattern: 〜くて／〜で,
+    meaning: "links an adjective or noun to what follows: and",
+    tofugu: te-form#form-for-and
+  }
+- {
+    id: form-adjective-before-noun,
+    pattern: 〜い／〜な ＋ noun,
+    meaning: an adjective before the noun it describes,
+    tofugu: na-adjective#before-a-noun
+  }
+- {
+    id: form-n-desu,
+    pattern: 〜んです,
+    meaning: explains or asks for an explanation,
+    tofugu: explanatory-nda-ndesu-noda-nodesu#for-explaining
+  }
+- {
+    id: form-no-ga-suki,
+    pattern: 〜のがすきです,
+    meaning: like doing …,
+    tofugu: particle-no-nominalizer
+  }
+- {
+    id: form-no-ga-jouzu,
+    pattern: 〜のがじょうずです,
+    meaning: be good at doing …,
+    tofugu: particle-no-nominalizer
+  }
+- {
+    id: form-ga-aru-iru,
+    pattern: 〜があります／います,
+    meaning: "there is … (things / people and animals)",
+    tofugu: iru-aru
+  }
+- {
+    id: comparison-no-hou-ga,
+    pattern: 〜より〜のほうが,
+    meaning: … is more … than …,
+    tofugu: particle-yori-than
+  }
+- {
+    id: comparison-ichiban,
+    pattern: 〜のなかで〜がいちばん,
+    meaning: "of …, … is the most …",
+    tofugu: naka#for-out-of
+  }
+
+- {
+    id: form-polite-tense,
+    pattern: 〜ます／〜ました／〜ません,
+    meaning: "tense and polarity that fit the context",
+    tofugu: masu
+  }
+- {
+    id: clause-noun-modifier,
+    pattern: "[clause] + noun",
+    meaning: "a clause before a noun describes it: 母が 作った ケーキ",
+    tofugu: sentences-and-clauses#noun-modification
+  }
+- {
+    id: verb-kariru-kasu,
+    pattern: かりる／かす,
+    meaning: "borrow from (に) or lend to (に)"
+  }
+- {
+    id: form-toki,
+    pattern: 〜とき,
+    meaning: when; at the time that,
+    tofugu: toki
+  }
+- {
+    id: form-kata,
+    pattern: ます stem ＋ かた,
+    meaning: the way of doing something
+  }
+
+# ── Set phrases ──────────────────────────────────────────────────────────────
+- {
+    id: phrase-o-kudasai,
+    pattern: 〜をください,
+    meaning: please give me …,
+    tofugu: kudasai
+  }
+- {
+    id: phrase-douzo,
+    pattern: どうぞ,
+    meaning: "please, go ahead; here you are"
+  }
+- { id: phrase-sumimasen, pattern: すみません, meaning: excuse me; sorry }
+- {
+    id: phrase-ikaga-desu-ka,
+    pattern: 〜はいかがですか,
+    meaning: would you like …?,
+    tofugu: question-words#for-how
+  }
+- {
+    id: phrase-ni-suru,
+    pattern: 〜にします,
+    meaning: "choose: I'll have …",
+    tofugu: suru#for-selecting-or-deciding-something
+  }
+- {
+    id: phrase-greetings,
+    pattern: いってきます・ただいま,
+    meaning: "set greetings for leaving home, coming home and meals"
+  }
