@@ -651,7 +651,7 @@
 
 - id: n5-b1-0051
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「だれが まどを あけましたか。」
     Ｂ「{田中|たなか}さん（1） あけました。」
@@ -665,7 +665,7 @@
 
 - id: n5-b1-0052
   type: form
-  status: draft
+  status: reviewed
   sentence: "はじめまして。わたし（1） キムです。かんこくから {来|き}ました。"
   en: "Nice to meet you. I am Kim. I came from Korea."
   slots:
@@ -677,7 +677,7 @@
 
 - id: n5-b1-0053
   type: form
-  status: draft
+  status: reviewed
   sentence: "{毎朝|まいあさ} コーヒー（1） {飲|の}みます。"
   en: I drink coffee every morning.
   slots:
@@ -689,7 +689,7 @@
 
 - id: n5-b1-0054
   type: form
-  status: draft
+  status: reviewed
   sentence: "{毎日|まいにち} {六時|ろくじ}に {家|いえ}（1） {帰|かえ}ります。"
   en: I go home at six every day.
   slots:
@@ -701,7 +701,7 @@
 
 - id: n5-b1-0055
   type: form
-  status: draft
+  status: reviewed
   sentence: "かばんの {中|なか}には ノート（1） ペンが {入|はい}って います。ほかには {何|なに}も ありません。"
   en: There is a notebook and a pen in the bag. There is nothing else.
   slots:
@@ -713,7 +713,7 @@
 
 - id: n5-b1-0056
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     （{日本|にほん}の {学校|がっこう}で）
     Ａ「リーさんは どこ（1） {来|き}ましたか。」
@@ -728,7 +728,7 @@
 
 - id: n5-b1-0057
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「すみません、これは {何|なん}です（1）。」
     Ｂ「{日本|にほん}の おかしです。」
@@ -742,7 +742,7 @@
 
 - id: n5-b1-0058
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「きのうの ばん、（1）を {食|た}べましたか。」
     Ｂ「カレーを {食|た}べました。」
@@ -756,7 +756,7 @@
 
 - id: n5-b1-0059
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「この かさは（1）のですか。」
     Ｂ「{山田|やまだ}さんのです。」
@@ -770,7 +770,7 @@
 
 - id: n5-b1-0060
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「（1）で {日本語|にほんご}を {勉強|べんきょう}しましたか。」
     Ｂ「アメリカの {大学|だいがく}で {勉強|べんきょう}しました。」
@@ -784,7 +784,7 @@
 
 - id: n5-b1-0061
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     （かさが たくさん あります）
     Ａ「この {中|なか}で、（1）が あなたの かさですか。」
@@ -799,7 +799,7 @@
 
 - id: n5-b1-0062
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「（1） {電車|でんしゃ}に のりますか。」
     Ｂ「{三|さん}ばんせんの {電車|でんしゃ}です。」
@@ -813,7 +813,7 @@
 
 - id: n5-b1-0063
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「{弟|おとうと}さんは（1）ですか。」
     Ｂ「{十|じゅっ}さいです。」
@@ -827,7 +827,7 @@
 
 - id: n5-b1-0064
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「（1） きのう {学校|がっこう}を {休|やす}んだんですか。」
     Ｂ「ねつが ありましたから。」
@@ -841,7 +841,7 @@
 
 - id: n5-b1-0065
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「その {本|ほん}は だれのですか。」
     Ｂ「（1）は わたしのです。」
@@ -855,7 +855,7 @@
 
 - id: n5-b1-0066
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     （ホテルで）
     きゃく「すみません、エレベーターは どちらですか。」
@@ -870,7 +870,7 @@
 
 - id: n5-b1-0067
   type: form
-  status: draft
+  status: reviewed
   sentence: "この {本|ほん}は（1） おもしろく ありませんでした。"
   en: This book was not interesting at all.
   slots:
@@ -882,7 +882,7 @@
 
 - id: n5-b1-0068
   type: form
-  status: draft
+  status: reviewed
   sentence: "わたしは {子|こ}どもの とき、この こうえんで（1） あそびました。"
   en: When I was a child, I often played in this park.
   slots:
@@ -894,7 +894,7 @@
 
 - id: n5-b1-0069
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「{日本語|にほんご}が わかりますか。」
     Ｂ「はい、（1） わかります。」
@@ -908,7 +908,7 @@
 
 - id: n5-b1-0070
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「あした、いっしょに えいがを {見|み}ませんか。」
     Ｂ「すみません、あしたは（1）…。」
@@ -922,7 +922,7 @@
 
 - id: n5-b1-0071
   type: form
-  status: draft
+  status: reviewed
   sentence: "わたしは（1） {七時|しちじ}に {起|お}きます。でも、{日曜日|にちようび}は {九時|くじ}に {起|お}きます。"
   en: I usually get up at seven. But on Sundays I get up at nine.
   slots:
@@ -934,7 +934,7 @@
 
 - id: n5-b1-0072
   type: form
-  status: draft
+  status: reviewed
   sentence: "{毎日|まいにち}では ありませんが、（1） {母|はは}に てがみを {書|か}きます。"
   en: Not every day, but I sometimes write letters to my mother.
   slots:
@@ -946,7 +946,7 @@
 
 - id: n5-b1-0073
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     （{先生|せんせい}に）
     「きょうは ありがとう ございました。（1） あした {来|き}ます。」
@@ -960,7 +960,7 @@
 
 - id: n5-b1-0074
   type: form
-  status: draft
+  status: reviewed
   sentence: "{十一月|じゅういちがつ}に なって、（1） さむく なりました。"
   en: It became November, and it gradually got cold.
   slots:
@@ -972,7 +972,7 @@
 
 - id: n5-b1-0075
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「{田中|たなか}さん、ちょっと {来|き}て ください。」
     Ｂ「はい、（1） {行|い}きます。」
@@ -986,7 +986,7 @@
 
 - id: n5-b1-0076
   type: form
-  status: draft
+  status: reviewed
   sentence: "わたしの へやは {広|ひろ}いです。（1）、とても {明|あか}るいです。"
   en: My room is large. And it is very bright.
   slots:
@@ -998,7 +998,7 @@
 
 - id: n5-b1-0077
   type: form
-  status: draft
+  status: reviewed
   sentence: "きのうは {頭|あたま}が いたかったです。（1）、{学校|がっこう}を {休|やす}みました。"
   en: Yesterday I had a headache. So I stayed home from school.
   slots:
@@ -1010,7 +1010,7 @@
 
 - id: n5-b1-0078
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「つかれましたね。ちょっと {休|やす}み（1）。」
     Ｂ「ええ、そう しましょう。」
@@ -1024,7 +1024,7 @@
 
 - id: n5-b1-0079
   type: form
-  status: draft
+  status: reviewed
   sentence: "あしたは たぶん {雨|あめ}が ふる（1）。"
   en: It will probably rain tomorrow.
   slots:
@@ -1036,7 +1036,7 @@
 
 - id: n5-b1-0080
   type: form
-  status: draft
+  status: reviewed
   sentence: "この {町|まち}は あまり（1）。"
   en: This town is not very quiet.
   slots:
@@ -1048,7 +1048,7 @@
 
 - id: n5-b1-0081
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「この ペン、かりても いいですか。」
     Ｂ「はい、（1）。」
@@ -1062,7 +1062,7 @@
 
 - id: n5-b1-0082
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     （{道|みち}で）
     Ａ「（1）、{駅|えき}は どこですか。」
@@ -1077,7 +1077,7 @@
 
 - id: n5-b1-0083
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     （{会社|かいしゃ}で）
     Ａ「しつれいですが、（1）ですか。」
@@ -1092,7 +1092,7 @@
 
 - id: n5-b1-0084
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「{日曜日|にちようび}、（1） {行|い}きましたか。」
     Ｂ「はい、デパートへ {行|い}きました。」
@@ -1106,7 +1106,7 @@
 
 - id: n5-b1-0085
   type: form
-  status: draft
+  status: reviewed
   sentence: "わたしは {日本語|にほんご}が すこし（1） わかりません。"
   en: I only understand a little Japanese.
   slots:
@@ -1118,7 +1118,7 @@
 
 - id: n5-b1-0086
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「つくえの {上|うえ}に {何|なに}（1） ありますか。」
     Ｂ「{本|ほん}と ノートが あります。」
@@ -1132,7 +1132,7 @@
 
 - id: n5-b1-0087
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「ケーキを もっと {食|た}べませんか。」
     Ｂ「ありがとう ございます。でも、おなかが いっぱいですから、（1） {食|た}べません。」
@@ -1146,7 +1146,7 @@
 
 - id: n5-b1-0088
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「のみものは {何|なに}が いいですか。」
     Ｂ「わたしは コーヒー（1） します。」
@@ -1160,7 +1160,7 @@
 
 - id: n5-b1-0089
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「{毎日|まいにち}（1） {勉強|べんきょう}しますか。」
     Ｂ「{二時間|にじかん}ぐらい {勉強|べんきょう}します。」
@@ -1174,7 +1174,7 @@
 
 - id: n5-b1-0090
   type: form
-  status: draft
+  status: reviewed
   sentence: "きのうは どこへも {行|い}き（1）。"
   en: I didn't go anywhere yesterday.
   slots:
@@ -1186,7 +1186,7 @@
 
 - id: n5-b1-0091
   type: form
-  status: draft
+  status: reviewed
   sentence: "ここは（1） こうえんです。"
   en: This is a quiet park.
   slots:
@@ -1198,7 +1198,7 @@
 
 - id: n5-b1-0092
   type: form
-  status: draft
+  status: reviewed
   sentence: "きのうは {一日中|いちにちじゅう} うち（1） いました。"
   en: Yesterday I was at home all day.
   slots:
@@ -1210,7 +1210,7 @@
 
 - id: n5-b1-0093
   type: form
-  status: draft
+  status: reviewed
   sentence: "{駅|えき}で {友|とも}だち（1） {会|あ}いました。"
   en: I met a friend at the station.
   slots:
@@ -1222,7 +1222,7 @@
 
 - id: n5-b1-0094
   type: form
-  status: draft
+  status: reviewed
   sentence: "{日本語|にほんご}の {勉強|べんきょう}が だんだん（1） なりました。"
   en: Studying Japanese gradually became interesting.
   slots:

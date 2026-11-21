@@ -247,7 +247,7 @@
 
 - id: n5-b2-0022
   type: compose
-  status: draft
+  status: reviewed
   sentence: "あそこで / {本|ほん}/を / {読|よ}んで / いる / {人|ひと}/は / {田中|たなか}さん/です。"
   en: The person reading a book over there is Tanaka-san.
   windows:
@@ -258,7 +258,7 @@
 
 - id: n5-b2-0023
   type: compose
-  status: draft
+  status: reviewed
   sentence: "{休|やす}みの {日|ひ}は / {本|ほん}/を / {読|よ}んだり / {音楽|おんがく}/を / {聞|き}いたり / します。"
   en: On my days off I do things like reading books and listening to music.
   windows:
@@ -269,7 +269,7 @@
 
 - id: n5-b2-0024
   type: compose
-  status: draft
+  status: reviewed
   sentence: "わたしは / いつも / {音楽|おんがく}/を / {聞|き}き/ながら / {勉強|べんきょう}します。"
   en: I always study while listening to music.
   windows:
@@ -280,7 +280,7 @@
 
 - id: n5-b2-0025
   type: compose
-  status: draft
+  status: reviewed
   sentence: "まいばん / ねる / まえ/に / シャワー/を / あびます。"
   en: Every night I take a shower before I go to bed.
   windows:
@@ -291,7 +291,7 @@
 
 - id: n5-b2-0026
   type: compose
-  status: draft
+  status: reviewed
   sentence: "つくえの / {上|うえ}/に / ある / {本|ほん}/は / {山田|やまだ}さん/の / です。"
   en: The book on the desk is Yamada-san's.
   windows:
@@ -302,7 +302,7 @@
 
 - id: n5-b2-0027
   type: compose
-  status: draft
+  status: reviewed
   sentence: "わたしの / {姉|あね}/は / {料理|りょうり}/を / {作|つく}る / の/が / {上手|じょうず}です。"
   en: My older sister is good at cooking.
   windows:
@@ -313,7 +313,7 @@
 
 - id: n5-b2-0028
   type: compose
-  status: draft
+  status: reviewed
   sentence: "どうして / きのう / {学校|がっこう}/を / {休|やす}んだ / ん/ですか。"
   en: Why were you absent from school yesterday?
   windows:
@@ -324,7 +324,7 @@
 
 - id: n5-b2-0029
   type: compose
-  status: draft
+  status: reviewed
   sentence: "これは / {日本|にほん}/へ / {来|き}た / とき/に / {買|か}った / かばん/です。"
   en: This is a bag I bought when I came to Japan.
   windows:
@@ -335,7 +335,7 @@
 
 - id: n5-b2-0030
   type: compose
-  status: draft
+  status: reviewed
   sentence: "すみません、/ その / しお/を / とって / ください。"
   en: Excuse me, please pass me that salt.
   windows:
@@ -346,7 +346,7 @@
 
 - id: n5-b2-0031
   type: compose
-  status: draft
+  status: reviewed
   sentence: "わたしが / いちばん / {好|す}きな / たべもの/は / すし/です。"
   en: The food I like best is sushi.
   windows:
@@ -357,7 +357,7 @@
 
 - id: n5-b2-0032
   type: compose
-  status: draft
+  status: reviewed
   sentence: "わたしは / まだ / その / えいが/を / {見|み}て / いません。"
   en: I haven't seen that movie yet.
   windows:
@@ -368,7 +368,7 @@
 
 - id: n5-b2-0033
   type: compose
-  status: draft
+  status: reviewed
   sentence: "この / クラス/で / いちばん / せ/が / {高|たか}い / {人|ひと}/は / リーさん/です。"
   en: The tallest person in this class is Lee-san.
   windows:
@@ -379,7 +379,7 @@
 
 - id: n5-b2-0034
   type: compose
-  status: draft
+  status: reviewed
   sentence: "{駅|えき}の {前|まえ}に / ある / {店|みせ}/で / パン/を / {買|か}いました。"
   en: I bought bread at the shop in front of the station.
   windows:
@@ -390,7 +390,7 @@
 
 - id: n5-b2-0035
   type: compose
-  status: draft
+  status: reviewed
   sentence: "コーヒー/と / こうちゃ/と / どちら/が / {好|す}きですか。"
   en: Which do you like better, coffee or tea?
   windows:
@@ -401,7 +401,7 @@
 
 - id: n5-b2-0036
   type: compose
-  status: draft
+  status: reviewed
   sentence: "この / {店|みせ}の / ケーキ/は / あまり / おいしく / ありません。"
   en: The cakes at this shop are not very good.
   windows:
@@ -423,7 +423,7 @@
 
 - id: n5-b2-0038
   type: compose
-  status: draft
+  status: reviewed
   sentence: "すみません、/ {赤|あか}い / りんご/を / {三|みっ}つ / ください。"
   en: Excuse me, three red apples, please.
   windows:
@@ -434,7 +434,7 @@
 
 - id: n5-b2-0039
   type: compose
-  status: draft
+  status: reviewed
   sentence: "{頭|あたま}/が / いたい / ので / {学校|がっこう}/を / {休|やす}みます。"
   en: I have a headache, so I will stay home from school.
   windows:
@@ -445,7 +445,7 @@
 
 - id: n5-b2-0040
   type: compose
-  status: draft
+  status: reviewed
   sentence: "スポーツ/の / {中|なか}/で / {何|なに}/が / いちばん / {好|す}きですか。"
   en: Of all sports, which do you like best?
   windows:

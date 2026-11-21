@@ -324,6 +324,276 @@
       ]
     },
     {
+      "id": "n5-b2-0022",
+      "type": "compose",
+      "status": "reviewed",
+      "sentence": "あそこで / {本|ほん}/を / {読|よ}んで / いる / {人|ひと}/は / {田中|たなか}さん/です。",
+      "en": "The person reading a book over there is Tanaka-san.",
+      "windows": [
+        {
+          "start": 1,
+          "difficulty": 2,
+          "points": ["clause-noun-modifier", "form-te-iru"],
+          "note": "{本|ほん}を {読|よ}んで いる describes {人|ひと}: the person who is reading a book."
+        }
+      ]
+    },
+    {
+      "id": "n5-b2-0023",
+      "type": "compose",
+      "status": "reviewed",
+      "sentence": "{休|やす}みの {日|ひ}は / {本|ほん}/を / {読|よ}んだり / {音楽|おんがく}/を / {聞|き}いたり / します。",
+      "en": "On my days off I do things like reading books and listening to music.",
+      "windows": [
+        {
+          "start": 1,
+          "difficulty": 2,
+          "points": ["form-tari-tari"],
+          "note": "〜たり 〜たり します lists some of the things you do: {本|ほん}を {読|よ}んだり、{音楽|おんがく}を {聞|き}いたり."
+        }
+      ]
+    },
+    {
+      "id": "n5-b2-0024",
+      "type": "compose",
+      "status": "reviewed",
+      "sentence": "わたしは / いつも / {音楽|おんがく}/を / {聞|き}き/ながら / {勉強|べんきょう}します。",
+      "en": "I always study while listening to music.",
+      "windows": [
+        {
+          "start": 2,
+          "difficulty": 2,
+          "points": ["form-nagara"],
+          "note": "ながら joins the ます stem: {聞|き}きながら. The main action, {勉強|べんきょう}します, comes last."
+        }
+      ]
+    },
+    {
+      "id": "n5-b2-0025",
+      "type": "compose",
+      "status": "reviewed",
+      "sentence": "まいばん / ねる / まえ/に / シャワー/を / あびます。",
+      "en": "Every night I take a shower before I go to bed.",
+      "windows": [
+        {
+          "start": 1,
+          "difficulty": 2,
+          "points": ["form-mae-ni"],
+          "note": "まえに follows the dictionary form: ねる まえに, before going to bed."
+        }
+      ]
+    },
+    {
+      "id": "n5-b2-0026",
+      "type": "compose",
+      "status": "reviewed",
+      "sentence": "つくえの / {上|うえ}/に / ある / {本|ほん}/は / {山田|やまだ}さん/の / です。",
+      "en": "The book on the desk is Yamada-san's.",
+      "windows": [
+        {
+          "start": 1,
+          "difficulty": 2,
+          "points": ["clause-noun-modifier", "particle-ni-existence"],
+          "note": "つくえの {上|うえ}に ある describes {本|ほん}: the book that is on the desk."
+        }
+      ]
+    },
+    {
+      "id": "n5-b2-0027",
+      "type": "compose",
+      "status": "reviewed",
+      "sentence": "わたしの / {姉|あね}/は / {料理|りょうり}/を / {作|つく}る / の/が / {上手|じょうず}です。",
+      "en": "My older sister is good at cooking.",
+      "windows": [
+        {
+          "start": 3,
+          "difficulty": 2,
+          "points": ["form-no-ga-jouzu"],
+          "note": "の turns {料理|りょうり}を {作|つく}る into a thing you can be good at. It follows the dictionary form."
+        }
+      ]
+    },
+    {
+      "id": "n5-b2-0028",
+      "type": "compose",
+      "status": "reviewed",
+      "sentence": "どうして / きのう / {学校|がっこう}/を / {休|やす}んだ / ん/ですか。",
+      "en": "Why were you absent from school yesterday?",
+      "windows": [
+        {
+          "start": 2,
+          "difficulty": 3,
+          "points": ["question-doushite", "form-n-desu"],
+          "note": "どうして 〜んですか asks for a reason. ん follows the plain form: {休|やす}んだ んですか."
+        }
+      ]
+    },
+    {
+      "id": "n5-b2-0029",
+      "type": "compose",
+      "status": "reviewed",
+      "sentence": "これは / {日本|にほん}/へ / {来|き}た / とき/に / {買|か}った / かばん/です。",
+      "en": "This is a bag I bought when I came to Japan.",
+      "windows": [
+        {
+          "start": 1,
+          "difficulty": 3,
+          "points": ["form-toki", "clause-noun-modifier"],
+          "note": "{日本|にほん}へ {来|き}た とき says when it happened. Then {買|か}った describes かばん."
+        }
+      ]
+    },
+    {
+      "id": "n5-b2-0030",
+      "type": "compose",
+      "status": "reviewed",
+      "sentence": "すみません、/ その / しお/を / とって / ください。",
+      "en": "Excuse me, please pass me that salt.",
+      "windows": [
+        {
+          "start": 1,
+          "difficulty": 1,
+          "points": ["form-te-kudasai", "demonstrative-adnominal"],
+          "note": "その comes right before its noun: その しお. Then を, and the て form before ください."
+        }
+      ]
+    },
+    {
+      "id": "n5-b2-0031",
+      "type": "compose",
+      "status": "reviewed",
+      "sentence": "わたしが / いちばん / {好|す}きな / たべもの/は / すし/です。",
+      "en": "The food I like best is sushi.",
+      "windows": [
+        {
+          "start": 1,
+          "difficulty": 2,
+          "points": ["adverb-ichiban", "form-adjective-before-noun"],
+          "note": "いちばん {好|す}きな describes たべもの. A な adjective keeps な before a noun."
+        }
+      ]
+    },
+    {
+      "id": "n5-b2-0032",
+      "type": "compose",
+      "status": "reviewed",
+      "sentence": "わたしは / まだ / その / えいが/を / {見|み}て / いません。",
+      "en": "I haven't seen that movie yet.",
+      "windows": [
+        {
+          "start": 2,
+          "difficulty": 2,
+          "points": ["form-mada-te-inai"],
+          "note": "まだ 〜て いません: not yet. その stays right before えいが."
+        }
+      ]
+    },
+    {
+      "id": "n5-b2-0033",
+      "type": "compose",
+      "status": "reviewed",
+      "sentence": "この / クラス/で / いちばん / せ/が / {高|たか}い / {人|ひと}/は / リーさん/です。",
+      "en": "The tallest person in this class is Lee-san.",
+      "windows": [
+        {
+          "start": 4,
+          "difficulty": 3,
+          "points": ["clause-noun-modifier", "comparison-ichiban"],
+          "note": "せが {高|たか}い describes {人|ひと}: the person who is tall. いちばん before it makes it the tallest."
+        }
+      ]
+    },
+    {
+      "id": "n5-b2-0034",
+      "type": "compose",
+      "status": "reviewed",
+      "sentence": "{駅|えき}の {前|まえ}に / ある / {店|みせ}/で / パン/を / {買|か}いました。",
+      "en": "I bought bread at the shop in front of the station.",
+      "windows": [
+        {
+          "start": 1,
+          "difficulty": 3,
+          "points": ["clause-noun-modifier", "particle-de-place"],
+          "note": "{駅|えき}の {前|まえ}に ある describes {店|みせ}. で marks where you buy it: {店|みせ}で パンを {買|か}いました."
+        }
+      ]
+    },
+    {
+      "id": "n5-b2-0035",
+      "type": "compose",
+      "status": "reviewed",
+      "sentence": "コーヒー/と / こうちゃ/と / どちら/が / {好|す}きですか。",
+      "en": "Which do you like better, coffee or tea?",
+      "windows": [
+        {
+          "start": 2,
+          "difficulty": 2,
+          "points": ["question-dochira"],
+          "note": "AとBと どちらが 〜ですか asks which of two. どちらが comes after both."
+        }
+      ]
+    },
+    {
+      "id": "n5-b2-0036",
+      "type": "compose",
+      "status": "reviewed",
+      "sentence": "この / {店|みせ}の / ケーキ/は / あまり / おいしく / ありません。",
+      "en": "The cakes at this shop are not very good.",
+      "windows": [
+        {
+          "start": 2,
+          "difficulty": 2,
+          "points": ["adverb-amari", "form-adjective-negative"],
+          "note": "あまり comes before the word it softens, and needs a negative: あまり おいしく ありません."
+        }
+      ]
+    },
+    {
+      "id": "n5-b2-0038",
+      "type": "compose",
+      "status": "reviewed",
+      "sentence": "すみません、/ {赤|あか}い / りんご/を / {三|みっ}つ / ください。",
+      "en": "Excuse me, three red apples, please.",
+      "windows": [
+        {
+          "start": 1,
+          "difficulty": 1,
+          "points": ["phrase-o-kudasai", "form-adjective-before-noun"],
+          "note": "Nを {三|みっ}つ ください: the number comes after を, right before ください."
+        }
+      ]
+    },
+    {
+      "id": "n5-b2-0039",
+      "type": "compose",
+      "status": "reviewed",
+      "sentence": "{頭|あたま}/が / いたい / ので / {学校|がっこう}/を / {休|やす}みます。",
+      "en": "I have a headache, so I will stay home from school.",
+      "windows": [
+        {
+          "start": 0,
+          "difficulty": 2,
+          "points": ["conjunction-node"],
+          "note": "ので follows the reason: {頭|あたま}が いたい ので. What happens because of it comes after."
+        }
+      ]
+    },
+    {
+      "id": "n5-b2-0040",
+      "type": "compose",
+      "status": "reviewed",
+      "sentence": "スポーツ/の / {中|なか}/で / {何|なに}/が / いちばん / {好|す}きですか。",
+      "en": "Of all sports, which do you like best?",
+      "windows": [
+        {
+          "start": 2,
+          "difficulty": 3,
+          "points": ["comparison-ichiban", "question-nani"],
+          "note": "〜の {中|なか}で sets the group. {何|なに}が いちばん asks which one is the most."
+        }
+      ]
+    },
+    {
       "id": "n5-b1-0001",
       "type": "form",
       "status": "reviewed",
@@ -1137,6 +1407,710 @@
       ]
     },
     {
+      "id": "n5-b1-0051",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "Ａ「だれが まどを あけましたか。」\nＢ「{田中|たなか}さん（1） あけました。」",
+      "en": "A: Who opened the window? B: Tanaka-san opened it.",
+      "slots": [
+        {
+          "answer": "が",
+          "wrong": ["は", "を", "に"],
+          "difficulty": 3,
+          "points": ["particle-ga-subject"],
+          "note": "A question with だれが asks for new information, and the answer takes が too: {田中|たなか}さんが あけました. は would treat {田中|たなか}さん as a topic already known."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0052",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "はじめまして。わたし（1） キムです。かんこくから {来|き}ました。",
+      "en": "Nice to meet you. I am Kim. I came from Korea.",
+      "slots": [
+        {
+          "answer": "は",
+          "wrong": ["を", "に", "で"],
+          "difficulty": 1,
+          "points": ["particle-wa-topic"],
+          "note": "は marks the topic: わたしは キムです, as for me, I am Kim."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0053",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "{毎朝|まいあさ} コーヒー（1） {飲|の}みます。",
+      "en": "I drink coffee every morning.",
+      "slots": [
+        {
+          "answer": "を",
+          "wrong": ["に", "で", "が"],
+          "difficulty": 1,
+          "points": ["particle-o-object"],
+          "note": "を marks the thing you drink, eat or make: コーヒーを {飲|の}みます."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0054",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "{毎日|まいにち} {六時|ろくじ}に {家|いえ}（1） {帰|かえ}ります。",
+      "en": "I go home at six every day.",
+      "slots": [
+        {
+          "answer": "に",
+          "wrong": ["を", "で", "が"],
+          "difficulty": 1,
+          "points": ["particle-ni-destination"],
+          "note": "{帰|かえ}る takes に for where you arrive: {家|いえ}に {帰|かえ}ります. を goes with leaving: {家|いえ}を {出|で}ます."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0055",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "かばんの {中|なか}には ノート（1） ペンが {入|はい}って います。ほかには {何|なに}も ありません。",
+      "en": "There is a notebook and a pen in the bag. There is nothing else.",
+      "slots": [
+        {
+          "answer": "と",
+          "wrong": ["や", "を", "で"],
+          "difficulty": 3,
+          "points": ["particle-to-and"],
+          "note": "と lists every item; や lists some of many. ほかには {何|なに}も ありません says these two are all, so と."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0056",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "（{日本|にほん}の {学校|がっこう}で）\nＡ「リーさんは どこ（1） {来|き}ましたか。」\nＢ「ちゅうごくです。」",
+      "en": "(At a school in Japan) A: Where did you come from, Lee-san? B: China.",
+      "slots": [
+        {
+          "answer": "から",
+          "wrong": ["まで", "を", "で"],
+          "difficulty": 1,
+          "points": ["particle-kara-from"],
+          "note": "から marks where someone starts from: どこから {来|き}ましたか, where did you come from?"
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0057",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "Ａ「すみません、これは {何|なん}です（1）。」\nＢ「{日本|にほん}の おかしです。」",
+      "en": "A: Excuse me, what is this? B: It's a Japanese sweet.",
+      "slots": [
+        {
+          "answer": "か",
+          "wrong": ["ね", "よ", "を"],
+          "difficulty": 1,
+          "points": ["particle-ka-question"],
+          "note": "か at the end makes a question. A question word like {何|なん} needs it: {何|なん}ですか."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0058",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "Ａ「きのうの ばん、（1）を {食|た}べましたか。」\nＢ「カレーを {食|た}べました。」",
+      "en": "A: What did you eat last night? B: I ate curry.",
+      "slots": [
+        {
+          "answer": "{何|なに}",
+          "wrong": ["だれ", "どこ", "いつ"],
+          "difficulty": 1,
+          "points": ["question-nani"],
+          "note": "{何|なに} asks what. B answers with a food, カレー."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0059",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "Ａ「この かさは（1）のですか。」\nＢ「{山田|やまだ}さんのです。」",
+      "en": "A: Whose umbrella is this? B: It's Yamada-san's.",
+      "slots": [
+        {
+          "answer": "だれ",
+          "wrong": ["どこ", "いつ", "どれ"],
+          "difficulty": 1,
+          "points": ["question-dare"],
+          "note": "だれの asks whose. B answers with a person: {山田|やまだ}さんの."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0060",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "Ａ「（1）で {日本語|にほんご}を {勉強|べんきょう}しましたか。」\nＢ「アメリカの {大学|だいがく}で {勉強|べんきょう}しました。」",
+      "en": "A: Where did you study Japanese? B: At a university in America.",
+      "slots": [
+        {
+          "answer": "どこ",
+          "wrong": ["いつ", "だれ", "なに"],
+          "difficulty": 1,
+          "points": ["question-doko"],
+          "note": "どこで asks where something happens. B answers with a place: {大学|だいがく}で."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0061",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "（かさが たくさん あります）\nＡ「この {中|なか}で、（1）が あなたの かさですか。」\nＢ「その {青|あお}い かさです。」",
+      "en": "(There are many umbrellas) A: Which of these is your umbrella? B: That blue one.",
+      "slots": [
+        {
+          "answer": "どれ",
+          "wrong": ["どの", "どこ", "どちら"],
+          "difficulty": 2,
+          "points": ["question-dore"],
+          "note": "どれ asks which one of three or more, and stands alone. どの needs a noun after it, and どちら asks about two."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0062",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "Ａ「（1） {電車|でんしゃ}に のりますか。」\nＢ「{三|さん}ばんせんの {電車|でんしゃ}です。」",
+      "en": "A: Which train do you take? B: The one on platform three.",
+      "slots": [
+        {
+          "answer": "どの",
+          "wrong": ["どれ", "どんな", "どこ"],
+          "difficulty": 2,
+          "points": ["question-dono"],
+          "note": "どの comes before a noun and asks which one: どの {電車|でんしゃ}. どんな asks what kind, but B names one train."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0063",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "Ａ「{弟|おとうと}さんは（1）ですか。」\nＢ「{十|じゅっ}さいです。」",
+      "en": "A: How old is your younger brother? B: He is ten.",
+      "slots": [
+        {
+          "answer": "いくつ",
+          "wrong": ["いくら", "なん", "いつ"],
+          "difficulty": 3,
+          "points": ["question-ikutsu"],
+          "note": "いくつ asks how many, and also how old. いくら asks a price."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0064",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "Ａ「（1） きのう {学校|がっこう}を {休|やす}んだんですか。」\nＢ「ねつが ありましたから。」",
+      "en": "A: Why were you absent from school yesterday? B: Because I had a fever.",
+      "slots": [
+        {
+          "answer": "どうして",
+          "wrong": ["どう", "いつ", "どこ"],
+          "difficulty": 2,
+          "points": ["question-doushite"],
+          "note": "どうして asks why. B answers with a reason: ねつが ありましたから."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0065",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "Ａ「その {本|ほん}は だれのですか。」\nＢ「（1）は わたしのです。」",
+      "en": "A: Whose is that book? B: This is mine.",
+      "slots": [
+        {
+          "answer": "これ",
+          "wrong": ["それ", "あれ", "この"],
+          "difficulty": 3,
+          "points": ["demonstrative-pronoun"],
+          "note": "A says その, so the book is near B. B, who has it, says これ. この needs a noun after it."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0066",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "（ホテルで）\nきゃく「すみません、エレベーターは どちらですか。」\nホテルの {人|ひと}「（1）です。あの {花|はな}の {右|みぎ}です。」",
+      "en": "(At a hotel) Guest: Excuse me, where is the lift? Staff: Over there. To the right of those flowers.",
+      "slots": [
+        {
+          "answer": "あちら",
+          "wrong": ["あの", "どの", "どちら"],
+          "difficulty": 2,
+          "points": ["demonstrative-direction"],
+          "note": "あちら points to a place or way over there, and stands alone. あの and どの need a noun after them, and the staff answer rather than ask."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0067",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "この {本|ほん}は（1） おもしろく ありませんでした。",
+      "en": "This book was not interesting at all.",
+      "slots": [
+        {
+          "answer": "ぜんぜん",
+          "wrong": ["とても", "たくさん", "よく"],
+          "difficulty": 2,
+          "points": ["adverb-zenzen"],
+          "note": "ぜんぜん goes with a negative: not at all. とても makes a word stronger and goes with a positive."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0068",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "わたしは {子|こ}どもの とき、この こうえんで（1） あそびました。",
+      "en": "When I was a child, I often played in this park.",
+      "slots": [
+        {
+          "answer": "よく",
+          "wrong": ["ぜんぜん", "あまり", "まだ"],
+          "difficulty": 2,
+          "points": ["adverb-yoku"],
+          "note": "よく: often. ぜんぜん and あまり need a negative verb, and あそびました is positive."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0069",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "Ａ「{日本語|にほんご}が わかりますか。」\nＢ「はい、（1） わかります。」",
+      "en": "A: Do you understand Japanese? B: Yes, a little.",
+      "slots": [
+        {
+          "answer": "すこし",
+          "wrong": ["ぜんぜん", "あまり", "まだ"],
+          "difficulty": 1,
+          "points": ["adverb-sukoshi"],
+          "note": "すこし: a little. ぜんぜん and あまり need a negative, but B says はい and わかります."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0070",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "Ａ「あした、いっしょに えいがを {見|み}ませんか。」\nＢ「すみません、あしたは（1）…。」",
+      "en": "A: Would you like to see a movie together tomorrow? B: Sorry, tomorrow is a bit…",
+      "slots": [
+        {
+          "answer": "ちょっと",
+          "wrong": ["とても", "たくさん", "よく"],
+          "difficulty": 2,
+          "points": ["adverb-chotto"],
+          "note": "ちょっと… with a pause turns down an invitation politely. The rest is left unsaid."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0071",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "わたしは（1） {七時|しちじ}に {起|お}きます。でも、{日曜日|にちようび}は {九時|くじ}に {起|お}きます。",
+      "en": "I usually get up at seven. But on Sundays I get up at nine.",
+      "slots": [
+        {
+          "answer": "いつも",
+          "wrong": ["ぜんぜん", "あまり", "たくさん"],
+          "difficulty": 1,
+          "points": ["adverb-itsumo"],
+          "note": "いつも: always, usually. でも then gives the exception, Sunday."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0072",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "{毎日|まいにち}では ありませんが、（1） {母|はは}に てがみを {書|か}きます。",
+      "en": "Not every day, but I sometimes write letters to my mother.",
+      "slots": [
+        {
+          "answer": "ときどき",
+          "wrong": ["いつも", "ぜんぜん", "あまり"],
+          "difficulty": 2,
+          "points": ["adverb-tokidoki"],
+          "note": "ときどき: sometimes. {毎日|まいにち}では ありません rules out いつも, and ぜんぜん and あまり need a negative verb."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0073",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "（{先生|せんせい}に）\n「きょうは ありがとう ございました。（1） あした {来|き}ます。」",
+      "en": "(To a teacher) Thank you for today. I will come again tomorrow.",
+      "slots": [
+        {
+          "answer": "また",
+          "wrong": ["もう", "まだ", "よく"],
+          "difficulty": 1,
+          "points": ["adverb-mata"],
+          "note": "また: again. The student came today and will come again tomorrow."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0074",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "{十一月|じゅういちがつ}に なって、（1） さむく なりました。",
+      "en": "It became November, and it gradually got cold.",
+      "slots": [
+        {
+          "answer": "だんだん",
+          "wrong": ["ぜんぜん", "あまり", "たくさん"],
+          "difficulty": 2,
+          "points": ["adverb-dandan"],
+          "note": "だんだん: gradually. It goes with a change: さむく なりました. ぜんぜん and あまり need a negative."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0075",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "Ａ「{田中|たなか}さん、ちょっと {来|き}て ください。」\nＢ「はい、（1） {行|い}きます。」",
+      "en": "A: Tanaka-san, please come here for a moment. B: Yes, I'll come right away.",
+      "slots": [
+        {
+          "answer": "すぐ",
+          "wrong": ["まだ", "よく", "あまり"],
+          "difficulty": 1,
+          "points": ["adverb-sugu"],
+          "note": "すぐ: right away. B answers a request at once."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0076",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "わたしの へやは {広|ひろ}いです。（1）、とても {明|あか}るいです。",
+      "en": "My room is large. And it is very bright.",
+      "slots": [
+        {
+          "answer": "そして",
+          "wrong": ["でも", "それとも", "じゃあ"],
+          "difficulty": 1,
+          "points": ["conjunction-soshite"],
+          "note": "そして adds a second good point: large, and bright. でも would need a contrast."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0077",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "きのうは {頭|あたま}が いたかったです。（1）、{学校|がっこう}を {休|やす}みました。",
+      "en": "Yesterday I had a headache. So I stayed home from school.",
+      "slots": [
+        {
+          "answer": "だから",
+          "wrong": ["でも", "それとも", "じゃあ"],
+          "difficulty": 2,
+          "points": ["conjunction-dakara"],
+          "note": "だから joins a reason to its result: a headache, so no school."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0078",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "Ａ「つかれましたね。ちょっと {休|やす}み（1）。」\nＢ「ええ、そう しましょう。」",
+      "en": "A: I'm tired, aren't you? Let's rest for a bit. B: Yes, let's.",
+      "slots": [
+        {
+          "answer": "ましょう",
+          "wrong": ["ました", "ません", "ましたか"],
+          "difficulty": 1,
+          "points": ["form-mashou"],
+          "note": "〜ましょう: let's. B answers そう しましょう, so A suggested it."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0079",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "あしたは たぶん {雨|あめ}が ふる（1）。",
+      "en": "It will probably rain tomorrow.",
+      "slots": [
+        {
+          "answer": "でしょう",
+          "wrong": ["つもりです", "ことが あります", "のが {好|す}きです"],
+          "difficulty": 2,
+          "points": ["form-deshou"],
+          "note": "〜でしょう: probably. It goes with たぶん. つもり is a person's plan, and rain has no plans."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0080",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "この {町|まち}は あまり（1）。",
+      "en": "This town is not very quiet.",
+      "slots": [
+        {
+          "answer": "しずかじゃ ありません",
+          "wrong": ["しずかです", "しずかでした", "しずかな"],
+          "difficulty": 2,
+          "points": ["adverb-amari", "form-adjective-negative"],
+          "note": "あまり needs a negative: あまり しずかじゃ ありません, not very quiet."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0081",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "Ａ「この ペン、かりても いいですか。」\nＢ「はい、（1）。」",
+      "en": "A: May I borrow this pen? B: Yes, go ahead.",
+      "slots": [
+        {
+          "answer": "どうぞ",
+          "wrong": ["どういたしまして", "すみません", "いただきます"],
+          "difficulty": 1,
+          "points": ["phrase-douzo"],
+          "note": "どうぞ: please, go ahead. It gives permission or offers something."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0082",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "（{道|みち}で）\nＡ「（1）、{駅|えき}は どこですか。」\nＢ「あの {白|しろ}い たてものの {前|まえ}です。」",
+      "en": "(On the street) A: Excuse me, where is the station? B: In front of that white building.",
+      "slots": [
+        {
+          "answer": "すみません",
+          "wrong": ["どうぞ", "いただきます", "ごちそうさまでした"],
+          "difficulty": 1,
+          "points": ["phrase-sumimasen"],
+          "note": "すみません: excuse me. It gets a stranger's attention before a question."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0083",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "（{会社|かいしゃ}で）\nＡ「しつれいですが、（1）ですか。」\nＢ「{日本電気|にほんでんき}の {山田|やまだ}です。」",
+      "en": "(At a company) A: Excuse me, but who are you? B: I'm Yamada from Nihon Denki.",
+      "slots": [
+        {
+          "answer": "どなた",
+          "wrong": ["どれ", "いつ", "いくつ"],
+          "difficulty": 3,
+          "points": ["question-donata"],
+          "note": "どなた is the polite だれ, for asking who someone is. しつれいですが shows A is being polite."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0084",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "Ａ「{日曜日|にちようび}、（1） {行|い}きましたか。」\nＢ「はい、デパートへ {行|い}きました。」",
+      "en": "A: Did you go anywhere on Sunday? B: Yes, I went to a department store.",
+      "slots": [
+        {
+          "answer": "どこかへ",
+          "wrong": ["どこへ", "どこへも", "どこでも"],
+          "difficulty": 3,
+          "points": ["question-ka-indefinite"],
+          "note": "B answers はい, so A asked a yes-no question: did you go somewhere? That is どこかへ. どこへ asks where, and needs no はい."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0085",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "わたしは {日本語|にほんご}が すこし（1） わかりません。",
+      "en": "I only understand a little Japanese.",
+      "slots": [
+        {
+          "answer": "しか",
+          "wrong": ["だけ", "が", "を"],
+          "difficulty": 3,
+          "points": ["particle-shika-nai"],
+          "note": "しか, only, needs a negative verb: すこししか わかりません. だけ means the same but goes with a positive: すこしだけ わかります."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0086",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "Ａ「つくえの {上|うえ}に {何|なに}（1） ありますか。」\nＢ「{本|ほん}と ノートが あります。」",
+      "en": "A: What is on the desk? B: A book and a notebook.",
+      "slots": [
+        {
+          "answer": "が",
+          "wrong": ["は", "を", "で"],
+          "difficulty": 2,
+          "points": ["particle-ga-subject"],
+          "note": "A question word takes が, not は: {何|なに}が ありますか. ある takes が for what is there."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0087",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "Ａ「ケーキを もっと {食|た}べませんか。」\nＢ「ありがとう ございます。でも、おなかが いっぱいですから、（1） {食|た}べません。」",
+      "en": "A: Won't you have some more cake? B: Thank you. But I'm full, so I won't eat any more.",
+      "slots": [
+        {
+          "answer": "もう",
+          "wrong": ["まだ", "よく", "いつも"],
+          "difficulty": 3,
+          "points": ["adverb-mou"],
+          "note": "もう with a negative means no more: もう {食|た}べません, I won't eat any more. まだ with a negative means not yet."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0088",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "Ａ「のみものは {何|なに}が いいですか。」\nＢ「わたしは コーヒー（1） します。」",
+      "en": "A: What would you like to drink? B: I'll have coffee.",
+      "slots": [
+        {
+          "answer": "に",
+          "wrong": ["を", "が", "で"],
+          "difficulty": 3,
+          "points": ["phrase-ni-suru"],
+          "note": "〜に します: choose, I'll have. に marks the thing chosen: コーヒーに します. コーヒーを します is not Japanese."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0089",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "Ａ「{毎日|まいにち}（1） {勉強|べんきょう}しますか。」\nＢ「{二時間|にじかん}ぐらい {勉強|べんきょう}します。」",
+      "en": "A: How many hours do you study every day? B: About two hours.",
+      "slots": [
+        {
+          "answer": "{何時間|なんじかん}",
+          "wrong": ["{何時|なんじ}", "いつ", "{何回|なんかい}"],
+          "difficulty": 3,
+          "points": ["question-nani"],
+          "note": "{何時間|なんじかん} asks how long, and B answers {二時間|にじかん}. {何時|なんじ} asks what time."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0090",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "きのうは どこへも {行|い}き（1）。",
+      "en": "I didn't go anywhere yesterday.",
+      "slots": [
+        {
+          "answer": "ませんでした",
+          "wrong": ["ました", "ません", "ましょう"],
+          "difficulty": 2,
+          "points": ["form-polite-tense", "question-mo-negative"],
+          "note": "どこへも needs a negative, and きのう needs the past: ませんでした."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0091",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "ここは（1） こうえんです。",
+      "en": "This is a quiet park.",
+      "slots": [
+        {
+          "answer": "しずかな",
+          "wrong": ["しずか", "しずかの", "しずかに"],
+          "difficulty": 2,
+          "points": ["form-adjective-before-noun"],
+          "note": "A な adjective keeps な before a noun: しずかな こうえん."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0092",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "きのうは {一日中|いちにちじゅう} うち（1） いました。",
+      "en": "Yesterday I was at home all day.",
+      "slots": [
+        {
+          "answer": "に",
+          "wrong": ["で", "を", "へ"],
+          "difficulty": 2,
+          "points": ["particle-ni-existence"],
+          "note": "いる takes に for where someone is: うちに いました. で marks where an action happens."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0093",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "{駅|えき}で {友|とも}だち（1） {会|あ}いました。",
+      "en": "I met a friend at the station.",
+      "slots": [
+        {
+          "answer": "に",
+          "wrong": ["を", "で", "へ"],
+          "difficulty": 2,
+          "points": ["particle-ni-recipient"],
+          "note": "{会|あ}う takes に for the person you meet: {友|とも}だちに {会|あ}いました. {友|とも}だちを {会|あ}う is a common mistake."
+        }
+      ]
+    },
+    {
+      "id": "n5-b1-0094",
+      "type": "form",
+      "status": "reviewed",
+      "sentence": "{日本語|にほんご}の {勉強|べんきょう}が だんだん（1） なりました。",
+      "en": "Studying Japanese gradually became interesting.",
+      "slots": [
+        {
+          "answer": "おもしろく",
+          "wrong": ["おもしろい", "おもしろくて", "おもしろかった"],
+          "difficulty": 2,
+          "points": ["form-naru"],
+          "note": "An い adjective becomes く before なる: おもしろく なりました."
+        }
+      ]
+    },
+    {
       "id": "n5-b3-0001",
       "type": "passage",
       "status": "reviewed",
@@ -1350,16 +2324,222 @@
           "note": "とても makes すき stronger: like it very much. たくさん counts things, and ぜんぜん and あまり need a negative."
         }
       ]
+    },
+    {
+      "id": "n5-b3-0006",
+      "type": "passage",
+      "status": "reviewed",
+      "intro": "ミンさんは「わたしの かぞく」の さくぶんを {書|か}きました。",
+      "text": "わたしの かぞくは {五人|ごにん}です。{父|ちち}（1） {母|はは}と {兄|あに}と {妹|いもうと}と わたしです。{父|ちち}は {銀行|ぎんこう}で {働|はたら}いて います。{兄|あに}は {大学生|だいがくせい}です。いつも いそがしいので、（2） {家|いえ}に いません。{妹|いもうと}は {七|なな}さいです。わたしが {国|くに}に いた とき、まいばん {妹|いもうと}（3） いっしょに ねました。\n{今|いま}、わたしは ひとりで {日本|にほん}に います。でも、{毎週|まいしゅう} かぞくと でんわで {話|はな}します（4）、さびしく ありません。",
+      "en": "My family has five people: my father, my mother, my older brother, my younger sister and me. My father works at a bank. My brother is a university student. He is always busy, so he is not at home much. My sister is seven. When I was in my country, I slept beside my sister every night. Now I live alone in Japan. But I talk with my family on the phone every week, so I am not lonely.",
+      "blanks": [
+        {
+          "answer": "と",
+          "wrong": ["や", "も", "が"],
+          "difficulty": 1,
+          "points": ["particle-to-and"],
+          "note": "と lists every member: {父|ちち}と {母|はは}と…. The family has {五人|ごにん}, and all five are named, so not や."
+        },
+        {
+          "answer": "あまり",
+          "wrong": ["とても", "たくさん", "すこし"],
+          "difficulty": 2,
+          "points": ["adverb-amari"],
+          "note": "あまり with a negative: not much. いません is negative, and とても, たくさん and すこし do not soften a negative."
+        },
+        {
+          "answer": "と",
+          "wrong": ["に", "を", "で"],
+          "difficulty": 1,
+          "points": ["particle-to-with"],
+          "note": "〜と いっしょに: together with someone."
+        },
+        {
+          "answer": "から",
+          "wrong": ["が", "まで", "を"],
+          "difficulty": 2,
+          "points": ["conjunction-kara-reason"],
+          "note": "から gives the reason: the family talks every week, so the writer is not lonely. が would set up a contrast."
+        }
+      ]
+    },
+    {
+      "id": "n5-b3-0007",
+      "type": "passage",
+      "status": "reviewed",
+      "intro": "ゆきさんが {友|とも}だちの アンさんに メモを {書|か}きました。",
+      "text": "アンさん\nあしたは わたしの たんじょうびです。わたしの うちで パーティーを します。パーティーは {六時|ろくじ}（1） {九時|くじ}までです。わたしの うちは {駅|えき}の {前|まえ}（2） {本屋|ほんや}の となりです。\nわたしは ケーキを {作|つく}ります。のみものは ありません（3）、{何|なに}か {買|か}って {来|き}て ください。クラスの {友|とも}だちも {三人|さんにん} {来|き}ます。みんなで ゲームを（4）。\nゆき",
+      "en": "Ann-san, tomorrow is my birthday. I'm having a party at my home. The party is from six to nine. My home is next to the bookshop in front of the station. I'll make a cake. There are no drinks, so please buy something on your way. Three friends from class are coming too. Let's all play games together. Yuki",
+      "blanks": [
+        {
+          "answer": "から",
+          "wrong": ["まで", "に", "を"],
+          "difficulty": 1,
+          "points": ["particle-kara-made"],
+          "note": "から〜まで: from … to …. まで already follows {九時|くじ}."
+        },
+        {
+          "answer": "の",
+          "wrong": ["に", "で", "を"],
+          "difficulty": 1,
+          "points": ["particle-no-possessive"],
+          "note": "の joins two nouns: {駅|えき}の {前|まえ}の {本屋|ほんや}, the bookshop in front of the station."
+        },
+        {
+          "answer": "から",
+          "wrong": ["まで", "と", "を"],
+          "difficulty": 2,
+          "points": ["conjunction-kara-reason"],
+          "note": "から gives the reason: there are no drinks, so please buy some. と cannot come before a request."
+        },
+        {
+          "answer": "しましょう",
+          "wrong": ["しました", "しません", "しませんでした"],
+          "difficulty": 1,
+          "points": ["form-mashou"],
+          "note": "〜ましょう: let's. The party is tomorrow, and みんなで invites everyone to play."
+        }
+      ]
+    },
+    {
+      "id": "n5-b3-0008",
+      "type": "passage",
+      "status": "reviewed",
+      "intro": "ケンさんは「わたしの しゅみ」の さくぶんを {書|か}きました。",
+      "text": "わたしの しゅみは しゃしんです。{休|やす}みの {日|ひ}は（1） カメラを {持|も}って、{山|やま}や {川|かわ}へ {行|い}きます。{花|はな}や {鳥|とり}の しゃしんを とるのが {好|す}きです。\n{先週|せんしゅう}の {日曜日|にちようび}も {早|はや}く {起|お}きて、{近|ちか}くの {山|やま}へ（2）。そこで、とても きれいな {鳥|とり}を {見|み}ました。でも、カメラを {家|いえ}に わすれました（3）、しゃしんは ありません。\nとても ざんねんでした。{来週|らいしゅう}（4） {行|い}きます。",
+      "en": "My hobby is photography. On my days off I always take my camera and go to the mountains or rivers. I like taking pictures of flowers and birds. Last Sunday too, I got up early and went to a mountain nearby. There I saw a very beautiful bird. But I had left my camera at home, so I have no pictures. It was a real shame. I will go again next week.",
+      "blanks": [
+        {
+          "answer": "いつも",
+          "wrong": ["ぜんぜん", "あまり", "まだ"],
+          "difficulty": 1,
+          "points": ["adverb-itsumo"],
+          "note": "いつも: always. ぜんぜん and あまり need a negative verb, and まだ does not fit a habit."
+        },
+        {
+          "answer": "{行|い}きました",
+          "wrong": [
+            "{行|い}きます",
+            "{行|い}きましょう",
+            "{行|い}って ください"
+          ],
+          "difficulty": 1,
+          "points": ["form-polite-tense"],
+          "note": "{先週|せんしゅう}の {日曜日|にちようび} puts it in the past: {行|い}きました."
+        },
+        {
+          "answer": "ので",
+          "wrong": ["が", "と", "まで"],
+          "difficulty": 2,
+          "points": ["conjunction-node"],
+          "note": "ので gives the reason: no camera, so no pictures. が would set up a contrast, but there is none."
+        },
+        {
+          "answer": "また",
+          "wrong": ["まだ", "もう", "よく"],
+          "difficulty": 1,
+          "points": ["adverb-mata"],
+          "note": "また: again. The writer went last week and will go again next week."
+        }
+      ]
+    },
+    {
+      "id": "n5-b3-0009",
+      "type": "passage",
+      "status": "reviewed",
+      "intro": "サラさんは「{日本語|にほんご}の クラス」の さくぶんを {書|か}きました。",
+      "text": "わたしは {毎朝|まいあさ} {九時|くじ}から {十二時|じゅうにじ}まで、{学校|がっこう}で {日本語|にほんご}を {勉強|べんきょう}して います。クラスには {学生|がくせい}が {十人|じゅうにん} います。みんな ちがう {国|くに}（1） {来|き}ました。\nクラスでは {日本語|にほんご}（2） {話|はな}しません。はじめは とても むずかしかったです。でも、{今|いま}は {先生|せんせい}の {話|はなし}が（3） わかります。\nじゅぎょうの あとは、いつも {友|とも}だちと {図書館|としょかん}（4） しゅくだいを します。",
+      "en": "Every morning from nine to twelve, I study Japanese at school. There are ten students in the class. We all came from different countries. In class we speak only Japanese. At first it was very hard. But now I understand a little of what the teacher says. After class I always do my homework with friends at the library.",
+      "blanks": [
+        {
+          "answer": "から",
+          "wrong": ["まで", "を", "に"],
+          "difficulty": 1,
+          "points": ["particle-kara-from"],
+          "note": "から marks where someone comes from. They all came to Japan, so not に."
+        },
+        {
+          "answer": "しか",
+          "wrong": ["だけ", "も", "を"],
+          "difficulty": 3,
+          "points": ["particle-shika-nai"],
+          "note": "しか, only, needs a negative verb: {日本語|にほんご}しか {話|はな}しません, they speak only Japanese. だけ goes with a positive verb."
+        },
+        {
+          "answer": "すこし",
+          "wrong": ["ぜんぜん", "あまり", "まだ"],
+          "difficulty": 1,
+          "points": ["adverb-sukoshi"],
+          "note": "すこし: a little. でも turns from hard to easier, and ぜんぜん and あまり would need a negative."
+        },
+        {
+          "answer": "で",
+          "wrong": ["に", "を", "へ"],
+          "difficulty": 1,
+          "points": ["particle-de-place"],
+          "note": "で marks where an action happens: {図書館|としょかん}で しゅくだいを します."
+        }
+      ]
+    },
+    {
+      "id": "n5-b3-0010",
+      "type": "passage",
+      "status": "reviewed",
+      "intro": "ジョンさんは「{日本|にほん}の {食|た}べもの」の さくぶんを {書|か}きました。",
+      "text": "{日本|にほん}に {来|く}る {前|まえ}は、すしを {食|た}べた ことが ありませんでした。{日本|にほん}へ {来|き}て、はじめて {食|た}べました。とても おいしかったです。{今|いま}は すし（1） いちばん {好|す}きです。\nでも、すしは {高|たか}いです（2）、あまり {食|た}べません。よく {食|た}べるのは ラーメンです。うちの {近|ちか}くに（3） ラーメンやが あります。{毎週|まいしゅう} {金曜日|きんようび}（4） {友|とも}だちと {行|い}きます。",
+      "en": "Before I came to Japan, I had never eaten sushi. I ate it for the first time after I came to Japan. It was very good. Now I like sushi best. But sushi is expensive, so I don't eat it much. What I often eat is ramen. There is a good ramen shop near my home. I go there with friends every Friday.",
+      "blanks": [
+        {
+          "answer": "が",
+          "wrong": ["を", "に", "で"],
+          "difficulty": 2,
+          "points": ["particle-ga-object"],
+          "note": "{好|す}き takes が for what you like: すしが {好|す}きです."
+        },
+        {
+          "answer": "から",
+          "wrong": ["が", "まで", "を"],
+          "difficulty": 2,
+          "points": ["conjunction-kara-reason"],
+          "note": "から gives the reason: sushi is expensive, so the writer does not eat it much. が would set up a contrast."
+        },
+        {
+          "answer": "おいしい",
+          "wrong": ["おいしく", "おいしくて", "おいしいの"],
+          "difficulty": 2,
+          "points": ["form-adjective-before-noun"],
+          "note": "An い adjective goes straight before its noun: おいしい ラーメンや."
+        },
+        {
+          "answer": "に",
+          "wrong": ["で", "を", "と"],
+          "difficulty": 1,
+          "points": ["particle-ni-time"],
+          "note": "に marks a day or a time: {金曜日|きんようび}に."
+        }
+      ]
     }
   ],
   "review": {
+    "particle-wa-topic": {
+      "label": "は",
+      "url": "https://www.tofugu.com/japanese-grammar/particle-wa/#as-a-topic-marker"
+    },
     "particle-wa-contrast": {
       "label": "は",
       "url": "https://www.tofugu.com/japanese-grammar/particle-wa/#for-contrast"
     },
+    "particle-ga-subject": {
+      "label": "が",
+      "url": "https://www.tofugu.com/japanese-grammar/particle-ga/"
+    },
     "particle-ga-object": {
       "label": "が",
       "url": "https://www.tofugu.com/japanese-grammar/particle-ga/#with-verb-like-adjectives"
+    },
+    "particle-o-object": {
+      "label": "を",
+      "url": "https://www.tofugu.com/japanese-grammar/particle-wo/#for-direct-objects"
     },
     "particle-o-through": {
       "label": "を",
@@ -1368,6 +2548,10 @@
     "particle-ni-time": {
       "label": "に",
       "url": "https://www.tofugu.com/japanese-grammar/particle-ni/#for-points-in-time"
+    },
+    "particle-ni-destination": {
+      "label": "に",
+      "url": "https://www.tofugu.com/japanese-grammar/particle-ni/#for-location"
     },
     "particle-ni-existence": {
       "label": "に",
@@ -1393,6 +2577,10 @@
       "label": "で",
       "url": "https://www.tofugu.com/japanese-grammar/particle-de/#for-quantities-and-measurements"
     },
+    "particle-to-and": {
+      "label": "と",
+      "url": "https://www.tofugu.com/japanese-grammar/particle-to/#as-in-and"
+    },
     "particle-to-with": {
       "label": "と",
       "url": "https://www.tofugu.com/japanese-grammar/particle-to/#as-in-with"
@@ -1417,6 +2605,10 @@
       "label": "の",
       "url": "https://www.tofugu.com/japanese-grammar/particle-no-noun-modifier/#noun----noun"
     },
+    "particle-kara-from": {
+      "label": "から",
+      "url": "https://www.tofugu.com/japanese-grammar/particle-kara/"
+    },
     "particle-kara-made": {
       "label": "から〜まで",
       "url": "https://www.tofugu.com/japanese-grammar/particle-made/"
@@ -1425,6 +2617,10 @@
       "label": "より",
       "url": "https://www.tofugu.com/japanese-grammar/particle-yori-than/"
     },
+    "particle-ka-question": {
+      "label": "か",
+      "url": "https://www.tofugu.com/japanese-grammar/particle-ka/#for-asking-questions"
+    },
     "particle-ka-or": {
       "label": "か",
       "url": "https://www.tofugu.com/japanese-grammar/particle-ka/#for-alternatives"
@@ -1432,6 +2628,26 @@
     "particle-dake-only": {
       "label": "だけ",
       "url": "https://www.tofugu.com/japanese-grammar/dake/"
+    },
+    "particle-shika-nai": {
+      "label": "しか〜ない",
+      "url": "https://www.tofugu.com/japanese-grammar/dake/#vs-"
+    },
+    "question-nani": {
+      "label": "なに／なん",
+      "url": "https://www.tofugu.com/japanese-grammar/question-words/#for-what"
+    },
+    "question-dare": {
+      "label": "だれ",
+      "url": "https://www.tofugu.com/japanese-grammar/question-words/#for-who"
+    },
+    "question-donata": {
+      "label": "どなた",
+      "url": "https://www.tofugu.com/japanese-grammar/question-words/#for-who"
+    },
+    "question-doko": {
+      "label": "どこ",
+      "url": "https://www.tofugu.com/japanese-grammar/question-words/#for-where"
     },
     "question-dochira": {
       "label": "どちら",
@@ -1449,13 +2665,37 @@
       "label": "どんな",
       "url": "https://www.tofugu.com/japanese-grammar/question-words/#for-what-kind-of-"
     },
+    "question-dore": {
+      "label": "どれ",
+      "url": "https://www.tofugu.com/japanese-grammar/kore-sore-are-dore/#for-which-one-out-of-three-or-more-choices"
+    },
+    "question-dono": {
+      "label": "どの",
+      "url": "https://www.tofugu.com/japanese-grammar/kono-sono-ano-dono/#for-which-out-of-three-or-more-options"
+    },
     "question-ikura": {
       "label": "いくら",
       "url": "https://www.tofugu.com/japanese-grammar/question-words/#for-how-much-costprice"
     },
+    "question-ikutsu": {
+      "label": "いくつ",
+      "url": "https://www.tofugu.com/japanese-grammar/question-words/#for-how-many"
+    },
+    "question-doushite": {
+      "label": "どうして",
+      "url": "https://www.tofugu.com/japanese-grammar/question-words/#for-why"
+    },
     "question-mo-negative": {
       "label": "なにも・だれも・どこも",
       "url": "https://www.tofugu.com/japanese-grammar/question-words/#question-word---1"
+    },
+    "question-ka-indefinite": {
+      "label": "なにか・だれか・どこか",
+      "url": "https://www.tofugu.com/japanese-grammar/particle-ka/#for-indefinite-pronouns"
+    },
+    "demonstrative-pronoun": {
+      "label": "これ／それ／あれ",
+      "url": "https://www.tofugu.com/japanese-grammar/kore-sore-are-dore/"
     },
     "demonstrative-adnominal": {
       "label": "この／その／あの",
@@ -1464,6 +2704,10 @@
     "demonstrative-place": {
       "label": "ここ／そこ／あそこ",
       "url": "https://www.tofugu.com/japanese-grammar/koko-soko-asoko-doko/"
+    },
+    "demonstrative-direction": {
+      "label": "こちら／そちら／あちら",
+      "url": "https://www.tofugu.com/japanese-grammar/kochira-sochira-achira-dochira/#for-directions-and-places"
     },
     "adverb-mou": {
       "label": "もう",
@@ -1485,8 +2729,16 @@
       "label": "いっしょに",
       "url": "https://www.tofugu.com/japanese-grammar/particle-to/#as-in-with"
     },
+    "adverb-ichiban": {
+      "label": "いちばん",
+      "url": "https://www.tofugu.com/japanese-grammar/naka/#for-out-of"
+    },
     "conjunction-demo": {
       "label": "でも",
+      "url": "https://www.tofugu.com/japanese-grammar/da/#in-the-middle-or-beginning-of-a-sentence"
+    },
+    "conjunction-dakara": {
+      "label": "だから",
       "url": "https://www.tofugu.com/japanese-grammar/da/#in-the-middle-or-beginning-of-a-sentence"
     },
     "conjunction-ga-but": {
@@ -1497,9 +2749,17 @@
       "label": "〜ので",
       "url": "https://www.tofugu.com/japanese-grammar/conjunctive-particle-node/"
     },
+    "conjunction-kara-reason": {
+      "label": "〜から",
+      "url": "https://www.tofugu.com/japanese-grammar/particle-kara/#for-reasons"
+    },
     "form-masen-ka": {
       "label": "〜ませんか",
       "url": "https://www.tofugu.com/japanese-grammar/masu/#and--for-politely-asking-questions"
+    },
+    "form-mashou": {
+      "label": "〜ましょう",
+      "url": "https://www.tofugu.com/japanese-grammar/verb-volitional-form-you/#proposing-and-inviting"
     },
     "form-mashou-ka": {
       "label": "〜ましょうか",
@@ -1565,9 +2825,17 @@
       "label": "〜つもりです",
       "url": "https://www.tofugu.com/japanese-grammar/tsumori/"
     },
+    "form-deshou": {
+      "label": "〜でしょう",
+      "url": "https://www.tofugu.com/japanese-grammar/deshou/"
+    },
     "form-naru": {
       "label": "〜く／〜になる",
       "url": "https://www.tofugu.com/japanese-grammar/naru/"
+    },
+    "form-adjective-negative": {
+      "label": "〜くない／〜じゃない",
+      "url": "https://www.tofugu.com/japanese-grammar/i-adjective-negative-form-kunai/"
     },
     "form-adjective-past": {
       "label": "〜かった／〜でした",
@@ -1580,6 +2848,10 @@
     "form-te-link": {
       "label": "〜くて／〜で",
       "url": "https://www.tofugu.com/japanese-grammar/te-form/#form-for-and"
+    },
+    "form-adjective-before-noun": {
+      "label": "〜い／〜な ＋ noun",
+      "url": "https://www.tofugu.com/japanese-grammar/na-adjective/#before-a-noun"
     },
     "form-n-desu": {
       "label": "〜んです",
@@ -1624,6 +2896,10 @@
     "phrase-ikaga-desu-ka": {
       "label": "〜はいかがですか",
       "url": "https://www.tofugu.com/japanese-grammar/question-words/#for-how"
+    },
+    "phrase-ni-suru": {
+      "label": "〜にします",
+      "url": "https://www.tofugu.com/japanese-grammar/suru/#for-selecting-or-deciding-something"
     }
   }
 }
