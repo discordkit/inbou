@@ -456,7 +456,7 @@
 
 - id: n5-b2-0041
   type: compose
-  status: draft
+  status: reviewed
   sentence: "すみません、/ ここ/に / なまえ/を / {書|か}いて / ください。"
   en: Excuse me, please write your name here.
   windows:
@@ -467,7 +467,7 @@
 
 - id: n5-b2-0042
   type: compose
-  status: draft
+  status: reviewed
   sentence: "あの / {白|しろ}い / ぼうし/を / かぶって / いる / {人|ひと}/は / {山田|やまだ}さんです。"
   en: The person wearing that white hat is Yamada-san.
   windows:
@@ -478,7 +478,7 @@
 
 - id: n5-b2-0043
   type: compose
-  status: draft
+  status: reviewed
   sentence: "わたしは / {夏|なつ}/より / {冬|ふゆ}/の / ほう/が / {好|す}きです。"
   en: I like winter better than summer.
   windows:
@@ -489,7 +489,7 @@
 
 - id: n5-b2-0044
   type: compose
-  status: draft
+  status: reviewed
   sentence: "この / りんご/は / {一|ひと}つ / いくら/ですか。"
   en: How much is one of these apples?
   windows:
@@ -500,7 +500,7 @@
 
 - id: n5-b2-0045
   type: compose
-  status: draft
+  status: reviewed
   sentence: "この / こと/は / だれ/に/も / {言|い}わないで / ください。"
   en: Please don't tell anyone about this.
   windows:
@@ -511,7 +511,7 @@
 
 - id: n5-b2-0046
   type: compose
-  status: draft
+  status: reviewed
   sentence: "あした / テスト/が / ある / から / {早|はや}く / ねます。"
   en: I have a test tomorrow, so I will go to bed early.
   windows:
@@ -522,7 +522,7 @@
 
 - id: n5-b2-0047
   type: compose
-  status: draft
+  status: reviewed
   sentence: "{田中|たなか}さんは / どんな / {音楽|おんがく}/が / {好|す}き/ですか。"
   en: What kind of music does Tanaka-san like?
   windows:
@@ -533,7 +533,7 @@
 
 - id: n5-b2-0048
   type: compose
-  status: draft
+  status: reviewed
   sentence: "{子|こ}ども/の / とき/に / よく / この / {川|かわ}/で / あそびました。"
   en: When I was a child, I often played in this river.
   windows:
@@ -544,7 +544,7 @@
 
 - id: n5-b2-0049
   type: compose
-  status: draft
+  status: reviewed
   sentence: "{図書館|としょかん}では / {大|おお}きい / {声|こえ}/で / {話|はな}さないで / ください。"
   en: Please do not talk loudly in the library.
   windows:
@@ -555,7 +555,7 @@
 
 - id: n5-b2-0050
   type: compose
-  status: draft
+  status: reviewed
   sentence: "ごはん/を / {食|た}べた / あと/で / さんぽ/を / します。"
   en: After I eat, I take a walk.
   windows:
@@ -566,7 +566,7 @@
 
 - id: n5-b2-0051
   type: compose
-  status: draft
+  status: reviewed
   sentence: "あの / {店|みせ}/は / ケーキ/が / とても / おいしいです。"
   en: That shop's cakes are very good.
   windows:
@@ -577,7 +577,7 @@
 
 - id: n5-b2-0052
   type: compose
-  status: draft
+  status: reviewed
   sentence: "この / かばん/は / あれ/より / {高|たか}いです。"
   en: This bag is more expensive than that one.
   windows:
@@ -588,7 +588,7 @@
 
 - id: n5-b2-0053
   type: compose
-  status: draft
+  status: reviewed
   sentence: "あしたは / どこ/へ/も / {行|い}かない / つもり/です。"
   en: I don't plan to go anywhere tomorrow.
   windows:
@@ -599,7 +599,7 @@
 
 - id: n5-b2-0054
   type: compose
-  status: draft
+  status: reviewed
   sentence: "わたしは / {毎朝|まいあさ} / {七時|しちじ}/の / バス/に / のります。"
   en: Every morning I take the seven o'clock bus.
   windows:
@@ -610,7 +610,7 @@
 
 - id: n5-b2-0055
   type: compose
-  status: draft
+  status: reviewed
   sentence: "{駅|えき}/の / {前|まえ}/で / {友|とも}だち/を / {待|ま}ちました。"
   en: I waited for my friend in front of the station.
   windows:
@@ -621,7 +621,7 @@
 
 - id: n5-b2-0056
   type: compose
-  status: draft
+  status: reviewed
   sentence: "わたしの / {好|す}きな / くだもの/は / りんご/です。"
   en: My favourite fruit is apples.
   windows:
@@ -632,7 +632,7 @@
 
 - id: n5-b2-0057
   type: compose
-  status: draft
+  status: reviewed
   sentence: "きょう/は / {日曜日|にちようび}/な/ので / {学校|がっこう}/は / {休|やす}みです。"
   en: Today is Sunday, so there is no school.
   windows:
@@ -643,7 +643,7 @@
 
 - id: n5-b2-0058
   type: compose
-  status: draft
+  status: reviewed
   sentence: "テーブルの / {上|うえ}/に / りんご/や / バナナ/など/が / あります。"
   en: There are apples, bananas and so on on the table.
   windows:
@@ -654,7 +654,7 @@
 
 - id: n5-b2-0059
   type: compose
-  status: draft
+  status: reviewed
   sentence: "あなた/の / かさ/は / どれ/ですか。"
   en: Which one is your umbrella?
   windows:
@@ -665,7 +665,7 @@
 
 - id: n5-b2-0060
   type: compose
-  status: draft
+  status: reviewed
   sentence: "この / へや/に/は / テレビ/が / ありません。"
   en: There is no TV in this room.
   windows:
