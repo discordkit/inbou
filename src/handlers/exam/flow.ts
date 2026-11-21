@@ -2,7 +2,7 @@ import type { Interaction } from "@discordkit/client/interactions/types/Interact
 import type { DiscordEffects, V2Effects } from "../discord.js";
 import type { TestId } from "./blueprint.js";
 import { drawTest, type Random } from "./draw.js";
-import type { Item } from "./items.js";
+import type { Item, ReviewLink } from "./items.js";
 import {
   answersOf,
   cardAt,
@@ -50,6 +50,8 @@ export interface ExamDeps {
   session: ExamPort;
   /** Reviewed items only. Drafts never reach a channel. */
   items: readonly Item[];
+  /** Where to read about each grammar point, by point id. */
+  review: Readonly<Record<string, ReviewLink>>;
   /** Injected so tests can pin the draw. */
   random: Random;
   /** Injected so tests can pin times. */
@@ -134,7 +136,7 @@ export const startTest = async (
     return;
   }
 
-  const questions = drawTest(test, deps.items, deps.random);
+  const questions = drawTest(test, deps.items, deps.review, deps.random);
   if (questions.length === 0) {
     await refuse(`No questions are ready for this test yet.`);
     return;

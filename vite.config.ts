@@ -301,6 +301,11 @@ export default defineConfig({
       "exam:build": {
         command: `node scripts/build-exam.mjs`,
         cache: false
+      },
+      // Fetches every Tofugu page the grammar points link to, and checks each section exists. Needs the network, so it runs on demand, not in CI.
+      "exam:links": {
+        command: `node scripts/check-review-links.mjs`,
+        cache: false
       }
     }
   },

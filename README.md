@@ -60,7 +60,7 @@ The full design is in [docs/specs/conjugation-quiz.md](docs/specs/conjugation-qu
 
 ### JLPT mock tests
 
-Practice in the shape of the real JLPT paper. The bot asks one question at a time with numbered buttons. Everyone votes privately, can change their vote until the question closes, and scores if they are right. Speed does not count, and harder questions are worth more. Each reveal teaches the point the question tested, and the end of a test shows everyone's score, with a private breakdown for each player.
+Practice in the shape of the real JLPT paper. The bot asks one question at a time with numbered buttons. Everyone votes privately, can change their vote until the question closes, and scores if they are right. Speed does not count, and harder questions are worth more. Each reveal teaches the point the question tested and, where Tofugu has an article on it, links there. The end of a test shows everyone's score, with a private breakdown for each player that links each missed question the same way.
 
 | Command         | What it does                                                                                                  |
 | --------------- | ------------------------------------------------------------------------------------------------------------- |

@@ -6,7 +6,7 @@ import {
 } from "@discordkit/client";
 import type { Mondai, TestId } from "./blueprint.js";
 import { OPTION_COUNT, type ExamQuestion } from "./draw.js";
-import { bare, BLANK, display, readingsOf } from "./items.js";
+import { bare, BLANK, display, readingsOf, type ReviewLink } from "./items.js";
 import type { Answer, Result, Tally } from "./machine.js";
 
 /**
@@ -32,6 +32,25 @@ const SLATE = 0x3a_3f_44;
 
 /** Discord's cap on a button label. */
 export const LABEL_MAX = 80;
+
+/** Discord's cap on a message's `content`, which My results is. */
+export const CONTENT_MAX = 2000;
+
+/**
+ * Links to read more, as `[で](<url>)`.
+ *
+ * The `<>` stops Discord from adding a preview card for each link. Square brackets in a label would end the link text early, so they are escaped.
+ */
+const reviewLinks = (review: readonly ReviewLink[] | undefined): string =>
+  (review ?? [])
+    .map(({ label, url }) => `[${label.replace(/[[\]]/gu, `\\$&`)}](<${url}>)`)
+    .join(` · `);
+
+/** A small line under a teaching note, or nothing when no page covers it. */
+const reviewLine = (review: readonly ReviewLink[] | undefined): string => {
+  const links = reviewLinks(review);
+  return links === `` ? `` : `\n-# Review on Tofugu: ${links}`;
+};
 
 /**
  * The custom ids the buttons carry.
@@ -335,7 +354,10 @@ export const revealMessage = (
               question.en === `` ? `` : `\n_${question.en}_`
             }`
           },
-          { type: ComponentType.TextDisplay, content: display(question.note) },
+          {
+            type: ComponentType.TextDisplay,
+            content: `${display(question.note)}${reviewLine(question.review)}`
+          },
           { type: ComponentType.Separator, divider: true, spacing: 1 },
           {
             type: ComponentType.TextDisplay,
@@ -349,7 +371,7 @@ export const revealMessage = (
   const blanks = results
     .map(({ question, tally }) => {
       const answer = display(question.options.at(question.correct) ?? ``);
-      return `✅ **［${String(question.number)}］ ${String(question.correct + 1)} ${answer}** · ${summaryOf(tally)}\n${display(question.note)}`;
+      return `✅ **［${String(question.number)}］ ${String(question.correct + 1)} ${answer}** · ${summaryOf(tally)}\n${display(question.note)}${reviewLine(question.review)}`;
     })
     .join(`\n\n`);
   const en = results
@@ -475,11 +497,16 @@ export const resultsMessage = (
   ];
 };
 
+/** Said when review links were left out of My results to fit. */
+const LINKS_LEFT_OUT = `-# Some review links did not fit here. The answer card for each question has them.`;
+
 /**
  * One player's answers, privately.
  *
  * Plain text in an ephemeral reply: it is for one person, and every missed
- * question shows the right answer beside theirs.
+ * question shows the right answer beside theirs, with where to review it.
+ *
+ * A reply's content is capped at 2,000 characters, and a test with many misses can carry more links than that. So the links go from the last miss back until the reply fits. The answers always stay, and every answer card above has the links.
  */
 export const myResultsText = (
   questions: readonly ExamQuestion[],
@@ -494,15 +521,37 @@ export const myResultsText = (
   const lines = answers.map((answer) => {
     const number = String(answer.number);
     const question = questions.find((q) => q.number === answer.number);
-    if (question === undefined) return `${number} ?`;
+    if (question === undefined) return { text: `${number} ?`, links: `` };
     const right = display(question.options.at(question.correct) ?? ``);
-    if (answer.correct) return `${number} ✅ ${right}`;
+    if (answer.correct) return { text: `${number} ✅ ${right}`, links: `` };
     const chose =
       answer.chose === null
         ? `no answer`
         : display(question.options.at(answer.chose) ?? ``);
-    return `${number} ❌ ${chose} → **${right}**`;
+    return {
+      text: `${number} ❌ ${chose} → **${right}**`,
+      links: reviewLinks(question.review)
+    };
   });
 
-  return [head, ...lines, GUIDE].join(`\n`);
+  /** The reply with links on the first `kept` lines only. */
+  const withLinks = (kept: number): string => {
+    const leftOut = lines.slice(kept).some((line) => line.links !== ``);
+    return [
+      head,
+      ...lines.map((line, index) =>
+        index < kept && line.links !== ``
+          ? `${line.text} · ${line.links}`
+          : line.text
+      ),
+      ...(leftOut ? [LINKS_LEFT_OUT] : []),
+      GUIDE
+    ].join(`\n`);
+  };
+
+  for (let kept = lines.length; kept > 0; kept -= 1) {
+    const text = withLinks(kept);
+    if (text.length <= CONTENT_MAX) return text;
+  }
+  return withLinks(0);
 };

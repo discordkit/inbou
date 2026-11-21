@@ -18,6 +18,7 @@ import {
   type FormItem,
   type Item,
   type PassageItem,
+  type ReviewLink,
   type Slot
 } from "./items.js";
 
@@ -74,6 +75,12 @@ export interface ExamQuestion {
   /** The English, or `` for a passage question before its last. */
   en: string;
   note: string;
+  /**
+   * Where to read about the question's grammar, each page once.
+   *
+   * Optional because a test drawn before review links existed is stored without them, and may still be running when they deploy.
+   */
+  review?: ReviewLink[];
   /** Routes a vote to this exact question; a press on any other is stale. */
   token: string;
   timeoutMs: number;
@@ -433,6 +440,25 @@ const drawPassage = (
 };
 
 /**
+ * The review links for a question's grammar points, each page once.
+ *
+ * Two points can share a page, such as と for "with" and いっしょに. One link is enough.
+ */
+export const reviewOf = (
+  points: readonly string[],
+  /** Partial: a point with no page has no entry. */
+  links: Readonly<Partial<Record<string, ReviewLink>>>
+): ReviewLink[] => {
+  const seen = new Set<string>();
+  return points.flatMap((point) => {
+    const link = links[point];
+    if (link === undefined || seen.has(link.url)) return [];
+    seen.add(link.url);
+    return [link];
+  });
+};
+
+/**
  * Draw a whole test, once, when it starts.
  *
  * The session stores the result, so nothing about the draw needs to survive
@@ -441,6 +467,7 @@ const drawPassage = (
 export const drawTest = (
   test: TestId,
   items: readonly Item[],
+  links: Readonly<Record<string, ReviewLink>>,
   random: Random
 ): ExamQuestion[] => {
   const questions: ExamQuestion[] = [];
@@ -468,5 +495,8 @@ export const drawTest = (
       }
     }
   }
-  return questions;
+  return questions.map((question) => ({
+    ...question,
+    review: reviewOf(question.points, links)
+  }));
 };

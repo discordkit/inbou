@@ -7,6 +7,7 @@ import {
   composeQuestion,
   formQuestion,
   passageQuestions,
+  reviewOf,
   type ExamQuestion
 } from "../draw.js";
 import {
@@ -16,6 +17,7 @@ import {
   grammarPointsSchema,
   itemProblems,
   itemsSchema,
+  reviewLinksOf,
   WINDOW_SIZE,
   type Item,
   type Slot
@@ -141,8 +143,13 @@ describe(`the mock-test corpus`, () => {
     // window, and on each passage as one card with every blank asked.
     const tally = { counts: [9, 9, 9, 9], correct: 0, scorers: [] };
     const over: string[] = [];
+    // Drafts included, so a draft's links are measured before it ships.
+    const links = reviewLinksOf(points, items);
     for (const item of items) {
-      const questions = longestQuestions(item);
+      const questions = longestQuestions(item).map((question) => ({
+        ...question,
+        review: reviewOf(question.points, links)
+      }));
       const cards =
         item.type === `passage` ? [questions] : questions.map((q) => [q]);
       for (const card of cards) {
@@ -184,6 +191,16 @@ describe(`the mock-test corpus`, () => {
     expect(corpus.drafts).toBe(false);
     expect(corpus.items).toEqual(
       items.filter((item) => item.status === `reviewed`)
+    );
+  });
+
+  it(`ships the review link of every point in use, as the source says`, () => {
+    // WHY: the links are built into corpus.json too. A page added or fixed in grammar-points.yaml without a rebuild would leave students with a missing or broken link.
+    expect(corpus.review).toEqual(
+      reviewLinksOf(
+        points,
+        items.filter((item) => item.status === `reviewed`)
+      )
     );
   });
 });

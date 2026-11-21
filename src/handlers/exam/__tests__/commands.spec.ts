@@ -24,6 +24,7 @@ const recordingDeps = () => {
     cards: { post: async () => `m1`, edit: async () => {} },
     session,
     items: [],
+    review: {},
     random: Math.random,
     now: Date.now,
     quizRunning: async () => false

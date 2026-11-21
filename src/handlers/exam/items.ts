@@ -183,10 +183,59 @@ export const joinChunks = (chunks: readonly Chunk[]): string =>
 export const grammarPointSchema = v.strictObject({
   id: v.pipe(v.string(), v.regex(/^[a-z0-9-]+$/u)),
   pattern: text,
-  meaning: text
+  meaning: text,
+  /** A Tofugu grammar page, and optionally `#section`, to review the point. */
+  tofugu: v.optional(
+    v.pipe(v.string(), v.regex(/^[a-z0-9-]+(?:#[a-z0-9-]+)?$/u))
+  )
 });
 export const grammarPointsSchema = v.array(grammarPointSchema);
 export type GrammarPoint = v.InferOutput<typeof grammarPointSchema>;
+
+/** Where a student who missed a grammar point can read about it. */
+export interface ReviewLink {
+  /** The point as the paper writes it, such as `で`. */
+  label: string;
+  url: string;
+}
+
+const TOFUGU = `https://www.tofugu.com/japanese-grammar/`;
+
+/** `particle-de#for-means-of-an-action` as the address it names. */
+export const tofuguUrl = (page: string): string => {
+  const hash = page.indexOf(`#`);
+  return hash === -1
+    ? `${TOFUGU}${page}/`
+    : `${TOFUGU}${page.slice(0, hash)}/${page.slice(hash)}`;
+};
+
+/** Every grammar point an item tests, across its slots, windows or blanks. */
+export const pointsOf = (item: Item): string[] =>
+  (item.type === `form`
+    ? item.slots
+    : item.type === `compose`
+      ? item.windows
+      : item.blanks
+  ).flatMap((unit) => unit.points);
+
+/**
+ * The review link for every point an item uses, by point id.
+ *
+ * Only points with a page, and only points in use, so the bundle carries no link that no question can show.
+ */
+export const reviewLinksOf = (
+  points: readonly GrammarPoint[],
+  items: readonly Item[]
+): Record<string, ReviewLink> => {
+  const used = new Set(items.flatMap(pointsOf));
+  return Object.fromEntries(
+    points.flatMap((point) =>
+      point.tofugu !== undefined && used.has(point.id)
+        ? [[point.id, { label: point.pattern, url: tofuguUrl(point.tofugu) }]]
+        : []
+    )
+  );
+};
 
 // ─── Markup ────────────────────────────────────────────────────────────────
 

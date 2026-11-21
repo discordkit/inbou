@@ -10,7 +10,7 @@ import {
   type ExamDeps,
   type ExamPort
 } from "../flow.js";
-import type { FormItem, Item, PassageItem } from "../items.js";
+import type { FormItem, Item, PassageItem, ReviewLink } from "../items.js";
 import {
   begin,
   castVote,
@@ -96,7 +96,13 @@ const seeded = (seed: number): (() => number) => {
   };
 };
 
-const setup = (options: { quizRunning?: boolean; items?: Item[] } = {}) => {
+const setup = (
+  options: {
+    quizRunning?: boolean;
+    items?: Item[];
+    review?: Record<string, ReviewLink>;
+  } = {}
+) => {
   const calls: Call[] = [];
   let posted = 0;
   const deps: ExamDeps = {
@@ -118,6 +124,7 @@ const setup = (options: { quizRunning?: boolean; items?: Item[] } = {}) => {
     },
     session: memorySession(),
     items: options.items ?? [item(1), item(2), item(3)],
+    review: options.review ?? {},
     // Seeded, not a constant: a constant would give every question the same
     // token, and the stale-press check would have nothing to tell apart.
     random: seeded(42),
@@ -228,6 +235,24 @@ describe(`running a test`, () => {
     expect(after.map((call) => call.kind)).toEqual([`edit`, `post`]);
     expect(after[0]).toMatchObject({ kind: `edit`, id: `m2` });
     expect(bodyOf(after[1])).toContain(note);
+  });
+
+  it(`links the revealed question's grammar to its review page`, async () => {
+    // WHY: the links travel from the corpus through the draw and the session to the reveal. Any step that drops them leaves students with nothing to click, and no error anywhere.
+    const url = (point: string) =>
+      `https://www.tofugu.com/japanese-grammar/${point}/`;
+    const review = Object.fromEntries(
+      [`point-1`, `point-2`, `point-3`].map((point) => [
+        point,
+        { label: point, url: url(point) }
+      ])
+    );
+    const { deps, calls } = await started({ review });
+    const point = (await deps.session.current())?.context.questions.at(0)
+      ?.points[0];
+    await handleTimeout(deps, `chan`);
+    expect(point).toBeDefined();
+    expect(bodyOf(calls.at(-1))).toContain(`(<${url(point ?? ``)}>)`);
   });
 
   it(`posts the results after the last question, and does not pause`, async () => {

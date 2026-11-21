@@ -51,7 +51,8 @@ One test belongs to one channel. The bot posts a question, players press a numbe
   │ ## 電車(でんしゃ)で 学校(がっこう)へ 行(い)きます。
   │ Answer  2 で          2 of 3 correct
   │ I go to school by train.
-  └ で marks the means: by train, by bus, with a pen.
+  │ で marks the means: by train, by bus, with a pen.
+  └ Review on Tofugu: で
 ```
 
 ### Rules
@@ -68,6 +69,16 @@ One test belongs to one channel. The bot posts a question, players press a numbe
 ### Results
 
 At the end, the bot posts a results card with each player's score and percentage. A **My results** button gives each player a private breakdown per 問題 and the items they missed, with the answers.
+
+### Review links
+
+A student who misses a question should know where to read about it. Each grammar point in `grammar-points.yaml` can name a Tofugu grammar article, and a section of it, in its `tofugu` field. The reveal shows the links for the question's points under the teaching note. My results shows them again beside each missed question, and only there: a link beside a right answer would bury the ones that matter.
+
+- **Only where a page really covers the point.** The nearest page is fine; a page that does not teach the point is not. About one point in six has no link (〜ては いけません, 〜ほうがいい, とても, and others). `exam:build` lists the points in use without one.
+- **Each page once per question.** Two points can share a section, such as と for "with" and いっしょに.
+- **No preview cards.** Links are written `[で](<url>)`; the `<>` stops Discord from adding a card for each one.
+- **My results stays under Discord's 2,000 characters.** A student who missed most of a test could otherwise get no reply at all. When the links do not fit, they are left out from the last miss back, and the reply says the answer cards have them. The answers always stay.
+- **Links are checked against the live site.** The build checks only their shape. `vp run exam:links` fetches each page once and checks that every section exists. Run it after adding or changing a link.
 
 The card also shows a guide line: the real N5 needs 38 of 120 (32%) in its first scoring section. The JLPT scales its scores, so we show this as a guide, not as an equivalent.
 

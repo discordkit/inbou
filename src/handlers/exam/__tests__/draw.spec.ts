@@ -7,6 +7,7 @@ import {
   formQuestion,
   OPTION_COUNT,
   passageQuestions,
+  reviewOf,
   timeoutFor,
   type Random
 } from "../draw.js";
@@ -234,7 +235,12 @@ describe(`drawing a test`, () => {
   it(`numbers its questions straight through`, () => {
     // WHY: the paper numbers questions across the whole section, and the
     // reveal and the results refer to those numbers.
-    const questions = drawTest(`bunpou`, deck({ 1: 5, 2: 5, 3: 5 }), seeded(9));
+    const questions = drawTest(
+      `bunpou`,
+      deck({ 1: 5, 2: 5, 3: 5 }),
+      {},
+      seeded(9)
+    );
     expect(questions.map((q) => q.number)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
   });
 
@@ -244,9 +250,41 @@ describe(`drawing a test`, () => {
     const questions = drawTest(
       `bunpou`,
       deck({ 1: 5, 2: 5, 3: 5 }),
+      {},
       seeded(10)
     );
     expect(new Set(questions.map((q) => q.token)).size).toBe(questions.length);
+  });
+
+  it(`gives every question the review page for its grammar point`, () => {
+    // WHY: the reveal and My results read links from the stored question, after the draw. A question drawn without them would show none, however complete the corpus.
+    const items = deck({ 1: 5, 2: 5, 3: 5 });
+    const links = Object.fromEntries(
+      items
+        .flatMap((item) => item.slots.flatMap((slot) => slot.points))
+        .map((point) => [
+          point,
+          { label: point, url: `https://www.tofugu.com/${point}/` }
+        ])
+    );
+    const questions = drawTest(`bunpou`, items, links, seeded(9));
+    expect(questions.length).toBeGreaterThan(0);
+    for (const q of questions) {
+      expect(q.review).toEqual(q.points.map((point) => links[point]));
+    }
+  });
+});
+
+describe(`review links`, () => {
+  it(`gives a page once when two points share it, and skips a point with none`, () => {
+    // WHY: と for "with" and いっしょに share one Tofugu section. The same link twice reads like a mistake, and a point with no page must not leave an empty link.
+    const url = `https://www.tofugu.com/japanese-grammar/particle-to/#as-in-with`;
+    expect(
+      reviewOf([`particle-to-with`, `adverb-issho-ni`, `form-kata`], {
+        "particle-to-with": { label: `と`, url },
+        "adverb-issho-ni": { label: `いっしょに`, url }
+      })
+    ).toEqual([{ label: `と`, url }]);
   });
 });
 
@@ -439,7 +477,7 @@ describe(`a full grammar test`, () => {
       })),
       passage
     ];
-    const questions = drawTest(`bunpou`, items, seeded(21));
+    const questions = drawTest(`bunpou`, items, {}, seeded(21));
     expect(questions.map((q) => q.number)).toEqual(
       Array.from({ length: 17 }, (_, i) => i + 1)
     );

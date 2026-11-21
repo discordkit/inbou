@@ -10,7 +10,7 @@ import {
   type ExamDeps,
   type ExamPort
 } from "./exam/flow.js";
-import type { Item } from "./exam/items.js";
+import type { Item, ReviewLink } from "./exam/items.js";
 import type { ExamSession } from "./exam/session.js";
 import { handleMessage } from "./messages.js";
 import corpus from "./quiz/corpus.json" with { type: "json" };
@@ -115,12 +115,14 @@ const commandDepsFor = (env: Env, channelId: string): CommandDeps => ({
  * `exam:build` validated them, and ships no drafts.
  */
 const items = examCorpus.items as Item[];
+const review: Readonly<Record<string, ReviewLink>> = examCorpus.review;
 
 const examDepsFor = (env: Env, channelId: string): ExamDeps => ({
   discord: discordEffects,
   cards: v2Effects,
   session: examFor(env, channelId),
   items,
+  review,
   random: Math.random,
   now: Date.now,
   quizRunning: async () => running(sessionFor(env, channelId))

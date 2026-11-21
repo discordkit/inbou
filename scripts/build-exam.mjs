@@ -29,7 +29,9 @@ import {
   grammarPointsSchema,
   itemHints,
   itemProblems,
-  itemsSchema
+  itemsSchema,
+  pointsOf,
+  reviewLinksOf
 } from "../src/handlers/exam/items.ts";
 
 const ROOT = `data/jlpt/n5`;
@@ -82,15 +84,26 @@ const hints = items.flatMap(itemHints);
 for (const hint of hints) console.log(`hint: ${hint}`);
 
 const shipped = items.filter((item) => DRAFTS || item.status === `reviewed`);
+const review = reviewLinksOf(points, shipped);
 writeFileSync(
   OUT,
-  `${JSON.stringify({ level: `N5`, drafts: DRAFTS, items: shipped }, null, 2)}\n`
+  `${JSON.stringify({ level: `N5`, drafts: DRAFTS, items: shipped, review }, null, 2)}\n`
 );
 
 console.log(
   `Wrote ${String(shipped.length)} of ${String(items.length)} items to ${OUT}${
     DRAFTS ? ` — DRAFTS INCLUDED, do not commit` : ``
   }.`
+);
+
+// Review links: which points in use have no Tofugu page, so the gaps stay visible.
+const linkless = [...new Set(shipped.flatMap(pointsOf))].filter(
+  (point) => !(point in review)
+);
+console.log(
+  `Review links: ${String(Object.keys(review).length)} points in use have one${
+    linkless.length === 0 ? `.` : `; none for ${linkless.join(`, `)}.`
+  }`
 );
 
 // Coverage: how many cards each deck holds, beside what one test draws. A

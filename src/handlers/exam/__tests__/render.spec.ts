@@ -2,6 +2,7 @@ import { describe, expect, it } from "vite-plus/test";
 import type { ExamQuestion } from "../draw.js";
 import {
   closedQuestionMessage,
+  CONTENT_MAX,
   fitLabel,
   heading2,
   LABEL_MAX,
@@ -41,6 +42,16 @@ const question = (overrides: Partial<ExamQuestion> = {}): ExamQuestion => ({
   timeoutMs: 30_000,
   ...overrides
 });
+
+/** Two review links, as the draw attaches them. */
+const DE = {
+  label: `で`,
+  url: `https://www.tofugu.com/japanese-grammar/particle-de/#for-means-of-an-action`
+};
+const TO = {
+  label: `と`,
+  url: `https://www.tofugu.com/japanese-grammar/particle-to/#as-in-with`
+};
 
 const view = (q: ExamQuestion) => ({
   questions: [q],
@@ -248,6 +259,54 @@ describe(`the reveal`, () => {
     ]);
     expect(JSON.stringify(reveal)).toContain(`Nobody answered.`);
   });
+
+  it(`links the grammar to Tofugu under the note, without a preview card`, () => {
+    // WHY: a student who got it wrong can read more while the question is fresh. The `<>` stops Discord adding a preview card per link, which would push the next question off screen.
+    const reveal = JSON.stringify(
+      revealMessage([
+        {
+          question: question({ review: [DE, TO] }),
+          tally: { counts: [0, 1, 0, 0], correct: 1, scorers: [] }
+        }
+      ])
+    );
+    expect(reveal).toContain(
+      `-# Review on Tofugu: [で](<${DE.url}>) · [と](<${TO.url}>)`
+    );
+  });
+
+  it(`links each passage blank to its own page`, () => {
+    // WHY: the four blanks of a passage test different grammar, so one link for the card would send a student to the wrong page.
+    const reveal = JSON.stringify(
+      revealMessage([
+        {
+          question: question({ mondai: 3, number: 14, review: [DE] }),
+          tally: { counts: [0, 1, 0, 0], correct: 1, scorers: [] }
+        },
+        {
+          question: question({ mondai: 3, number: 15, review: [TO] }),
+          tally: { counts: [0, 1, 0, 0], correct: 1, scorers: [] }
+        }
+      ])
+    );
+    expect(reveal).toMatch(/［14］[^［]*\[で\]\(</u);
+    expect(reveal).toMatch(/［15］[^［]*\[と\]\(</u);
+  });
+
+  it(`adds no review line when no page covers the grammar`, () => {
+    // WHY: "Review on Tofugu:" with nothing after it points nowhere. A test drawn before links existed has no `review` at all, and must still reveal.
+    for (const review of [[], undefined]) {
+      const reveal = JSON.stringify(
+        revealMessage([
+          {
+            question: question({ review }),
+            tally: { counts: [0, 1, 0, 0], correct: 1, scorers: [] }
+          }
+        ])
+      );
+      expect(reveal).not.toContain(`Review on Tofugu`);
+    }
+  });
 });
 
 describe(`button ids`, () => {
@@ -297,6 +356,69 @@ describe(`results`, () => {
     );
     expect(text).toContain(`1 ❌ を → **で**`);
     expect(text).toContain(`2 ❌ no answer → **で**`);
+  });
+
+  it(`links a missed question to its review page, and a right one to nothing`, () => {
+    // WHY: the links are homework for what the student got wrong. A link beside every right answer would bury the ones that matter.
+    const text = myResultsText(
+      [
+        question({ number: 1, review: [DE] }),
+        question({ number: 2, review: [TO] })
+      ],
+      [
+        { number: 1, chose: 0, correct: false, points: 0 },
+        { number: 2, chose: 1, correct: true, points: 2 }
+      ],
+      { userId: `ann`, points: 2, max: 4, correct: 1, asked: 2 }
+    );
+    expect(text).toContain(`1 ❌ を → **で** · [で](<${DE.url}>)`);
+    expect(text).toContain(`2 ✅ で\n`);
+    expect(text).not.toContain(TO.url);
+  });
+
+  it(`escapes square brackets in a link's label`, () => {
+    // WHY: a "]" in the label would end the link text early, and Discord would show broken markup instead of a link.
+    const text = myResultsText(
+      [
+        question({
+          number: 1,
+          review: [{ label: `[clause] + noun`, url: DE.url }]
+        })
+      ],
+      [{ number: 1, chose: 0, correct: false, points: 0 }],
+      undefined
+    );
+    expect(text).toContain(`[\\[clause\\] + noun](<${DE.url}>)`);
+  });
+
+  it(`fits Discord's 2,000 characters however much is missed, keeping every answer`, () => {
+    // WHY: Discord rejects a reply over the limit, so the student who missed the most would see nothing at all. Links go first, from the end; the answers stay, and the answer cards above still have every link.
+    const long = (n: number) => ({
+      label: `〜くなかった／〜じゃなかった`,
+      url: `https://www.tofugu.com/japanese-grammar/explanatory-nda-ndesu-noda-nodesu/#for-explaining-${String(n)}`
+    });
+    const questions = Array.from({ length: 17 }, (_, i) =>
+      question({ number: i + 1, review: [long(i), long(i + 100)] })
+    );
+    const answers = questions.map((q) => ({
+      number: q.number,
+      chose: 0,
+      correct: false,
+      points: 0
+    }));
+    const text = myResultsText(questions, answers, {
+      userId: `ann`,
+      points: 0,
+      max: 51,
+      correct: 0,
+      asked: 17
+    });
+    expect(text.length).toBeLessThanOrEqual(CONTENT_MAX);
+    for (const q of questions) {
+      expect(text).toContain(`\n${String(q.number)} ❌ を → **で**`);
+    }
+    expect(text).toContain(long(0).url);
+    expect(text).toContain(`The answer card for each question has them.`);
   });
 });
 
