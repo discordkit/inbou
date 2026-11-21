@@ -27,8 +27,8 @@
     "node": ">=22"
   },
   "dependencies": {
-    "@discordkit/client": "^4.4.0",
-    "@discordkit/core": "^4.2.0",
+    "@discordkit/client": "^4.6.0",
+    "@discordkit/core": "^4.3.0",
     "@discordkit/gateway": "^1.0.3",
     "nostics": "1.3.0",
     "valibot": "^1.5.0",

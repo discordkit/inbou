@@ -174,7 +174,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@discordkit/client@npm:^4.3.3, @discordkit/client@npm:^4.4.0":
+"@discordkit/client@npm:^4.3.3":
   version: 4.4.0
   resolution: "@discordkit/client@npm:4.4.0"
   dependencies:
@@ -185,12 +185,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@discordkit/client@npm:^4.6.0":
+  version: 4.6.0
+  resolution: "@discordkit/client@npm:4.6.0"
+  dependencies:
+    "@discordkit/core": "npm:^4.3.0"
+  peerDependencies:
+    valibot: ">= 1.4.0"
+  checksum: 10/6729d21ffd61d6b4a57358f28003468e376038a1a9abdd80a19174736fca01ae1e6e40d888a6ed2ccd815d3b6252961b15b852eca054def7bc26f2e269ee74ce
+  languageName: node
+  linkType: hard
+
 "@discordkit/core@npm:^4.1.3, @discordkit/core@npm:^4.2.0":
   version: 4.2.0
   resolution: "@discordkit/core@npm:4.2.0"
   peerDependencies:
     valibot: ">= 1.4.0"
   checksum: 10/4c9092667a4624b2a73dabf49ec0dbfd44ec058de42feb24e4c098ff3f34a45ca3228eb40665414eaaeff15e4d7f122fadf45db6d2c472ced8c5094cbf8797c7
+  languageName: node
+  linkType: hard
+
+"@discordkit/core@npm:^4.3.0":
+  version: 4.3.0
+  resolution: "@discordkit/core@npm:4.3.0"
+  peerDependencies:
+    valibot: ">= 1.4.0"
+  checksum: 10/b0e9c52c5b853988dd343262ba7a83dd6f7b34788c2cca85c78814613b1c43b128d7df8d56671f16110394e66914402fd1c387f3a6c00fd8de28f2c68820a6f3
   languageName: node
   linkType: hard
 
@@ -1947,8 +1967,8 @@ __metadata:
     "@cloudflare/vite-plugin": "npm:1.67.0"
     "@cloudflare/vitest-plugin": "npm:1.6.0"
     "@cloudflare/workers-types": "npm:5.20261107.1"
-    "@discordkit/client": "npm:^4.4.0"
-    "@discordkit/core": "npm:^4.2.0"
+    "@discordkit/client": "npm:^4.6.0"
+    "@discordkit/core": "npm:^4.3.0"
     "@discordkit/gateway": "npm:^1.0.3"
     "@saeris/configs": "npm:1.6.1"
     "@varlock/bumpy": "npm:1.19.0"
