@@ -23,7 +23,7 @@
 
 - id: n5-b2-0002
   type: compose
-  status: draft
+  status: reviewed
   sentence: "{日本|にほん}/へ / {行|い}きたい / {人|ひと}/は / {手|て}/を / {上|あ}げて / ください。"
   en: People who want to go to Japan, please raise your hand.
   windows:
@@ -60,7 +60,7 @@
 
 - id: n5-b2-0005
   type: compose
-  status: draft
+  status: reviewed
   sentence: "{手|て}/を / あらって/から / ごはん/を / {食|た}べます。"
   en: I wash my hands, and then I eat.
   windows:
@@ -71,7 +71,7 @@
 
 - id: n5-b2-0006
   type: compose
-  status: draft
+  status: reviewed
   sentence: "{先生|せんせい}は / しゃしん/を / とらないで / ください/と / {言|い}いました。"
   en: 'The teacher said, "Please don''t take photos."'
   windows:
@@ -159,7 +159,7 @@
 
 - id: n5-b2-0014
   type: compose
-  status: draft
+  status: reviewed
   sentence: "つくえの / {上|うえ}/に / {日本語|にほんご}/の / {本|ほん}/が / あります。"
   en: There is a Japanese book on the desk.
   windows:
@@ -181,7 +181,7 @@
 
 - id: n5-b2-0016
   type: compose
-  status: draft
+  status: reviewed
   sentence: "{山田|やまだ}さん/に / {借|か}りた / {本|ほん}/を / まだ / {読|よ}んで / いません。"
   en: I haven't read the book I borrowed from Yamada-san yet.
   windows:
@@ -192,7 +192,7 @@
 
 - id: n5-b2-0017
   type: compose
-  status: draft
+  status: reviewed
   sentence: "わたしは / きのう / {新|あたら}しい / くつ/を / {買|か}い/に / {行|い}きました。"
   en: Yesterday I went to buy new shoes.
   windows:
@@ -203,7 +203,7 @@
 
 - id: n5-b2-0018
   type: compose
-  status: draft
+  status: reviewed
   sentence: "この / {料理|りょうり}/の / {作|つく}りかた/を / {教|おし}えて / ください。"
   en: Please teach me how to make this dish.
   windows:
@@ -412,7 +412,7 @@
 
 - id: n5-b2-0037
   type: compose
-  status: draft
+  status: reviewed
   sentence: "わたしは / {学校|がっこう}/の / {先生|せんせい}/に / なりたい / です。"
   en: I want to become a school teacher.
   windows:
