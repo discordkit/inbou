@@ -63,6 +63,11 @@
 - { id: particle-to-and, pattern: と, meaning: "and, listing every item" }
 - { id: particle-to-with, pattern: と, meaning: "with a person" }
 - {
+    id: particle-to-quote,
+    pattern: と（いう）,
+    meaning: marks what someone says or thinks
+  }
+- {
     id: particle-ya-and,
     pattern: や,
     meaning: "and, listing some items of many"
@@ -107,6 +112,11 @@
 - { id: question-ikura, pattern: いくら, meaning: how much }
 - { id: question-ikutsu, pattern: いくつ, meaning: how many; how old }
 - { id: question-doushite, pattern: どうして, meaning: why }
+- {
+    id: question-mo-negative,
+    pattern: なにも・だれも・どこも,
+    meaning: "with a negative verb: nothing, nobody, nowhere"
+  }
 
 # ── こそあど words ───────────────────────────────────────────────────────────
 - {
@@ -276,6 +286,12 @@
     id: verb-kariru-kasu,
     pattern: かりる／かす,
     meaning: "borrow from (に) or lend to (に)"
+  }
+- { id: form-toki, pattern: 〜とき, meaning: when; at the time that }
+- {
+    id: form-kata,
+    pattern: ます stem ＋ かた,
+    meaning: the way of doing something
   }
 
 # ── Set phrases ──────────────────────────────────────────────────────────────

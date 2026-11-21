@@ -83,13 +83,13 @@
 - id: n5-b2-0007
   type: compose
   status: draft
-  sentence: "あした / {友|とも}だち/と / {山|やま}/へ / {行|い}きます。"
-  en: Tomorrow I am going to the mountains with a friend.
+  sentence: "あした / {友|とも}だち/と / いっしょに / {山|やま}/へ / {行|い}きます。"
+  en: Tomorrow I am going to the mountains together with a friend.
   windows:
     - start: 1
       difficulty: 1
-      points: [particle-to-with, particle-he-direction]
-      note: "と marks who you go with, へ where you go."
+      points: [particle-to-with, adverb-issho-ni]
+      note: "〜と いっしょに: together with someone. いっしょに comes right after と, as one phrase."
 
 - id: n5-b2-0008
   type: compose
@@ -134,3 +134,113 @@
       difficulty: 3
       points: [clause-noun-modifier]
       note: "A clause can describe a noun: {母|はは}が {作|つく}った ケーキ — the cake my mother made."
+
+- id: n5-b2-0012
+  type: compose
+  status: draft
+  sentence: "わたしは / {日本|にほん}の / アニメ/を / {見|み}る / の/が / {好|す}きです。"
+  en: I like watching Japanese anime.
+  windows:
+    - start: 2
+      difficulty: 2
+      points: [form-no-ga-suki]
+      note: "〜のが {好|す}きです: の turns アニメを {見|み}る into a thing you like."
+
+- id: n5-b2-0013
+  type: compose
+  status: draft
+  sentence: "{田中|たなか}さんは / わたし/より / せ/が / {高|たか}い/です。"
+  en: Tanaka-san is taller than me.
+  windows:
+    - start: 2
+      difficulty: 3
+      points: [particle-yori-comparison]
+      note: "Aより Bが {高|たか}い: より follows what is compared, here わたし, and せが {高|たか}い follows it."
+
+- id: n5-b2-0014
+  type: compose
+  status: draft
+  sentence: "つくえの / {上|うえ}/に / {日本語|にほんご}の / {本|ほん}/が / あります。"
+  en: There is a Japanese book on the desk.
+  windows:
+    - start: 1
+      difficulty: 1
+      points: [particle-ni-existence]
+      note: "〜の {上|うえ}に Nが あります: where something is, then what is there."
+
+- id: n5-b2-0015
+  type: compose
+  status: draft
+  sentence: "ここ/は / {日本語|にほんご}/を / {勉強|べんきょう}する / {学校|がっこう}/です。"
+  en: This is a school where people study Japanese.
+  windows:
+    - start: 2
+      difficulty: 2
+      points: [clause-noun-modifier]
+      note: "{日本語|にほんご}を {勉強|べんきょう}する describes {学校|がっこう}, so it comes right before it."
+
+- id: n5-b2-0016
+  type: compose
+  status: draft
+  sentence: "{山田|やまだ}さんに / {借|か}りた / {本|ほん}/を / まだ / {読|よ}んで / いません。"
+  en: I haven't read the book I borrowed from Yamada-san yet.
+  windows:
+    - start: 0
+      difficulty: 3
+      points: [verb-kariru-kasu, clause-noun-modifier]
+      note: "{山田|やまだ}さんに {借|か}りた describes {本|ほん}: the book borrowed from Yamada-san."
+
+- id: n5-b2-0017
+  type: compose
+  status: draft
+  sentence: "わたしは / きのう / {新|あたら}しい / くつ/を / {買|か}いに / {行|い}きました。"
+  en: Yesterday I went to buy new shoes.
+  windows:
+    - start: 2
+      difficulty: 1
+      points: [form-ni-iku]
+      note: "〜を {買|か}いに {行|い}く: go to buy something. {新|あたら}しい comes before the noun it describes."
+
+- id: n5-b2-0018
+  type: compose
+  status: draft
+  sentence: "この / {料理|りょうり}の / {作|つく}り/かた/を / {教|おし}えて / ください。"
+  en: Please teach me how to make this dish.
+  windows:
+    - start: 1
+      difficulty: 2
+      points: [form-kata, form-te-kudasai]
+      note: "ます stem ＋ かた: the way of doing something. {作|つく}りかた, how to make it."
+
+- id: n5-b2-0019
+  type: compose
+  status: draft
+  sentence: "{雨|あめ}が / ふって / いる / とき/は / うち/で / {本|ほん}/を / {読|よ}みます。"
+  en: When it is raining, I read books at home.
+  windows:
+    - start: 1
+      difficulty: 2
+      points: [form-toki, form-te-iru]
+      note: "〜て いる とき: while something is going on. とき follows the verb that describes the time."
+
+- id: n5-b2-0020
+  type: compose
+  status: draft
+  sentence: "{日本|にほん}で / いちばん / {高|たか}い / {山|やま}/は / ふじさん/です。"
+  en: The highest mountain in Japan is Mount Fuji.
+  windows:
+    - start: 1
+      difficulty: 2
+      points: [comparison-ichiban]
+      note: "いちばん {高|たか}い describes {山|やま}: the highest mountain."
+
+- id: n5-b2-0021
+  type: compose
+  status: draft
+  sentence: "テーブルの / {上|うえ}/の / りんご/を / {食|た}べても / いいですか。"
+  en: May I eat the apple on the table?
+  windows:
+    - start: 1
+      difficulty: 1
+      points: [form-te-mo-ii]
+      note: "テーブルの {上|うえ}の りんご: the の phrases come before the noun they describe."

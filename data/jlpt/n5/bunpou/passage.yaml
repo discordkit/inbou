@@ -46,8 +46,8 @@
   intro: "アンナさんが「{日本|にほん}の コンビニ」の さくぶんを {書|か}きました。"
   text: |-
     {日本|にほん}の コンビニは とても べんりです。{朝|あさ}（1） {夜|よる}まで あいて います。{食|た}べもの（2） {飲|の}みものが たくさん あります。{私|わたし}は {毎日|まいにち} {学校|がっこう}の {帰|かえ}りに コンビニへ おべんとうを（3） {行|い}きます。
-    {私|わたし}の {国|くに}には コンビニが（4）。{日本|にほん}に {来|き}て、はじめて コンビニに {入|はい}りました。はじめは つかいかたが わかりませんでした。（5）、{今|いま}は コンビニが だいすきです。
-  en: "Convenience stores in Japan are very handy. They are open from morning until night, and they have lots of food, drinks and more. Every day on my way home from school, I go to one to buy a bento. There are no convenience stores in my country. I first went into one after I came to Japan. At first I did not know how to use it. But now I love convenience stores."
+    {私|わたし}の {国|くに}には コンビニが（4）から、{日本|にほん}に {来|き}て はじめて コンビニに {入|はい}りました。はじめは つかいかたが わかりませんでした。（5）、{今|いま}は コンビニが だいすきです。
+  en: "Convenience stores in Japan are very handy. They are open from morning until night, and they have lots of food, drinks and more. Every day on my way home from school, I go to one to buy a bento. There are no convenience stores in my country, so I first went into one after I came to Japan. At first I did not know how to use it. But now I love convenience stores."
   blanks:
     - answer: から
       wrong: [まで, で, に]
@@ -68,7 +68,7 @@
       wrong: [あります, いません, ありました]
       difficulty: 2
       points: [form-ga-aru-iru]
-      note: "She first went into one in Japan, so there are none at home: ありません. Things take ある; people and animals take いる."
+      note: "から gives the reason she first went into one in Japan: there are none at home, ありません. Things take ある; people and animals take いる."
     - answer: でも
       wrong: [だから, そして, いつも]
       difficulty: 1
@@ -107,3 +107,70 @@
       difficulty: 2
       points: [form-te-mo-ii]
       note: "〜ても いいですか asks for permission: may I …?"
+
+- id: n5-b3-0004
+  type: passage
+  status: draft
+  intro: "ジョンさんと マリアさんは「わたしの すきな きせつ」の さくぶんを {書|か}いて、クラスの みんなの {前|まえ}で {読|よ}みます。"
+  text: |-
+    【ジョンさんの さくぶん】
+    わたしは なつが すきです。{毎日|まいにち} {海|うみ}（1） およいで、{夜|よる}は {友|とも}だちと はなびを {見|み}ます。なつは あついですから、きらいな {人|ひと}も います。（2）、わたしは あつい {日|ひ}が だいすきです。
+    【マリアさんの さくぶん】
+    わたしは ふゆが いちばん すきです。わたしの {国|くに}では ゆきが ふりません。{去年|きょねん}の ふゆ、{日本|にほん}で はじめて ゆきを（3）。とても きれいでした。ことしの ふゆは、{友|とも}だちと {山|やま}へ スキーを（4） {行|い}きたいです。スキーは（5） した ことが ありませんから、とても たのしみです。
+  en: "John's composition: I like summer. Every day I swim in the sea, and at night I watch fireworks with friends. Summer is hot, so some people don't like it. But I love hot days. Maria's composition: I like winter best. It doesn't snow in my country. Last winter, in Japan, I saw snow for the first time. It was very beautiful. This winter I want to go to the mountains with friends to ski. I have never skied before, so I'm really looking forward to it."
+  blanks:
+    - answer: で
+      wrong: [に, が, と]
+      difficulty: 1
+      points: [particle-de-place]
+      note: "で marks where an action happens: {海|うみ}で およぐ. に marks where something is, or where it goes."
+    - answer: でも
+      wrong: [だから, それから, では]
+      difficulty: 1
+      points: [conjunction-demo]
+      note: "でも turns to the opposite: some people dislike the heat, but John loves it."
+    - answer: "{見|み}ました"
+      wrong: ["{見|み}ます", "{見|み}て います", "{見|み}たいです"]
+      difficulty: 2
+      points: [form-polite-tense]
+      note: "{去年|きょねん}の ふゆ puts it in the past: {見|み}ました."
+    - answer: しに
+      wrong: [して, する, した]
+      difficulty: 2
+      points: [form-ni-iku]
+      note: "〜に {行|い}く: go to do something. It takes the ます stem: スキーを しに {行|い}きます."
+    - answer: まだ
+      wrong: [もう, よく, いつも]
+      difficulty: 2
+      points: [adverb-mada, form-ta-koto-ga-aru]
+      note: "まだ 〜た ことが ありません: have never done it yet. もう would say she has stopped."
+
+- id: n5-b3-0005
+  type: passage
+  status: draft
+  intro: "リンさんは「わたしの {町|まち}」の さくぶんを {書|か}きました。"
+  text: |-
+    わたしの {町|まち}は {大|おお}きく ありませんが、とても しずかで きれいです。{駅|えき}の {前|まえ}に {小|ちい}さい こうえんが あります。こうえんには {大|おお}きい {木|き}が（1） あります。{毎朝|まいあさ}、わたしは その こうえんを さんぽします。
+    {駅|えき}の {近|ちか}く（2） おいしい パンやが あります。わたしは {毎週|まいしゅう} {土曜日|どようび}に そこで パンを {買|か}います。その パンやの パンは {安|やす}（3）、おいしいです。この {町|まち}に {来|き}て、もう {三年|さんねん}に なります。わたしは この {町|まち}が（4） すきです。
+  en: "My town is not big, but it is very quiet and pretty. There is a small park in front of the station. The park has lots of big trees. Every morning I take a walk in that park. Near the station there is a good bakery. I buy bread there every Saturday. The bread there is cheap and tasty. It has been three years since I came to this town. I like this town very much."
+  blanks:
+    - answer: たくさん
+      wrong: [とても, ぜんぜん, あまり]
+      difficulty: 2
+      points: [adverb-takusan]
+      note: "たくさん counts: many trees. とても makes a word stronger, so it goes with words like {大|おお}きい or すき, not あります."
+    - answer: に
+      wrong: [で, を, へ]
+      difficulty: 2
+      points: [particle-ni-existence]
+      note: "に marks where something is: {近|ちか}くに パンやが あります. で marks where something happens."
+    - answer: くて
+      wrong: [い, かった, くない]
+      difficulty: 2
+      points: [form-te-link]
+      note: "An い adjective joins the next one with くて: {安|やす}くて、おいしい. Cheap and tasty."
+    - answer: とても
+      wrong: [たくさん, ぜんぜん, あまり]
+      difficulty: 2
+      points: [adverb-totemo]
+      note: "とても makes すき stronger: like it very much. たくさん counts things, and ぜんぜん and あまり need a negative."
