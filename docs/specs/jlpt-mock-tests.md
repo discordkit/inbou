@@ -2,7 +2,7 @@
 
 Practice tests in the shape of the real JLPT, played in a Discord channel. The bot asks one question at a time with numbered buttons, everyone answers privately, and everyone who is right scores. Students repeat the tests until they can hold a steady score before the real exam.
 
-Status: **draft 1**, 2026-11-10. Decisions here are settled unless marked open; section 10 lists what is not. Nothing is built yet. N5 Section 2 (grammar and reading) comes first, and grammar comes before reading.
+Status: **draft 2**, 2026-11-21. Decisions here are settled unless marked open; section 10 lists what is not. Phases 1 to 3 of section 9 are built: `/bunpou` ships with 230 reviewed items. Reading (`/dokkai`) and full-section tests (`/moshi`) come next.
 
 ## Why a poll and not a race
 
@@ -88,9 +88,10 @@ The commands follow the skill split of the Shin Kanzen Master series, which we u
 
 ```
 /bunpou start            — grammar: 問題1–3, 17 questions
-/dokkai start            — reading: 問題4–6, 5 questions
-/moshi start section:2   — the whole of Section 2, grammar then reading
-/moshi history           — your recent results and average (private)
+/bunpou end              — end the test in this channel and show the results
+/dokkai start            — reading: 問題4–6, 5 questions (planned)
+/moshi start section:2   — the whole of Section 2, grammar then reading (planned)
+/moshi history           — your recent results and average, private (planned)
 ```
 
 `/goi` (vocabulary) and `/choukai` (listening) come later. The conjugation quiz keeps `/quiz`.
@@ -234,6 +235,8 @@ button exam:v:<token>:<n> ─► commands.ts ─► flow ─► private "You cho
 ## 9. Build order
 
 Each phase ends with something we can show.
+
+Phases 1 to 3 are done.
 
 1. **`/bunpou` end to end, with 問題1 only.** Item schema and build, draw, machine, session, Components V2 cards, vote routing, about 20 reviewed seed items.
 2. **問題2 and 問題3.** The ★ and passage draws and cards. `/bunpou` runs the full 9 + 4 + 4.
