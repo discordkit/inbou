@@ -150,9 +150,17 @@ At ask time, the bot chooses a window, puts the ★ on one of its four positions
 
 Code checks the window's shape: it fits the sentence, its four chunks are different strings (two の would make the ★ answer ambiguous), and it does not end the sentence (the last chunk carries the 。, which would give its own place away). Whether the order is unique is the reviewer's call, and it is this type's trap. 新聞を コーヒーを 飲みながら 読みます is as good as コーヒーを 飲みながら 新聞を 読みます. Splitting particles into their own chunks, as the paper does, is what pins an order down.
 
+**Each chunk in a window is one word.** A particle always stands alone: `{学校|がっこう}/の`, never `{学校|がっこう}の`. A verb or adjective in one form is one chunk, as the paper prints it: 読んで, 食べた, 行きたい, とらないで, 作りかた. Words written apart stay apart: いる, ください, こと, とき. The first review found six windows that joined a noun or a stem to a particle; code cannot catch this without a dictionary, so the reviewer checks it. Chunks outside the window are only shown, so they can be any size.
+
 ### Passages (問題3)
 
 A passage has an optional intro (who wrote it, and why), a text with four or more `（n）` blanks numbered in reading order, and the whole passage in English. Each blank is a slot, as in 問題1: its own answer, wrong pool, difficulty, points and note.
+
+**A passage has about eight blanks, and a test asks any four of them**, chosen at random. So a passage that comes up again usually asks a different set: eight blanks give 70 sets of four. A test draws one passage, so a passage appears at most once in it. Because any blank may be shown filled, each blank must stand alone:
+
+- No filled-in answer gives another blank away.
+- No two blanks in a passage test the same grammar point.
+- No two blanks sit side by side.
 
 A test asks four blanks, numbered straight on from 問題2 (14 to 17 on a full test), and answers them **on one card**. Each asked blank shows its number, ［15］, and has its own row of buttons under a ［15］ label. Blanks it does not ask are shown filled. The second live test asked the blanks one card at a time, and one short story split across four cards read badly. One card with four labelled rows uses about 32 of Discord's 40 components.
 

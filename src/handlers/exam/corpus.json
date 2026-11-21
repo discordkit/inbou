@@ -18,21 +18,6 @@
       ]
     },
     {
-      "id": "n5-b2-0002",
-      "type": "compose",
-      "status": "reviewed",
-      "sentence": "{私|わたし}は / なつやすみに / {日本|にほん}/へ / {行|い}き/たい/です。",
-      "en": "I want to go to Japan in the summer holidays.",
-      "windows": [
-        {
-          "start": 2,
-          "difficulty": 1,
-          "points": ["form-tai", "particle-he-direction"],
-          "note": "〜たい follows the ます stem: {行|い}きたい. へ marks the direction: {日本|にほん}へ."
-        }
-      ]
-    },
-    {
       "id": "n5-b2-0003",
       "type": "compose",
       "status": "reviewed",
@@ -65,36 +50,6 @@
           "difficulty": 2,
           "points": ["form-ta-koto-ga-aru"],
           "note": "〜た ことが あります: have done … before. こと takes が."
-        }
-      ]
-    },
-    {
-      "id": "n5-b2-0005",
-      "type": "compose",
-      "status": "reviewed",
-      "sentence": "{手|て}を / あらって/から / ごはんを / {食|た}べます。",
-      "en": "I wash my hands, and then I eat.",
-      "windows": [
-        {
-          "start": 0,
-          "difficulty": 1,
-          "points": ["form-te-kara"],
-          "note": "〜てから: after doing …. The て form comes before から."
-        }
-      ]
-    },
-    {
-      "id": "n5-b2-0006",
-      "type": "compose",
-      "status": "reviewed",
-      "sentence": "ここで / しゃしん/を / とら/ないで / ください。",
-      "en": "Please do not take photos here.",
-      "windows": [
-        {
-          "start": 1,
-          "difficulty": 1,
-          "points": ["form-naide-kudasai"],
-          "note": "〜ないで ください asks someone not to do something: とらない → とらないで ください."
         }
       ]
     },
@@ -204,21 +159,6 @@
       ]
     },
     {
-      "id": "n5-b2-0014",
-      "type": "compose",
-      "status": "reviewed",
-      "sentence": "つくえの / {上|うえ}/に / {日本語|にほんご}の / {本|ほん}/が / あります。",
-      "en": "There is a Japanese book on the desk.",
-      "windows": [
-        {
-          "start": 1,
-          "difficulty": 1,
-          "points": ["particle-ni-existence"],
-          "note": "〜の {上|うえ}に Nが あります: where something is, then what is there."
-        }
-      ]
-    },
-    {
       "id": "n5-b2-0015",
       "type": "compose",
       "status": "reviewed",
@@ -230,51 +170,6 @@
           "difficulty": 2,
           "points": ["clause-noun-modifier"],
           "note": "{日本語|にほんご}を {勉強|べんきょう}する describes {学校|がっこう}, so it comes right before it."
-        }
-      ]
-    },
-    {
-      "id": "n5-b2-0016",
-      "type": "compose",
-      "status": "reviewed",
-      "sentence": "{山田|やまだ}さんに / {借|か}りた / {本|ほん}/を / まだ / {読|よ}んで / いません。",
-      "en": "I haven't read the book I borrowed from Yamada-san yet.",
-      "windows": [
-        {
-          "start": 0,
-          "difficulty": 3,
-          "points": ["verb-kariru-kasu", "clause-noun-modifier"],
-          "note": "{山田|やまだ}さんに {借|か}りた describes {本|ほん}: the book borrowed from Yamada-san."
-        }
-      ]
-    },
-    {
-      "id": "n5-b2-0017",
-      "type": "compose",
-      "status": "reviewed",
-      "sentence": "わたしは / きのう / {新|あたら}しい / くつ/を / {買|か}いに / {行|い}きました。",
-      "en": "Yesterday I went to buy new shoes.",
-      "windows": [
-        {
-          "start": 2,
-          "difficulty": 1,
-          "points": ["form-ni-iku"],
-          "note": "〜を {買|か}いに {行|い}く: go to buy something. {新|あたら}しい comes before the noun it describes."
-        }
-      ]
-    },
-    {
-      "id": "n5-b2-0018",
-      "type": "compose",
-      "status": "reviewed",
-      "sentence": "この / {料理|りょうり}の / {作|つく}り/かた/を / {教|おし}えて / ください。",
-      "en": "Please teach me how to make this dish.",
-      "windows": [
-        {
-          "start": 1,
-          "difficulty": 2,
-          "points": ["form-kata", "form-te-kudasai"],
-          "note": "ます stem ＋ かた: the way of doing something. {作|つく}りかた, how to make it."
         }
       ]
     },
@@ -2561,10 +2456,6 @@
       "label": "に",
       "url": "https://www.tofugu.com/japanese-grammar/particle-ni/#in-social-interactions-and-transactions"
     },
-    "particle-he-direction": {
-      "label": "へ",
-      "url": "https://www.tofugu.com/japanese-grammar/particle-he/#for-physical-destinations-and-directions"
-    },
     "particle-de-place": {
       "label": "で",
       "url": "https://www.tofugu.com/japanese-grammar/particle-de/#for-specifying-places"
@@ -2769,10 +2660,6 @@
       "label": "〜てください",
       "url": "https://www.tofugu.com/japanese-grammar/kudasai/"
     },
-    "form-naide-kudasai": {
-      "label": "〜ないでください",
-      "url": "https://www.tofugu.com/japanese-grammar/kudasai/"
-    },
     "form-te-mo-ii": {
       "label": "〜てもいいです",
       "url": "https://www.tofugu.com/japanese-grammar/temoii/"
@@ -2789,10 +2676,6 @@
       "label": "〜たことがある",
       "url": "https://www.tofugu.com/japanese-grammar/takotogaaru/"
     },
-    "form-tai": {
-      "label": "〜たい",
-      "url": "https://www.tofugu.com/japanese-grammar/tai-form/"
-    },
     "form-hoshii": {
       "label": "〜がほしい",
       "url": "https://www.tofugu.com/japanese-grammar/particle-ga/#with-verb-like-adjectives"
@@ -2800,10 +2683,6 @@
     "form-tari-tari": {
       "label": "〜たり〜たりする",
       "url": "https://www.tofugu.com/japanese-grammar/tarisuru/"
-    },
-    "form-te-kara": {
-      "label": "〜てから",
-      "url": "https://www.tofugu.com/japanese-grammar/particle-kara/#for-continuous-actions"
     },
     "form-ta-ato-de": {
       "label": "〜たあとで",

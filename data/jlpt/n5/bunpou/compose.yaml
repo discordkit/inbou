@@ -23,14 +23,14 @@
 
 - id: n5-b2-0002
   type: compose
-  status: reviewed
-  sentence: "{私|わたし}は / なつやすみに / {日本|にほん}/へ / {行|い}き/たい/です。"
-  en: I want to go to Japan in the summer holidays.
+  status: draft
+  sentence: "{日本|にほん}/へ / {行|い}きたい / {人|ひと}/は / {手|て}/を / {上|あ}げて / ください。"
+  en: People who want to go to Japan, please raise your hand.
   windows:
-    - start: 2
+    - start: 0
       difficulty: 1
-      points: [form-tai, particle-he-direction]
-      note: "〜たい follows the ます stem: {行|い}きたい. へ marks the direction: {日本|にほん}へ."
+      points: [form-tai, particle-he-direction, clause-noun-modifier]
+      note: "{日本|にほん}へ {行|い}きたい describes {人|ひと}. 〜たい follows the ます stem: {行|い}きたい."
 
 - id: n5-b2-0003
   type: compose
@@ -60,8 +60,8 @@
 
 - id: n5-b2-0005
   type: compose
-  status: reviewed
-  sentence: "{手|て}を / あらって/から / ごはんを / {食|た}べます。"
+  status: draft
+  sentence: "{手|て}/を / あらって/から / ごはん/を / {食|た}べます。"
   en: I wash my hands, and then I eat.
   windows:
     - start: 0
@@ -71,14 +71,14 @@
 
 - id: n5-b2-0006
   type: compose
-  status: reviewed
-  sentence: "ここで / しゃしん/を / とら/ないで / ください。"
-  en: Please do not take photos here.
+  status: draft
+  sentence: "{先生|せんせい}は / しゃしん/を / とらないで / ください/と / {言|い}いました。"
+  en: "The teacher said, \"Please don't take photos.\""
   windows:
     - start: 1
       difficulty: 1
       points: [form-naide-kudasai]
-      note: "〜ないで ください asks someone not to do something: とらない → とらないで ください."
+      note: "〜ないで ください asks someone not to do something: とらない → とらないで ください. ください comes right after it."
 
 - id: n5-b2-0007
   type: compose
@@ -159,8 +159,8 @@
 
 - id: n5-b2-0014
   type: compose
-  status: reviewed
-  sentence: "つくえの / {上|うえ}/に / {日本語|にほんご}の / {本|ほん}/が / あります。"
+  status: draft
+  sentence: "つくえの / {上|うえ}/に / {日本語|にほんご}/の / {本|ほん}/が / あります。"
   en: There is a Japanese book on the desk.
   windows:
     - start: 1
@@ -181,8 +181,8 @@
 
 - id: n5-b2-0016
   type: compose
-  status: reviewed
-  sentence: "{山田|やまだ}さんに / {借|か}りた / {本|ほん}/を / まだ / {読|よ}んで / いません。"
+  status: draft
+  sentence: "{山田|やまだ}さん/に / {借|か}りた / {本|ほん}/を / まだ / {読|よ}んで / いません。"
   en: I haven't read the book I borrowed from Yamada-san yet.
   windows:
     - start: 0
@@ -192,19 +192,19 @@
 
 - id: n5-b2-0017
   type: compose
-  status: reviewed
-  sentence: "わたしは / きのう / {新|あたら}しい / くつ/を / {買|か}いに / {行|い}きました。"
+  status: draft
+  sentence: "わたしは / きのう / {新|あたら}しい / くつ/を / {買|か}い/に / {行|い}きました。"
   en: Yesterday I went to buy new shoes.
   windows:
-    - start: 2
+    - start: 3
       difficulty: 1
       points: [form-ni-iku]
-      note: "〜を {買|か}いに {行|い}く: go to buy something. {新|あたら}しい comes before the noun it describes."
+      note: "〜を {買|か}いに {行|い}く: go to buy something. に follows the ます stem: {買|か}いに."
 
 - id: n5-b2-0018
   type: compose
-  status: reviewed
-  sentence: "この / {料理|りょうり}の / {作|つく}り/かた/を / {教|おし}えて / ください。"
+  status: draft
+  sentence: "この / {料理|りょうり}/の / {作|つく}りかた/を / {教|おし}えて / ください。"
   en: Please teach me how to make this dish.
   windows:
     - start: 1
@@ -413,10 +413,10 @@
 - id: n5-b2-0037
   type: compose
   status: draft
-  sentence: "わたしは / {学校|がっこう}の / {先生|せんせい}/に / なりたい / です。"
+  sentence: "わたしは / {学校|がっこう}/の / {先生|せんせい}/に / なりたい / です。"
   en: I want to become a school teacher.
   windows:
-    - start: 1
+    - start: 2
       difficulty: 2
       points: [form-naru, form-tai]
       note: "〜に なりたい: want to become. に marks what you become: {先生|せんせい}に."
