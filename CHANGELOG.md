@@ -4,6 +4,15 @@
 
 
 
+
+## 1.2.1
+<sub>2026-11-21</sub>
+
+- [#16](https://github.com/discordkit/inbou/pull/16)  *(patch)* Thanks [@Saeris](https://github.com/Saeris)!
+  Fix lost votes and commands when many people answer at once. The bot now hands each event over without waiting for the work, and it replaces a Gateway connection that has stopped responding within about a minute, where before it could stay deaf for up to five.
+
+  Both Workers now keep their logs for three days, so a dropped connection can be traced after the fact.
+
 ## 1.2.0
 <sub>2026-11-21</sub>
 
