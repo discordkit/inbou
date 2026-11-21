@@ -6,6 +6,9 @@
   "compatibility_flags": [],
   // Keep each invocation's logs, so a dropped connection or a lost event can be traced after the fact. Without this, only a live `wrangler tail` sees them. Free up to 200,000 log events a day, kept for 3 days.
   "observability": { "enabled": true },
+  // No public address. This Worker trusts every event it receives, so anyone who could reach it could vote or answer as any user, or skip questions. Only the bot (`HANDLERS`) and this Worker itself (`SELF`) call it, and service bindings need no public route. Both keys are needed: turning off `workers_dev` leaves version URLs as they were.
+  "workers_dev": false,
+  "preview_urls": false,
   // Quiz sessions are Durable Objects on THIS side of the split, not the bot
   // Worker's. A session needs durable per-channel state and a timer that
   // survives eviction, and putting it here means editing quiz logic reloads
