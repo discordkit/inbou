@@ -174,3 +174,157 @@
       difficulty: 2
       points: [adverb-totemo]
       note: "とても makes すき stronger: like it very much. たくさん counts things, and ぜんぜん and あまり need a negative."
+
+- id: n5-b3-0006
+  type: passage
+  status: draft
+  intro: "ミンさんは「わたしの かぞく」の さくぶんを {書|か}きました。"
+  text: |-
+    わたしの かぞくは {五人|ごにん}です。{父|ちち}（1） {母|はは}と {兄|あに}と {妹|いもうと}と わたしです。{父|ちち}は {銀行|ぎんこう}で {働|はたら}いて います。{兄|あに}は {大学生|だいがくせい}です。いつも いそがしいので、（2） {家|いえ}に いません。{妹|いもうと}は {七|なな}さいです。わたしが {国|くに}に いた とき、まいばん {妹|いもうと}（3） いっしょに ねました。
+    {今|いま}、わたしは ひとりで {日本|にほん}に います。でも、{毎週|まいしゅう} かぞくと でんわで {話|はな}します（4）、さびしく ありません。
+  en: "My family has five people: my father, my mother, my older brother, my younger sister and me. My father works at a bank. My brother is a university student. He is always busy, so he is not at home much. My sister is seven. When I was in my country, I slept beside my sister every night. Now I live alone in Japan. But I talk with my family on the phone every week, so I am not lonely."
+  blanks:
+    - answer: と
+      wrong: [や, も, が]
+      difficulty: 1
+      points: [particle-to-and]
+      note: "と lists every member: {父|ちち}と {母|はは}と…. The family has {五人|ごにん}, and all five are named, so not や."
+    - answer: あまり
+      wrong: [とても, たくさん, すこし]
+      difficulty: 2
+      points: [adverb-amari]
+      note: "あまり with a negative: not much. いません is negative, and とても, たくさん and すこし do not soften a negative."
+    - answer: と
+      wrong: [に, を, で]
+      difficulty: 1
+      points: [particle-to-with]
+      note: "〜と いっしょに: together with someone."
+    - answer: から
+      wrong: [が, まで, を]
+      difficulty: 2
+      points: [conjunction-kara-reason]
+      note: "から gives the reason: the family talks every week, so the writer is not lonely. が would set up a contrast."
+
+- id: n5-b3-0007
+  type: passage
+  status: draft
+  intro: "ゆきさんが {友|とも}だちの アンさんに メモを {書|か}きました。"
+  text: |-
+    アンさん
+    あしたは わたしの たんじょうびです。わたしの うちで パーティーを します。パーティーは {六時|ろくじ}（1） {九時|くじ}までです。わたしの うちは {駅|えき}の {前|まえ}（2） {本屋|ほんや}の となりです。
+    わたしは ケーキを {作|つく}ります。のみものは ありません（3）、{何|なに}か {買|か}って {来|き}て ください。クラスの {友|とも}だちも {三人|さんにん} {来|き}ます。みんなで ゲームを（4）。
+    ゆき
+  en: "Ann-san, tomorrow is my birthday. I'm having a party at my home. The party is from six to nine. My home is next to the bookshop in front of the station. I'll make a cake. There are no drinks, so please buy something on your way. Three friends from class are coming too. Let's all play games together. Yuki"
+  blanks:
+    - answer: から
+      wrong: [まで, に, を]
+      difficulty: 1
+      points: [particle-kara-made]
+      note: "から〜まで: from … to …. まで already follows {九時|くじ}."
+    - answer: の
+      wrong: [に, で, を]
+      difficulty: 1
+      points: [particle-no-possessive]
+      note: "の joins two nouns: {駅|えき}の {前|まえ}の {本屋|ほんや}, the bookshop in front of the station."
+    - answer: から
+      wrong: [まで, と, を]
+      difficulty: 2
+      points: [conjunction-kara-reason]
+      note: "から gives the reason: there are no drinks, so please buy some. と cannot come before a request."
+    - answer: しましょう
+      wrong: [しました, しません, しませんでした]
+      difficulty: 1
+      points: [form-mashou]
+      note: "〜ましょう: let's. The party is tomorrow, and みんなで invites everyone to play."
+
+- id: n5-b3-0008
+  type: passage
+  status: draft
+  intro: "ケンさんは「わたしの しゅみ」の さくぶんを {書|か}きました。"
+  text: |-
+    わたしの しゅみは しゃしんです。{休|やす}みの {日|ひ}は（1） カメラを {持|も}って、{山|やま}や {川|かわ}へ {行|い}きます。{花|はな}や {鳥|とり}の しゃしんを とるのが {好|す}きです。
+    {先週|せんしゅう}の {日曜日|にちようび}も {早|はや}く {起|お}きて、{近|ちか}くの {山|やま}へ（2）。そこで、とても きれいな {鳥|とり}を {見|み}ました。でも、カメラを {家|いえ}に わすれました（3）、しゃしんは ありません。
+    とても ざんねんでした。{来週|らいしゅう}（4） {行|い}きます。
+  en: "My hobby is photography. On my days off I always take my camera and go to the mountains or rivers. I like taking pictures of flowers and birds. Last Sunday too, I got up early and went to a mountain nearby. There I saw a very beautiful bird. But I had left my camera at home, so I have no pictures. It was a real shame. I will go again next week."
+  blanks:
+    - answer: いつも
+      wrong: [ぜんぜん, あまり, まだ]
+      difficulty: 1
+      points: [adverb-itsumo]
+      note: "いつも: always. ぜんぜん and あまり need a negative verb, and まだ does not fit a habit."
+    - answer: "{行|い}きました"
+      wrong: ["{行|い}きます", "{行|い}きましょう", "{行|い}って ください"]
+      difficulty: 1
+      points: [form-polite-tense]
+      note: "{先週|せんしゅう}の {日曜日|にちようび} puts it in the past: {行|い}きました."
+    - answer: ので
+      wrong: [が, と, まで]
+      difficulty: 2
+      points: [conjunction-node]
+      note: "ので gives the reason: no camera, so no pictures. が would set up a contrast, but there is none."
+    - answer: また
+      wrong: [まだ, もう, よく]
+      difficulty: 1
+      points: [adverb-mata]
+      note: "また: again. The writer went last week and will go again next week."
+
+- id: n5-b3-0009
+  type: passage
+  status: draft
+  intro: "サラさんは「{日本語|にほんご}の クラス」の さくぶんを {書|か}きました。"
+  text: |-
+    わたしは {毎朝|まいあさ} {九時|くじ}から {十二時|じゅうにじ}まで、{学校|がっこう}で {日本語|にほんご}を {勉強|べんきょう}して います。クラスには {学生|がくせい}が {十人|じゅうにん} います。みんな ちがう {国|くに}（1） {来|き}ました。
+    クラスでは {日本語|にほんご}（2） {話|はな}しません。はじめは とても むずかしかったです。でも、{今|いま}は {先生|せんせい}の {話|はなし}が（3） わかります。
+    じゅぎょうの あとは、いつも {友|とも}だちと {図書館|としょかん}（4） しゅくだいを します。
+  en: "Every morning from nine to twelve, I study Japanese at school. There are ten students in the class. We all came from different countries. In class we speak only Japanese. At first it was very hard. But now I understand a little of what the teacher says. After class I always do my homework with friends at the library."
+  blanks:
+    - answer: から
+      wrong: [まで, を, に]
+      difficulty: 1
+      points: [particle-kara-from]
+      note: "から marks where someone comes from. They all came to Japan, so not に."
+    - answer: しか
+      wrong: [だけ, も, を]
+      difficulty: 3
+      points: [particle-shika-nai]
+      note: "しか, only, needs a negative verb: {日本語|にほんご}しか {話|はな}しません, they speak only Japanese. だけ goes with a positive verb."
+    - answer: すこし
+      wrong: [ぜんぜん, あまり, まだ]
+      difficulty: 1
+      points: [adverb-sukoshi]
+      note: "すこし: a little. でも turns from hard to easier, and ぜんぜん and あまり would need a negative."
+    - answer: で
+      wrong: [に, を, へ]
+      difficulty: 1
+      points: [particle-de-place]
+      note: "で marks where an action happens: {図書館|としょかん}で しゅくだいを します."
+
+- id: n5-b3-0010
+  type: passage
+  status: draft
+  intro: "ジョンさんは「{日本|にほん}の {食|た}べもの」の さくぶんを {書|か}きました。"
+  text: |-
+    {日本|にほん}に {来|く}る {前|まえ}は、すしを {食|た}べた ことが ありませんでした。{日本|にほん}へ {来|き}て、はじめて {食|た}べました。とても おいしかったです。{今|いま}は すし（1） いちばん {好|す}きです。
+    でも、すしは {高|たか}いです（2）、あまり {食|た}べません。よく {食|た}べるのは ラーメンです。うちの {近|ちか}くに（3） ラーメンやが あります。{毎週|まいしゅう} {金曜日|きんようび}（4） {友|とも}だちと {行|い}きます。
+  en: "Before I came to Japan, I had never eaten sushi. I ate it for the first time after I came to Japan. It was very good. Now I like sushi best. But sushi is expensive, so I don't eat it much. What I often eat is ramen. There is a good ramen shop near my home. I go there with friends every Friday."
+  blanks:
+    - answer: が
+      wrong: [を, に, で]
+      difficulty: 2
+      points: [particle-ga-object]
+      note: "{好|す}き takes が for what you like: すしが {好|す}きです."
+    - answer: から
+      wrong: [が, まで, を]
+      difficulty: 2
+      points: [conjunction-kara-reason]
+      note: "から gives the reason: sushi is expensive, so the writer does not eat it much. が would set up a contrast."
+    - answer: おいしい
+      wrong: [おいしく, おいしくて, おいしいの]
+      difficulty: 2
+      points: [form-adjective-before-noun]
+      note: "An い adjective goes straight before its noun: おいしい ラーメンや."
+    - answer: に
+      wrong: [で, を, と]
+      difficulty: 1
+      points: [particle-ni-time]
+      note: "に marks a day or a time: {金曜日|きんようび}に."

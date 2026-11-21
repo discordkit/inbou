@@ -180,6 +180,12 @@
   }
 - { id: particle-dake-only, pattern: だけ, meaning: "only, just", tofugu: dake }
 - {
+    id: particle-shika-nai,
+    pattern: しか〜ない,
+    meaning: "only, with a negative verb",
+    tofugu: dake#vs-
+  }
+- {
     id: particle-ne-agreement,
     pattern: ね,
     meaning: seeks agreement,
@@ -283,6 +289,12 @@
     meaning: "with a negative verb: nothing, nobody, nowhere",
     tofugu: question-words#question-word---1
   }
+- {
+    id: question-ka-indefinite,
+    pattern: なにか・だれか・どこか,
+    meaning: "something, someone, somewhere",
+    tofugu: particle-ka#for-indefinite-pronouns
+  }
 
 # ── こそあど words ───────────────────────────────────────────────────────────
 - {
@@ -314,7 +326,7 @@
 - {
     id: adverb-mou,
     pattern: もう,
-    meaning: already,
+    meaning: "already; with a negative, no longer",
     tofugu: mou-already-not-anymore
   }
 - {
@@ -384,6 +396,12 @@
     pattern: 〜ので,
     meaning: "because, so (softer than から)",
     tofugu: conjunctive-particle-node
+  }
+- {
+    id: conjunction-kara-reason,
+    pattern: 〜から,
+    meaning: "because, so",
+    tofugu: particle-kara#for-reasons
   }
 
 # ── Forms and patterns ───────────────────────────────────────────────────────
@@ -524,6 +542,12 @@
     tofugu: te-form#form-for-and
   }
 - {
+    id: form-adjective-before-noun,
+    pattern: 〜い／〜な ＋ noun,
+    meaning: an adjective before the noun it describes,
+    tofugu: na-adjective#before-a-noun
+  }
+- {
     id: form-n-desu,
     pattern: 〜んです,
     meaning: explains or asks for an explanation,
@@ -607,4 +631,10 @@
     pattern: 〜はいかがですか,
     meaning: would you like …?,
     tofugu: question-words#for-how
+  }
+- {
+    id: phrase-ni-suru,
+    pattern: 〜にします,
+    meaning: "choose: I'll have …",
+    tofugu: suru#for-selecting-or-deciding-something
   }
