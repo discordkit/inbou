@@ -12,7 +12,7 @@
 
 - id: n5-b2-0001
   type: compose
-  status: draft
+  status: reviewed
   sentence: "この / かばん/は / わたし/の / です。"
   en: This bag is mine.
   windows:
@@ -23,7 +23,7 @@
 
 - id: n5-b2-0002
   type: compose
-  status: draft
+  status: reviewed
   sentence: "{私|わたし}は / なつやすみに / {日本|にほん}/へ / {行|い}き/たい/です。"
   en: I want to go to Japan in the summer holidays.
   windows:
@@ -34,7 +34,7 @@
 
 - id: n5-b2-0003
   type: compose
-  status: draft
+  status: reviewed
   sentence: "バスより / {電車|でんしゃ}/の/ほう/が / はやいです。"
   en: The train is faster than the bus.
   windows:
@@ -45,7 +45,7 @@
 
 - id: n5-b2-0004
   type: compose
-  status: draft
+  status: reviewed
   sentence: "わたしは / {日本|にほん}の / すし/を / {食|た}べた / こと/が / あります。"
   en: I have eaten Japanese sushi.
   windows:
@@ -60,7 +60,7 @@
 
 - id: n5-b2-0005
   type: compose
-  status: draft
+  status: reviewed
   sentence: "{手|て}を / あらって/から / ごはんを / {食|た}べます。"
   en: I wash my hands, and then I eat.
   windows:
@@ -71,7 +71,7 @@
 
 - id: n5-b2-0006
   type: compose
-  status: draft
+  status: reviewed
   sentence: "ここで / しゃしん/を / とら/ないで / ください。"
   en: Please do not take photos here.
   windows:
@@ -82,7 +82,7 @@
 
 - id: n5-b2-0007
   type: compose
-  status: draft
+  status: reviewed
   sentence: "あした / {友|とも}だち/と / いっしょに / {山|やま}/へ / {行|い}きます。"
   en: Tomorrow I am going to the mountains together with a friend.
   windows:
@@ -93,7 +93,7 @@
 
 - id: n5-b2-0008
   type: compose
-  status: draft
+  status: reviewed
   sentence: "たんじょうびに / あたらしい / くつ/が / ほしい/です。"
   en: For my birthday I want new shoes.
   windows:
@@ -104,18 +104,18 @@
 
 - id: n5-b2-0009
   type: compose
-  status: draft
+  status: reviewed
   sentence: "なつやすみに / {国|くに}/へ / {帰|かえ}る / つもり/です。"
   en: I plan to go back to my country in the summer holidays.
   windows:
     - start: 1
-      difficulty: 2
+      difficulty: 3
       points: [form-tsumori]
       note: "〜つもりです follows the dictionary form: {帰|かえ}る つもりです."
 
 - id: n5-b2-0010
   type: compose
-  status: draft
+  status: reviewed
   sentence: "かぜの ときは / {早|はや}く / ねた / ほう/が / いいです。"
   en: When you have a cold, you should go to bed early.
   windows:
@@ -126,7 +126,7 @@
 
 - id: n5-b2-0011
   type: compose
-  status: draft
+  status: reviewed
   sentence: "これは / {母|はは}/が / {作|つく}った / ケーキ/です。"
   en: This is a cake my mother made.
   windows:
@@ -137,7 +137,7 @@
 
 - id: n5-b2-0012
   type: compose
-  status: draft
+  status: reviewed
   sentence: "わたしは / {日本|にほん}の / アニメ/を / {見|み}る / の/が / {好|す}きです。"
   en: I like watching Japanese anime.
   windows:
@@ -148,7 +148,7 @@
 
 - id: n5-b2-0013
   type: compose
-  status: draft
+  status: reviewed
   sentence: "{田中|たなか}さんは / わたし/より / せ/が / {高|たか}い/です。"
   en: Tanaka-san is taller than me.
   windows:
@@ -159,7 +159,7 @@
 
 - id: n5-b2-0014
   type: compose
-  status: draft
+  status: reviewed
   sentence: "つくえの / {上|うえ}/に / {日本語|にほんご}の / {本|ほん}/が / あります。"
   en: There is a Japanese book on the desk.
   windows:
@@ -170,7 +170,7 @@
 
 - id: n5-b2-0015
   type: compose
-  status: draft
+  status: reviewed
   sentence: "ここ/は / {日本語|にほんご}/を / {勉強|べんきょう}する / {学校|がっこう}/です。"
   en: This is a school where people study Japanese.
   windows:
@@ -181,7 +181,7 @@
 
 - id: n5-b2-0016
   type: compose
-  status: draft
+  status: reviewed
   sentence: "{山田|やまだ}さんに / {借|か}りた / {本|ほん}/を / まだ / {読|よ}んで / いません。"
   en: I haven't read the book I borrowed from Yamada-san yet.
   windows:
@@ -192,7 +192,7 @@
 
 - id: n5-b2-0017
   type: compose
-  status: draft
+  status: reviewed
   sentence: "わたしは / きのう / {新|あたら}しい / くつ/を / {買|か}いに / {行|い}きました。"
   en: Yesterday I went to buy new shoes.
   windows:
@@ -203,7 +203,7 @@
 
 - id: n5-b2-0018
   type: compose
-  status: draft
+  status: reviewed
   sentence: "この / {料理|りょうり}の / {作|つく}り/かた/を / {教|おし}えて / ください。"
   en: Please teach me how to make this dish.
   windows:
@@ -214,7 +214,7 @@
 
 - id: n5-b2-0019
   type: compose
-  status: draft
+  status: reviewed
   sentence: "{雨|あめ}が / ふって / いる / とき/は / うち/で / {本|ほん}/を / {読|よ}みます。"
   en: When it is raining, I read books at home.
   windows:
@@ -225,7 +225,7 @@
 
 - id: n5-b2-0020
   type: compose
-  status: draft
+  status: reviewed
   sentence: "{日本|にほん}で / いちばん / {高|たか}い / {山|やま}/は / ふじさん/です。"
   en: The highest mountain in Japan is Mount Fuji.
   windows:
@@ -236,7 +236,7 @@
 
 - id: n5-b2-0021
   type: compose
-  status: draft
+  status: reviewed
   sentence: "テーブルの / {上|うえ}/の / りんご/を / {食|た}べても / いいですか。"
   en: May I eat the apple on the table?
   windows:

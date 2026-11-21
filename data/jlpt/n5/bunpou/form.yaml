@@ -15,7 +15,7 @@
 
 - id: n5-b1-0001
   type: form
-  status: draft
+  status: reviewed
   sentence: "{毎日|まいにち} バス（1） {学校|がっこう}へ {行|い}きます。"
   en: I go to school by bus every day.
   slots:
@@ -27,7 +27,7 @@
 
 - id: n5-b1-0002
   type: form
-  status: draft
+  status: reviewed
   sentence: "{日曜日|にちようび}に こうえん（1） テニスを しました。"
   en: On Sunday I played tennis in the park.
   slots:
@@ -39,7 +39,7 @@
 
 - id: n5-b1-0003
   type: form
-  status: draft
+  status: reviewed
   sentence: "{毎朝|まいあさ} 7{時|じ}（1） {起|お}きます。"
   en: I get up at seven every morning.
   slots:
@@ -51,7 +51,7 @@
 
 - id: n5-b1-0004
   type: form
-  status: draft
+  status: reviewed
   sentence: "{私|わたし}は {毎朝|まいあさ} 8{時|じ}に {家|いえ}（1） {出|で}ます。"
   en: I leave home at eight every morning.
   slots:
@@ -63,7 +63,7 @@
 
 - id: n5-b1-0005
   type: form
-  status: draft
+  status: reviewed
   sentence: "テーブルの {上|うえ}に りんご（1） バナナなどが あります。"
   en: There are apples, bananas and so on on the table.
   slots:
@@ -75,7 +75,7 @@
 
 - id: n5-b1-0006
   type: form
-  status: draft
+  status: reviewed
   sentence: "つくえの {上|うえ}（1） {本|ほん}が あります。"
   en: There is a book on the desk.
   slots:
@@ -87,7 +87,7 @@
 
 - id: n5-b1-0007
   type: form
-  status: draft
+  status: reviewed
   sentence: "きのう {友|とも}だち（1） えいがを {見|み}に {行|い}きました。"
   en: Yesterday I went to see a film with a friend.
   slots:
@@ -99,7 +99,7 @@
 
 - id: n5-b1-0008
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「もう ひるごはんを {食|た}べましたか。」
     Ｂ「いいえ、（1） {食|た}べて いません。」
@@ -113,7 +113,7 @@
 
 - id: n5-b1-0009
   type: form
-  status: draft
+  status: reviewed
   sentence: "きのうの テストは あまり（1）です。"
   en: Yesterday's test was not very difficult.
   slots:
@@ -125,7 +125,7 @@
 
 - id: n5-b1-0010
   type: form
-  status: draft
+  status: reviewed
   sentence: "ごはんを（1）{前|まえ}に、{手|て}を あらいます。"
   en: I wash my hands before I eat.
   slots:
@@ -137,7 +137,7 @@
 
 - id: n5-b1-0011
   type: form
-  status: draft
+  status: reviewed
   sentence: "{父|ちち}は テレビを（1）ながら ごはんを {食|た}べます。"
   en: My father eats while watching TV.
   slots:
@@ -149,7 +149,7 @@
 
 - id: n5-b1-0012
   type: form
-  status: draft
+  status: reviewed
   sentence: "{日曜日|にちようび}に デパートへ くつを（1）に {行|い}きます。"
   en: On Sunday I am going to the department store to buy shoes.
   slots:
@@ -161,7 +161,7 @@
 
 - id: n5-b1-0013
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「あした いっしょに えいがを（1）か。」
     Ｂ「いいですね。{行|い}きましょう。」
@@ -175,7 +175,7 @@
 
 - id: n5-b1-0014
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「きのうの パーティーは（1）でしたか。」
     Ｂ「とても たのしかったです。」
@@ -189,7 +189,7 @@
 
 - id: n5-b1-0015
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     {店|みせ}の {人|ひと}「いらっしゃいませ。」
     キム「すみません、この かばんは（1）ですか。」
@@ -204,7 +204,7 @@
 
 - id: n5-b1-0016
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「すみません、トイレは どこですか。」
     Ｂ「（1）です。あの ドアの {右|みぎ}です。」
@@ -218,7 +218,7 @@
 
 - id: n5-b1-0017
   type: form
-  status: draft
+  status: reviewed
   sentence: "{私|わたし}は {日本|にほん}の うた（1） すきです。"
   en: I like Japanese songs.
   slots:
@@ -230,7 +230,7 @@
 
 - id: n5-b1-0018
   type: form
-  status: draft
+  status: reviewed
   sentence: "{銀行|ぎんこう}は {午前|ごぜん}9{時|じ}から {午後|ごご}3{時|じ}（1）です。"
   en: The bank is open from 9 a.m. to 3 p.m.
   slots:
@@ -242,7 +242,7 @@
 
 - id: n5-b1-0019
   type: form
-  status: draft
+  status: reviewed
   sentence: "{電車|でんしゃ}は バス（1） はやいです。"
   en: The train is faster than the bus.
   slots:
@@ -254,7 +254,7 @@
 
 - id: n5-b1-0020
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     （{店|みせ}で）
     キム「すみません、この パンを {二|ふた}つ（1）。」
@@ -269,7 +269,7 @@
 
 - id: n5-b1-0021
   type: form
-  status: draft
+  status: reviewed
   sentence: "{日曜日|にちようび}（1） {土曜日|どようび}（1）、{休|やす}みです。"
   en: Both Sunday and Saturday are days off.
   slots:
@@ -281,7 +281,7 @@
 
 - id: n5-b1-0022
   type: form
-  status: draft
+  status: reviewed
   sentence: "この りんごは {三|みっ}つ（1） 500{円|えん}です。"
   en: These apples are 500 yen for three.
   slots:
@@ -293,7 +293,7 @@
 
 - id: n5-b1-0023
   type: form
-  status: draft
+  status: reviewed
   sentence: "きのう {母|はは}（1） でんわを かけました。"
   en: Yesterday I phoned my mother.
   slots:
@@ -305,7 +305,7 @@
 
 - id: n5-b1-0024
   type: form
-  status: draft
+  status: reviewed
   sentence: "すみません、もう すこし ゆっくり（1） ください。"
   en: Excuse me, please speak a little more slowly.
   slots:
@@ -317,7 +317,7 @@
 
 - id: n5-b1-0025
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「しゅくだいは もう {出|だ}しましたか。」
     Ｂ「いいえ、まだ（1）。」
@@ -332,7 +332,7 @@
 
 - id: n5-b1-0026
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「{日曜日|にちようび}は どこかへ {行|い}きましたか。」
     Ｂ「いいえ、（1） {行|い}きませんでした。」
@@ -346,7 +346,7 @@
 
 - id: n5-b1-0027
   type: form
-  status: draft
+  status: reviewed
   sentence: "{一週間|いっしゅうかん}（1） {三回|さんかい} プールで およぎます。"
   en: I swim in the pool three times a week.
   slots:
@@ -358,7 +358,7 @@
 
 - id: n5-b1-0028
   type: form
-  status: draft
+  status: reviewed
   sentence: "{毎朝|まいあさ} パン（1） ごはんを {食|た}べます。"
   en: Every morning I eat bread or rice.
   slots:
@@ -370,7 +370,7 @@
 
 - id: n5-b1-0029
   type: form
-  status: draft
+  status: reviewed
   sentence: "{教室|きょうしつ}に {学生|がくせい}が {一人|ひとり}（1） います。"
   en: There is only one student in the classroom.
   slots:
@@ -382,7 +382,7 @@
 
 - id: n5-b1-0030
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「{田中|たなか}さんは（1） {人|ひと}ですか。」
     Ｂ「おもしろくて、やさしい {人|ひと}です。」
@@ -396,7 +396,7 @@
 
 - id: n5-b1-0031
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「バスと {電車|でんしゃ}と、（1）が はやいですか。」
     Ｂ「{電車|でんしゃ}の ほうが はやいです。」
@@ -410,7 +410,7 @@
 
 - id: n5-b1-0032
   type: form
-  status: draft
+  status: reviewed
   sentence: "くだものの {中|なか}で（1） りんごが {好|す}きです。"
   en: Of all fruits, I like apples best.
   slots:
@@ -422,7 +422,7 @@
 
 - id: n5-b1-0033
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「しゅくだいは {終|お}わりましたか。」
     Ｂ「はい、（1） {終|お}わりました。」
@@ -436,7 +436,7 @@
 
 - id: n5-b1-0034
   type: form
-  status: draft
+  status: reviewed
   sentence: "ばんごはんを（1） あとで、さんぽを します。"
   en: I take a walk after eating dinner.
   slots:
@@ -448,7 +448,7 @@
 
 - id: n5-b1-0035
   type: form
-  status: draft
+  status: reviewed
   sentence: "{今|いま}、{弟|おとうと}は へやで {音楽|おんがく}を（1）。"
   en: My younger brother is listening to music in his room now.
   slots:
@@ -460,19 +460,19 @@
 
 - id: n5-b1-0036
   type: form
-  status: draft
+  status: reviewed
   sentence: "ここは びょういんです。たばこを（1）。"
   en: This is a hospital. You must not smoke.
   slots:
     - answer: すっては いけません
       wrong: [すっても いいです, すって ください, すいましょう]
-      difficulty: 2
+      difficulty: 3
       points: [form-te-wa-ikenai]
       note: "〜ては いけません forbids something. In a hospital, smoking is forbidden, not allowed or invited."
 
 - id: n5-b1-0037
   type: form
-  status: draft
+  status: reviewed
   sentence: "{日曜日|にちようび}は {本|ほん}を {読|よ}んだり、{音楽|おんがく}を（1） します。"
   en: On Sundays I do things like reading books and listening to music.
   slots:
@@ -484,7 +484,7 @@
 
 - id: n5-b1-0038
   type: form
-  status: draft
+  status: reviewed
   sentence: "{顔|かお}を あらいました。（1）、{朝|あさ}ごはんを {食|た}べました。"
   en: I washed my face. After that, I ate breakfast.
   slots:
@@ -496,7 +496,7 @@
 
 - id: n5-b1-0039
   type: form
-  status: draft
+  status: reviewed
   sentence: "{兄|あに}は せが {高|たか}いです（1）、{弟|おとうと}は ひくいです。"
   en: My older brother is tall, but my younger brother is short.
   slots:
@@ -508,7 +508,7 @@
 
 - id: n5-b1-0040
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「その かばん、{重|おも}いですね。{持|も}ち（1）。」
     Ｂ「ありがとう ございます。おねがいします。」
@@ -522,7 +522,7 @@
 
 - id: n5-b1-0041
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「どうしたんですか。」
     Ｂ「あたまが（1）んです。」
@@ -536,7 +536,7 @@
 
 - id: n5-b1-0042
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「なつやすみは（1）からですか。」
     Ｂ「{七月|しちがつ} {二十日|はつか}からです。」
@@ -550,7 +550,7 @@
 
 - id: n5-b1-0043
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     （{店|みせ}で）
     Ａ「すみません、（1） ケーキを {一|ひと}つ ください。」
@@ -565,7 +565,7 @@
 
 - id: n5-b1-0044
   type: form
-  status: draft
+  status: reviewed
   sentence: "{肉|にく}は {食|た}べますが、{魚|さかな}（1） {食|た}べません。"
   en: I eat meat, but I don't eat fish.
   slots:
@@ -577,7 +577,7 @@
 
 - id: n5-b1-0045
   type: form
-  status: draft
+  status: reviewed
   sentence: "{日本|にほん}へ {来|き}た（1）、ひらがなも わかりませんでした。"
   en: When I came to Japan, I couldn't even read hiragana.
   slots:
@@ -589,7 +589,7 @@
 
 - id: n5-b1-0046
   type: form
-  status: draft
+  status: reviewed
   sentence: "{友|とも}だちは「あしたは {行|い}きません」（1） {言|い}いました。"
   en: My friend said they would not go tomorrow.
   slots:
@@ -601,7 +601,7 @@
 
 - id: n5-b1-0047
   type: form
-  status: draft
+  status: reviewed
   sentence: "きのうの パーティーは とても にぎやか（1）。"
   en: Yesterday's party was very lively.
   slots:
@@ -613,7 +613,7 @@
 
 - id: n5-b1-0048
   type: form
-  status: draft
+  status: reviewed
   sentence: "{来年|らいねん}、{妹|いもうと}は はたち（1） なります。"
   en: Next year my younger sister will turn twenty.
   slots:
@@ -625,7 +625,7 @@
 
 - id: n5-b1-0049
   type: form
-  status: draft
+  status: reviewed
   sentence: |-
     Ａ「コーヒーは（1）ですか。」
     Ｂ「ありがとう ございます。いただきます。」
@@ -639,7 +639,7 @@
 
 - id: n5-b1-0050
   type: form
-  status: draft
+  status: reviewed
   sentence: "{姉|あね}は うたを（1）のが {上手|じょうず}です。"
   en: My older sister is good at singing.
   slots:
