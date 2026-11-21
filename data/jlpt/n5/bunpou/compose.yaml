@@ -73,7 +73,7 @@
   type: compose
   status: draft
   sentence: "{先生|せんせい}は / しゃしん/を / とらないで / ください/と / {言|い}いました。"
-  en: "The teacher said, \"Please don't take photos.\""
+  en: 'The teacher said, "Please don''t take photos."'
   windows:
     - start: 1
       difficulty: 1
