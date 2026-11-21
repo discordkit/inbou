@@ -2,6 +2,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import * as v from "valibot";
 import { describe, expect, it } from "vite-plus/test";
 import { parse } from "yaml";
+import { BLUEPRINTS } from "../blueprint.js";
 import corpus from "../corpus.json" with { type: "json" };
 import {
   composeQuestion,
@@ -14,6 +15,7 @@ import {
   chunksOf,
   corpusProblems,
   display,
+  fill,
   grammarPointsSchema,
   itemProblems,
   itemsSchema,
@@ -77,28 +79,60 @@ const longestPool = (slot: Slot): Slot => ({
 /** Pinned: these lengths do not depend on the draw. */
 const zero = (): number => 0;
 
+/** How many blanks a test asks of its passage. */
+const ASKED = BLUEPRINTS.bunpou.find((plan) => plan.mondai === 3)?.blanks ?? 4;
+
+/** Every way to choose `size` entries of `list`, each in list order. */
+const choices = <T>(list: readonly T[], size: number): T[][] =>
+  size === 0
+    ? [[]]
+    : list.flatMap((first, index) =>
+        choices(list.slice(index + 1), size - 1).map((rest) => [first, ...rest])
+      );
+
 /**
- * Every question an item can produce, at its longest, through the real draw.
+ * Every card an item can produce, at its longest, through the real draw.
  *
- * Each pool is cut to its three longest options, and a passage asks every one
- * of its blanks, so every question here is as long as any draw could make it.
- * If these fit, every draw fits.
+ * Each pool is cut to its three longest options, so every question here is as long as any draw could make it. A passage makes one card for each set of blanks a test could ask, with the rest filled in, as the card shows them. If these fit, every draw fits.
  */
-const longestQuestions = (item: Item): ExamQuestion[] => {
+const longestCards = (item: Item): ExamQuestion[][] => {
   switch (item.type) {
     case `form`: {
       const longest = { ...item, slots: item.slots.map(longestPool) };
-      return item.slots.map((_, index) =>
+      return item.slots.map((_, index) => [
         formQuestion(longest, index, 99, zero)
-      );
+      ]);
     }
     case `compose`:
-      return item.windows.map((_, index) =>
+      return item.windows.map((_, index) => [
         composeQuestion(item, index, 99, zero)
-      );
+      ]);
     case `passage`: {
-      const longest = { ...item, blanks: item.blanks.map(longestPool) };
-      return passageQuestions(longest, item.blanks.length, 90, zero);
+      const blanks = item.blanks.map(longestPool);
+      const slots = blanks.map((_, index) => index + 1);
+      return choices(slots, Math.min(ASKED, slots.length)).map((asked) =>
+        passageQuestions(
+          {
+            ...item,
+            // The asked blanks, renumbered; every other blank filled in.
+            text: fill(
+              item.text,
+              new Map(
+                slots.map((slot) => [
+                  slot,
+                  asked.includes(slot)
+                    ? `（${String(asked.indexOf(slot) + 1)}）`
+                    : (blanks[slot - 1]?.answer ?? ``)
+                ])
+              )
+            ),
+            blanks: asked.flatMap((slot) => blanks.slice(slot - 1, slot))
+          },
+          asked.length,
+          90,
+          zero
+        )
+      );
     }
   }
 };
@@ -140,18 +174,18 @@ describe(`the mock-test corpus`, () => {
   it(`renders every card inside Discord's limits`, () => {
     // WHY: Discord rejects the whole message over a limit, and the question
     // is lost mid-test. Checked on the longest variant of every slot and
-    // window, and on each passage as one card with every blank asked.
+    // window, and on every set of four blanks a passage card can ask.
     const tally = { counts: [9, 9, 9, 9], correct: 0, scorers: [] };
     const over: string[] = [];
     // Drafts included, so a draft's links are measured before it ships.
     const links = reviewLinksOf(points, items);
     for (const item of items) {
-      const questions = longestQuestions(item).map((question) => ({
-        ...question,
-        review: reviewOf(question.points, links)
-      }));
-      const cards =
-        item.type === `passage` ? [questions] : questions.map((q) => [q]);
+      const cards = longestCards(item).map((card) =>
+        card.map((question) => ({
+          ...question,
+          review: reviewOf(question.points, links)
+        }))
+      );
       for (const card of cards) {
         for (const message of [
           questionMessage({

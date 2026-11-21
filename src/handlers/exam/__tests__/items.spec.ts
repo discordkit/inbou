@@ -341,6 +341,60 @@ describe(`passage items`, () => {
       problems.some((p) => p.includes(`intro: kanji 先 has no reading`))
     ).toBe(true);
   });
+
+  /** Four blanks, each on its own point, with words between them. */
+  const passage = (text: string, points: string[]): PassageItem => ({
+    id: `n5-b3-0001`,
+    type: `passage`,
+    status: `draft`,
+    text,
+    en: `English.`,
+    blanks: points.map((point) => ({
+      answer: `で`,
+      wrong: [`を`, `が`, `と`],
+      difficulty: 1 as const,
+      points: [point],
+      note: `n`
+    }))
+  });
+  const FOUR = [
+    `particle-de-means`,
+    `particle-de-place`,
+    `particle-ni-time`,
+    `particle-o-object`
+  ];
+
+  it(`passes blanks that each stand alone`, () => {
+    expect(
+      itemProblems(
+        passage(`あ（1）い（2）う（3）え（4）お。`, FOUR),
+        new Set(FOUR)
+      )
+    ).toEqual([]);
+  });
+
+  it(`catches two blanks that test the same point`, () => {
+    // WHY: a test asks any four blanks and shows the rest filled. Two on one point would test it twice on one card, or a filled one would give the asked one away.
+    const same = [...FOUR.slice(0, 3), `particle-de-means`];
+    expect(
+      itemProblems(
+        passage(`あ（1）い（2）う（3）え（4）お。`, same),
+        new Set(FOUR)
+      )
+    ).toEqual([
+      `n5-b3-0001: blanks （1） and （4） both test particle-de-means`
+    ]);
+  });
+
+  it(`catches two blanks with only punctuation between them`, () => {
+    // WHY: two gaps side by side read as one, and whichever is shown filled decides what the other can be.
+    expect(
+      itemProblems(
+        passage(`あ（1）い（2）、（3）え（4）お。`, FOUR),
+        new Set(FOUR)
+      )
+    ).toEqual([`n5-b3-0001: blanks （2） and （3） sit side by side`]);
+  });
 });
 
 describe(`the schemas`, () => {

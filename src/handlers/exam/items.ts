@@ -570,6 +570,36 @@ const composeProblems = (
 };
 
 /** Everything code can find wrong with one item. Empty means it may ship. */
+/**
+ * What a passage's blanks need because a test asks any four of them and shows the rest filled in.
+ *
+ * Two blanks on one grammar point would test it twice on one card, and a filled one would give the other away. Two blanks with only punctuation between them read as one gap.
+ */
+const passageBlankProblems = (item: PassageItem): string[] => {
+  const problems: string[] = [];
+  const first = new Map<string, number>();
+  item.blanks.forEach((blank, index) => {
+    for (const point of blank.points) {
+      const earlier = first.get(point);
+      if (earlier === undefined) first.set(point, index + 1);
+      else
+        problems.push(
+          `${item.id}: blanks （${String(earlier)}） and （${String(index + 1)}） both test ${point}`
+        );
+    }
+  });
+  const marks = [...item.text.matchAll(/（(\d+)）/gu)];
+  marks.slice(1).forEach((mark, index) => {
+    const before = marks[index];
+    const gap = item.text.slice(before.index + before[0].length, mark.index);
+    if (gap.replace(/[\s、。「」]/gu, ``) === ``)
+      problems.push(
+        `${item.id}: blanks ${before[0]} and ${mark[0]} sit side by side`
+      );
+  });
+  return problems;
+};
+
 export const itemProblems = (
   item: Item,
   points: ReadonlySet<string>
@@ -584,7 +614,8 @@ export const itemProblems = (
         ...(item.intro === undefined
           ? []
           : markupProblems(item.intro, `${item.id} intro`)),
-        ...blankedProblems(item.text, item.blanks, points, item.id)
+        ...blankedProblems(item.text, item.blanks, points, item.id),
+        ...passageBlankProblems(item)
       ];
   }
 };

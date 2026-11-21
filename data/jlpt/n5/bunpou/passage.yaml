@@ -1,24 +1,37 @@
 # 問題3 文章の文法 — a short passage with numbered blanks.
 #
-# Blanks are （n）, numbered in the order a reader meets them. A test asks four
-# of a passage's blanks and shows the rest filled in, so a passage with five
-# or six varies between tests. Each blank's wrong options must be wrong in the
-# PASSAGE, not just the sentence: the paper tests whether a form fits the flow
-# — a conjunction that fits the sentence before, a tense that fits the day.
+# Blanks are （n）, numbered in the order a reader meets them. A passage has about eight, and a test asks any four of them and shows the rest filled in, so a passage that comes up again asks a different set. Because any blank may be shown filled, each must stand alone: no two test the same grammar point, no two sit side by side (the build checks both), and no filled-in answer gives another away.
+#
+# Each blank's wrong options must be wrong in the PASSAGE, not just the sentence: the paper tests whether a form fits the flow — a conjunction that fits the sentence before, a tense that fits the day.
 
 - id: n5-b3-0001
   type: passage
-  status: reviewed
+  status: draft
   intro: "リーさんは「{私|わたし}の しゅうまつ」の さくぶんを {書|か}いて、クラスの みんなの {前|まえ}で {読|よ}みます。"
   text: |-
-    {私|わたし}は {毎週|まいしゅう} {土曜日|どようび}に {友|とも}だちと テニスを します。（1）、{先週|せんしゅう}の {土曜日|どようび}は {雨|あめ}でした。{私|わたし}たちは テニスを しないで、{駅|えき}の {近|ちか}くの きっさてんへ {行|い}きました。コーヒーを（2）、たくさん {話|はな}しました。きっさてん（3） ケーキも とても おいしかったです。{今度|こんど}は {家族|かぞく}（4） {行|い}きたいです。{来週|らいしゅう}は {天気|てんき}が いいでしょう。また テニスが（5）。
+    {私|わたし}は {毎週|まいしゅう} {土曜日|どようび}（1） {友|とも}だちと テニスを します。（2）、{先週|せんしゅう}の {土曜日|どようび}は {雨|あめ}（3）。{私|わたし}たちは テニスを しないで、{駅|えき}の {近|ちか}くの きっさてん（4） {行|い}きました。コーヒーを（5）、たくさん {話|はな}しました。きっさてん（6） ケーキも とても おいしかったです。{今度|こんど}は {家族|かぞく}（7） {行|い}きたいです。{来週|らいしゅう}は {天気|てんき}が いいでしょう。また テニスが（8）。
   en: "Every Saturday I play tennis with my friends. But last Saturday it rained. We didn't play tennis, and went to a café near the station. We talked a lot while drinking coffee. The café's cake was very good too. Next time I want to go with my family. Next week the weather will probably be good, so we can play tennis again."
   blanks:
+    - answer: に
+      wrong: [で, を, が]
+      difficulty: 1
+      points: [particle-ni-time]
+      note: "に marks a day or a time: {土曜日|どようび}に."
     - answer: でも
       wrong: [だから, それから, そして]
       difficulty: 1
       points: [conjunction-demo]
       note: "でも turns to something unexpected: tennis every Saturday, but last Saturday it rained."
+    - answer: でした
+      wrong: [です, でしょう, じゃ ありません]
+      difficulty: 1
+      points: [form-adjective-past]
+      note: "{先週|せんしゅう} puts it in the past: {雨|あめ}でした. It rained, so they did not play tennis."
+    - answer: へ
+      wrong: [を, で, が]
+      difficulty: 1
+      points: [particle-he-direction]
+      note: "へ marks the direction you go: きっさてんへ {行|い}きました. に would also be right, so it is not offered."
     - answer: "{飲|の}みながら"
       wrong: ["{飲|の}みたいから", "{飲|の}みに", "{飲|の}みませんか"]
       difficulty: 2
@@ -42,13 +55,18 @@
 
 - id: n5-b3-0002
   type: passage
-  status: reviewed
+  status: draft
   intro: "アンナさんが「{日本|にほん}の コンビニ」の さくぶんを {書|か}きました。"
   text: |-
-    {日本|にほん}の コンビニは とても べんりです。{朝|あさ}（1） {夜|よる}まで あいて います。{食|た}べもの（2） {飲|の}みものが たくさん あります。{私|わたし}は {毎日|まいにち} {学校|がっこう}の {帰|かえ}りに コンビニへ おべんとうを（3） {行|い}きます。
-    {私|わたし}の {国|くに}には コンビニが（4）から、{日本|にほん}に {来|き}て はじめて コンビニに {入|はい}りました。はじめは つかいかたが わかりませんでした。（5）、{今|いま}は コンビニが だいすきです。
+    {日本|にほん}の コンビニは（1） べんりです。{朝|あさ}（2） {夜|よる}まで あいて います。{食|た}べもの（3） {飲|の}みものが たくさん あります。{私|わたし}は {毎日|まいにち} {学校|がっこう}の {帰|かえ}りに コンビニへ おべんとうを（4） {行|い}きます。
+    {私|わたし}の {国|くに}には コンビニが（5）から、{日本|にほん}に {来|き}て はじめて コンビニ（6） {入|はい}りました。はじめは つかいかた（7） わかりませんでした。（8）、{今|いま}は コンビニが だいすきです。
   en: "Convenience stores in Japan are very handy. They are open from morning until night, and they have lots of food, drinks and more. Every day on my way home from school, I go to one to buy a bento. There are no convenience stores in my country, so I first went into one after I came to Japan. At first I did not know how to use it. But now I love convenience stores."
   blanks:
+    - answer: とても
+      wrong: [たくさん, ぜんぜん, あまり]
+      difficulty: 1
+      points: [adverb-totemo]
+      note: "とても makes べんり stronger. ぜんぜん and あまり need a negative, and たくさん counts things."
     - answer: から
       wrong: [まで, で, に]
       difficulty: 1
@@ -69,6 +87,16 @@
       difficulty: 2
       points: [form-ga-aru-iru]
       note: "から gives the reason she first went into one in Japan: there are none at home, ありません. Things take ある; people and animals take いる."
+    - answer: に
+      wrong: [を, で, が]
+      difficulty: 2
+      points: [particle-ni-destination]
+      note: "{入|はい}る takes に for the place you go into: コンビニに {入|はい}りました."
+    - answer: が
+      wrong: [を, に, で]
+      difficulty: 2
+      points: [particle-ga-object]
+      note: "わかる takes が for what you understand: つかいかたが わかりません. を is a common mistake."
     - answer: でも
       wrong: [だから, そして, いつも]
       difficulty: 1
@@ -77,26 +105,46 @@
 
 - id: n5-b3-0003
   type: passage
-  status: reviewed
+  status: draft
   intro: "ケンさんが {先生|せんせい}に メールを {書|か}きました。"
   text: |-
     {田中|たなか}{先生|せんせい}
-    こんにちは。ケンです。{来週|らいしゅう}の {月曜日|げつようび}、{学校|がっこう}を（1）。{国|くに}から {母|はは}が {来|く}る（2）、くうこうへ むかえに {行|い}きます。じゅぎょうの ノートは {友|とも}だちに（3） {読|よ}みます。しゅくだいは {火曜日|かようび}に {出|だ}しても（4）か。
+    こんにちは。ケンです。{来週|らいしゅう}（1） {月曜日|げつようび}、{学校|がっこう}を（2）。{国|くに}から {母|はは}（3） {来|く}る（4）、くうこうへ むかえ（5） {行|い}きます。{火曜日|かようび}には {学校|がっこう}（6） {来|き}ます。じゅぎょうの ノートは {友|とも}だちに（7） {読|よ}みます。しゅくだいは {火曜日|かようび}に {出|だ}しても（8）か。
     よろしく おねがいします。
     ケン
-  en: "Dear Tanaka-sensei, Hello, this is Ken. I will be absent from school next Monday. My mother is coming from my country, so I am going to the airport to meet her. I will borrow the class notes from a friend and read them. May I hand in my homework on Tuesday? Thank you. Ken"
+  en: "Dear Tanaka-sensei, Hello, this is Ken. I will be absent from school next Monday. My mother is coming from my country, so I am going to the airport to meet her. I will come to school on Tuesday. I will borrow the class notes from a friend and read them. May I hand in my homework on Tuesday? Thank you. Ken"
   blanks:
+    - answer: の
+      wrong: [に, で, が]
+      difficulty: 1
+      points: [particle-no-possessive]
+      note: "の joins two nouns: {来週|らいしゅう}の {月曜日|げつようび}, Monday next week."
     - answer: "{休|やす}みます"
       wrong:
         ["{休|やす}みました", "{休|やす}んで います", "{休|やす}みたかったです"]
       difficulty: 2
       points: [form-polite-tense]
       note: "Next Monday is still to come: {休|やす}みます, not a past form."
+    - answer: が
+      wrong: [を, に, で]
+      difficulty: 2
+      points: [particle-ga-subject]
+      note: "が marks who does the action inside the clause: {母|はは}が {来|く}る, my mother comes."
     - answer: ので
       wrong: [けど, まで, が]
       difficulty: 2
       points: [conjunction-node]
       note: "〜ので gives a reason, like から: his mother is coming, so he goes to meet her."
+    - answer: に
+      wrong: [で, を, と]
+      difficulty: 2
+      points: [form-ni-iku]
+      note: "〜に {行|い}く: go to do something. むかえ is the ます stem of むかえる, to meet someone: むかえに {行|い}きます."
+    - answer: に
+      wrong: [を, で, が]
+      difficulty: 1
+      points: [particle-ni-destination]
+      note: "{来|く}る takes に for where someone arrives: {学校|がっこう}に {来|き}ます."
     - answer: かりて
       wrong: [かして, かりに, かります]
       difficulty: 3
@@ -110,13 +158,13 @@
 
 - id: n5-b3-0004
   type: passage
-  status: reviewed
+  status: draft
   intro: "ジョンさんと マリアさんは「わたしの すきな きせつ」の さくぶんを {書|か}いて、クラスの みんなの {前|まえ}で {読|よ}みます。"
   text: |-
     【ジョンさんの さくぶん】
-    わたしは なつが すきです。{毎日|まいにち} {海|うみ}（1） およいで、{夜|よる}は {友|とも}だちと はなびを {見|み}ます。なつは あついですから、きらいな {人|ひと}も います。（2）、わたしは あつい {日|ひ}が だいすきです。
+    わたしは なつが すきです。{毎日|まいにち} {海|うみ}（1） およいで、{夜|よる}は {友|とも}だち（2） はなびを {見|み}ます。なつは あついですから、きらいな {人|ひと}（3） います。（4）、わたしは あつい {日|ひ}が だいすきです。
     【マリアさんの さくぶん】
-    わたしは ふゆが いちばん すきです。わたしの {国|くに}では ゆきが ふりません。{去年|きょねん}の ふゆ、{日本|にほん}で はじめて ゆきを（3）。とても きれいでした。ことしの ふゆは、{友|とも}だちと {山|やま}へ スキーを（4） {行|い}きたいです。スキーは（5） した ことが ありませんから、とても たのしみです。
+    わたしは ふゆ（5） いちばん すきです。わたしの {国|くに}では ゆきが ふりません。{去年|きょねん}の ふゆ、{日本|にほん}で はじめて ゆきを（6）。とても きれいでした。ことしの ふゆは、{友|とも}だちと {山|やま}へ スキーを（7） {行|い}きたいです。スキーは（8） した ことが ありませんから、とても たのしみです。
   en: "John's composition: I like summer. Every day I swim in the sea, and at night I watch fireworks with friends. Summer is hot, so some people don't like it. But I love hot days. Maria's composition: I like winter best. It doesn't snow in my country. Last winter, in Japan, I saw snow for the first time. It was very beautiful. This winter I want to go to the mountains with friends to ski. I have never skied before, so I'm really looking forward to it."
   blanks:
     - answer: で
@@ -124,11 +172,26 @@
       difficulty: 1
       points: [particle-de-place]
       note: "で marks where an action happens: {海|うみ}で およぐ. に marks where something is, or where it goes."
+    - answer: と
+      wrong: [に, を, で]
+      difficulty: 1
+      points: [particle-to-with]
+      note: "と marks who you do something with: {友|とも}だちと はなびを {見|み}ます."
+    - answer: も
+      wrong: [を, に, で]
+      difficulty: 2
+      points: [particle-mo-also]
+      note: "も: also. Many people like summer, but there are also people who dislike it."
     - answer: でも
       wrong: [だから, それから, では]
       difficulty: 1
       points: [conjunction-demo]
       note: "でも turns to the opposite: some people dislike the heat, but John loves it."
+    - answer: が
+      wrong: [を, に, で]
+      difficulty: 2
+      points: [particle-ga-object]
+      note: "すき takes が for what you like: ふゆが いちばん すきです."
     - answer: "{見|み}ました"
       wrong: ["{見|み}ます", "{見|み}て います", "{見|み}たいです"]
       difficulty: 2
@@ -147,11 +210,11 @@
 
 - id: n5-b3-0005
   type: passage
-  status: reviewed
+  status: draft
   intro: "リンさんは「わたしの {町|まち}」の さくぶんを {書|か}きました。"
   text: |-
-    わたしの {町|まち}は {大|おお}きく ありませんが、とても しずかで きれいです。{駅|えき}の {前|まえ}に {小|ちい}さい こうえんが あります。こうえんには {大|おお}きい {木|き}が（1） あります。{毎朝|まいあさ}、わたしは その こうえんを さんぽします。
-    {駅|えき}の {近|ちか}く（2） おいしい パンやが あります。わたしは {毎週|まいしゅう} {土曜日|どようび}に そこで パンを {買|か}います。その パンやの パンは {安|やす}（3）、おいしいです。この {町|まち}に {来|き}て、もう {三年|さんねん}に なります。わたしは この {町|まち}が（4） すきです。
+    わたしの {町|まち}は {大|おお}きく ありませんが、とても しずかで きれいです。{駅|えき}の {前|まえ}に {小|ちい}さい こうえんが あります。こうえんには {大|おお}きい {木|き}が（1） あります。{毎朝|まいあさ}、わたしは その こうえん（2） さんぽします。
+    {駅|えき}の {近|ちか}く（3） おいしい パンやが あります。わたしは {毎週|まいしゅう} {土曜日|どようび}に（4）で パンを {買|か}います。その パンやの パンは {安|やす}（5）、おいしいです。この {町|まち}（6） {来|き}て、（7） {三年|さんねん}に なります。わたしは この {町|まち}が（8） すきです。
   en: "My town is not big, but it is very quiet and pretty. There is a small park in front of the station. The park has lots of big trees. Every morning I take a walk in that park. Near the station there is a good bakery. I buy bread there every Saturday. The bread there is cheap and tasty. It has been three years since I came to this town. I like this town very much."
   blanks:
     - answer: たくさん
@@ -159,16 +222,36 @@
       difficulty: 2
       points: [adverb-takusan]
       note: "たくさん counts: many trees. とても makes a word stronger, so it goes with words like {大|おお}きい or すき, not あります."
+    - answer: を
+      wrong: [に, へ, が]
+      difficulty: 3
+      points: [particle-o-through]
+      note: "さんぽする takes を for the place you walk through: こうえんを さんぽします. で would also be right, so it is not offered."
     - answer: に
       wrong: [で, を, へ]
       difficulty: 2
       points: [particle-ni-existence]
       note: "に marks where something is: {近|ちか}くに パンやが あります. で marks where something happens."
+    - answer: そこ
+      wrong: [ここ, あそこ, どこ]
+      difficulty: 3
+      points: [demonstrative-place]
+      note: "そこ points back to a place just named, the bakery. In writing, a place already mentioned takes そ."
     - answer: くて
       wrong: [い, かった, くない]
       difficulty: 2
       points: [form-te-link]
       note: "An い adjective joins the next one with くて: {安|やす}くて、おいしい. Cheap and tasty."
+    - answer: に
+      wrong: [を, で, が]
+      difficulty: 1
+      points: [particle-ni-destination]
+      note: "{来|く}る takes に for where you arrive: この {町|まち}に {来|き}て."
+    - answer: もう
+      wrong: [まだ, よく, いつも]
+      difficulty: 2
+      points: [adverb-mou]
+      note: "もう: already. Three years have already passed since the writer came."
     - answer: とても
       wrong: [たくさん, ぜんぜん, あまり]
       difficulty: 2
@@ -177,11 +260,11 @@
 
 - id: n5-b3-0006
   type: passage
-  status: reviewed
+  status: draft
   intro: "ミンさんは「わたしの かぞく」の さくぶんを {書|か}きました。"
   text: |-
-    わたしの かぞくは {五人|ごにん}です。{父|ちち}（1） {母|はは}と {兄|あに}と {妹|いもうと}と わたしです。{父|ちち}は {銀行|ぎんこう}で {働|はたら}いて います。{兄|あに}は {大学生|だいがくせい}です。いつも いそがしいので、（2） {家|いえ}に いません。{妹|いもうと}は {七|なな}さいです。わたしが {国|くに}に いた とき、まいばん {妹|いもうと}（3） いっしょに ねました。
-    {今|いま}、わたしは ひとりで {日本|にほん}に います。でも、{毎週|まいしゅう} かぞくと でんわで {話|はな}します（4）、さびしく ありません。
+    わたしの かぞくは {五人|ごにん}です。{父|ちち}（1） {母|はは}と {兄|あに}と {妹|いもうと}と わたしです。{父|ちち}は {銀行|ぎんこう}（2） {働|はたら}いて います。{兄|あに}（3） {大学生|だいがくせい}です。いつも いそがしいので、（4） {家|いえ}に いません。{妹|いもうと}は {七|なな}さいです。わたしが {国|くに}に いた（5）、まいばん {妹|いもうと}（6） いっしょに ねました。
+    {今|いま}、わたしは ひとりで {日本|にほん}（7） います。でも、{毎週|まいしゅう} かぞくと でんわで {話|はな}します（8）、さびしく ありません。
   en: "My family has five people: my father, my mother, my older brother, my younger sister and me. My father works at a bank. My brother is a university student. He is always busy, so he is not at home much. My sister is seven. When I was in my country, I slept beside my sister every night. Now I live alone in Japan. But I talk with my family on the phone every week, so I am not lonely."
   blanks:
     - answer: と
@@ -189,16 +272,36 @@
       difficulty: 1
       points: [particle-to-and]
       note: "と lists every member: {父|ちち}と {母|はは}と…. The family has {五人|ごにん}, and all five are named, so not や."
+    - answer: で
+      wrong: [に, を, へ]
+      difficulty: 2
+      points: [particle-de-place]
+      note: "で marks where an action happens: {銀行|ぎんこう}で {働|はたら}きます."
+    - answer: は
+      wrong: [を, に, で]
+      difficulty: 1
+      points: [particle-wa-topic]
+      note: "は marks the topic: {兄|あに}は {大学生|だいがくせい}です, as for my older brother, he is a student."
     - answer: あまり
       wrong: [とても, たくさん, すこし]
       difficulty: 2
       points: [adverb-amari]
       note: "あまり with a negative: not much. いません is negative, and とても, たくさん and すこし do not soften a negative."
+    - answer: とき
+      wrong: [まえ, あと, ながら]
+      difficulty: 2
+      points: [form-toki]
+      note: "〜とき: when. いた とき, when I was in my country. まえ needs the dictionary form, and ながら the ます stem."
     - answer: と
       wrong: [に, を, で]
       difficulty: 1
       points: [particle-to-with]
       note: "〜と いっしょに: together with someone."
+    - answer: に
+      wrong: [で, を, へ]
+      difficulty: 2
+      points: [particle-ni-existence]
+      note: "いる takes に for where someone is: {日本|にほん}に います."
     - answer: から
       wrong: [が, まで, を]
       difficulty: 2
@@ -207,15 +310,20 @@
 
 - id: n5-b3-0007
   type: passage
-  status: reviewed
+  status: draft
   intro: "ゆきさんが {友|とも}だちの アンさんに メモを {書|か}きました。"
   text: |-
     アンさん
-    あしたは わたしの たんじょうびです。わたしの うちで パーティーを します。パーティーは {六時|ろくじ}（1） {九時|くじ}までです。わたしの うちは {駅|えき}の {前|まえ}（2） {本屋|ほんや}の となりです。
-    わたしは ケーキを {作|つく}ります。のみものは ありません（3）、{何|なに}か {買|か}って {来|き}て ください。クラスの {友|とも}だちも {三人|さんにん} {来|き}ます。みんなで ゲームを（4）。
+    あしたは わたしの たんじょうびです。わたしの うち（1） パーティーを します。パーティーは {六時|ろくじ}（2） {九時|くじ}までです。わたしの うちは {駅|えき}の {前|まえ}（3） {本屋|ほんや}の となりです。
+    わたしは ケーキ（4） {作|つく}ります。のみものは ありません（5）、スーパーで（6） {買|か}って {来|き}て ください。クラスの {友|とも}だち（7） {三人|さんにん} {来|き}ます。みんなで ゲームを（8）。
     ゆき
-  en: "Ann-san, tomorrow is my birthday. I'm having a party at my home. The party is from six to nine. My home is next to the bookshop in front of the station. I'll make a cake. There are no drinks, so please buy something on your way. Three friends from class are coming too. Let's all play games together. Yuki"
+  en: "Ann-san, tomorrow is my birthday. I'm having a party at my home. The party is from six to nine. My home is next to the bookshop in front of the station. I'll make a cake. There are no drinks, so please buy something at the supermarket on your way. Three friends from class are coming too. Let's all play games together. Yuki"
   blanks:
+    - answer: で
+      wrong: [に, を, へ]
+      difficulty: 1
+      points: [particle-de-place]
+      note: "で marks where something happens: うちで パーティーを します."
     - answer: から
       wrong: [まで, に, を]
       difficulty: 1
@@ -226,11 +334,26 @@
       difficulty: 1
       points: [particle-no-possessive]
       note: "の joins two nouns: {駅|えき}の {前|まえ}の {本屋|ほんや}, the bookshop in front of the station."
+    - answer: を
+      wrong: [に, で, が]
+      difficulty: 1
+      points: [particle-o-object]
+      note: "を marks the thing you make: ケーキを {作|つく}ります."
     - answer: から
       wrong: [まで, と, を]
       difficulty: 2
       points: [conjunction-kara-reason]
       note: "から gives the reason: there are no drinks, so please buy some. と cannot come before a request."
+    - answer: "{何|なに}か"
+      wrong: ["{何|なに}", "{何|なに}も", "{何|なに}が"]
+      difficulty: 3
+      points: [question-ka-indefinite]
+      note: "{何|なに}か: something. {何|なに}も needs a negative, and {何|なに} alone would ask a question."
+    - answer: も
+      wrong: [を, で, に]
+      difficulty: 1
+      points: [particle-mo-also]
+      note: "も: also. Ann is invited, and three friends from class are coming too."
     - answer: しましょう
       wrong: [しました, しません, しませんでした]
       difficulty: 1
@@ -239,12 +362,12 @@
 
 - id: n5-b3-0008
   type: passage
-  status: reviewed
+  status: draft
   intro: "ケンさんは「わたしの しゅみ」の さくぶんを {書|か}きました。"
   text: |-
-    わたしの しゅみは しゃしんです。{休|やす}みの {日|ひ}は（1） カメラを {持|も}って、{山|やま}や {川|かわ}へ {行|い}きます。{花|はな}や {鳥|とり}の しゃしんを とるのが {好|す}きです。
-    {先週|せんしゅう}の {日曜日|にちようび}も {早|はや}く {起|お}きて、{近|ちか}くの {山|やま}へ（2）。そこで、とても きれいな {鳥|とり}を {見|み}ました。でも、カメラを {家|いえ}に わすれました（3）、しゃしんは ありません。
-    とても ざんねんでした。{来週|らいしゅう}（4） {行|い}きます。
+    わたしの しゅみは しゃしんです。{休|やす}みの {日|ひ}は（1） カメラを {持|も}って、{山|やま}（2） {川|かわ}へ {行|い}きます。{花|はな}や {鳥|とり}の しゃしんを とる（3） {好|す}きです。
+    {先週|せんしゅう}の {日曜日|にちようび}（4） {早|はや}く {起|お}きて、{近|ちか}くの {山|やま}へ（5）。そこで、とても きれい（6） {鳥|とり}を {見|み}ました。でも、カメラを {家|いえ}に わすれました（7）、しゃしんは ありません。
+    とても ざんねんでした。{来週|らいしゅう}（8） {行|い}きます。
   en: "My hobby is photography. On my days off I always take my camera and go to the mountains or rivers. I like taking pictures of flowers and birds. Last Sunday too, I got up early and went to a mountain nearby. There I saw a very beautiful bird. But I had left my camera at home, so I have no pictures. It was a real shame. I will go again next week."
   blanks:
     - answer: いつも
@@ -252,11 +375,31 @@
       difficulty: 1
       points: [adverb-itsumo]
       note: "いつも: always. ぜんぜん and あまり need a negative verb, and まだ does not fit a habit."
+    - answer: や
+      wrong: [を, に, が]
+      difficulty: 1
+      points: [particle-ya-and]
+      note: "や lists some places of many: {山|やま}や {川|かわ}. と would also be right, so it is not offered."
+    - answer: のが
+      wrong: [のを, のに, ので]
+      difficulty: 3
+      points: [form-no-ga-suki]
+      note: "の turns とる into a thing you like, and {好|す}き takes が: とるのが {好|す}きです. のを is a common mistake."
+    - answer: も
+      wrong: [を, で, が]
+      difficulty: 2
+      points: [particle-mo-also]
+      note: "も: too. The writer goes out on days off, and last Sunday was one more."
     - answer: "{行|い}きました"
       wrong: ["{行|い}きます", "{行|い}きましょう", "{行|い}って ください"]
       difficulty: 1
       points: [form-polite-tense]
       note: "{先週|せんしゅう}の {日曜日|にちようび} puts it in the past: {行|い}きました."
+    - answer: な
+      wrong: [の, だ, と]
+      difficulty: 2
+      points: [form-adjective-before-noun]
+      note: "A な adjective keeps な before a noun: きれいな {鳥|とり}."
     - answer: ので
       wrong: [が, と, まで]
       difficulty: 2
@@ -270,14 +413,24 @@
 
 - id: n5-b3-0009
   type: passage
-  status: reviewed
+  status: draft
   intro: "サラさんは「{日本語|にほんご}の クラス」の さくぶんを {書|か}きました。"
   text: |-
-    わたしは {毎朝|まいあさ} {九時|くじ}から {十二時|じゅうにじ}まで、{学校|がっこう}で {日本語|にほんご}を {勉強|べんきょう}して います。クラスには {学生|がくせい}が {十人|じゅうにん} います。みんな ちがう {国|くに}（1） {来|き}ました。
-    クラスでは {日本語|にほんご}（2） {話|はな}しません。はじめは とても むずかしかったです。でも、{今|いま}は {先生|せんせい}の {話|はなし}が（3） わかります。
-    じゅぎょうの あとは、いつも {友|とも}だちと {図書館|としょかん}（4） しゅくだいを します。
+    わたしは {毎朝|まいあさ} {九時|くじ}から {十二時|じゅうにじ}（1）、{学校|がっこう}で {日本語|にほんご}を {勉強|べんきょう}して います。クラスには {学生|がくせい}が {十人|じゅうにん}（2）。みんな ちがう {国|くに}（3） {来|き}ました。
+    クラスでは {日本語|にほんご}（4） {話|はな}しません。はじめは とても（5）。でも、{今|いま}は {先生|せんせい}の {話|はなし}が（6） わかります。
+    じゅぎょう（7） あとは、いつも {友|とも}だちと {図書館|としょかん}（8） しゅくだいを します。
   en: "Every morning from nine to twelve, I study Japanese at school. There are ten students in the class. We all came from different countries. In class we speak only Japanese. At first it was very hard. But now I understand a little of what the teacher says. After class I always do my homework with friends at the library."
   blanks:
+    - answer: まで
+      wrong: [に, を, が]
+      difficulty: 1
+      points: [particle-kara-made]
+      note: "から〜まで: from … to …. から comes first, まで last."
+    - answer: います
+      wrong: [あります, です, でした]
+      difficulty: 2
+      points: [form-ga-aru-iru]
+      note: "People take いる: {学生|がくせい}が {十人|じゅうにん} います. Things take ある."
     - answer: から
       wrong: [まで, を, に]
       difficulty: 1
@@ -288,11 +441,21 @@
       difficulty: 3
       points: [particle-shika-nai]
       note: "しか, only, needs a negative verb: {日本語|にほんご}しか {話|はな}しません, they speak only Japanese. だけ goes with a positive verb."
+    - answer: むずかしかったです
+      wrong: [むずかしいです, むずかしくないです, むずかしくて]
+      difficulty: 2
+      points: [form-adjective-past]
+      note: "はじめは, at first, is in the past: むずかしかったです. でも then turns to now."
     - answer: すこし
       wrong: [ぜんぜん, あまり, まだ]
       difficulty: 1
       points: [adverb-sukoshi]
       note: "すこし: a little. でも turns from hard to easier, and ぜんぜん and あまり would need a negative."
+    - answer: の
+      wrong: [を, で, が]
+      difficulty: 1
+      points: [particle-no-possessive]
+      note: "の joins two nouns: じゅぎょうの あと, after class."
     - answer: で
       wrong: [に, を, へ]
       difficulty: 1
@@ -301,13 +464,28 @@
 
 - id: n5-b3-0010
   type: passage
-  status: reviewed
+  status: draft
   intro: "ジョンさんは「{日本|にほん}の {食|た}べもの」の さくぶんを {書|か}きました。"
   text: |-
-    {日本|にほん}に {来|く}る {前|まえ}は、すしを {食|た}べた ことが ありませんでした。{日本|にほん}へ {来|き}て、はじめて {食|た}べました。とても おいしかったです。{今|いま}は すし（1） いちばん {好|す}きです。
-    でも、すしは {高|たか}いです（2）、あまり {食|た}べません。よく {食|た}べるのは ラーメンです。うちの {近|ちか}くに（3） ラーメンやが あります。{毎週|まいしゅう} {金曜日|きんようび}（4） {友|とも}だちと {行|い}きます。
+    {日本|にほん}に（1） {前|まえ}は、すしを（2） ことが ありませんでした。{日本|にほん}（3） {来|き}て、はじめて {食|た}べました。とても おいしかったです。{今|いま}は すし（4） いちばん {好|す}きです。
+    でも、すしは {高|たか}いです（5）、あまり {食|た}べません。（6） {食|た}べるのは ラーメンです。うちの {近|ちか}くに（7） ラーメンやが あります。{毎週|まいしゅう} {金曜日|きんようび}（8） {友|とも}だちと {行|い}きます。
   en: "Before I came to Japan, I had never eaten sushi. I ate it for the first time after I came to Japan. It was very good. Now I like sushi best. But sushi is expensive, so I don't eat it much. What I often eat is ramen. There is a good ramen shop near my home. I go there with friends every Friday."
   blanks:
+    - answer: "{来|く}る"
+      wrong: ["{来|き}た", "{来|き}て", "{来|こ}ない"]
+      difficulty: 2
+      points: [form-mae-ni]
+      note: "まえ follows the dictionary form: {来|く}る {前|まえ}, before coming."
+    - answer: "{食|た}べた"
+      wrong: ["{食|た}べて", "{食|た}べます", "{食|た}べましょう"]
+      difficulty: 2
+      points: [form-ta-koto-ga-aru]
+      note: "〜た ことが ありません: have never done it. It takes the た form: {食|た}べた ことが ありませんでした."
+    - answer: へ
+      wrong: [を, で, が]
+      difficulty: 1
+      points: [particle-he-direction]
+      note: "へ marks the direction you go or come: {日本|にほん}へ {来|き}て. に would also be right, so it is not offered."
     - answer: が
       wrong: [を, に, で]
       difficulty: 2
@@ -318,6 +496,11 @@
       difficulty: 2
       points: [conjunction-kara-reason]
       note: "から gives the reason: sushi is expensive, so the writer does not eat it much. が would set up a contrast."
+    - answer: よく
+      wrong: [ぜんぜん, あまり, まだ]
+      difficulty: 2
+      points: [adverb-yoku]
+      note: "よく: often. ぜんぜん and あまり need a negative, and {食|た}べる is positive."
     - answer: おいしい
       wrong: [おいしく, おいしくて, おいしいの]
       difficulty: 2

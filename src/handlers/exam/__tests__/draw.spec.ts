@@ -444,6 +444,29 @@ describe(`a passage`, () => {
     );
   });
 
+  it(`asks a different set of its blanks from one test to the next`, () => {
+    // WHY: a passage that comes up again should not bring back the same four questions. With eight blanks there are 70 sets of four, and every blank should get its turn. One random stream across draws, as tests are drawn in play.
+    const eight: PassageItem = {
+      ...passage,
+      text: `あ（1）い（2）う（3）え（4）お（5）か（6）き（7）く（8）け。`,
+      blanks: [1, 2, 3, 4, 5, 6, 7, 8].map((n) => ({
+        ...passage.blanks[0],
+        answer: `A${String(n)}`,
+        points: [`p${String(n)}`]
+      }))
+    };
+    const random = seeded(31);
+    const sets = new Set<string>();
+    const asked = new Set<number>();
+    for (let i = 0; i < 200; i += 1) {
+      const questions = passageQuestions(eight, 4, 14, random);
+      sets.add(questions.map((q) => q.slot).join(`,`));
+      for (const q of questions) asked.add(q.slot);
+    }
+    expect(sets.size).toBeGreaterThan(40);
+    expect([...asked].sort((a, b) => a - b)).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
+  });
+
   it(`gives the English only after its last question`, () => {
     // WHY: the translation of the whole passage would answer the blanks
     // still to come.
@@ -486,5 +509,25 @@ describe(`a full grammar test`, () => {
       ...Array.from({ length: 4 }, () => 2),
       ...Array.from({ length: 4 }, () => 3)
     ]);
+  });
+
+  it(`uses one passage, once, however many the corpus holds`, () => {
+    // WHY: a passage seen twice in one sitting gives its own answers away. Every 問題3 question must come from the same passage, and ask a different blank of it.
+    const passages = [1, 2, 3].map((n): PassageItem => ({
+      ...passage,
+      id: `n5-b3-${String(n).padStart(4, `0`)}`
+    }));
+    const random = seeded(41);
+    for (let i = 0; i < 50; i += 1) {
+      const questions = drawTest(
+        `bunpou`,
+        [...deck({ 1: 5, 2: 5, 3: 5 }), ...passages],
+        {},
+        random
+      ).filter((q) => q.mondai === 3);
+      expect(questions).toHaveLength(4);
+      expect(new Set(questions.map((q) => q.itemId)).size).toBe(1);
+      expect(new Set(questions.map((q) => q.slot)).size).toBe(4);
+    }
   });
 });
