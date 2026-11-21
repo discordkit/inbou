@@ -30,6 +30,10 @@ import type { Scheduler } from "@discordkit/gateway";
 export interface AlarmScheduler extends Scheduler {
   /** Call from the Durable Object's `alarm()` handler. */
   onAlarm: () => Promise<void>;
+  /**
+   * How many timers are waiting. A live connection always has at least one (a heartbeat, an ACK check or a reconnect), so none for long means it can never act again.
+   */
+  pending: () => number;
 }
 
 interface PendingTimer {
@@ -69,6 +73,8 @@ export const alarmScheduler = (ctx: DurableObjectState): AlarmScheduler => {
     clearTimeout: (handle) => {
       if (timers.delete(handle as number)) arm();
     },
+
+    pending: () => timers.size,
 
     onAlarm: async (): Promise<void> => {
       const now = Date.now();

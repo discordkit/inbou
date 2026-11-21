@@ -215,6 +215,25 @@ The session object can close a question on its own, but it can do neither of the
 
 One path for "something happened, act on it", whether it originated at the Gateway or at a timer.
 
+### Hand the event over; do not wait for the work
+
+The handlers entry answers `202` as soon as it has read the event, and does the work in `ctx.waitUntil()`. Every caller only hands an event over, and nothing reads the answer, so the caller discards the body.
+
+This is load-bearing. Until 2026-11-21 the entry answered only after the work, and a `/bunpou` vote lost presses in production. Two Workers rules caused it:
+
+- **Cancellation crosses a service binding.** When the caller's request ends, Cloudflare cancels the work it is waiting on. The work was tied to the bot's request, so it died with it.
+- **The six-connection limit is shared through a service binding.** It is measured from the top-level request, so the bot's waiting forwards and the handlers' own calls to Discord came from one pool.
+
+`waitUntil` gives the work up to 30 seconds of its own, far more than any event needs. `entry.spec.ts` pins the rule.
+
+### A live connection always has a timer
+
+`GatewayConnection` reports a state, but the state can lie. After a missed heartbeat ACK, it closes the socket and waits for the `close` event to schedule a resume. On 2026-11-21 that event never came: the connection stayed `ready` with nothing scheduled, and the bot heard nothing until the five-minute cron.
+
+So the bot tests life by the scheduler, not the state. A live connection always has a timer waiting: a heartbeat, an ACK check or a reconnect. `keeper.ts` replaces a connection that has had no timer for a minute, and stops the old one first, so a late `close` event cannot start a second session beside the new one. Every alarm runs that check, and an alarm is set whenever no timer is waiting, so a stuck connection is caught within about a minute. After a restart the timers are gone, and the next alarm reconnects.
+
+The minute is a trade-off. A `close` event or a HELLO normally arrives within seconds, and replacing a connection sooner would throw away a session that could still resume. Each new session counts against Discord's 1,000 a day.
+
 ### What each layer may depend on
 
 The split above is about reload cost. These boundaries are about testability, and they are why 164 of the 186 tests need neither a token nor workerd:
