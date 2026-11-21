@@ -129,65 +129,74 @@ const examDepsFor = (env: Env, channelId: string): ExamDeps => ({
 });
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  /**
+   * Take an event and answer at once; the work runs afterwards in `waitUntil`.
+   *
+   * Every caller here (the bot, and the session objects' alarms) only hands an event over. Answering after the work would tie the work to the caller's request: when the bot's request ended, Cloudflare cancelled the work with it, and the requests waiting for answers shared one pool of six connections with the work's own calls to Discord. Under a class's votes, presses were lost. `waitUntil` gives the work up to 30 seconds of its own, far more than any event needs.
+   */
+  async fetch(
+    request: Request,
+    env: Env,
+    ctx: ExecutionContext
+  ): Promise<Response> {
     // Workers have no `process.env`. Idempotent, so per-request is fine.
     discord.setToken(`Bot ${env.DISCORD_BOT_TOKEN}`);
 
     const event = await request.json<ForwardedEvent>();
-
-    try {
-      switch (event.type) {
-        case `INTERACTION_CREATE`: {
-          const channelId = event.data.channelId ?? `dm`;
-          // Mock tests first; anything they do not recognise is the quiz's.
-          // A command outside a channel has no session to act on. The routers
-          // say so; the deps just need somewhere to point.
-          if (
-            await handleExamInteraction(examDepsFor(env, channelId), event.data)
-          )
-            break;
-          await handleCommand(commandDepsFor(env, channelId), event.data);
-          break;
-        }
-        case `MESSAGE_CREATE`:
-          await handleMessage(depsFor(env, event.data.channelId), event.data);
-          break;
-        case `SESSION_RESUME`:
-          // A pause ended. The question was chosen before the wait, so this
-          // only has to open it.
-          await handleResume(depsFor(env, event.channelId), event.channelId);
-          break;
-        case `SESSION_TIMEOUT`:
-          // The Durable Object's alarm fired. It has already closed the
-          // question; this posts the reveal and asks the next one, because
-          // neither can be done from inside the object — one needs the corpus,
-          // the other needs a REST call.
-          await handleTimeout(depsFor(env, event.channelId), event.channelId);
-          break;
-        case `EXAM_RESUME`:
-          await handleExamResume(
-            examDepsFor(env, event.channelId),
-            event.channelId
-          );
-          break;
-        case `EXAM_TIMEOUT`:
-          // Unlike the quiz, the exam object only forwards: closing the
-          // question here returns the final ballot the reveal needs.
-          await handleExamTimeout(
-            examDepsFor(env, event.channelId),
-            event.channelId
-          );
-          break;
-      }
-      return Response.json({ ok: true });
-    } catch (error) {
-      // Report rather than throw: the bot Worker only forwards, and a failure
-      // in app logic should not read as an unhealthy connection.
-      console.error(`Failed to handle ${event.type}`, error);
-      return Response.json(
-        { ok: false, error: String(error) },
-        { status: 500 }
-      );
-    }
+    ctx.waitUntil(handleEvent(env, event));
+    return new Response(null, { status: 202 });
   }
 } satisfies ExportedHandler<Env>;
+
+/** Route one event. Failures are reported, never thrown: nobody is waiting for them. */
+const handleEvent = async (env: Env, event: ForwardedEvent): Promise<void> => {
+  try {
+    switch (event.type) {
+      case `INTERACTION_CREATE`: {
+        const channelId = event.data.channelId ?? `dm`;
+        // Mock tests first; anything they do not recognise is the quiz's.
+        // A command outside a channel has no session to act on. The routers
+        // say so; the deps just need somewhere to point.
+        if (
+          await handleExamInteraction(examDepsFor(env, channelId), event.data)
+        )
+          break;
+        await handleCommand(commandDepsFor(env, channelId), event.data);
+        break;
+      }
+      case `MESSAGE_CREATE`:
+        await handleMessage(depsFor(env, event.data.channelId), event.data);
+        break;
+      case `SESSION_RESUME`:
+        // A pause ended. The question was chosen before the wait, so this
+        // only has to open it.
+        await handleResume(depsFor(env, event.channelId), event.channelId);
+        break;
+      case `SESSION_TIMEOUT`:
+        // The Durable Object's alarm fired. It has already closed the
+        // question; this posts the reveal and asks the next one, because
+        // neither can be done from inside the object — one needs the corpus,
+        // the other needs a REST call.
+        await handleTimeout(depsFor(env, event.channelId), event.channelId);
+        break;
+      case `EXAM_RESUME`:
+        await handleExamResume(
+          examDepsFor(env, event.channelId),
+          event.channelId
+        );
+        break;
+      case `EXAM_TIMEOUT`:
+        // Unlike the quiz, the exam object only forwards: closing the
+        // question here returns the final ballot the reveal needs.
+        await handleExamTimeout(
+          examDepsFor(env, event.channelId),
+          event.channelId
+        );
+        break;
+    }
+  } catch (error) {
+    // Report rather than throw: the bot Worker only forwards, and a failure
+    // in app logic should not read as an unhealthy connection.
+    console.error(`Failed to handle ${event.type}`, error);
+  }
+};

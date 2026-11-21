@@ -8,6 +8,8 @@
   // dependency that quietly needs a Node shim fails the bundle check instead of
   // shipping. `vp run check:bundle` enforces it.
   "compatibility_flags": [],
+  // Keep each invocation's logs, so a dropped connection or a lost event can be traced after the fact. Without this, only a live `wrangler tail` sees them. Free up to 200,000 log events a day, kept for 3 days.
+  "observability": { "enabled": true },
   "services": [{ "binding": "HANDLERS", "service": "inbou-handlers" }],
   "durable_objects": {
     "bindings": [

@@ -161,12 +161,14 @@ export class ExamSession extends DurableObject<ExamEnv> {
     if (state !== `asking` && state !== `paused`) return;
 
     const { channelId } = actor.getSnapshot().context;
-    await this.env.SELF.fetch(`https://handlers/event`, {
+    const response = await this.env.SELF.fetch(`https://handlers/event`, {
       method: `POST`,
       body: JSON.stringify({
         type: state === `paused` ? `EXAM_RESUME` : `EXAM_TIMEOUT`,
         channelId
       })
     });
+    // The handlers answer at once and work afterwards; nothing here reads the answer.
+    await response.body?.cancel();
   }
 }

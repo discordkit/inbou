@@ -305,12 +305,14 @@ export class QuizSession extends DurableObject<SessionEnv> {
     // Posting the reveal is a REST call and the next question needs the
     // corpus; neither belongs in an object that hibernates every question.
     const { channelId } = actor.getSnapshot().context;
-    await this.env.SELF.fetch(`https://handlers/event`, {
+    const response = await this.env.SELF.fetch(`https://handlers/event`, {
       method: `POST`,
       body: JSON.stringify({
         type: state === `paused` ? `SESSION_RESUME` : `SESSION_TIMEOUT`,
         channelId
       })
     });
+    // The handlers answer at once and work afterwards; nothing here reads the answer.
+    await response.body?.cancel();
   }
 }

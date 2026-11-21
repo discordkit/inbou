@@ -7,6 +7,7 @@ import {
 } from "@discordkit/gateway";
 import type { ForwardedEvent } from "../handlers/events.js";
 import { alarmScheduler } from "./alarmScheduler.js";
+import { keeper, STUCK_MS } from "./keeper.js";
 
 export interface Env {
   /** Bot token. Authenticates the Gateway connection and the REST calls. */
@@ -29,8 +30,6 @@ export interface Env {
  * whole bot lives here and the Worker is only a doorway.
  */
 export class InbouBot extends DurableObject<Env> {
-  #connection: GatewayConnection | null = null;
-
   /**
    * Connection timers run on Durable Object alarms rather than `setTimeout`.
    * A DO's JS timers die with its isolate, so an evicted object would stop
@@ -38,24 +37,46 @@ export class InbouBot extends DurableObject<Env> {
    */
   readonly #scheduler = alarmScheduler(this.ctx);
 
-  /**
-   * Open the Gateway connection if it is not already live.
-   *
-   * Idempotent by design: the cron trigger calls this every few minutes, and
-   * after an eviction it is what brings the bot back.
-   */
-  start(): { state: string } {
-    // A closed connection is still a non-null object. Guarding on presence
-    // alone would make every later call a silent no-op once a session failed.
-    if (this.#connection !== null && this.#connection.state !== `closed`) {
-      return { state: this.#connection.state };
+  /** Owns the connection, and replaces it when it is stuck. See `keeper`. */
+  readonly #keeper = keeper({
+    open: () => this.#open(),
+    pending: () => this.#scheduler.pending(),
+    now: Date.now,
+    log: (message) => {
+      console.warn(message);
     }
+  });
 
+  /**
+   * Make sure the Gateway connection is live, opening or replacing it if not.
+   *
+   * Idempotent by design: the cron trigger calls this every few minutes, and so does every alarm, which is what brings the bot back within seconds after a restart.
+   */
+  async start(): Promise<{ state: string }> {
+    const { state } = this.#keeper.ensure();
+    await this.#watch();
+    return { state };
+  }
+
+  /**
+   * A connection waiting on a `close` event or a HELLO has no timer, so no alarm would come to check it. Set one, so a wait that never ends is caught.
+   */
+  async #watch(): Promise<void> {
+    if (this.#scheduler.pending() === 0) {
+      await this.ctx.storage.setAlarm(Date.now() + STUCK_MS);
+    }
+  }
+
+  #open(): GatewayConnection {
     const connection = new GatewayConnection({
       token: this.env.DISCORD_BOT_TOKEN,
       scheduler: this.#scheduler
     });
-    this.#connection = connection;
+
+    // The connection's own record, so the logs show when it dropped and how it came back.
+    connection.onStateChange((state) => {
+      console.log(`Gateway ${state}`);
+    });
 
     onReady(
       ({ user }) => {
@@ -93,7 +114,7 @@ export class InbouBot extends DurableObject<Env> {
     connection.setIntents(`GUILDS`, `MESSAGE_CONTENT`, `GUILD_MEMBERS`);
 
     connection.connect();
-    return { state: connection.state };
+    return connection;
   }
 
   /**
@@ -103,14 +124,22 @@ export class InbouBot extends DurableObject<Env> {
    * and making the socket wait on app logic would let a slow handler stall
    * heartbeats. Failures are logged rather than thrown, since a bug in app
    * logic should not read as an unhealthy connection.
+   *
+   * The handlers answer at once and do the work afterwards, so this request is short. Its body is discarded, as Cloudflare advises for a response nobody reads.
    */
   #forward(event: ForwardedEvent): void {
     void (async (): Promise<void> => {
       try {
-        await this.env.HANDLERS.fetch(`https://handlers/event`, {
-          method: `POST`,
-          body: JSON.stringify(event)
-        });
+        const response = await this.env.HANDLERS.fetch(
+          `https://handlers/event`,
+          { method: `POST`, body: JSON.stringify(event) }
+        );
+        await response.body?.cancel();
+        if (!response.ok) {
+          console.error(
+            `Handlers refused ${event.type} with ${String(response.status)}`
+          );
+        }
       } catch (error) {
         console.error(`Failed to forward ${event.type}`, error);
       }
@@ -119,14 +148,18 @@ export class InbouBot extends DurableObject<Env> {
 
   /** Current connection state, for the health endpoint. */
   status(): { state: string; sessionId: string | null } {
+    const connection = this.#keeper.current();
     return {
-      state: this.#connection?.state ?? `idle`,
-      sessionId: this.#connection?.sessionId ?? null
+      state: connection?.state ?? `idle`,
+      sessionId: connection?.sessionId ?? null
     };
   }
 
-  /** Fires whatever connection timers have come due. See `alarmScheduler`. */
+  /**
+   * Fires whatever connection timers have come due, then makes sure the connection is still live. After a restart the timers are gone, and this is what reconnects; a connection with no timer for a minute is replaced. See `keeper`.
+   */
   override async alarm(): Promise<void> {
     await this.#scheduler.onAlarm();
+    await this.start();
   }
 }
