@@ -48,6 +48,12 @@ export interface ExamQuestion {
   mondai: Mondai;
   /** 1-based, numbered straight through the test, as on the paper. */
   number: number;
+  /**
+   * Which card the question is shown on, named by the card's first question
+   * number. Questions sharing a card open and close together — a passage's
+   * blanks. Every other question has a card of its own.
+   */
+  card: number;
   /** Markup the card shows: a sentence with its blank, a ★ line, or a passage. */
   prompt: string;
   /** Markup the reveal shows: the answer in place, underlined. */
@@ -256,6 +262,7 @@ export const formQuestion = (
     slot: asked,
     mondai: 1,
     number,
+    card: number,
     prompt,
     answered: fill(prompt, new Map([[asked, underlined(slot.answer)]])),
     options,
@@ -320,6 +327,7 @@ export const composeQuestion = (
     slot: windowIndex + 1,
     mondai: 2,
     number,
+    card: number,
     prompt,
     answered,
     options,
@@ -344,21 +352,17 @@ const blankOrder = (text: string): number[] => {
   return order;
 };
 
-/** The sentence holding the underlined answer, for the reveal. */
-const sentenceWith = (text: string, marker: string): string =>
-  (text.match(/[^。！？\n]+[。！？]?/gu) ?? [])
-    .find((sentence) => sentence.includes(marker))
-    ?.trim() ?? text;
-
 /**
- * 問題3: one passage, asked blank by blank, in reading order.
+ * 問題3: one passage, its asked blanks answered together on one card.
  *
- * Blanks not asked are shown filled from the start. An asked blank shows its
- * question number until its turn — ［15］ — and its answer once revealed, so
- * the passage completes as the group goes on.
+ * Every asked blank shows its question number — ［15］ — and every blank not
+ * asked is shown filled. The questions share a card, so they open and close
+ * together, and the reveal shows the passage with all their answers in place.
+ * The first live test asked them one card at a time, and splitting one short
+ * story across four cards read badly.
  *
- * The passage counts toward the first question's time and not again: by the
- * second blank it has been read.
+ * The card's timer is the sum of its questions' times. The passage counts
+ * toward the first question's time only, so it is read once, not four times.
  */
 export const passageQuestions = (
   item: PassageItem,
@@ -374,42 +378,40 @@ export const passageQuestions = (
   const answerOf = (slot: number): string =>
     item.blanks.at(slot - 1)?.answer ?? ``;
 
+  /** The passage with every asked blank shown as `asked(slot)`. */
+  const passageWith = (show: (slot: number) => string): string =>
+    fill(
+      item.text,
+      new Map(
+        order.map((slot) => [
+          slot,
+          asked.includes(slot) ? show(slot) : answerOf(slot)
+        ])
+      )
+    );
+  const prompt = passageWith((slot) => `［${String(numberOf(slot))}］`);
+  const answered = passageWith((slot) => underlined(answerOf(slot)));
+
   return asked.map((slot, position) => {
     const blank = item.blanks.at(slot - 1);
     if (blank === undefined)
       throw new Error(`${item.id} has no blank ${String(slot)}`);
-
-    const shown = (current: string): Map<number, string> =>
-      new Map(
-        order.map((other) => {
-          const turn = asked.indexOf(other);
-          if (other === slot) return [other, current];
-          // Not asked, or already revealed: its answer.
-          if (turn === -1 || turn < position) return [other, answerOf(other)];
-          return [other, `［${String(numberOf(other))}］`];
-        })
-      );
-
-    const prompt = fill(item.text, shown(`**［${String(numberOf(slot))}］**`));
     const { options, correct } = optionsFor(blank, random);
-    const last = position === asked.length - 1;
 
     return {
       itemId: item.id,
       slot,
       mondai: 3,
       number: numberOf(slot),
+      card: firstNumber,
       prompt,
-      answered: sentenceWith(
-        fill(item.text, shown(underlined(blank.answer))),
-        `__`
-      ),
+      answered,
       ...(item.intro === undefined ? {} : { intro: item.intro }),
       options,
       correct,
       difficulty: blank.difficulty,
       points: [...blank.points],
-      en: last ? item.en : ``,
+      en: position === asked.length - 1 ? item.en : ``,
       note: blank.note,
       token: tokenFrom(random),
       timeoutMs: timeoutFor(3, position === 0 ? prompt : ``, options)

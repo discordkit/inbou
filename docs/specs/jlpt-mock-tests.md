@@ -143,9 +143,11 @@ Code checks the window's shape: it fits the sentence, its four chunks are differ
 
 A passage has an optional intro (who wrote it, and why), a text with four or more `（n）` blanks numbered in reading order, and the whole passage in English. Each blank is a slot, as in 問題1: its own answer, wrong pool, difficulty, points and note.
 
-A test asks four blanks, in reading order, numbered straight on from 問題2 (14 to 17 on a full test). Blanks it does not ask are shown filled from the start. A blank still to come shows its number, ［16］. The current one is in bold, and each one already revealed shows its answer, so the passage completes as the group goes on.
+A test asks four blanks, numbered straight on from 問題2 (14 to 17 on a full test), and answers them **on one card**. Each asked blank shows its number, ［15］, and has its own row of buttons under a ［15］ label. Blanks it does not ask are shown filled. The second live test asked the blanks one card at a time, and one short story split across four cards read badly. One card with four labelled rows uses about 32 of Discord's 40 components.
 
-The passage shows as a block quote at reading size, with its readings in a small line below. The reveal shows only the sentence that held the blank. The English for the whole passage comes after its last question, because earlier it would answer the blanks still ahead. The passage counts toward the first question's timer only: by the second blank it has been read.
+The card's timer is the sum of its questions' times, with the passage counted once. Each press gets a private reply naming its row, "［15］ You chose 2". The answer counter counts players, not presses, so one player answering four rows is one.
+
+The passage shows as a block quote at reading size, with its readings in a small line below. The card is revealed as one: the completed passage with every answer underlined, then each blank's answer, result and note, then the English for the whole passage. Scoring, results and My results still count each blank as its own question.
 
 ### What code checks, and what a person checks
 

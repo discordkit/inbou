@@ -28,6 +28,7 @@ const question = (overrides: Partial<ExamQuestion> = {}): ExamQuestion => ({
   slot: 1,
   mondai: 1,
   number: 3,
+  card: 3,
   prompt: `{毎日|まいにち} バス（1） {行|い}きます。`,
   answered: `{毎日|まいにち} バス__で__ {行|い}きます。`,
   options: [`を`, `で`, `が`, `と`],
@@ -42,7 +43,7 @@ const question = (overrides: Partial<ExamQuestion> = {}): ExamQuestion => ({
 });
 
 const view = (q: ExamQuestion) => ({
-  question: q,
+  questions: [q],
   total: 9,
   endsAt: 1_700_000_000
 });
@@ -75,6 +76,34 @@ describe(`a passage question`, () => {
 > また **［15］**。
 -# 私 わたし`
     );
+  });
+
+  it(`gives each blank its own labelled row, inside Discord's 40 components`, () => {
+    // WHY: found in the second live test. One passage split across four cards
+    // read badly; on one card each row must say which blank it answers, and
+    // each button must carry its own blank's token.
+    const blanks = [14, 15, 16, 17].map((number) =>
+      question({ mondai: 3, number, card: 14, token: `tok${String(number)}` })
+    );
+    const card = questionMessage({ questions: blanks, total: 17, endsAt: 0 });
+    const json = JSON.stringify(card);
+    for (const number of [14, 15, 16, 17]) {
+      expect(json).toContain(`**［${String(number)}］**`);
+    }
+    const ids = buttons(card).map((button) => String(button.customId));
+    expect(ids.filter((id) => id.startsWith(`exam:v:tok16:`))).toHaveLength(4);
+    expect(json).toContain(`14–17 / 17`);
+
+    let components = 0;
+    const count = (node: unknown): void => {
+      if (Array.isArray(node)) node.forEach(count);
+      else if (typeof node === `object` && node !== null) {
+        components += 1;
+        count((node as { components?: unknown }).components);
+      }
+    };
+    count(card);
+    expect(components).toBeLessThanOrEqual(40);
   });
 
   it(`puts the intro above the passage`, () => {
@@ -167,34 +196,56 @@ describe(`the reveal`, () => {
     // WHY: the reveal is a heading; the underline is what marks the answer,
     // and the readings belong on their own line as on the question card.
     const reveal = JSON.stringify(
-      revealMessage(question(), {
-        counts: [0, 1, 0, 0],
-        correct: 1,
-        scorers: []
-      })
+      revealMessage([
+        {
+          question: question(),
+          tally: { counts: [0, 1, 0, 0], correct: 1, scorers: [] }
+        }
+      ])
     );
     expect(reveal).toContain(`## 毎日 バス__で__ 行きます。`);
     expect(reveal).toContain(`-# 毎日 まいにち · 行 い`);
   });
 
-  it(`leaves out the English line while a passage still has blanks to come`, () => {
-    // WHY: the passage's translation would answer the blanks still ahead.
+  it(`reveals a passage card as one: every answer in place, then each blank`, () => {
+    // WHY: the passage is answered as one card, so it is revealed as one —
+    // the completed passage, each blank's answer and note, and the English
+    // once, at the end.
+    const blank = (number: number, en: string) =>
+      question({
+        mondai: 3,
+        number,
+        card: 14,
+        prompt: `あ［14］い［15］う。`,
+        answered: `あ__で__い__に__う。`,
+        en,
+        note: `Note ${String(number)}.`
+      });
     const reveal = JSON.stringify(
-      revealMessage(question({ en: `` }), {
-        counts: [0, 1, 0, 0],
-        correct: 1,
-        scorers: []
-      })
+      revealMessage([
+        {
+          question: blank(14, ``),
+          tally: { counts: [0, 1, 0, 0], correct: 1, scorers: [`ann`] }
+        },
+        {
+          question: blank(15, `The English.`),
+          tally: { counts: [0, 0, 0, 0], correct: 1, scorers: [] }
+        }
+      ])
     );
-    expect(reveal).not.toContain(`\\n_`);
+    expect(reveal).toContain(`> あ__で__い__に__う。`);
+    expect(reveal).toContain(`**［14］ 2 で** · 1 of 1 correct`);
+    expect(reveal).toContain(`**［15］ 2 で** · Nobody answered.`);
+    expect(reveal.match(/The English\./gu)).toHaveLength(1);
   });
 
   it(`says nobody answered rather than "0 of 0 correct"`, () => {
-    const reveal = revealMessage(question(), {
-      counts: [0, 0, 0, 0],
-      correct: 1,
-      scorers: []
-    });
+    const reveal = revealMessage([
+      {
+        question: question(),
+        tally: { counts: [0, 0, 0, 0], correct: 1, scorers: [] }
+      }
+    ]);
     expect(JSON.stringify(reveal)).toContain(`Nobody answered.`);
   });
 });

@@ -135,20 +135,24 @@ describe(`the mock-test corpus`, () => {
     expect(problems).toEqual([]);
   });
 
-  it(`renders every question inside Discord's limits`, () => {
+  it(`renders every card inside Discord's limits`, () => {
     // WHY: Discord rejects the whole message over a limit, and the question
-    // is lost mid-test. Checked on the longest variant of every slot, window
-    // and passage blank.
+    // is lost mid-test. Checked on the longest variant of every slot and
+    // window, and on each passage as one card with every blank asked.
+    const tally = { counts: [9, 9, 9, 9], correct: 0, scorers: [] };
     const over: string[] = [];
     for (const item of items) {
-      for (const question of longestQuestions(item)) {
+      const questions = longestQuestions(item);
+      const cards =
+        item.type === `passage` ? [questions] : questions.map((q) => [q]);
+      for (const card of cards) {
         for (const message of [
-          questionMessage({ question, total: 99, endsAt: 1_700_000_000 }),
-          revealMessage(question, {
-            counts: [9, 9, 9, 9],
-            correct: 0,
-            scorers: []
-          })
+          questionMessage({
+            questions: card,
+            total: 99,
+            endsAt: 1_700_000_000
+          }),
+          revealMessage(card.map((question) => ({ question, tally })))
         ]) {
           const { components, text } = measure(message);
           if (components > COMPONENTS_MAX)

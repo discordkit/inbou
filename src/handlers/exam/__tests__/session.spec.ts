@@ -24,6 +24,7 @@ const question = (number: number): ExamQuestion => ({
   slot: 1,
   mondai: 1,
   number,
+  card: number,
   prompt: `ぶん（1）です。`,
   answered: `ぶん__あ__です。`,
   options: [`あ`, `い`, `う`, `え`],
@@ -79,7 +80,7 @@ describe(`the exam session`, () => {
 
     expect((await stub.vote(`ann`, `tok1`, 2)).outcome).toBe(`recorded`);
     expect((await stub.vote(`ben`, `old`, 1)).outcome).toBe(`stale`);
-    expect((await stub.current())?.context.votes).toEqual({ ann: 2 });
+    expect((await stub.current())?.context.votes).toEqual({ 0: { ann: 2 } });
   });
 
   it(`gives each channel its own test`, async () => {

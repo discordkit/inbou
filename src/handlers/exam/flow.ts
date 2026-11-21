@@ -5,6 +5,7 @@ import { drawTest, type Random } from "./draw.js";
 import type { Item } from "./items.js";
 import {
   answersOf,
+  cardAt,
   resultsOf,
   type Closed,
   type ExamInput,
@@ -89,16 +90,16 @@ export const showsVoteCount = (voters: number): boolean => {
 };
 
 /**
- * How the open question is rendered.
+ * How the open card is rendered.
  *
  * Built from the session every time, so the settle-on-close edit reproduces
  * exactly what was posted.
  */
 const viewOf = (view: ExamView): QuestionView | null => {
-  const question = view.context.questions.at(view.context.index);
-  if (question === undefined) return null;
+  const questions = cardAt(view.context.questions, view.context.index);
+  if (questions.length === 0) return null;
   return {
-    question,
+    questions,
     total: view.context.questions.length,
     endsAt: Math.floor((view.context.deadline ?? 0) / 1000)
   };
@@ -227,23 +228,23 @@ export const handleTimeout = async (
 ): Promise<void> => {
   const closed = await deps.session.close();
   if (closed === null) return;
-  const { view, question, tally } = closed;
+  const { view, results } = closed;
 
-  // Settle the question BEFORE the reveal, so a live-looking question never
-  // sits above its own answer.
+  // Settle the card BEFORE the reveal, so a live-looking question never sits
+  // above its own answer.
   const { messageId } = view.context;
   if (messageId !== null) {
     await deps.cards.edit(
       channelId,
       messageId,
       closedQuestionMessage({
-        question,
+        questions: results.map(({ question }) => question),
         total: view.context.questions.length,
         endsAt: 0
       })
     );
   }
-  await deps.cards.post(channelId, revealMessage(question, tally));
+  await deps.cards.post(channelId, revealMessage(results));
 
   // The last question reaches `finished` straight from `asking`.
   if (view.state === `finished`) {
@@ -262,11 +263,14 @@ export const handleVote = async (
 ): Promise<VoteResult> => {
   const result = await deps.session.vote(vote.userId, vote.token, vote.option);
   const chosen = String(vote.option + 1);
+  // On a passage card, say which row: four rows, one acknowledgement each.
+  const row =
+    result.number === undefined ? `` : `［${String(result.number)}］ `;
   const content =
     result.outcome === `recorded`
-      ? `You chose **${chosen}**. You can change it until the question closes.`
+      ? `${row}You chose **${chosen}**. You can change it until the question closes.`
       : result.outcome === `changed`
-        ? `Changed to **${chosen}**.`
+        ? `${row}Changed to **${chosen}**.`
         : result.outcome === `stale`
           ? `That question has already closed.`
           : `No question is open here right now.`;

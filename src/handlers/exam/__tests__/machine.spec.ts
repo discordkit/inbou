@@ -30,6 +30,7 @@ const question = (
   slot: 1,
   mondai: 1,
   number,
+  card: number,
   prompt: `ぶん（1）です。`,
   answered: `ぶん__あ__です。`,
   options: [`あ`, `い`, `う`, `え`],
@@ -79,7 +80,7 @@ describe(`a vote`, () => {
     const actor = started([question(1)]);
     expect(vote(actor, `ann`, 1).outcome).toBe(`recorded`);
     expect(vote(actor, `ann`, 0).outcome).toBe(`changed`);
-    expect(viewOf(actor).context.votes).toEqual({ ann: 0 });
+    expect(viewOf(actor).context.votes).toEqual({ 0: { ann: 0 } });
   });
 
   it(`from an old question's button is stale and changes nothing`, () => {
@@ -221,5 +222,64 @@ describe(`the session's shape`, () => {
     );
     closeQuestion(restored);
     expect(resultsOf(viewOf(restored).context)[0]?.points).toBe(WEIGHT[2]);
+  });
+});
+
+describe(`a card of several questions`, () => {
+  /** Question 1 alone, then questions 2 and 3 on one card: a passage. */
+  const withPassage = (): ExamActor =>
+    started([
+      question(1),
+      { ...question(2), card: 2 },
+      { ...question(3), card: 2 }
+    ]);
+  const toPassage = (actor: ExamActor): void => {
+    closeQuestion(actor);
+    actor.send({ type: `NEXT`, now: 100_000 });
+  };
+
+  it(`opens its questions together, on the sum of their times`, () => {
+    // WHY: a passage is answered as one card. Four blanks get the time four
+    // questions would — the passage itself is counted once, in the draw.
+    const actor = withPassage();
+    toPassage(actor);
+    expect(viewOf(actor).context.index).toBe(1);
+    expect(viewOf(actor).context.deadline).toBe(100_000 + 2 * 30_000);
+  });
+
+  it(`puts a vote on the question its button belongs to`, () => {
+    // WHY: four rows of buttons on one card. A press on row ［3］ must answer
+    // question 3, and the reply must say which row it took.
+    const actor = withPassage();
+    toPassage(actor);
+    const result = vote(actor, `ann`, 2, `tok3`);
+    expect(result).toMatchObject({ outcome: `recorded`, number: 3 });
+    expect(viewOf(actor).context.votes).toEqual({ 2: { ann: 2 } });
+  });
+
+  it(`settles every question on the card at once, then moves past it`, () => {
+    // WHY: ballots are indexed like questions. Settling one blank of four
+    // would shift every later score onto the wrong question.
+    const actor = withPassage();
+    toPassage(actor);
+    vote(actor, `ann`, 0, `tok2`);
+    vote(actor, `ann`, 1, `tok3`);
+    const closed = closeQuestion(actor);
+    expect(closed?.results.map(({ question: q }) => q.number)).toEqual([2, 3]);
+    expect(viewOf(actor).context.ballots).toHaveLength(3);
+    expect(viewOf(actor).state).toBe(`finished`);
+    expect(answersOf(viewOf(actor).context, `ann`).map((a) => a.chose)).toEqual(
+      [null, 0, 1]
+    );
+  });
+
+  it(`counts players for the answer counter, not presses`, () => {
+    // WHY: one player answering four rows is one player. Counting presses
+    // would overstate the room, and edit the card four times for one person.
+    const actor = withPassage();
+    toPassage(actor);
+    expect(vote(actor, `ann`, 0, `tok2`).voters).toBe(1);
+    expect(vote(actor, `ann`, 0, `tok3`).voters).toBeUndefined();
+    expect(vote(actor, `ben`, 0, `tok2`).voters).toBe(2);
   });
 });

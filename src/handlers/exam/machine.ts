@@ -62,16 +62,19 @@ export interface ExamContext {
    * outlives the session — every card is back in its deck for the next test.
    */
   questions: ExamQuestion[];
-  /** 0-based; the question open, or just closed. */
+  /**
+   * 0-based; the first question on the card open, or just closed. A card is
+   * usually one question; a passage's blanks share one.
+   */
   index: number;
   /**
-   * Votes on the open question, keyed by player.
+   * Votes on the open card, by question index, then by player.
    *
-   * Keyed, and that is load-bearing: a player who changes their mind
-   * overwrites their entry, so nobody can hold two votes and the record is
-   * always their latest choice. The data structure enforces one vote each.
+   * Keyed by player, and that is load-bearing: a player who changes their mind
+   * overwrites their entry, so nobody can hold two votes on one question and
+   * the record is always their latest choice.
    */
-  votes: Ballot;
+  votes: Partial<Record<number, Ballot>>;
   /** The final votes on each closed question, by question index. */
   ballots: Ballot[];
   /** Epoch ms. Set only while `asking` (the timer) or `paused` (the wait). */
@@ -93,7 +96,8 @@ export interface ExamContext {
 }
 
 export type ExamEvent =
-  | { type: `VOTE`; userId: string; option: number }
+  /** A vote on one question of the open card, by its index in the test. */
+  | { type: `VOTE`; userId: string; question: number; option: number }
   | { type: `TIMEOUT` }
   /** Open the next stored question. */
   | { type: `NEXT`; now: number }
@@ -105,11 +109,35 @@ export type ExamEvent =
   | { type: `POSTED`; messageId: string }
   | { type: `END` };
 
-/** Was the question that just closed the last one? */
-const testOver = ({ context }: { context: ExamContext }): boolean =>
-  context.index >= context.questions.length - 1;
+/**
+ * The questions on the card at `index`: the question there, and any after it
+ * that share its card. Cards are contiguous, because a passage's questions are
+ * drawn together.
+ */
+export const cardAt = (
+  questions: readonly ExamQuestion[],
+  index: number
+): ExamQuestion[] => {
+  const card = questions.at(index)?.card;
+  const on: ExamQuestion[] = [];
+  for (const question of questions.slice(index)) {
+    if (question.card !== card) break;
+    on.push(question);
+  }
+  return on;
+};
 
-/** Start the clock on `questions[index]` and clear the previous votes. */
+/** Was the card that just closed the last one? */
+const testOver = ({ context }: { context: ExamContext }): boolean =>
+  context.index + cardAt(context.questions, context.index).length >=
+  context.questions.length;
+
+/**
+ * Start the clock on the card at `index` and clear the previous votes.
+ *
+ * A card's time is the sum of its questions' times: four blanks of a passage
+ * get the time four questions would, with the passage counted once.
+ */
 const openQuestion = assign<
   ExamContext,
   ExamEvent,
@@ -119,17 +147,22 @@ const openQuestion = assign<
 >({
   votes: {},
   posted: true,
-  // The previous question's message, deliberately dropped: carrying it would
-  // make the next timeout settle a message the channel has moved past.
+  // The previous card's message, deliberately dropped: carrying it would make
+  // the next timeout settle a message the channel has moved past.
   messageId: null,
   deadline: ({ context, event }) =>
     event.type === `NEXT` || event.type === `RESUME`
-      ? event.now + (context.questions[context.index]?.timeoutMs ?? 0)
+      ? event.now +
+        cardAt(context.questions, context.index).reduce(
+          (sum, question) => sum + question.timeoutMs,
+          0
+        )
       : null
 });
 
 const advance = assign<ExamContext, ExamEvent, undefined, ExamEvent, never>({
-  index: ({ context }) => context.index + 1
+  index: ({ context }) =>
+    context.index + cardAt(context.questions, context.index).length
 });
 
 const holdUntil = assign<ExamContext, ExamEvent, undefined, ExamEvent, never>({
@@ -173,7 +206,10 @@ export const examMachine = setup({
           actions: assign({
             votes: ({ context, event }) => ({
               ...context.votes,
-              [event.userId]: event.option
+              [event.question]: {
+                ...context.votes[event.question],
+                [event.userId]: event.option
+              }
             })
           })
         },
@@ -183,8 +219,15 @@ export const examMachine = setup({
         },
         TIMEOUT: {
           target: `revealing`,
+          // Every question on the card is settled at once, in order, so
+          // `ballots` stays indexed like `questions`.
           actions: assign({
-            ballots: ({ context }) => [...context.ballots, context.votes],
+            ballots: ({ context }) => [
+              ...context.ballots,
+              ...cardAt(context.questions, context.index).map(
+                (_, offset) => context.votes[context.index + offset] ?? {}
+              )
+            ],
             deadline: null
           })
         },
@@ -360,7 +403,16 @@ export interface VoteResult {
     | `not-open`;
   /** The option they are now on, for the private acknowledgement. */
   option?: number;
-  /** How many have answered, for the debounced counter. */
+  /**
+   * The question voted on, when its card holds several — a passage's blanks —
+   * so the acknowledgement can say which row it was.
+   */
+  number?: number;
+  /**
+   * How many players have answered anything on the card, present only when
+   * this vote brought a new one. The counter shows players, not presses: one
+   * player answering four rows of a passage is still one.
+   */
   voters?: number;
 }
 
@@ -371,6 +423,9 @@ export interface VoteResult {
  * runs the same rules: a stub that re-implemented them would be a second copy,
  * free to drift. The session never trusts its caller, so the option is bounded
  * again here even though `parseVote` already did.
+ *
+ * The token picks the question: every button carries its own question's, so a
+ * press on a passage's third row votes on the third blank and nothing else.
  */
 export const castVote = (
   actor: ExamActor,
@@ -378,8 +433,10 @@ export const castVote = (
 ): VoteResult => {
   const before = actor.getSnapshot();
   if (before.value !== `asking`) return { outcome: `not-open` };
-  const open = before.context.questions.at(before.context.index);
-  if (open?.token !== vote.token) return { outcome: `stale` };
+  const { questions, index, votes } = before.context;
+  const card = cardAt(questions, index);
+  const offset = card.findIndex((question) => question.token === vote.token);
+  if (offset === -1) return { outcome: `stale` };
   if (
     !Number.isInteger(vote.option) ||
     vote.option < 0 ||
@@ -388,27 +445,40 @@ export const castVote = (
     return { outcome: `stale` };
   }
 
-  const hadVoted = Object.hasOwn(before.context.votes, vote.userId);
-  actor.send({ type: `VOTE`, userId: vote.userId, option: vote.option });
+  const question = index + offset;
+  const hadVoted = Object.hasOwn(votes[question] ?? {}, vote.userId);
+  actor.send({
+    type: `VOTE`,
+    userId: vote.userId,
+    question,
+    option: vote.option
+  });
+
+  const playersIn = (ballots: ExamContext[`votes`]): number =>
+    new Set(
+      Object.values(ballots).flatMap((ballot) => Object.keys(ballot ?? {}))
+    ).size;
+  const players = playersIn(actor.getSnapshot().context.votes);
   return {
     outcome: hadVoted ? `changed` : `recorded`,
     option: vote.option,
-    voters: Object.keys(actor.getSnapshot().context.votes).length
+    ...(card.length > 1 ? { number: card[offset]?.number } : {}),
+    ...(players > playersIn(votes) ? { voters: players } : {})
   };
 };
 
-/** A question that just closed, with what the reveal needs. */
+/** A card that just closed, with what its reveal needs. */
 export interface Closed {
   view: ExamView;
-  question: ExamQuestion;
-  tally: Tally;
+  /** Each question on the card, with how the room answered it. */
+  results: Array<{ question: ExamQuestion; tally: Tally }>;
 }
 
 /**
- * Close the open question and settle its votes.
+ * Close the open card and settle its votes.
  *
- * Returns what the reveal needs, because this is the moment the ballot is
- * final. Null if no question is open.
+ * Returns what the reveal needs, because this is the moment the ballots are
+ * final. Null if no card is open.
  */
 export const closeQuestion = (actor: ExamActor): Closed | null => {
   if (actor.getSnapshot().value !== `asking`) return null;
@@ -416,10 +486,13 @@ export const closeQuestion = (actor: ExamActor): Closed | null => {
 
   const view = viewOf(actor);
   const { index, questions, ballots } = view.context;
-  const question = questions.at(index);
-  const ballot = ballots.at(index);
-  if (question === undefined || ballot === undefined) return null;
-  return { view, question, tally: tallyOf(question, ballot, OPTION_COUNT) };
+  const results = cardAt(questions, index).flatMap((question, offset) => {
+    const ballot = ballots.at(index + offset);
+    return ballot === undefined
+      ? []
+      : [{ question, tally: tallyOf(question, ballot, OPTION_COUNT) }];
+  });
+  return results.length === 0 ? null : { view, results };
 };
 
 /** What a Durable Object persists. See the quiz machine for why it is typed. */

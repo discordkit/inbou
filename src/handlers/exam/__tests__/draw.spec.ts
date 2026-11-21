@@ -367,25 +367,30 @@ describe(`a passage`, () => {
     );
   });
 
-  it(`shows the unasked blank filled, earlier ones answered, later ones numbered`, () => {
-    // WHY: the passage should complete as the group goes on. A later blank
-    // shown filled would give its answer away; an earlier one left blank
-    // would hide what was just revealed.
-    const asked = passage.blanks.slice(0, 4);
-    const questions = passageQuestions(
-      { ...passage, blanks: asked.concat(passage.blanks.slice(4)) },
-      5,
-      14,
-      seeded(17)
-    );
-    expect(questions[1]?.prompt).toBe(
-      `あA1い。か**［15］**き。さ［16］し。た［17］ち。な［18］に。`
-    );
+  it(`puts all its asked blanks on one card, numbered, with the rest filled`, () => {
+    // WHY: found in the second live test — a passage split across four cards
+    // read badly. On one card every asked blank shows its number, and a blank
+    // not asked shows its answer, since nobody is asked about it.
     const four = passageQuestions(passage, 4, 14, seeded(18));
+    expect(new Set(four.map((q) => q.card))).toEqual(new Set([14]));
     const unasked = [1, 2, 3, 4, 5].find(
       (slot) => !four.some((q) => q.slot === slot)
     );
-    expect(four[0]?.prompt).toContain(`A${String(unasked)}`);
+    const prompt = four[0]?.prompt ?? ``;
+    for (const number of [14, 15, 16, 17]) {
+      expect(prompt).toContain(`［${String(number)}］`);
+    }
+    expect(prompt).toContain(`A${String(unasked)}`);
+    expect(new Set(four.map((q) => q.prompt)).size).toBe(1);
+  });
+
+  it(`reveals the whole passage with every asked answer underlined`, () => {
+    // WHY: the card is revealed as one, so its reveal is the completed
+    // passage, each answer marked where it goes.
+    const all = passageQuestions(passage, 5, 14, seeded(22));
+    expect(all[0]?.answered).toBe(
+      `あ__A1__い。か__A2__き。さ__A3__し。た__A4__ち。な__A5__に。`
+    );
   });
 
   it(`counts the passage toward the first question's time only`, () => {

@@ -10,7 +10,7 @@ import {
   type ExamDeps,
   type ExamPort
 } from "../flow.js";
-import type { FormItem } from "../items.js";
+import type { FormItem, Item, PassageItem } from "../items.js";
 import {
   begin,
   castVote,
@@ -96,7 +96,7 @@ const seeded = (seed: number): (() => number) => {
   };
 };
 
-const setup = (options: { quizRunning?: boolean; items?: FormItem[] } = {}) => {
+const setup = (options: { quizRunning?: boolean; items?: Item[] } = {}) => {
   const calls: Call[] = [];
   let posted = 0;
   const deps: ExamDeps = {
@@ -351,6 +351,50 @@ describe(`ending and results`, () => {
     expect(calls.at(-1)).toEqual({
       kind: `reply`,
       content: `Those results belong to an earlier test.`
+    });
+  });
+});
+
+describe(`a passage card`, () => {
+  const passage: PassageItem = {
+    id: `n5-b3-0001`,
+    type: `passage`,
+    status: `reviewed`,
+    text: `あ（1）い。か（2）き。さ（3）し。た（4）ち。`,
+    en: `The passage in English.`,
+    blanks: [1, 2, 3, 4].map((n) => ({
+      answer: `A${String(n)}`,
+      wrong: [`W${String(n)}a`, `W${String(n)}b`, `W${String(n)}c`],
+      difficulty: 1 as const,
+      points: [`p`],
+      note: `Note ${String(n)}.`
+    }))
+  };
+
+  it(`is posted once for all its blanks, and a row's reply names the row`, async () => {
+    // WHY: found in the second live test — one short story split across four
+    // cards read badly. One card, four rows; and with four rows a bare
+    // "You chose 2" would not say which blank it answered.
+    const { deps, calls } = await started({ items: [item(1), passage] });
+    await handleTimeout(deps, `chan`);
+    const before = calls.length;
+    await handleResume(deps, `chan`);
+    const posts = calls.slice(before).filter((call) => call.kind === `post`);
+    expect(posts).toHaveLength(1);
+    expect(bodyOf(posts[0])).toContain(`2–5 / 5`);
+
+    const view = await deps.session.current();
+    const third = view?.context.questions.at(2);
+    await handleVote(deps, interaction, `chan`, {
+      userId: `ann`,
+      token: third?.token ?? ``,
+      option: 0
+    });
+    // The reply, not the last call: the answer counter's edit follows it.
+    const replies = calls.filter((call) => call.kind === `reply`);
+    expect(replies.at(-1)).toEqual({
+      kind: `reply`,
+      content: expect.stringContaining(`［3］ You chose **1**`) as string
     });
   });
 });

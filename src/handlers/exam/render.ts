@@ -1,6 +1,7 @@
 import {
   ButtonStyle,
   ComponentType,
+  type ActionRow,
   type MessageComponent
 } from "@discordkit/client";
 import type { Mondai, TestId } from "./blueprint.js";
@@ -138,9 +139,10 @@ const withReadings = (text: string, markup: string): string => {
 export const fitLabel = (text: string): string =>
   text.length <= LABEL_MAX ? text : `${text.slice(0, LABEL_MAX - 1)}…`;
 
-/** What a question card needs beyond the question itself. */
+/** What a card needs beyond its questions. */
 export interface QuestionView {
-  question: ExamQuestion;
+  /** The questions on the card: usually one; a passage's blanks share one. */
+  questions: readonly ExamQuestion[];
   /** How many questions the test has. */
   total: number;
   /** Epoch seconds, rendered by the client as a live countdown. */
@@ -149,27 +151,65 @@ export interface QuestionView {
   voters?: number;
 }
 
+/** "14" for one question, "14–17" for a card of several. */
+const numbersOf = (questions: readonly ExamQuestion[]): string => {
+  const first = questions.at(0)?.number ?? 0;
+  const last = questions.at(-1)?.number ?? first;
+  return first === last ? String(first) : `${String(first)}–${String(last)}`;
+};
+
+/** One question's four buttons, numbered as on the paper. */
+const optionRow = (question: ExamQuestion, closed: boolean): ActionRow => ({
+  type: ComponentType.ActionRow as const,
+  components: question.options.map((option, index) => ({
+    type: ComponentType.Button as const,
+    style: ButtonStyle.Secondary as const,
+    // Numbered as on the paper, so the reveal can refer to "2".
+    label: fitLabel(`${String(index + 1)} ${display(option)}`),
+    customId: BUTTON.vote(question.token, index),
+    // Disabled rather than removed, so the layout the channel scrolled past
+    // stays put and the numbers still match the reveal.
+    ...(closed ? { disabled: true } : {})
+  }))
+});
+
 /**
- * The question, open or closed.
+ * A card, open or closed.
  *
  * One builder for both, because the message is EDITED in place when the timer
  * ends, and any difference beyond the closed state would read as the message
  * rewriting itself.
+ *
+ * A passage card has a row of buttons per blank, each labelled with its
+ * number, so the whole passage is answered on one card: about 32 of Discord's
+ * 40 components for four blanks.
  */
 const questionBody = (
   view: QuestionView,
   closed: boolean
 ): MessageComponent => {
-  const { question } = view;
+  const first = view.questions.at(0);
+  if (first === undefined) return [];
   const voters =
     view.voters === undefined || view.voters === 0
       ? ``
       : ` · ${String(view.voters)} answered`;
   // A relative timestamp is ticked down by the client for free. It must be
   // replaced on close, or it goes on saying "ends 5 minutes ago" forever.
-  const heading = `**もんだい${String(question.mondai)}** · ${String(question.number)} / ${String(view.total)} · ${
+  const heading = `**もんだい${String(first.mondai)}** · ${numbersOf(view.questions)} / ${String(view.total)} · ${
     closed ? `closed` : `ends <t:${String(view.endsAt)}:R>`
   }${voters}`;
+
+  const rows =
+    view.questions.length === 1
+      ? [optionRow(first, closed)]
+      : view.questions.flatMap((question) => [
+          {
+            type: ComponentType.TextDisplay as const,
+            content: `**［${String(question.number)}］**`
+          },
+          optionRow(question, closed)
+        ]);
 
   return [
     {
@@ -179,41 +219,29 @@ const questionBody = (
         { type: ComponentType.TextDisplay, content: heading },
         {
           type: ComponentType.TextDisplay,
-          content: `-# ${display(INSTRUCTIONS[question.mondai])}`
+          content: `-# ${display(INSTRUCTIONS[first.mondai])}`
         },
-        ...(question.intro === undefined
+        ...(first.intro === undefined
           ? []
           : [
               {
                 type: ComponentType.TextDisplay as const,
-                content: display(question.intro)
+                content: display(first.intro)
               }
             ]),
         {
           type: ComponentType.TextDisplay,
           content:
-            question.mondai === 3
-              ? passageBlock(question.prompt)
-              : sentenceBlock(question.prompt)
+            first.mondai === 3
+              ? passageBlock(first.prompt)
+              : sentenceBlock(first.prompt)
         },
         { type: ComponentType.Separator, divider: true, spacing: 1 },
-        {
-          type: ComponentType.ActionRow,
-          components: question.options.map((option, index) => ({
-            type: ComponentType.Button as const,
-            style: ButtonStyle.Secondary as const,
-            // Numbered as on the paper, so the reveal can refer to "2".
-            label: fitLabel(`${String(index + 1)} ${display(option)}`),
-            customId: BUTTON.vote(question.token, index),
-            // Disabled rather than removed, so the layout the channel scrolled
-            // past stays put and the numbers still match the reveal.
-            ...(closed ? { disabled: true } : {})
-          }))
-        }
+        ...rows
       ]
     },
-    // Outside the card, and only while open: a closed question has nothing
-    // left to end.
+    // Outside the card, and only while open: a closed card has nothing left
+    // to end.
     ...(closed
       ? []
       : [
@@ -232,11 +260,11 @@ const questionBody = (
   ];
 };
 
-/** The question the channel answers, with its clock running. */
+/** The card the channel answers, with its clock running. */
 export const questionMessage = (view: QuestionView): MessageComponent =>
   questionBody(view, false);
 
-/** The same question once its timer has ended. Edited over the original. */
+/** The same card once its timer has ended. Edited over the original. */
 export const closedQuestionMessage = (view: QuestionView): MessageComponent =>
   questionBody(view, true);
 
@@ -249,21 +277,18 @@ const bar = (count: number, max: number): string => {
   return `${`█`.repeat(filled)}${`░`.repeat(BAR_WIDTH - filled)}`;
 };
 
-/**
- * The answer, why, and how the room answered.
- *
- * The distribution is shown only now that the question has closed. While it was
- * open, "3 picked 2" would have leaked the answer.
- */
-export const revealMessage = (
-  question: ExamQuestion,
-  tally: Tally
-): MessageComponent => {
-  const max = Math.max(0, ...tally.counts);
+/** "2 of 3 correct", or that nobody answered. */
+const summaryOf = (tally: Tally): string => {
   const voted = tally.counts.reduce((sum, count) => sum + count, 0);
-  const answer = display(question.options.at(question.correct) ?? ``);
+  return voted === 0
+    ? `Nobody answered.`
+    : `${String(tally.scorers.length)} of ${String(voted)} correct`;
+};
 
-  const rows = question.options
+/** How the room answered one question: a bar per option. */
+const distribution = (question: ExamQuestion, tally: Tally): string => {
+  const max = Math.max(0, ...tally.counts);
+  return question.options
     .map((option, index) => {
       const count = tally.counts.at(index) ?? 0;
       const graph = `${bar(count, max)} \`${String(count)}\``;
@@ -272,32 +297,79 @@ export const revealMessage = (
         : `${String(index + 1)} ${graph} ${display(option)}`;
     })
     .join(`\n`);
+};
 
-  const summary =
-    voted === 0
-      ? `Nobody answered.`
-      : `${String(tally.scorers.length)} of ${String(voted)} correct`;
+/**
+ * The answers, why, and how the room answered.
+ *
+ * The distribution is shown only now that the card has closed. While it was
+ * open, "3 picked 2" would have leaked the answer.
+ *
+ * A passage card reveals as one: the passage with every answer in place and
+ * underlined, then each blank's answer and note, then the English. Without
+ * the bars, which four times over would bury the passage.
+ */
+export const revealMessage = (
+  results: ReadonlyArray<{ question: ExamQuestion; tally: Tally }>
+): MessageComponent => {
+  const only = results.at(0);
+  if (only === undefined) return [];
+
+  if (results.length === 1) {
+    const { question, tally } = only;
+    const answer = display(question.options.at(question.correct) ?? ``);
+    return [
+      {
+        type: ComponentType.Container,
+        accentColor: MOSS,
+        components: [
+          // The answer underlined, not bold: the sentence is a heading, and a
+          // bold answer vanished into it in the first live test.
+          {
+            type: ComponentType.TextDisplay,
+            content: sentenceBlock(question.answered)
+          },
+          {
+            type: ComponentType.TextDisplay,
+            content: `✅ **${String(question.correct + 1)} ${answer}** · ${summaryOf(tally)}${
+              question.en === `` ? `` : `\n_${question.en}_`
+            }`
+          },
+          { type: ComponentType.TextDisplay, content: display(question.note) },
+          { type: ComponentType.Separator, divider: true, spacing: 1 },
+          {
+            type: ComponentType.TextDisplay,
+            content: distribution(question, tally)
+          }
+        ]
+      }
+    ];
+  }
+
+  const blanks = results
+    .map(({ question, tally }) => {
+      const answer = display(question.options.at(question.correct) ?? ``);
+      return `✅ **［${String(question.number)}］ ${String(question.correct + 1)} ${answer}** · ${summaryOf(tally)}\n${display(question.note)}`;
+    })
+    .join(`\n\n`);
+  const en = results
+    .map(({ question }) => question.en)
+    .find((text) => text !== ``);
 
   return [
     {
       type: ComponentType.Container,
       accentColor: MOSS,
       components: [
-        // The answer underlined, not bold: the sentence is a heading, and a
-        // bold answer vanished into it in the first live test.
         {
           type: ComponentType.TextDisplay,
-          content: sentenceBlock(question.answered)
+          content: passageBlock(only.question.answered)
         },
-        {
-          type: ComponentType.TextDisplay,
-          content: `✅ **${String(question.correct + 1)} ${answer}** · ${summary}${
-            question.en === `` ? `` : `\n_${question.en}_`
-          }`
-        },
-        { type: ComponentType.TextDisplay, content: display(question.note) },
         { type: ComponentType.Separator, divider: true, spacing: 1 },
-        { type: ComponentType.TextDisplay, content: rows }
+        { type: ComponentType.TextDisplay, content: blanks },
+        ...(en === undefined
+          ? []
+          : [{ type: ComponentType.TextDisplay as const, content: `_${en}_` }])
       ]
     }
   ];
