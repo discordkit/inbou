@@ -837,3 +837,615 @@
       answer: 1
       difficulty: 1
       note: "This asks the deadline for saying you will come: 15{日|にち}までに {教|おし}えて ください."
+
+- id: n5-d4-0027
+  type: short
+  status: draft
+  intro: |-
+    （{電話|でんわ}で）
+    リンさんの るすばんでんわに この メッセージが ありました。
+  text: |-
+    リンさん、こちらは さくら はいしゃです。あしたの よやくは {午後|ごご}3{時|じ}でしたが、{医者|いしゃ}の つごうで、4{時|じ}{半|はん}に なりました。4{時|じ}{半|はん}に {来|く}る ことが できない ときは、{今日|きょう}の 6{時|じ}までに {電話|でんわ}を ください。
+  en: "Lin, this is Sakura Dental. Your appointment tomorrow was at 3 p.m., but because of the dentist's schedule it is now at 4:30. If you cannot come at 4:30, please phone us by six today."
+  questions:
+    - question: "リンさんは あした {何時|なんじ}に はいしゃへ {行|い}きますか。"
+      options:
+        - option: "{午後|ごご}2{時|じ}{半|はん}"
+          why: "No time in the message is half past two."
+        - option: "{午後|ごご}3{時|じ}"
+          why: "Three was the old time: 3{時|じ}でしたが … 4{時|じ}{半|はん}に なりました."
+        - option: "{午後|ごご}4{時|じ}"
+          why: "The new time is half past four, not four."
+        - "{午後|ごご}4{時|じ}{半|はん}"
+      answer: 4
+      difficulty: 2
+      note: "This asks the time of tomorrow's appointment. It has changed: {午後|ごご}3{時|じ}でしたが … 4{時|じ}{半|はん}に なりました."
+    - question: |-
+        リンさんは あした 4{時|じ}{半|はん}に {行|い}く ことが できません。
+        どう しますか。
+      answer: "{今日|きょう}の 6{時|じ}までに はいしゃに {電話|でんわ}を します。"
+      wrong:
+        - option: "あしたの 3{時|じ}に はいしゃへ {行|い}きます。"
+          why: "3{時|じ} is the old time. The message asks Lin to phone if 4:30 does not work."
+        - option: "あしたの 6{時|じ}までに {電話|でんわ}を します。"
+          why: "The deadline is today, not tomorrow: {今日|きょう}の 6{時|じ}までに."
+        - option: "はいしゃからの {電話|でんわ}を {待|ま}ちます。"
+          why: "The dentist will not call again. The message asks Lin to call: {電話|でんわ}を ください."
+      difficulty: 3
+      points: [form-toki]
+      note: "This asks what Lin does if 4:30 is no good. The message's last sentence covers it: 4{時|じ}{半|はん}に {来|く}る ことが できない ときは、{今日|きょう}の 6{時|じ}までに {電話|でんわ}を ください."
+
+- id: n5-d4-0028
+  type: short
+  status: draft
+  intro: |-
+    （アパートで）
+    ルームメイトの ケイさんが れいぞうこに この メモを はりました。
+  text: |-
+    ジョンさんへ
+    {先月|せんげつ}の {電気|でんき}と ガスの おかねは、ぜんぶで 6,000{円|えん}でした。{私|わたし}が はらいましたから、{半分|はんぶん}を {金曜日|きんようび}までに ください。それから、トイレの かみが ありません。{帰|かえ}りに {買|か}って きて ください。
+    ケイ
+  en: "John — last month's electricity and gas came to 6,000 yen in all. I paid it, so please give me half by Friday. Also, we are out of toilet paper. Please buy some on your way home. Kei"
+  questions:
+    - question: "ジョンさんは {金曜日|きんようび}までに ケイさんに いくら はらいますか。"
+      options:
+        - option: "2,000{円|えん}"
+          why: "That would be a third. Kei asks for half: {半分|はんぶん}."
+        - "3,000{円|えん}"
+        - option: "6,000{円|えん}"
+          why: "6,000{円|えん} is the whole bill, which Kei already paid. John pays half."
+        - option: "12,000{円|えん}"
+          why: "That is twice the bill. John pays half of 6,000{円|えん}."
+      answer: 2
+      difficulty: 3
+      points: [particle-de-total]
+      note: "This asks how much John owes. The bill was ぜんぶで 6,000{円|えん}, Kei paid it, and the memo asks for {半分|はんぶん}, half: 3,000{円|えん}."
+    - question: "ジョンさんは {帰|かえ}りに {何|なに}を しますか。"
+      answer: "トイレの かみを {買|か}います。"
+      wrong:
+        - option: "{電気|でんき}の おかねを はらいに {行|い}きます。"
+          why: "Kei already paid the bill: {私|わたし}が はらいました."
+        - option: "ケイさんに おかねを わたします。"
+          why: "The money can wait until Friday. The errand on the way home is the toilet paper."
+        - option: "ガスの {会社|かいしゃ}に {電話|でんわ}を します。"
+          why: "The memo never asks John to phone anyone."
+      difficulty: 2
+      note: "This asks about the way home: {帰|かえ}りに {買|か}って きて ください, buy toilet paper."
+
+- id: n5-d4-0029
+  type: short
+  status: draft
+  intro: "これは {料理|りょうり}の {本|ほん}に ある、たまごの サンドイッチの {作|つく}り{方|かた}です。"
+  text: |-
+    まず、たまごを 10{分|ぷん} ゆでます。つぎに、たまごを {水|みず}に {入|い}れて、つめたく します。それから、たまごを こまかく {切|き}って、マヨネーズと まぜます。さいごに、それを パンに のせて、もう {一|いち}まいの パンを {上|うえ}に のせます。
+  en: "First, boil the eggs for 10 minutes. Next, put the eggs in water to cool them. Then chop the eggs finely and mix them with mayonnaise. Finally, put that on a slice of bread, and put another slice on top."
+  questions:
+    - question: "たまごを ゆでた {後|あと}、つぎに {何|なに}を しますか。"
+      answer: "たまごを {水|みず}で つめたく します。"
+      wrong:
+        - option: "たまごを マヨネーズと まぜます。"
+          why: "Mixing comes after the chopping: こまかく {切|き}って、マヨネーズと まぜます."
+        - option: "たまごを パンに のせます。"
+          why: "That is the last step: さいごに."
+        - option: "たまごを こまかく {切|き}ります。"
+          why: "Chopping is the third step, after the cooling: それから."
+      difficulty: 3
+      points: [form-ta-ato-de]
+      note: "This asks for the step right after boiling. The recipe numbers its steps with まず, つぎに, それから and さいごに: boil, then {水|みず}に {入|い}れて、つめたく します."
+    - question: "たまごは {何分|なんぷん} ゆでますか。"
+      options:
+        - "5{分|ふん}"
+        - "10{分|ぷん}"
+        - "15{分|ふん}"
+        - "20{分|ぷん}"
+      answer: 2
+      difficulty: 1
+      note: "This asks how long the eggs boil: まず、たまごを 10{分|ぷん} ゆでます."
+
+- id: n5-d4-0030
+  type: short
+  status: draft
+  intro: |-
+    （{会社|かいしゃ}で）
+    {会社|かいしゃ}の {人|ひと}が この おしらせを {見|み}ました。
+  text: |-
+    {夏休|なつやす}みの おしらせ
+    {今年|ことし}の {夏休|なつやす}みは 8{月|がつ}11{日|にち}（{月|げつ}）から 8{月|がつ}15{日|にち}（{金|きん}）までです。16{日|にち}と 17{日|にち}は {土曜日|どようび}と {日曜日|にちようび}ですから、{会社|かいしゃ}は 18{日|にち}（{月|げつ}）から {始|はじ}まります。{休|やす}みの {間|あいだ}に {急|いそ}ぎの しごとが ある {人|ひと}は、{山本|やまもと}さんに {話|はな}して ください。
+  en: "Summer holiday notice: this year's summer holiday runs from Monday 11 August to Friday 15 August. The 16th and 17th are Saturday and Sunday, so the office opens again on Monday the 18th. If you have urgent work during the holiday, please tell Yamamoto-san."
+  questions:
+    - question: "{会社|かいしゃ}が {休|やす}みの {日|ひ}は、ぜんぶで {何日|なんにち} ありますか。"
+      options:
+        - option: "{4日|よっか}"
+          why: "11th to 15th is already five days, and the weekend after it adds two."
+        - option: "{5日|いつか}"
+          why: "That counts only the summer holiday. The weekend after it, the 16th and 17th, is closed too."
+        - option: "{6日|むいか}"
+          why: "From the 11th to the 17th, both counted, is seven days."
+        - "{7日|なのか}"
+      answer: 4
+      difficulty: 3
+      points: [particle-kara-made]
+      note: "This asks how many days the office is closed in all: the holiday, the 11th to the 15th, then the weekend, the 16th and 17th. It opens on the 18th, so seven days."
+    - question: "{休|やす}みの {間|あいだ}に {急|いそ}ぎの しごとが ある とき、どう しますか。"
+      answer: "{山本|やまもと}さんに {話|はな}します。"
+      wrong:
+        - option: "18{日|にち}まで {待|ま}ちます。"
+          why: "The notice gives a way to handle urgent work during the break: tell Yamamoto-san."
+        - option: "{一人|ひとり}で {会社|かいしゃ}に {来|き}ます。"
+          why: "The notice never says to come in. It says to talk to Yamamoto-san."
+        - option: "{会社|かいしゃ}に メールを {送|おく}ります。"
+          why: "The notice names a person to tell, Yamamoto-san, not an email address."
+      difficulty: 2
+      note: "This asks about urgent work during the holiday: {山本|やまもと}さんに {話|はな}して ください."
+
+- id: n5-d4-0031
+  type: short
+  status: draft
+  intro: "これは {医者|いしゃ}が {病院|びょういん}で ハンナさんに わたした {紙|かみ}です。"
+  text: |-
+    ハンナさんへ
+    {今日|きょう}と あしたは おふろに {入|はい}らないで ください。シャワーは あしたから だいじょうぶです。{薬|くすり}は {朝|あさ}と {夜|よる}、ごはんの {後|あと}に {飲|の}んで ください。{3日|みっか} {飲|の}んで、まだ ねつが ある ときは、また {来|き}て ください。
+  en: "Hanna — please do not take a bath today or tomorrow. A shower is fine from tomorrow. Take the medicine in the morning and evening, after meals. If you have taken it for three days and still have a fever, please come again."
+  questions:
+    - question: "あした、ハンナさんは {何|なに}を しても いいですか。"
+      answer: "シャワーを あびます。"
+      wrong:
+        - option: "おふろに {入|はい}ります。"
+          why: "No bath tomorrow either: {今日|きょう}と あしたは おふろに {入|はい}らないで ください."
+        - option: "{薬|くすり}を {昼|ひる}ごはんの {後|あと}に {飲|の}みます。"
+          why: "The medicine is for morning and evening, after meals: {朝|あさ}と {夜|よる}."
+        - option: "{薬|くすり}を {飲|の}みません。"
+          why: "Hanna takes the medicine every morning and evening. Skipping it is not on the paper."
+      difficulty: 3
+      points: [form-te-mo-ii, form-naide-kudasai]
+      note: "This asks what Hanna may do tomorrow. Baths are out today and tomorrow, but シャワーは あしたから だいじょうぶです."
+    - question: "ねつが {下|さ}がらない とき、ハンナさんは いつ また {病院|びょういん}へ {行|い}きますか。"
+      options:
+        - option: "あした"
+          why: "Hanna takes the medicine for three days first: {3日|みっか} {飲|の}んで."
+        - option: "あさって"
+          why: "That is two days. The doctor says three: {3日|みっか} {飲|の}んで."
+        - "{3日|みっか}{後|ご}"
+        - option: "{一週間|いっしゅうかん}{後|ご}"
+          why: "The doctor wants to see Hanna after three days if the fever stays, not after a week."
+      answer: 3
+      difficulty: 2
+      note: "This asks when Hanna comes back if the fever stays: after three days of medicine, {3日|みっか} {飲|の}んで、まだ ねつが ある ときは、また {来|き}て ください."
+
+- id: n5-d4-0032
+  type: short
+  status: draft
+  intro: "これは りょかんの {人|ひと}が {送|おく}った メールです。"
+  text: |-
+    ホワイトさん
+    {来週|らいしゅう}の {土曜日|どようび}は、3{時|じ}から へやに {入|はい}る ことが できます。ばんごはんは 6{時|じ}{半|はん}から 1かいの {食堂|しょくどう}です。{駅|えき}から りょかんまで バスで 15{分|ふん}です。バスは {毎時|まいじ} 15{分|ふん}と 45{分|ふん}に {駅|えき}を {出|で}ます。
+    さくら りょかん
+  en: "White-san — next Saturday you can go into your room from three o'clock. Dinner is from 6:30 in the dining room on the first floor. It is 15 minutes by bus from the station to the inn. Buses leave the station at 15 and 45 minutes past every hour. Sakura Ryokan"
+  questions:
+    - question: "ホワイトさんは {土曜日|どようび}、{何時|なんじ}から へやに {入|はい}る ことが できますか。"
+      options:
+        - "1{時|じ}"
+        - "2{時|じ}"
+        - "2{時|じ}{半|はん}"
+        - "3{時|じ}"
+      answer: 4
+      difficulty: 1
+      note: "This asks when the room is ready: 3{時|じ}から へやに {入|はい}る ことが できます."
+    - question: |-
+        ホワイトさんは 3{時|じ}までに りょかんに {着|つ}きたいです。
+        いちばん おそい バスは {何時|なんじ}に {出|で}ますか。
+      options:
+        - option: "2{時|じ}15{分|ふん}"
+          why: "It arrives at 2:30, in time, but the 2:45 bus leaves later and still arrives by three."
+        - option: "2{時|じ}{半|はん}"
+          why: "No bus leaves at half past: buses leave at 15 and 45 minutes past the hour."
+        - "2{時|じ}45{分|ふん}"
+        - option: "3{時|じ}15{分|ふん}"
+          why: "It arrives at 3:30, after three."
+      answer: 3
+      difficulty: 3
+      note: "This asks for the latest bus that still arrives by three. Buses leave at 15 and 45 past the hour, and the ride is 15{分|ふん}: the 2:45 bus arrives at 3:00."
+
+- id: n5-d4-0033
+  type: short
+  status: draft
+  intro: |-
+    （プールで）
+    {入口|いりぐち}に この {紙|かみ}が あります。
+  text: |-
+    わすれものの おしらせ
+    きのう、{青|あお}い タオルと {黒|くろ}い かさが ありました。タオルは うけつけに あります。かさは {大|おお}きいので、2かいの じむしょに あります。{自分|じぶん}の ものが ある {人|ひと}は、{名前|なまえ}を {書|か}いて から、{持|も}って {帰|かえ}って ください。
+  en: "Lost property: yesterday a blue towel and a black umbrella were left behind. The towel is at reception. The umbrella is big, so it is in the office on the second floor. If something is yours, please write your name, then take it home."
+  questions:
+    - question: "{黒|くろ}い かさを わすれた {人|ひと}は、どこへ {行|い}きますか。"
+      answer: "2かいの じむしょ"
+      wrong:
+        - option: "うけつけ"
+          why: "Reception has the towel. The umbrella is big, so it is in the office."
+        - option: "プールの {入口|いりぐち}"
+          why: "The entrance is only where the notice hangs."
+        - option: "1かいの じむしょ"
+          why: "The office is on the second floor: 2かいの じむしょ."
+      difficulty: 2
+      points: [conjunction-node]
+      note: "This asks where the black umbrella is: かさは {大|おお}きいので、2かいの じむしょに あります."
+    - question: "{自分|じぶん}の ものを {見|み}つけた {人|ひと}は、{持|も}って {帰|かえ}る {前|まえ}に {何|なに}を しますか。"
+      answer: "{名前|なまえ}を {書|か}きます。"
+      wrong:
+        - option: "うけつけの {人|ひと}に {電話|でんわ}を します。"
+          why: "The notice asks only for a name: {名前|なまえ}を {書|か}いて から."
+        - option: "おかねを はらいます。"
+          why: "Nothing in the notice costs money."
+        - option: "あした もう {一度|いちど} {来|き}ます。"
+          why: "Owners may take things home the same day, after writing their name."
+      difficulty: 2
+      points: [form-te-kara]
+      note: "This asks what comes before taking it home: {名前|なまえ}を {書|か}いて から、{持|も}って {帰|かえ}って ください."
+
+- id: n5-d4-0034
+  type: short
+  status: draft
+  intro: "これは ペドロさんが {書|か}いた にっきです。"
+  text: |-
+    9{月|がつ}{5日|いつか}（{金|きん}）
+    {今日|きょう}は {友|とも}だちの {家|いえ}へ {行|い}きました。{友|とも}だちは「みなみ{駅|えき}で おりて ください」と {言|い}いましたが、{私|わたし}は まちがえて みなと{駅|えき}で おりました。みなと{駅|えき}は みなみ{駅|えき}の {一|ひと}つ {前|まえ}の {駅|えき}です。それで、つぎの {電車|でんしゃ}を 20{分|ぷん} {待|ま}ちました。
+  en: "Friday 5 September. Today I went to my friend's house. My friend said, “Please get off at Minami Station,” but by mistake I got off at Minato Station. Minato Station is the stop before Minami. So I waited twenty minutes for the next train."
+  questions:
+    - question: "ペドロさんは どうして 20{分|ぷん} {待|ま}ちましたか。"
+      answer: "みなみ{駅|えき}の {前|まえ}の {駅|えき}で おりたから"
+      wrong:
+        - option: "{友|とも}だちが おくれたから"
+          why: "The diary never says the friend was late. Pedro got off one stop early."
+        - option: "みなみ{駅|えき}を すぎたから"
+          why: "The other way round: Minato is the stop before Minami, so Pedro got off too early, not too late."
+        - option: "{電車|でんしゃ}が {止|と}まったから"
+          why: "The trains ran. Pedro waited because of getting off at the wrong station."
+      difficulty: 3
+      note: "This asks why Pedro waited. Pedro got off at みなと{駅|えき}, the stop before みなみ{駅|えき}: まちがえて みなと{駅|えき}で おりました. それで, so, the next train."
+    - question: "{友|とも}だちは どの {駅|えき}で おりて くださいと {言|い}いましたか。"
+      answer: "みなみ{駅|えき}"
+      wrong:
+        - option: "みなと{駅|えき}"
+          why: "Minato is where Pedro got off by mistake. The friend said Minami."
+        - option: "みなみ{駅|えき}の つぎの {駅|えき}"
+          why: "The friend named Minami itself, not the stop after it."
+        - option: "{東京|とうきょう}{駅|えき}"
+          why: "The diary never mentions Tokyo Station."
+      difficulty: 2
+      points: [particle-to-quote]
+      note: "This asks which station the friend named. The friend's words are in 「」, before と {言|い}いました: みなみ{駅|えき}で おりて ください."
+
+- id: n5-d4-0035
+  type: short
+  status: draft
+  intro: "これは {友|とも}だちの ミナさんが {送|おく}った メッセージです。"
+  text: |-
+    ごめん！あしたの {映画|えいが}、10{時|じ}からと {言|い}いましたが、10{時|じ}の チケットは もう ありませんでした。1{時|じ}の チケットを {買|か}いました。だから、ひるごはんを いっしょに {食|た}べてから {行|い}きましょう。12{時|じ}に {駅|えき}の {前|まえ}で {会|あ}いましょう。
+  en: "Sorry! I said tomorrow's film was at ten, but there were no more tickets for ten. I bought tickets for one o'clock. So let's have lunch together and then go. Let's meet at twelve in front of the station."
+  questions:
+    - question: "ふたりは あした {何時|なんじ}に {会|あ}いますか。"
+      options:
+        - "12{時|じ}"
+        - option: "1{時|じ}"
+          why: "One o'clock is when the film starts. They meet an hour earlier, at twelve, for lunch."
+        - option: "2{時|じ}"
+          why: "No time in the message is two."
+        - option: "3{時|じ}"
+          why: "No time in the message is three."
+      answer: 1
+      difficulty: 2
+      note: "This asks when they meet, which is not when the film starts: 12{時|じ}に {駅|えき}の {前|まえ}で {会|あ}いましょう."
+    - question: "ミナさんは どうして 1{時|じ}の チケットを {買|か}いましたか。"
+      answer: "10{時|じ}の チケットが なかったから"
+      wrong:
+        - option: "ひるごはんを {食|た}べたかったから"
+          why: "Lunch came after the change: だから links the one o'clock tickets to the lunch plan, not the other way round."
+        - option: "10{時|じ}は {駅|えき}に {行|い}く ことが できないから"
+          why: "The message gives one reason: the ten o'clock tickets had sold out."
+        - option: "1{時|じ}の チケットの ほうが {安|やす}かったから"
+          why: "The message says nothing about price."
+      difficulty: 3
+      points: [adverb-mou]
+      note: "This asks why the tickets are for one o'clock: 10{時|じ}の チケットは もう ありませんでした. The lunch plan follows from that: だから."
+
+- id: n5-d4-0036
+  type: short
+  status: draft
+  intro: "これは エマさんが {書|か}いた にっきです。"
+  text: |-
+    3{月|がつ}{20日|はつか}（{日|にち}）
+    {今日|きょう}は {私|わたし}の たんじょうびでした。{家|いえ}で パーティーを しました。クラスの {友|とも}だちを 5{人|にん} よびましたが、ケンさんは かぜで {来|き}ませんでした。でも、ケンさんの お{姉|ねえ}さんが ケーキを {持|も}って {来|き}ました。
+  en: "Sunday 20 March. Today was my birthday. I had a party at home. I invited five friends from class, but Ken didn't come because of a cold. But Ken's older sister came, bringing a cake."
+  questions:
+    - question: "パーティーに {来|き}た {人|ひと}は、エマさんの ほかに {何人|なんにん} いましたか。"
+      options:
+        - option: "4{人|にん}"
+          why: "That counts the four friends who came, but leaves out Ken's sister, who came with a cake."
+        - "5{人|にん}"
+        - option: "6{人|にん}"
+          why: "That counts all five friends and the sister, but Ken stayed home with a cold."
+        - option: "7{人|にん}"
+          why: "Only four friends and Ken's sister came: five people."
+      answer: 2
+      difficulty: 3
+      note: "This asks how many guests came. Five friends were invited and Ken stayed home, so four. Ken's sister came with a cake, so five."
+    - question: "ケンさんの お{姉|ねえ}さんは {何|なに}を しましたか。"
+      answer: "ケーキを {持|も}って {来|き}ました。"
+      wrong:
+        - option: "かぜで {来|き}ませんでした。"
+          why: "That is Ken, not Ken's sister."
+        - option: "エマさんを パーティーに よびました。"
+          why: "Emma held the party and invited the guests."
+        - option: "ケンさんと いっしょに {来|き}ました。"
+          why: "Ken stayed home with a cold. The sister came without Ken."
+      difficulty: 2
+      note: "This asks what Ken's sister did: でも、ケンさんの お{姉|ねえ}さんが ケーキを {持|も}って {来|き}ました."
+
+- id: n5-d4-0037
+  type: short
+  status: draft
+  intro: |-
+    （りょうの {台所|だいどころ}で）
+    りょうの {学生|がくせい}が この {紙|かみ}を {見|み}ました。
+  text: |-
+    れいぞうこを {使|つか}う {人|ひと}へ
+    {自分|じぶん}の {食|た}べ{物|もの}や {飲|の}み{物|もの}には、{名前|なまえ}を {書|か}いて ください。{名前|なまえ}が ない ものは、{毎週|まいしゅう} {金曜日|きんようび}の {夜|よる}に すてます。{月曜日|げつようび}の {朝|あさ}は れいぞうこの そうじを しますから、{日曜日|にちようび}の {夜|よる}は {何|なに}も {入|い}れないで ください。
+  en: "To fridge users: please write your name on your own food and drinks. Things without a name are thrown away every Friday night. The fridge is cleaned on Monday morning, so please don't put anything in it on Sunday night."
+  questions:
+    - question: "{名前|なまえ}が ない ものは いつ すてますか。"
+      options:
+        - "{金曜日|きんようび}の {夜|よる}"
+        - option: "{土曜日|どようび}の {朝|あさ}"
+          why: "No rule in the notice falls on a Saturday."
+        - option: "{日曜日|にちようび}の {夜|よる}"
+          why: "Sunday night is when nothing may go in, before the cleaning."
+        - option: "{月曜日|げつようび}の {朝|あさ}"
+          why: "Monday morning is the cleaning, not when unnamed things go."
+      answer: 1
+      difficulty: 2
+      note: "This asks when unnamed things are thrown away: {毎週|まいしゅう} {金曜日|きんようび}の {夜|よる}に すてます."
+    - question: |-
+        {日曜日|にちようび}の {夜|よる}、ケーキを {買|か}って {帰|かえ}りました。
+        どう しますか。
+      answer: "その {夜|よる}は れいぞうこに {入|い}れません。"
+      wrong:
+        - option: "{名前|なまえ}を {書|か}いて、れいぞうこに {入|い}れます。"
+          why: "On Sunday night nothing may go in, with a name or without: {何|なに}も {入|い}れないで ください."
+        - option: "{名前|なまえ}を {書|か}かないで、れいぞうこに {入|い}れます。"
+          why: "Nothing may go in on Sunday night, and an unnamed cake would be thrown away on Friday besides."
+        - option: "れいぞうこに {入|い}れて、{月曜日|げつようび}に {名前|なまえ}を {書|か}きます。"
+          why: "On Sunday night nothing may go in, because the fridge is cleaned on Monday morning."
+      difficulty: 3
+      points: [form-naide-kudasai]
+      note: "This asks what to do with food bought on Sunday night: {日曜日|にちようび}の {夜|よる}は {何|なに}も {入|い}れないで ください, because the fridge is cleaned on Monday morning."
+
+- id: n5-d4-0038
+  type: short
+  status: draft
+  intro: "これは {日本人|にほんじん}の {友|とも}だち たくやさんが {送|おく}った メールです。"
+  text: |-
+    アナさん
+    {来週|らいしゅう}、また いっしょに {勉強|べんきょう}しませんか。{私|わたし}は {月曜日|げつようび}と {水曜日|すいようび}の {午後|ごご}が {空|あ}いて います。アナさんは {水曜日|すいようび}の {午後|ごご}は アルバイトでしたね。{月曜日|げつようび}は どうですか。{図書館|としょかん}は {月曜日|げつようび}が {休|やす}みですから、{駅|えき}の {前|まえ}の きっさてんで {会|あ}いましょう。
+    たくや
+  en: "Ana — shall we study together again next week? I'm free on Monday and Wednesday afternoons. You work part-time on Wednesday afternoons, don't you? How about Monday? The library is closed on Mondays, so let's meet at the café in front of the station. Takuya"
+  questions:
+    - question: "たくやさんは {何曜日|なんようび}に {会|あ}いたいと {言|い}って いますか。"
+      options:
+        - "{月曜日|げつようび}"
+        - option: "{火曜日|かようび}"
+          why: "Takuya is free only on Monday and Wednesday afternoons."
+        - option: "{水曜日|すいようび}"
+          why: "Ana works on Wednesday afternoons, so Takuya suggests Monday."
+        - option: "{木曜日|もくようび}"
+          why: "Takuya is free only on Monday and Wednesday afternoons."
+      answer: 1
+      difficulty: 2
+      note: "This asks which day Takuya suggests: {月曜日|げつようび}は どうですか, since Ana works on Wednesday afternoons."
+    - question: "ふたりは どうして {図書館|としょかん}で {会|あ}いませんか。"
+      answer: "{月曜日|げつようび}は {図書館|としょかん}が {休|やす}みだから"
+      wrong:
+        - option: "{図書館|としょかん}は {駅|えき}から {遠|とお}いから"
+          why: "The email says nothing about distance. The library is closed on Mondays."
+        - option: "アナさんが アルバイトだから"
+          why: "Ana's job is on Wednesday. They meet on Monday, when the library is closed."
+        - option: "きっさてんの ほうが しずかだから"
+          why: "The email gives one reason: {図書館|としょかん}は {月曜日|げつようび}が {休|やす}みです."
+      difficulty: 3
+      points: [conjunction-kara-reason]
+      note: "This asks why not the library. Linking two facts gives it: they meet on Monday, and {図書館|としょかん}は {月曜日|げつようび}が {休|やす}みですから."
+
+- id: n5-d4-0039
+  type: short
+  status: draft
+  intro: |-
+    （{教室|きょうしつ}で）
+    {先生|せんせい}が ホワイトボードに この しゅくだいを {書|か}きました。
+  text: |-
+    しゅくだい
+    きょうかしょの 20ページから 23ページまでの もんだいを して ください。でも、22ページの もんだいは あした じゅぎょうで いっしょに しますから、しないで ください。こたえは ノートに {書|か}いて ください。
+  en: "Homework: please do the exercises on pages 20 to 23 of the textbook. But we will do the exercises on page 22 together in class tomorrow, so please don't do those. Write your answers in your notebook."
+  questions:
+    - question: "{学生|がくせい}は どの ページの もんだいを しますか。"
+      answer: "20、21、23ページ"
+      wrong:
+        - option: "20、21、22、23ページ"
+          why: "Page 22 is left for class: 22ページの もんだいは … しないで ください."
+        - option: "22ページだけ"
+          why: "Page 22 is the one page NOT to do."
+        - option: "21、22、23ページ"
+          why: "Page 20 is included (20ページから), and page 22 is left for class."
+      difficulty: 3
+      points: [particle-kara-made, form-naide-kudasai]
+      note: "This asks which pages to do: 20 to 23 (20ページから 23ページまで), all but page 22, which the class does together tomorrow."
+    - question: "こたえは どこに {書|か}きますか。"
+      answer: "ノート"
+      wrong:
+        - "きょうかしょ"
+        - "ホワイトボード"
+        - "{先生|せんせい}の {紙|かみ}"
+      difficulty: 1
+      note: "This asks where the answers go: こたえは ノートに {書|か}いて ください."
+
+- id: n5-d4-0040
+  type: short
+  status: draft
+  intro: |-
+    （アパートの {前|まえ}で）
+    {車|くるま}に この メモが ありました。
+  text: |-
+    この {車|くるま}の {人|ひと}へ
+    あしたの {朝|あさ} 9{時|じ}から {午後|ごご} 3{時|じ}まで、ここで {道|みち}の {工事|こうじ}を します。9{時|じ}までに {車|くるま}を となりの ちゅうしゃじょうに {動|うご}かして ください。ちゅうしゃじょうの おかねは いりません。
+    {山田|やまだ}
+  en: "To the owner of this car: tomorrow from 9 a.m. to 3 p.m. there will be road work here. Please move your car to the car park next door by nine. The car park is free. Yamada"
+  questions:
+    - question: "{車|くるま}の {人|ひと}は あした {何時|なんじ}までに {車|くるま}を {動|うご}かしますか。"
+      options:
+        - option: "{朝|あさ} 8{時|じ}"
+          why: "The deadline is nine: 9{時|じ}までに."
+        - option: "{朝|あさ} 8{時|じ}{半|はん}"
+          why: "The deadline is nine: 9{時|じ}までに."
+        - "{朝|あさ} 9{時|じ}"
+        - option: "{午後|ごご} 3{時|じ}"
+          why: "Three is when the road work ends."
+      answer: 3
+      difficulty: 2
+      note: "This asks the deadline for moving the car: 9{時|じ}までに, before the work starts."
+    - question: "ちゅうしゃじょうに ついて {正|ただ}しい ものは どれですか。"
+      answer: "{車|くるま}を {止|と}めても、おかねは はらいません。"
+      wrong:
+        - option: "1{時間|じかん} 200{円|えん}です。"
+          why: "The note says it costs nothing: おかねは いりません."
+        - option: "{午後|ごご} 3{時|じ}から {使|つか}う ことが できます。"
+          why: "The car moves there by nine, before the work starts, not at three."
+        - option: "アパートの {後|うし}ろに あります。"
+          why: "It is next door: となりの ちゅうしゃじょう."
+      difficulty: 2
+      note: "This asks which sentence is true of the car park. It is next door and free: おかねは いりません."
+
+- id: n5-d4-0041
+  type: short
+  status: draft
+  intro: "これは {自転車|じてんしゃ}やの {人|ひと}が {送|おく}った メールです。"
+  text: |-
+    ニコラスさん
+    {自転車|じてんしゃ}の しゅうりが {終|お}わりました。おかねは 2,500{円|えん}です。{店|みせ}は {午前|ごぜん}10{時|じ}から {午後|ごご}7{時|じ}までです。{水曜日|すいようび}は {休|やす}みです。とりに {来|く}る ときは、この メールを {見|み}せて ください。
+    ハッピー {自転車|じてんしゃ}
+  en: "Nicholas — the repair of your bicycle is finished. It costs 2,500 yen. The shop is open from 10 a.m. to 7 p.m. We are closed on Wednesdays. When you come to pick it up, please show this email. Happy Bicycles"
+  questions:
+    - question: |-
+        ニコラスさんは {火曜日|かようび}の {午後|ごご} 8{時|じ}に {店|みせ}へ {行|い}きました。
+        どう でしたか。
+      answer: "{店|みせ}は もう しまって いました。"
+      wrong:
+        - option: "{自転車|じてんしゃ}を とる ことが できました。"
+          why: "The shop closes at 7 p.m. At eight it was already shut."
+        - option: "{水曜日|すいようび}なので {休|やす}みでした。"
+          why: "Tuesday is not the closed day; Wednesday is. The shop was shut because it closes at seven."
+        - option: "まだ しゅうりが {終|お}わって いませんでした。"
+          why: "The repair is already finished: しゅうりが {終|お}わりました."
+      difficulty: 3
+      points: [adverb-mou]
+      note: "This asks what happened at 8 p.m. on Tuesday. The shop is open {午前|ごぜん}10{時|じ}から {午後|ごご}7{時|じ}までです, so at eight it had already closed."
+    - question: "{店|みせ}で {何|なに}を {見|み}せますか。"
+      answer: "この メール"
+      wrong:
+        - "{自転車|じてんしゃ}の かぎ"
+        - "2,500{円|えん}の レシート"
+        - "{名前|なまえ}の カード"
+      difficulty: 1
+      note: "This asks what to show at the shop: この メールを {見|み}せて ください."
+
+- id: n5-d4-0042
+  type: short
+  status: draft
+  intro: |-
+    （パンやで）
+    あたらしい アルバイトの ソフィさんが この メモを {読|よ}みました。
+  text: |-
+    ソフィさんへ
+    {店|みせ}に {来|き}た とき、はじめに {手|て}を {洗|あら}って ください。つぎに、パンを たなに ならべます。その あとで、ゆかを そうじして、8{時|じ}に {店|みせ}を {開|あ}けます。わからない ことは、{何|なん}でも {聞|き}いて ください。
+    {店長|てんちょう}
+  en: "Sophie — when you arrive at the shop, first please wash your hands. Next, set out the bread on the shelves. After that, clean the floor, and open the shop at eight. Please ask about anything you don't understand. The manager"
+  questions:
+    - question: "ソフィさんは {店|みせ}を {開|あ}ける {前|まえ}に、さいごに {何|なに}を しますか。"
+      answer: "ゆかを そうじします。"
+      wrong:
+        - option: "{手|て}を {洗|あら}います。"
+          why: "Washing hands is the first thing: はじめに."
+        - option: "パンを たなに ならべます。"
+          why: "That is second: つぎに. The floor comes after it: その あとで."
+        - option: "{店長|てんちょう}に {聞|き}きます。"
+          why: "Asking is for anything unclear, at any time. It is not one of the steps before opening."
+      difficulty: 3
+      note: "This asks for the last step before opening. The memo orders the steps: はじめに wash hands, つぎに set out the bread, その あとで clean the floor, then open at eight."
+    - question: "{店|みせ}は {何時|なんじ}に {開|あ}きますか。"
+      options:
+        - "8{時|じ}"
+        - "8{時|じ}{半|はん}"
+        - "9{時|じ}"
+        - "9{時|じ}{半|はん}"
+      answer: 1
+      difficulty: 1
+      note: "This asks the opening time: 8{時|じ}に {店|みせ}を {開|あ}けます."
+
+- id: n5-d4-0043
+  type: short
+  status: draft
+  intro: "これは ゆいさんが {書|か}いた にっきです。"
+  text: |-
+    5{月|がつ}{3日|みっか}（{土|ど}）
+    {今日|きょう}は {妹|いもうと}と こうえんで テニスを する つもりでした。でも、{朝|あさ}から {雨|あめ}だったので、{近|ちか}くの {図書館|としょかん}へ {行|い}きました。{妹|いもうと}は まんがを {読|よ}んで、{私|わたし}は しゅくだいを しました。テニスは {来週|らいしゅう} します。
+  en: "Saturday 3 May. Today my younger sister and I were going to play tennis in the park. But it rained from the morning, so we went to the library nearby. My sister read manga, and I did my homework. We'll play tennis next week."
+  questions:
+    - question: "ゆいさんは {今日|きょう} {何|なに}を しましたか。"
+      answer: "{図書館|としょかん}で しゅくだいを しました。"
+      wrong:
+        - option: "こうえんで テニスを しました。"
+          why: "That was the plan, but it rained: する つもりでした。でも…"
+        - option: "{図書館|としょかん}で まんがを {読|よ}みました。"
+          why: "Manga is what the sister read. Yui did homework."
+        - option: "{家|いえ}で しゅくだいを しました。"
+          why: "Yui did the homework at the library, not at home."
+      difficulty: 2
+      points: [form-tsumori]
+      note: "This asks what Yui really did, not what was planned. The plan was tennis (つもりでした), but it rained, so the library, where Yui did homework."
+    - question: "ふたりは いつ テニスを しますか。"
+      options:
+        - "{今日|きょう}"
+        - "あした"
+        - "あさって"
+        - "{来週|らいしゅう}"
+      answer: 4
+      difficulty: 1
+      note: "This asks when the tennis will happen now: テニスは {来週|らいしゅう} します."
+
+- id: n5-d4-0044
+  type: short
+  status: draft
+  intro: "これは リーさんが {日本語|にほんご}の {先生|せんせい}に わたした カードです。"
+  text: |-
+    {森|もり}{先生|せんせい}
+    {一年|いちねん}、ほんとうに ありがとう ございました。{先生|せんせい}の じゅぎょうは いつも {楽|たの}しかったです。{来月|らいげつ} {国|くに}へ {帰|かえ}りますが、{国|くに}でも {日本語|にほんご}の {勉強|べんきょう}を つづけます。{夏|なつ}に また {日本|にほん}へ {来|き}たいです。
+    リー
+  en: "Mori-sensei — thank you so much for this year. Your lessons were always fun. Next month I go back to my country, but I will keep studying Japanese there. I want to come to Japan again in the summer. Lee"
+  questions:
+    - question: "リーさんは {来月|らいげつ} {何|なに}を しますか。"
+      answer: "{国|くに}へ {帰|かえ}ります。"
+      wrong:
+        - option: "{日本|にほん}へ {来|き}ます。"
+          why: "That is the summer plan: {夏|なつ}に また."
+        - "{日本語|にほんご}の {先生|せんせい}に なります。"
+        - "{森|もり}{先生|せんせい}の じゅぎょうに {出|で}ます。"
+      difficulty: 1
+      note: "This asks about next month: {来月|らいげつ} {国|くに}へ {帰|かえ}ります."
+    - question: "カードに あう ものは どれですか。"
+      answer: "リーさんは {国|くに}でも {日本語|にほんご}を {勉強|べんきょう}します。"
+      wrong:
+        - option: "リーさんは {日本語|にほんご}の {勉強|べんきょう}を やめます。"
+          why: "The opposite: {国|くに}でも … つづけます."
+        - option: "{森|もり}{先生|せんせい}の じゅぎょうは むずかしかったです。"
+          why: "The card says the lessons were always fun: いつも {楽|たの}しかったです."
+        - option: "リーさんは {夏|なつ}まで {日本|にほん}に います。"
+          why: "Lee goes home next month. Summer is when Lee hopes to come back."
+      difficulty: 2
+      note: "This asks which sentence agrees with the card: {国|くに}でも {日本語|にほんご}の {勉強|べんきょう}を つづけます, Lee keeps studying at home."

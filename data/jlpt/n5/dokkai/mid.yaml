@@ -576,3 +576,500 @@
         - "バスの {中|なか}で ひるごはんを {食|た}べます。"
       difficulty: 1
       note: "This asks what happens if it rains: {雨|あめ}の {日|ひ}も {行|い}きます。かさを {持|も}って きて ください."
+
+- id: n5-d5-0012
+  type: mid
+  status: draft
+  intro: "これは マリアさんが {書|か}いた さくぶんです。"
+  text: |-
+    {先月|せんげつ}の はじめ、{国|くに}の {母|はは}に にもつを {送|おく}りました。{日本|にほん}の おかしと {冬|ふゆ}の {服|ふく}です。{服|ふく}は {母|はは}の たんじょうびの プレゼントです。
+    ゆうびんきょくの {人|ひと}は「ふなびんは 1か{月|げつ}ぐらい かかります。こうくうびんは 1{週間|しゅうかん}ぐらいですが、ねだんが ふなびんの 3ばいです」と {言|い}いました。{母|はは}の たんじょうびは 2か{月|げつ}{後|ご}でしたから、{私|わたし}は ふなびんに しました。
+    きのう、{母|はは}から メールが {来|き}ました。「にもつ、{着|つ}いたよ。{服|ふく}が とても あたたかい」と ありました。
+    {来月|らいげつ}の たんじょうびには、{母|はは}に {電話|でんわ}を します。
+  en: "At the start of last month I sent a parcel to my mother back home: Japanese sweets and winter clothes. The clothes are a birthday present for my mother. The post office worker said, “Sea mail takes about a month. Air mail takes about a week, but it costs three times as much as sea mail.” My mother's birthday was two months away, so I chose sea mail. Yesterday a message came from my mother. It said, “The parcel arrived. The clothes are very warm.” On my mother's birthday next month, I will phone."
+  questions:
+    - question: "マリアさんは {何|なに}を {送|おく}りましたか。"
+      answer: "おかしと {服|ふく}"
+      wrong:
+        - "おかしと {本|ほん}"
+        - "{本|ほん}と {服|ふく}"
+        - "{服|ふく}と {写真|しゃしん}"
+      difficulty: 1
+      note: "This asks what was in the parcel: {日本|にほん}の おかしと {冬|ふゆ}の {服|ふく}です."
+    - question: "こうくうびんに ついて {正|ただ}しい ものは どれですか。"
+      answer: "ふなびんより {早|はや}いですが、{高|たか}いです。"
+      wrong:
+        - option: "ふなびんより {早|はや}くて、{安|やす}いです。"
+          why: "Air mail costs three times as much: ねだんが ふなびんの 3ばいです."
+        - option: "ふなびんより おそいですが、{安|やす}いです。"
+          why: "Both halves are the wrong way round: air mail takes about a week and sea mail about a month, and air mail costs more."
+        - option: "ふなびんと {同|おな}じ ねだんです。"
+          why: "Air mail is three times the price of sea mail."
+      difficulty: 2
+      points: [particle-yori-comparison]
+      note: "This asks what the post office said about air mail: about a week (1{週間|しゅうかん}ぐらい), but three times the price of sea mail (3ばい)."
+    - question: "マリアさんは どうして ふなびんに しましたか。"
+      answer: "たんじょうびまで {時間|じかん}が あったから"
+      wrong:
+        - option: "こうくうびんが なかったから"
+          why: "Air mail was offered: the worker described both."
+        - option: "おかしが {重|おも}かったから"
+          why: "Weight never comes up. The reason is the time before the birthday."
+        - option: "{母|はは}が ふなびんが いいと {言|い}ったから"
+          why: "Maria decided alone, from the birthday date. The mother only wrote after the parcel arrived."
+      difficulty: 3
+      note: "This asks why Maria chose sea mail. Sea mail takes about a month, and the birthday was two months away: {母|はは}の たんじょうびは 2か{月|げつ}{後|ご}でしたから."
+    - question: "ぶんしょうに あう ものは どれですか。"
+      answer: "にもつは もう {母|はは}の ところに {着|つ}きました。"
+      wrong:
+        - option: "にもつは まだ {着|つ}いて いません。"
+          why: "It has arrived: にもつ、{着|つ}いたよ."
+        - option: "マリアさんは きのう {母|はは}に {電話|でんわ}を しました。"
+          why: "Yesterday the mother sent a message. The phone call is planned for the birthday next month."
+        - option: "{母|はは}の たんじょうびは きのうでした。"
+          why: "The birthday is next month: {来月|らいげつ}の たんじょうび."
+      difficulty: 2
+      note: "This asks which sentence agrees with the essay: the mother's message says にもつ、{着|つ}いたよ, the parcel has arrived."
+
+- id: n5-d5-0013
+  type: mid
+  status: draft
+  intro: "これは トーマスさんが {書|か}いた さくぶんです。"
+  text: |-
+    {先週|せんしゅう}の {金曜日|きんようび}、{友|とも}だちと {東京|とうきょう}から {京都|きょうと}へ {行|い}きました。しんかんせんは 2{時間|じかん}{半|はん}で {着|つ}きますが、14,000{円|えん}ぐらい かかります。それで、{私|わたし}たちは {夜|よる}の バスに {乗|の}りました。バスは 5,000{円|えん}でした。
+    バスは {夜|よる} 11{時|じ}に {東京|とうきょう}を {出|で}て、{朝|あさ} 6{時|じ}に {京都|きょうと}に {着|つ}きました。バスの {中|なか}は せまくて、あまり ねる ことが できませんでした。
+    {京都|きょうと}では、おてらを {見|み}たり、おいしい おとうふを {食|た}べたり しました。でも、{夜|よる}は とても つかれて いました。
+    {帰|かえ}りは しんかんせんに しました。{高|たか}かったですが、{楽|らく}でした。
+  en: "Last Friday I went from Tokyo to Kyoto with a friend. The shinkansen gets there in two and a half hours, but costs about 14,000 yen. So we took a night bus. The bus was 5,000 yen. The bus left Tokyo at 11 p.m. and reached Kyoto at 6 a.m. Inside the bus it was cramped, and I could hardly sleep. In Kyoto we saw temples and ate delicious tofu. But in the evening I was very tired. On the way back we took the shinkansen. It was expensive, but comfortable."
+  questions:
+    - question: "トーマスさんたちは どうして {夜|よる}の バスに {乗|の}りましたか。"
+      answer: "しんかんせんより {安|やす}かったから"
+      wrong:
+        - option: "しんかんせんより {早|はや}く {着|つ}くから"
+          why: "The bus took seven hours; the shinkansen takes two and a half. The bus was chosen for its price."
+        - option: "バスの {中|なか}で よく ねる ことが できるから"
+          why: "The opposite: Thomas could hardly sleep on the bus."
+        - option: "しんかんせんの きっぷが なかったから"
+          why: "The essay never says the shinkansen was full. それで links the choice to the 14,000{円|えん} price."
+      difficulty: 2
+      note: "This asks why they took the night bus. The shinkansen costs about 14,000{円|えん}, それで, so, they took the 5,000{円|えん} bus."
+    - question: "バスは {京都|きょうと}まで {何時間|なんじかん} かかりましたか。"
+      options:
+        - option: "2{時間|じかん}{半|はん}"
+          why: "That is the shinkansen's time, not the bus's."
+        - option: "5{時間|じかん}"
+          why: "From 11 p.m. to 6 a.m. is seven hours."
+        - "7{時間|じかん}"
+        - option: "11{時間|じかん}"
+          why: "11 is the hour the bus left, not how long it took."
+      answer: 3
+      difficulty: 3
+      note: "This asks how long the bus took. It left at {夜|よる} 11{時|じ} and arrived at {朝|あさ} 6{時|じ}: seven hours."
+    - question: "トーマスさんたちは {京都|きょうと}で {何|なに}を しましたか。"
+      answer: "おてらを {見|み}て、おとうふを {食|た}べました。"
+      wrong:
+        - option: "おてらを {見|み}て、すしを {食|た}べました。"
+          why: "The food was tofu: おとうふを {食|た}べたり."
+        - option: "しんかんせんに {乗|の}って、おてらを {見|み}ました。"
+          why: "The shinkansen was for the way home, not for getting around Kyoto."
+        - option: "おとうふを {作|つく}りました。"
+          why: "They ate tofu. They did not make it."
+      difficulty: 2
+      points: [form-tari-tari]
+      note: "This asks what they did in Kyoto: おてらを {見|み}たり、おいしい おとうふを {食|た}べたり しました."
+    - question: "ぶんしょうに あう ものは どれですか。"
+      answer: "{帰|かえ}りは {行|い}きより おかねが かかりました。"
+      wrong:
+        - option: "{行|い}きも {帰|かえ}りも バスでした。"
+          why: "Only the way there was by bus. They came back by shinkansen."
+        - option: "{帰|かえ}りは {行|い}きより {時間|じかん}が かかりました。"
+          why: "The shinkansen takes two and a half hours, much less than the bus's seven."
+        - option: "バスの {中|なか}は {広|ひろ}くて {楽|らく}でした。"
+          why: "The bus was cramped: せまくて. {楽|らく} describes the shinkansen."
+      difficulty: 3
+      points: [particle-yori-comparison]
+      note: "This asks which sentence agrees with the essay. The way there was by 5,000{円|えん} bus, and the way back by shinkansen, about 14,000{円|えん}: the way back cost more."
+
+- id: n5-d5-0014
+  type: mid
+  status: draft
+  intro: "これは キムさんが {書|か}いた さくぶんです。"
+  text: |-
+    {先月|せんげつ}、スーパーで かいものを して、{家|いえ}に {帰|かえ}りました。でも、かばんの {中|なか}に さいふが ありませんでした。すぐ スーパーに もどって、{店|みせ}の {人|ひと}に {聞|き}きましたが、ありませんでした。
+    つぎの {日|ひ}、こうばんへ {行|い}きました。けいさつかんは「きのうの {夜|よる}、{小学生|しょうがくせい}が この さいふを {持|も}って {来|き}ましたよ」と {言|い}いました。さいふの {中|なか}の おかねも カードも、ぜんぶ ありました。
+    __その {子|こ}__は、スーパーの {前|まえ}の {道|みち}で さいふを {見|み}つけました。{私|わたし}は その {子|こ}に おれいを {言|い}いたいです。でも、{名前|なまえ}が わかりません。
+  en: "Last month I went shopping at the supermarket and went home. But my wallet was not in my bag. I went straight back to the supermarket and asked the staff, but it wasn't there. The next day I went to the police box. The officer said, “Last night a primary-school child brought this wallet in.” The money and the cards in the wallet were all there. That child had found the wallet in the street in front of the supermarket. I want to thank the child. But I don't know the child's name."
+  questions:
+    - question: "キムさんは さいふが ない ことが わかって、はじめに どう しましたか。"
+      answer: "スーパーに もどりました。"
+      wrong:
+        - option: "こうばんへ {行|い}きました。"
+          why: "The police box came the next day: つぎの {日|ひ}."
+        - option: "{家|いえ}の {中|なか}を さがしました。"
+          why: "The essay never says Kim searched at home. Kim went straight back: すぐ スーパーに もどって."
+        - option: "{小学生|しょうがくせい}に {聞|き}きました。"
+          why: "Kim never met the child. The officer told Kim about the child."
+      difficulty: 2
+      note: "This asks what Kim did first on finding the wallet gone: すぐ スーパーに もどって、{店|みせ}の {人|ひと}に {聞|き}きました."
+    - question: "__その {子|こ}__ とは だれですか。"
+      answer: "さいふを こうばんに {持|も}って {来|き}た {小学生|しょうがくせい}"
+      wrong:
+        - option: "スーパーの {店|みせ}の {人|ひと}"
+          why: "The staff knew nothing of the wallet: ありませんでした."
+        - option: "こうばんの けいさつかん"
+          why: "The officer told Kim about the child. The child is someone else."
+        - option: "キムさんの {子|こ}ども"
+          why: "The essay never mentions Kim's own children. その points back to the child the officer described."
+      difficulty: 3
+      points: [demonstrative-adnominal]
+      note: "This asks who その {子|こ} is. その points back to the child just mentioned: the {小学生|しょうがくせい} who brought the wallet to the police box."
+    - question: "ぶんしょうに あう ものは どれですか。"
+      answer: "さいふの {中|なか}の ものは ぜんぶ ありました。"
+      wrong:
+        - option: "おかねは ありましたが、カードは ありませんでした。"
+          why: "Both were there: おかねも カードも、ぜんぶ ありました."
+        - option: "さいふは スーパーの {中|なか}に ありました。"
+          why: "It was found in the street in front of the supermarket, not inside."
+        - option: "さいふは キムさんの かばんの {中|なか}に ありました。"
+          why: "It was not in the bag. A child found it in the street."
+      difficulty: 2
+      note: "This asks which sentence agrees with the essay: おかねも カードも、ぜんぶ ありました."
+    - question: "キムさんは どうして おれいを {言|い}う ことが できませんか。"
+      answer: "その {子|こ}の {名前|なまえ}が わからないから"
+      wrong:
+        - "けいさつかんが だめだと {言|い}ったから"
+        - "キムさんが いそがしいから"
+        - "その {子|こ}の {家|いえ}が {遠|とお}いから"
+      difficulty: 1
+      note: "This asks why Kim cannot thank the child: {名前|なまえ}が わかりません."
+
+- id: n5-d5-0015
+  type: mid
+  status: draft
+  intro: "これは アーロンさんが {書|か}いた さくぶんです。"
+  text: |-
+    {私|わたし}の {国|くに}は あつい {国|くに}ですから、ゆきを {見|み}た ことが ありませんでした。
+    {先週|せんしゅう}の {水曜日|すいようび}、{朝|あさ} {起|お}きて、まどの {外|そと}を {見|み}ました。{外|そと}は まっ{白|しろ}でした。はじめての ゆきです。
+    その {日|ひ}は ゆきが {多|おお}かったので、{学校|がっこう}は {休|やす}みに なりました。{私|わたし}は {同|おな}じ りょうの {友|とも}だちと {外|そと}に {出|で}て、ゆきだるまを {作|つく}りました。{手|て}が とても つめたく なりましたが、{楽|たの}しかったです。
+    つぎの {日|ひ}、ゆきだるまを {見|み}に {行|い}きましたが、もう ありませんでした。__{天気|てんき}が よかった__からです。
+  en: "My country is a hot country, so I had never seen snow. Last Wednesday I got up in the morning and looked out of the window. Outside, everything was white. My first snow. That day there was so much snow that school was cancelled. I went outside with friends from the same dorm and made a snowman. My hands got very cold, but it was fun. The next day I went to see the snowman, but it was already gone. It was because the weather was good."
+  questions:
+    - question: "アーロンさんは どうして ゆきを {見|み}た ことが ありませんでしたか。"
+      answer: "{国|くに}が あつい {国|くに}だから"
+      wrong:
+        - "{国|くに}に {山|やま}が ないから"
+        - "{冬|ふゆ}に {国|くに}に いなかったから"
+        - "{家族|かぞく}が ゆきが きらいだから"
+      difficulty: 1
+      points: [form-ta-koto-ga-aru]
+      note: "This asks why Aaron had never seen snow: {私|わたし}の {国|くに}は あつい {国|くに}ですから."
+    - question: "{水曜日|すいようび}、{学校|がっこう}は どう なりましたか。"
+      answer: "ゆきで {休|やす}みに なりました。"
+      wrong:
+        - option: "いつもより おそく {始|はじ}まりました。"
+          why: "School did not open late. It was cancelled: {休|やす}みに なりました."
+        - option: "ゆきの じゅぎょうが ありました。"
+          why: "There were no classes. Aaron made a snowman with friends."
+        - option: "いつもと {同|おな}じでした。"
+          why: "The snow closed the school: {学校|がっこう}は {休|やす}みに なりました."
+      difficulty: 2
+      points: [form-naru]
+      note: "This asks what happened to school on Wednesday: ゆきが {多|おお}かったので、{学校|がっこう}は {休|やす}みに なりました."
+    - question: "アーロンさんは だれと ゆきだるまを {作|つく}りましたか。"
+      answer: "りょうの {友|とも}だち"
+      wrong:
+        - option: "クラスの {先生|せんせい}"
+          why: "School was closed. Aaron went out with friends from the dorm."
+        - option: "{国|くに}の {家族|かぞく}"
+          why: "The family is in Aaron's hot home country."
+        - option: "{一人|ひとり}で"
+          why: "Aaron went out with friends: {友|とも}だちと {外|そと}に {出|で}て."
+      difficulty: 2
+      note: "This asks who made the snowman with Aaron: {同|おな}じ りょうの {友|とも}だちと."
+    - question: "__{天気|てんき}が よかった__ ので、どう なりましたか。"
+      answer: "ゆきだるまが なくなりました。"
+      wrong:
+        - option: "また ゆきが ふりました。"
+          why: "The next day was fine, not snowy: {天気|てんき}が よかった."
+        - option: "{学校|がっこう}が また {休|やす}みに なりました。"
+          why: "The essay says nothing about school the next day."
+        - option: "ゆきだるまが {大|おお}きく なりました。"
+          why: "The snowman was gone: もう ありませんでした."
+      difficulty: 3
+      note: "This asks what the good weather did. The underlined words give the reason the snowman was gone: もう ありませんでした。{天気|てんき}が よかったからです. から links the result to its cause."
+
+- id: n5-d5-0016
+  type: mid
+  status: draft
+  intro: "これは ペンパルの ゆきさんが ジェームスさんに {書|か}いた {手紙|てがみ}です。"
+  text: |-
+    ジェームスさん
+    お{手紙|てがみ} ありがとう。ジェームスさんの {町|まち}は {夏|なつ}も すずしいんですね。{私|わたし}の {町|まち}は {今|いま}、とても あついです。
+    しつもんに こたえます。{私|わたし}の しゅみは {料理|りょうり}です。{毎週|まいしゅう} {日曜日|にちようび}に {家族|かぞく}の ばんごはんを {作|つく}ります。{先週|せんしゅう}は {母|はは}と いっしょに ぎょうざを {作|つく}りました。
+    {来年|らいねん}の {春|はる}、ジェームスさんの {国|くに}へ {旅行|りょこう}に {行|い}きます。その とき、{会|あ}いませんか。ジェームスさんの {好|す}きな {日本|にほん}の おかしを {持|も}って {行|い}きます。{何|なに}が いいですか。
+    ゆき
+  en: "James — thank you for your letter. So your town is cool even in summer. My town is very hot right now. To answer your question: my hobby is cooking. Every Sunday I make dinner for my family. Last week I made gyoza with my mother. Next spring I'm going on a trip to your country. Shall we meet then? I'll bring a Japanese sweet you like. What would be good? Yuki"
+  questions:
+    - question: "ジェームスさんの {町|まち}は {夏|なつ}、どうですか。"
+      answer: "すずしいです。"
+      wrong:
+        - option: "とても あついです。"
+          why: "That is Yuki's town: {私|わたし}の {町|まち}は {今|いま}、とても あついです."
+        - option: "{雨|あめ}が {多|おお}いです。"
+          why: "The letter says nothing about rain."
+        - option: "ゆきが ふります。"
+          why: "The letter says James's town is cool in summer, not snowy."
+      difficulty: 2
+      note: "This asks about James's town, so watch whose town each sentence is about: ジェームスさんの {町|まち}は {夏|なつ}も すずしいんですね."
+    - question: "ゆきさんは {毎週|まいしゅう} {日曜日|にちようび}に {何|なに}を しますか。"
+      answer: "{家族|かぞく}の ばんごはんを {作|つく}ります。"
+      wrong:
+        - "{母|はは}と ぎょうざを {食|た}べに {行|い}きます。"
+        - "ジェームスさんに {手紙|てがみ}を {書|か}きます。"
+        - "{料理|りょうり}の {教室|きょうしつ}へ {行|い}きます。"
+      difficulty: 1
+      note: "This asks about Sundays: {毎週|まいしゅう} {日曜日|にちようび}に {家族|かぞく}の ばんごはんを {作|つく}ります."
+    - question: "ジェームスさんは {前|まえ}の {手紙|てがみ}で {何|なに}を {聞|き}きましたか。"
+      answer: "ゆきさんの しゅみ"
+      wrong:
+        - option: "ゆきさんの {町|まち}の {天気|てんき}"
+          why: "Yuki mentions the weather, but the answer to James's question comes after しつもんに こたえます: the hobby."
+        - option: "{日本|にほん}の おかしの ねだん"
+          why: "Sweets come up only at the end, as Yuki's own question to James."
+        - option: "ゆきさんの {家族|かぞく}の {名前|なまえ}"
+          why: "The letter names no one in the family."
+      difficulty: 3
+      note: "This asks what James had asked. Yuki signals the answer: しつもんに こたえます, then {私|わたし}の しゅみは {料理|りょうり}です. So James asked about Yuki's hobby."
+    - question: "ゆきさんは {来年|らいねん}の {春|はる}、{何|なに}を しますか。"
+      answer: "ジェームスさんの {国|くに}へ {旅行|りょこう}に {行|い}きます。"
+      wrong:
+        - option: "ジェームスさんが {日本|にほん}へ {来|き}ます。"
+          why: "The other way round: Yuki travels to James's country."
+        - option: "{母|はは}と ぎょうざを {作|つく}ります。"
+          why: "That was last week: {先週|せんしゅう}."
+        - option: "{日本|にほん}で おかしの {店|みせ}を {始|はじ}めます。"
+          why: "The sweets are a present Yuki will bring, not a shop."
+      difficulty: 2
+      note: "This asks about next spring: {来年|らいねん}の {春|はる}、ジェームスさんの {国|くに}へ {旅行|りょこう}に {行|い}きます."
+
+- id: n5-d5-0017
+  type: mid
+  status: draft
+  intro: "これは ミアさんが {書|か}いた さくぶんです。"
+  text: |-
+    {先週|せんしゅう}の {土曜日|どようび}、{日本語学校|にほんごがっこう}の うんどうかいが ありました。{学生|がくせい}は {赤|あか}と {白|しろ}の 2つの チームに わかれました。{私|わたし}は {赤|あか}の チームでした。
+    はじめに つなひきを しました。{赤|あか}が かちました。つぎに リレーを しました。{私|わたし}は {走|はし}るのが おそいので、とても しんぱいでした。でも、チームの みんなが はやかったので、{赤|あか}が 1ばんでした。
+    さいごは ダンスでした。{白|しろ}の チームの ダンスは とても じょうずで、{白|しろ}が かちました。
+    ぜんぶで {赤|あか}が 2かい、{白|しろ}が 1かい かったので、{赤|あか}の チームが かちました。
+  en: "Last Saturday was my Japanese school's sports day. The students split into two teams, red and white. I was on the red team. First we did tug-of-war. Red won. Next we did a relay. I'm a slow runner, so I was very worried. But everyone on the team was fast, so red came first. Last was dancing. The white team's dance was very good, and white won. In all, red won twice and white once, so the red team won."
+  questions:
+    - question: "ミアさんは {何色|なにいろ}の チームでしたか。"
+      answer: "{赤|あか}"
+      wrong:
+        - "{白|しろ}"
+        - "{青|あお}"
+        - "{黒|くろ}"
+      difficulty: 1
+      note: "This asks which team Mia was on: {私|わたし}は {赤|あか}の チームでした."
+    - question: "ミアさんは どうして リレーの とき しんぱいでしたか。"
+      answer: "{自分|じぶん}が {走|はし}るのが おそいから"
+      wrong:
+        - option: "チームの みんなが おそいから"
+          why: "The team was fast: みんなが はやかった. Mia was the slow one."
+        - option: "{白|しろ}の チームが つよいから"
+          why: "The essay gives Mia's own speed as the worry: {私|わたし}は {走|はし}るのが おそいので."
+        - option: "つなひきで まけたから"
+          why: "Red won the tug-of-war: {赤|あか}が かちました."
+      difficulty: 2
+      points: [conjunction-node]
+      note: "This asks why Mia was worried: {私|わたし}は {走|はし}るのが おそいので、とても しんぱいでした."
+    - question: "{白|しろ}の チームが かったのは どれですか。"
+      answer: "ダンス"
+      wrong:
+        - option: "つなひき"
+          why: "Red won the tug-of-war."
+        - option: "リレー"
+          why: "Red came first in the relay."
+        - option: "つなひきと ダンス"
+          why: "Red won the tug-of-war. White won only the dance."
+      difficulty: 2
+      note: "This asks what white won: {白|しろ}の チームの ダンスは とても じょうずで、{白|しろ}が かちました."
+    - question: "どうして {赤|あか}の チームが かちましたか。"
+      answer: "かった かずが {白|しろ}より {多|おお}かったから"
+      wrong:
+        - option: "ダンスが じょうずだったから"
+          why: "White's dance was the better one: {白|しろ}が かちました."
+        - option: "ミアさんが はやく {走|はし}ったから"
+          why: "Mia is a slow runner. The team's speed won the relay."
+        - option: "{白|しろ}の チームの {人|ひと}が {少|すく}なかったから"
+          why: "The essay says nothing about how many were on each team."
+      difficulty: 3
+      points: [particle-yori-comparison]
+      note: "This asks why red won overall: {赤|あか}が 2かい、{白|しろ}が 1かい かったので. Two wins against one."
+
+- id: n5-d5-0018
+  type: mid
+  status: draft
+  intro: "これは リナさんが {書|か}いた さくぶんです。"
+  text: |-
+    {私|わたし}の となりの へやに、おばあさんの {田中|たなか}さんが {住|す}んで います。{田中|たなか}さんは {料理|りょうり}が とても じょうずです。
+    {先週|せんしゅう}、{田中|たなか}さんに みそしるの {作|つく}り{方|かた}を ならいました。{田中|たなか}さんは「みそは さいごに {入|い}れます。みそを {入|い}れてから、あまり あつく しないで ください」と {言|い}いました。
+    きのう、{一人|ひとり}で みそしるを {作|つく}りました。でも、みそを {入|い}れてから、ながく あつく しました。みそしるの あじは よく ありませんでした。
+    {田中|たなか}さんの ことばを わすれて いました。こんどは {気|き}を つけます。
+  en: "Tanaka-san, an elderly woman, lives in the room next to mine. Tanaka-san is a very good cook. Last week Tanaka-san taught me how to make miso soup. Tanaka-san said, “Miso goes in last. After you put the miso in, don't heat it too much.” Yesterday I made miso soup by myself. But after putting the miso in, I heated it for a long time. The soup did not taste good. I had forgotten Tanaka-san's words. Next time I'll be careful."
+  questions:
+    - question: "{田中|たなか}さんは どんな {人|ひと}ですか。"
+      answer: "{料理|りょうり}が じょうずな おばあさん"
+      wrong:
+        - "{料理|りょうり}が へたな おばあさん"
+        - "{料理|りょうり}の {学校|がっこう}の {先生|せんせい}"
+        - "リナさんの おばあさん"
+      difficulty: 1
+      note: "This asks who Tanaka-san is: a neighbour, おばあさんの {田中|たなか}さん, who is {料理|りょうり}が とても じょうず."
+    - question: "{田中|たなか}さんは みそを いつ {入|い}れると {言|い}いましたか。"
+      answer: "さいごに"
+      wrong:
+        - option: "はじめに"
+          why: "The opposite: みそは さいごに {入|い}れます."
+        - option: "{水|みず}と いっしょに"
+          why: "Miso goes in last, after everything else."
+        - option: "やさいと いっしょに"
+          why: "The essay says miso goes in last, not with anything."
+      difficulty: 2
+      note: "This asks when Tanaka-san said to add miso: みそは さいごに {入|い}れます."
+    - question: "リナさんの みそしるは どうして おいしく ありませんでしたか。"
+      answer: "みそを {入|い}れた {後|あと}で、ながく あつく したから"
+      wrong:
+        - option: "みそを {入|い}れなかったから"
+          why: "Lina did add miso. The problem was heating it for a long time afterwards."
+        - option: "{田中|たなか}さんと いっしょに {作|つく}ったから"
+          why: "Lina made it alone: {一人|ひとり}で."
+        - option: "みそを たくさん {入|い}れたから"
+          why: "The essay says nothing about how much miso. It says Lina heated it too long."
+      difficulty: 3
+      points: [form-te-kara]
+      note: "This asks why the soup went wrong. Tanaka-san said not to heat it much after the miso, but Lina did: みそを {入|い}れてから、ながく あつく しました."
+    - question: "ぶんしょうに あう ものは どれですか。"
+      answer: "リナさんは {田中|たなか}さんに {料理|りょうり}を ならいました。"
+      wrong:
+        - option: "{田中|たなか}さんは リナさんの おばあさんです。"
+          why: "Tanaka-san is the neighbour: となりの へや."
+        - option: "リナさんは きのう {田中|たなか}さんと {料理|りょうり}を しました。"
+          why: "Yesterday Lina cooked alone. The lesson was last week."
+        - option: "リナさんは みそしるが きらいです。"
+          why: "The essay never says that. Lina learned to make it and will try again."
+      difficulty: 2
+      note: "This asks which sentence agrees with the essay: {田中|たなか}さんに みそしるの {作|つく}り{方|かた}を ならいました."
+
+- id: n5-d5-0019
+  type: mid
+  status: draft
+  intro: "これは ラジさんが {書|か}いた さくぶんです。"
+  text: |-
+    {私|わたし}は コンビニで アルバイトを して います。{月曜日|げつようび}と {木曜日|もくようび}の {夜|よる}、6{時|じ}から 10{時|じ}までです。
+    {先週|せんしゅう}、{大学|だいがく}で テストが ありました。テストは {木曜日|もくようび}の つぎの {日|ひ}でしたから、{木曜日|もくようび}は {勉強|べんきょう}したかったです。
+    {同|おな}じ コンビニの マイさんは、{水曜日|すいようび}に アルバイトを して います。{私|わたし}は マイさんに、{水曜日|すいようび}と {木曜日|もくようび}を かえたいと {話|はな}しました。マイさんは「いいですよ」と {言|い}いました。
+    {水曜日|すいようび}は いそがしかったですが、{木曜日|もくようび}は {家|いえ}で たくさん {勉強|べんきょう}しました。テストは よく できました。こんど マイさんに ケーキを あげます。
+  en: "I work part-time at a convenience store, on Monday and Thursday evenings from 6 to 10. Last week I had a test at university. The test was the day after Thursday, so I wanted to study on Thursday. Mai, who works at the same store, works on Wednesdays. I told Mai I wanted to swap Wednesday and Thursday. Mai said, “Sure.” Wednesday was busy, but on Thursday I studied a lot at home. The test went well. Next time I'll give Mai a cake."
+  questions:
+    - question: "ラジさんは いつも {何曜日|なんようび}に アルバイトを しますか。"
+      answer: "{月曜日|げつようび}と {木曜日|もくようび}"
+      wrong:
+        - option: "{月曜日|げつようび}と {水曜日|すいようび}"
+          why: "Wednesday was only last week's swap. Raj usually works Monday and Thursday."
+        - "{火曜日|かようび}と {金曜日|きんようび}"
+        - "{水曜日|すいようび}と {土曜日|どようび}"
+      difficulty: 1
+      note: "This asks Raj's usual days: {月曜日|げつようび}と {木曜日|もくようび}の {夜|よる}."
+    - question: "テストは {何曜日|なんようび}でしたか。"
+      options:
+        - option: "{木曜日|もくようび}"
+          why: "Thursday was the study day. The test was the day after it."
+        - "{金曜日|きんようび}"
+        - option: "{土曜日|どようび}"
+          why: "The test was the day right after Thursday: Friday."
+        - option: "{日曜日|にちようび}"
+          why: "The test was the day right after Thursday: Friday."
+      answer: 2
+      difficulty: 3
+      note: "This asks the day of the test. The essay gives it only through Thursday: {木曜日|もくようび}の つぎの {日|ひ}, the day after Thursday, is Friday."
+    - question: "{先週|せんしゅう}の {水曜日|すいようび}、ラジさんは {何|なに}を しましたか。"
+      answer: "コンビニで アルバイトを しました。"
+      wrong:
+        - option: "{家|いえ}で {勉強|べんきょう}しました。"
+          why: "Studying was on Thursday. On Wednesday Raj worked Mai's shift."
+        - option: "{大学|だいがく}で テストを うけました。"
+          why: "The test was the day after Thursday, not on Wednesday."
+        - option: "マイさんと ケーキを {食|た}べました。"
+          why: "The cake is a thank-you still to come: こんど."
+      difficulty: 2
+      note: "This asks about last Wednesday. Raj swapped days with Mai, so Raj worked Wednesday: {水曜日|すいようび}は いそがしかったです."
+    - question: "ラジさんは どうして マイさんに ケーキを あげますか。"
+      answer: "マイさんが アルバイトの {日|ひ}を かえたから"
+      wrong:
+        - option: "マイさんの たんじょうびだから"
+          why: "The essay gives no birthday. The cake thanks Mai for the swap."
+        - option: "マイさんが テストで よく できたから"
+          why: "The test was Raj's, not Mai's."
+        - option: "コンビニが いそがしかったから"
+          why: "The busy Wednesday is not the reason. The swap is: マイさんは「いいですよ」と {言|い}いました."
+      difficulty: 3
+      note: "This asks why Raj will give Mai a cake. The essay never says it outright: Mai agreed to swap days, so Raj could study, and the test went well. The cake is a thank-you."
+
+- id: n5-d5-0020
+  type: mid
+  status: draft
+  intro: "これは ハナさんが {書|か}いた さくぶんです。"
+  text: |-
+    {大学|だいがく}に {入|はい}って、クラブを えらびました。テニスと {音楽|おんがく}の クラブで まよいました。
+    テニスの クラブは {毎日|まいにち} れんしゅうが あります。{私|わたし}は {高校|こうこう}で テニスを して いましたから、テニスは {好|す}きです。でも、{私|わたし}は {週|しゅう}に 3かい アルバイトを して いますから、{毎日|まいにち}の れんしゅうは むりです。
+    {音楽|おんがく}の クラブは {火曜日|かようび}と {金曜日|きんようび}だけです。{私|わたし}は ピアノが あまり じょうずでは ありませんが、せんぱいは「{教|おし}えますよ」と {言|い}いました。
+    それで、{音楽|おんがく}の クラブに {入|はい}りました。テニスは {休|やす}みの {日|ひ}に {友|とも}だちと します。
+  en: "When I started university, I chose a club. I couldn't decide between the tennis club and the music club. The tennis club practises every day. I played tennis in high school, so I like tennis. But I work part-time three times a week, so practising every day is impossible for me. The music club meets only on Tuesdays and Fridays. I'm not very good at the piano, but a senior student said, “I'll teach you.” So I joined the music club. I'll play tennis with friends on my days off."
+  questions:
+    - question: "ハナさんは どうして テニスが {好|す}きですか。"
+      answer: "{高校|こうこう}で テニスを して いたから"
+      wrong:
+        - option: "{友|とも}だちが テニスを して いるから"
+          why: "The essay gives one reason: {高校|こうこう}で テニスを して いましたから."
+        - option: "テニスの クラブが {毎日|まいにち} あるから"
+          why: "Daily practice is the problem, not why Hana likes tennis."
+        - option: "せんぱいが {教|おし}えるから"
+          why: "The senior's offer was for the piano, in the music club."
+      difficulty: 2
+      points: [conjunction-kara-reason]
+      note: "This asks why Hana likes tennis: {高校|こうこう}で テニスを して いましたから、テニスは {好|す}きです."
+    - question: "ハナさんは どうして テニスの クラブに {入|はい}りませんでしたか。"
+      answer: "アルバイトが あって、{毎日|まいにち}の れんしゅうは むりだから"
+      wrong:
+        - option: "テニスが きらいだから"
+          why: "Hana likes tennis: テニスは {好|す}きです."
+        - option: "テニスが へただから"
+          why: "Hana played in high school. Skill is never the problem; the daily practice is."
+        - option: "テニスの クラブは おかねが {高|たか}いから"
+          why: "The essay says nothing about cost."
+      difficulty: 3
+      note: "This asks why not the tennis club. The essay sets でも against Hana's love of tennis: {週|しゅう}に 3かい アルバイトを して いますから、{毎日|まいにち}の れんしゅうは むりです."
+    - question: "{音楽|おんがく}の クラブは いつ ありますか。"
+      answer: "{火曜日|かようび}と {金曜日|きんようび}"
+      wrong:
+        - option: "{毎日|まいにち}"
+          why: "That is the tennis club."
+        - option: "{月曜日|げつようび}と {木曜日|もくようび}"
+          why: "The music club meets on Tuesday and Friday: {火曜日|かようび}と {金曜日|きんようび}だけ."
+        - option: "{土曜日|どようび}だけ"
+          why: "Saturday never comes up. The days are Tuesday and Friday."
+      difficulty: 2
+      points: [particle-dake-only]
+      note: "This asks when the music club meets: {火曜日|かようび}と {金曜日|きんようび}だけです."
+    - question: "ハナさんは これから テニスを どう しますか。"
+      answer: "{休|やす}みの {日|ひ}に {友|とも}だちと します。"
+      wrong:
+        - option: "もう テニスは しません。"
+          why: "Hana keeps playing: テニスは {休|やす}みの {日|ひ}に {友|とも}だちと します."
+        - option: "{音楽|おんがく}の クラブの {人|ひと}と します。"
+          why: "The tennis is with friends on days off, not with the music club."
+        - option: "{毎日|まいにち} れんしゅうします。"
+          why: "Daily practice is what Hana cannot fit around the part-time job."
+      difficulty: 2
+      note: "This asks about tennis from now on: テニスは {休|やす}みの {日|ひ}に {友|とも}だちと します."
