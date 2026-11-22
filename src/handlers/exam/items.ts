@@ -662,6 +662,10 @@ export type ShortItem = v.InferOutput<typeof shortItemSchema>;
 export type MidItem = v.InferOutput<typeof midItemSchema>;
 export type InfoItem = v.InferOutput<typeof infoItemSchema>;
 export type Item = v.InferOutput<typeof itemSchema>;
+/**
+ * What kind of question an item asks. It decides a question's instructions, its timer and its card. The 問題 number does not: each test section numbers its own 問題 from 1.
+ */
+export type ItemType = Item[`type`];
 
 /** How many chunks a ★ question arranges, as on the paper. */
 export const WINDOW_SIZE = 4;

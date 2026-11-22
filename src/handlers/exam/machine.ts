@@ -5,9 +5,9 @@ import {
   type Actor,
   type SnapshotFrom
 } from "xstate";
-import type { TestId } from "./blueprint.js";
+import type { Mondai, TestId } from "./blueprint.js";
 import { OPTION_COUNT, type ExamQuestion } from "./draw.js";
-import { WEIGHT } from "./items.js";
+import { WEIGHT, type ItemType } from "./items.js";
 
 /**
  * A mock test as an explicit state machine.
@@ -549,9 +549,61 @@ export const persist = (actor: ExamActor): PersistedExam => ({
   snapshot: actor.getPersistedSnapshot()
 });
 
+/**
+ * Each question's type, for a test drawn before questions named one.
+ *
+ * Until then only Section 2 existed, so its 問題 number said which kind of question it was.
+ */
+const TYPE_OF_MONDAI: Readonly<Record<Mondai, ItemType>> = {
+  1: `form`,
+  2: `compose`,
+  3: `passage`,
+  4: `short`,
+  5: `mid`,
+  6: `info`
+};
+
+/** A saved question as an older release stored it. */
+type SavedQuestion = Omit<ExamQuestion, `type`> & { type?: ItemType };
+
+/**
+ * Does a saved snapshot hold questions? XState types a persisted snapshot loosely, so its context has to be found.
+ */
+const holdsQuestions = (
+  snapshot: object
+): snapshot is { context: { questions: SavedQuestion[] } } =>
+  `context` in snapshot &&
+  typeof snapshot.context === `object` &&
+  snapshot.context !== null &&
+  `questions` in snapshot.context &&
+  Array.isArray(snapshot.context.questions);
+
+/**
+ * A saved test with every question's type filled in.
+ *
+ * A test drawn before questions named their type may still be running when this release deploys. Filled in here, once, so everything after can rely on `type`. A missing type is not "none", the way a missing `review` is "no links", so an optional field would only move this guess into every reader.
+ */
+const upgrade = (
+  snapshot: PersistedExam[`snapshot`]
+): PersistedExam[`snapshot`] => {
+  if (!holdsQuestions(snapshot)) return snapshot;
+  // Named before it is returned: XState's snapshot type has no `context`, and a bare literal would be checked for extra fields.
+  const upgraded = {
+    ...snapshot,
+    context: {
+      ...snapshot.context,
+      questions: snapshot.context.questions.map((question): ExamQuestion => ({
+        ...question,
+        type: question.type ?? TYPE_OF_MONDAI[question.mondai]
+      }))
+    }
+  };
+  return upgraded;
+};
+
 export const restore = (persisted: PersistedExam): ExamActor => {
   const actor = createActor(examMachine, {
-    snapshot: persisted.snapshot,
+    snapshot: upgrade(persisted.snapshot),
     input: RESTORE_INPUT
   });
   actor.start();

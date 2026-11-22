@@ -1,9 +1,10 @@
 import { describe, expect, it } from "vite-plus/test";
 import type { ExamQuestion } from "../draw.js";
-import { WEIGHT, type Difficulty } from "../items.js";
+import { display, WEIGHT, type Difficulty } from "../items.js";
 import {
   answersOf,
   begin,
+  cardAt,
   castVote,
   closeQuestion,
   persist,
@@ -12,6 +13,7 @@ import {
   viewOf,
   type ExamActor
 } from "../machine.js";
+import { INSTRUCTIONS, questionMessage } from "../render.js";
 
 /**
  * The poll rules.
@@ -28,6 +30,7 @@ const question = (
 ): ExamQuestion => ({
   itemId: `n5-b1-${String(number).padStart(4, `0`)}`,
   slot: 1,
+  type: `form`,
   mondai: 1,
   number,
   card: number,
@@ -223,6 +226,31 @@ describe(`the session's shape`, () => {
     closeQuestion(restored);
     expect(resultsOf(viewOf(restored).context)[0]?.points).toBe(WEIGHT[2]);
   });
+
+  it(`keeps going when an older release saved it, before questions named their type`, () => {
+    // WHY: a test can be running when a release deploys. Its questions were saved without a type, and a card's instructions, timer and layout now hang on it: without the upgrade, the next card would render no instruction line.
+    const reading: ExamQuestion = {
+      ...question(2),
+      type: `short`,
+      mondai: 4
+    };
+    const saved = JSON.stringify(persist(started([question(1), reading])));
+    const older = saved.replaceAll(/"type":"(?:form|short)",/gu, ``);
+    expect(older).not.toMatch(/"type":"(?:form|short)"/u);
+
+    const restored = restore(JSON.parse(older) as ReturnType<typeof persist>);
+    const { questions } = viewOf(restored).context;
+    expect(questions.map((q) => q.type)).toEqual([`form`, `short`]);
+    expect(
+      JSON.stringify(
+        questionMessage({
+          questions: cardAt(questions, 1),
+          total: 2,
+          endsAt: 0
+        })
+      )
+    ).toContain(display(INSTRUCTIONS.short));
+  });
 });
 
 describe(`a card of several questions`, () => {
@@ -300,6 +328,7 @@ describe(`reply tokens`, () => {
     });
   const explained = (number: number): ExamQuestion => ({
     ...question(number),
+    type: `short`,
     mondai: 4,
     whys: [``, `why`, `why`, `why`]
   });

@@ -28,6 +28,7 @@ import {
 const question = (overrides: Partial<ExamQuestion> = {}): ExamQuestion => ({
   itemId: `n5-b1-0001`,
   slot: 1,
+  type: `form`,
   mondai: 1,
   number: 3,
   card: 3,
@@ -95,7 +96,13 @@ describe(`a passage question`, () => {
     // read badly; on one card each row must say which blank it answers, and
     // each button must carry its own blank's token.
     const blanks = [14, 15, 16, 17].map((number) =>
-      question({ mondai: 3, number, card: 14, token: `tok${String(number)}` })
+      question({
+        type: `passage`,
+        mondai: 3,
+        number,
+        card: 14,
+        token: `tok${String(number)}`
+      })
     );
     const card = questionMessage({ questions: blanks, total: 17, endsAt: 0 });
     const json = JSON.stringify(card);
@@ -125,6 +132,7 @@ describe(`a passage question`, () => {
       questionMessage(
         view(
           question({
+            type: `passage`,
             mondai: 3,
             intro: `ケンさんが メールを {書|か}きました。`,
             prompt: `こんにちは。**［14］**。`
@@ -225,6 +233,7 @@ describe(`the reveal`, () => {
     // once, at the end.
     const blank = (number: number, en: string) =>
       question({
+        type: `passage`,
         mondai: 3,
         number,
         card: 14,
@@ -281,11 +290,21 @@ describe(`the reveal`, () => {
     const reveal = JSON.stringify(
       revealMessage([
         {
-          question: question({ mondai: 3, number: 14, review: [DE] }),
+          question: question({
+            type: `passage`,
+            mondai: 3,
+            number: 14,
+            review: [DE]
+          }),
           tally: { counts: [0, 1, 0, 0], correct: 1, scorers: [] }
         },
         {
-          question: question({ mondai: 3, number: 15, review: [TO] }),
+          question: question({
+            type: `passage`,
+            mondai: 3,
+            number: 15,
+            review: [TO]
+          }),
           tally: { counts: [0, 1, 0, 0], correct: 1, scorers: [] }
         }
       ])
@@ -435,6 +454,7 @@ describe(`a reading card`, () => {
   const reading = (overrides: Partial<ExamQuestion> = {}): ExamQuestion =>
     question({
       itemId: `n5-d4-0001`,
+      type: `short`,
       mondai: 4,
       prompt: `{今日|きょう}は 6{時|じ}に {帰|かえ}ります。`,
       answered: `{今日|きょう}は 6{時|じ}に {帰|かえ}ります。`,
@@ -466,6 +486,7 @@ describe(`a reading card`, () => {
     const message = questionMessage(
       view(
         reading({
+          type: `info`,
           mondai: 6,
           prompt: ``,
           answered: ``,

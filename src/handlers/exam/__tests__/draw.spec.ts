@@ -164,7 +164,7 @@ describe(`drawing a deck`, () => {
       ...[1, 2, 3, 4, 5, 6].map((n) => item(n, 1, `same-point`)),
       ...[7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map((n) => item(n, 1))
     ];
-    const plan = { mondai: 1 as const, mix: { 1: 9, 2: 0, 3: 0 } };
+    const plan = { type: `form` as const, mix: { 1: 9, 2: 0, 3: 0 } };
     for (let seed = 1; seed <= 20; seed += 1) {
       const drawn = drawDeck(items, plan, seeded(seed));
       const same = drawn.filter(
@@ -226,8 +226,13 @@ describe(`a question`, () => {
   it(`gives longer questions more time, in whole seconds`, () => {
     // WHY: the timer is weighted by length, so a dialogue does not get the
     // same time as a five-word sentence.
-    const short = timeoutFor(1, `ぶん（1）です。`, [`あ`, `い`, `う`, `え`]);
-    const long = timeoutFor(1, `ながい ながい ながい ぶん（1）です。`, [
+    const short = timeoutFor(`form`, `ぶん（1）です。`, [
+      `あ`,
+      `い`,
+      `う`,
+      `え`
+    ]);
+    const long = timeoutFor(`form`, `ながい ながい ながい ぶん（1）です。`, [
       `あ`,
       `い`,
       `う`,
@@ -711,7 +716,7 @@ describe(`a reading test`, () => {
       seeded(1)
     );
     expect(second?.timeoutMs).toBe(
-      timeoutFor(5, second?.question ?? ``, second?.options ?? [])
+      timeoutFor(`mid`, second?.question ?? ``, second?.options ?? [])
     );
     expect(first?.timeoutMs).toBeGreaterThan(second?.timeoutMs ?? 0);
 

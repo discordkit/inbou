@@ -22,6 +22,7 @@ const session = (name: string): DurableObjectStub<ExamSession> =>
 const question = (number: number): ExamQuestion => ({
   itemId: `n5-b1-${String(number).padStart(4, `0`)}`,
   slot: 1,
+  type: `form`,
   mondai: 1,
   number,
   card: number,

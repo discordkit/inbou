@@ -145,14 +145,16 @@ console.log(
 // Coverage: how many cards each deck holds, beside what one test draws. A
 // deck is playable when it holds at least twice that, so two tests in a row
 // differ. 問題1's cards are slots, 問題2's windows, and 問題3's whole passages.
-const unitsOf = (mondai) =>
-  shipped.flatMap((item) =>
-    mondai === 1 && item.type === `form`
-      ? item.slots
-      : mondai === 2 && item.type === `compose`
-        ? item.windows
-        : []
-  );
+const unitsOf = (type) =>
+  shipped
+    .filter((item) => item.type === type)
+    .flatMap((item) =>
+      item.type === `form`
+        ? item.slots
+        : item.type === `compose`
+          ? item.windows
+          : []
+    );
 const report = (label, have, draw) =>
   console.log(
     `${label}: ${String(have)} cards, a test draws ${String(draw)} (${have >= draw * 2 ? `ok` : `short`})`
@@ -193,9 +195,8 @@ for (const [test, plans] of Object.entries(BLUEPRINTS)) {
   for (const plan of plans) {
     if (`questions` in plan) {
       // Reading shares one mix across its decks, shuffled each test, so a deck may be dealt a level up to as often as the mix holds it.
-      const type = { 4: `short`, 5: `mid`, 6: `info` }[plan.mondai];
       const questions = shipped
-        .filter((item) => item.type === type)
+        .filter((item) => item.type === plan.type)
         .flatMap((item) => item.questions);
       for (const level of [1, 2, 3]) {
         report(
@@ -210,7 +211,7 @@ for (const [test, plans] of Object.entries(BLUEPRINTS)) {
       ).length;
       report(`${test} 問題3 passages`, passages, 1);
     } else {
-      const units = unitsOf(plan.mondai);
+      const units = unitsOf(plan.type);
       for (const level of [1, 2, 3]) {
         report(
           `${test} 問題${String(plan.mondai)} difficulty ${String(level)}`,

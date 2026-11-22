@@ -4,9 +4,16 @@ import {
   type ActionRow,
   type MessageComponent
 } from "@discordkit/client";
-import type { Mondai, TestId } from "./blueprint.js";
+import type { TestId } from "./blueprint.js";
 import { OPTION_COUNT, type ExamQuestion } from "./draw.js";
-import { bare, BLANK, display, readingsOf, type ReviewLink } from "./items.js";
+import {
+  bare,
+  BLANK,
+  display,
+  readingsOf,
+  type ItemType,
+  type ReviewLink
+} from "./items.js";
 import type { Answer, Result, Tally } from "./machine.js";
 
 /**
@@ -101,18 +108,21 @@ export const TEST_NAMES: Readonly<Record<TestId, string>> = {
  *
  * Markup, so the kanji carry readings as on the paper.
  */
-export const INSTRUCTIONS: Readonly<Record<Mondai, string>> = {
-  1: `${BLANK}に {何|なに}を {入|い}れますか。1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
-  2: `★に {入|はい}る ものは どれですか。1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
-  3: `［　］に {何|なに}を {入|い}れますか。ぶんしょうの いみを かんがえて、1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
-  4: `つぎの ぶんしょうを {読|よ}んで、しつもんに こたえて ください。こたえは、1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
-  5: `つぎの ぶんしょうを {読|よ}んで、しつもんに こたえて ください。こたえは、1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
+export const INSTRUCTIONS: Readonly<Record<ItemType, string>> = {
+  form: `${BLANK}に {何|なに}を {入|い}れますか。1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
+  compose: `★に {入|はい}る ものは どれですか。1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
+  passage: `［　］に {何|なに}を {入|い}れますか。ぶんしょうの いみを かんがえて、1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
+  short: `つぎの ぶんしょうを {読|よ}んで、しつもんに こたえて ください。こたえは、1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
+  mid: `つぎの ぶんしょうを {読|よ}んで、しつもんに こたえて ください。こたえは、1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
   // The paper's 右の ページ: here the picture sits in the card, so つぎの.
-  6: `つぎの ページを {見|み}て、しつもんに こたえて ください。こたえは、1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`
+  info: `つぎの ページを {見|み}て、しつもんに こたえて ください。こたえは、1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`
 };
 
 /** Reading puts its options in the card, and its buttons show only the number. */
-const isReading = (question: ExamQuestion): boolean => question.mondai >= 4;
+const isReading = (question: ExamQuestion): boolean =>
+  question.type === `short` ||
+  question.type === `mid` ||
+  question.type === `info`;
 
 /** Discord's cap on a picture's description, its alt text. */
 const ALT_MAX = 1024;
@@ -328,7 +338,7 @@ const readingBody = (view: QuestionView, closed: boolean): MessageComponent => {
         { type: ComponentType.TextDisplay, content: headingOf(view, closed) },
         {
           type: ComponentType.TextDisplay,
-          content: `-# ${display(INSTRUCTIONS[first.mondai])}`
+          content: `-# ${display(INSTRUCTIONS[first.type])}`
         },
         ...(first.intro === undefined
           ? []
@@ -388,7 +398,7 @@ const questionBody = (
         { type: ComponentType.TextDisplay, content: heading },
         {
           type: ComponentType.TextDisplay,
-          content: `-# ${display(INSTRUCTIONS[first.mondai])}`
+          content: `-# ${display(INSTRUCTIONS[first.type])}`
         },
         ...(first.intro === undefined
           ? []
@@ -401,7 +411,7 @@ const questionBody = (
         {
           type: ComponentType.TextDisplay,
           content:
-            first.mondai === 3
+            first.type === `passage`
               ? passageBlock(first.prompt)
               : sentenceBlock(first.prompt)
         },

@@ -7,7 +7,11 @@ import type { Difficulty } from "./items.js";
  * corpus build reports each deck's size against what a test draws from it.
  */
 
-/** The paper's question types: 1–3 grammar, 4–6 reading. */
+/**
+ * The number a card shows: 1–3 grammar and 4–6 reading in Section 2.
+ *
+ * Only a number. What kind of question it is lives in the item's type, because each section of the paper numbers its 問題 from 1.
+ */
 export type Mondai = 1 | 2 | 3 | 4 | 5 | 6;
 
 /** The tests a channel can start. */
@@ -23,10 +27,9 @@ export type Mix = Readonly<Record<Difficulty, number>>;
  * scores can be compared from one test to the next. Used for 問題1, whose
  * cards are slots, and 問題2, whose cards are windows.
  */
-export interface MixPlan {
-  mondai: 1 | 2;
-  mix: Mix;
-}
+export type MixPlan =
+  | { mondai: 1; type: `form`; mix: Mix }
+  | { mondai: 2; type: `compose`; mix: Mix };
 
 /**
  * 問題3's share: one passage, and how many of its blanks to ask.
@@ -36,6 +39,7 @@ export interface MixPlan {
  */
 export interface PassagePlan {
   mondai: 3;
+  type: `passage`;
   blanks: number;
 }
 
@@ -49,8 +53,9 @@ export interface PassagePlan {
  * Difficulty is not fixed per deck but shared by the test: see {@link READING_MIX}.
  */
 export type ReadingPlan =
-  | { mondai: 4 | 6; questions: number; together: false }
-  | { mondai: 5; questions: number; together: true };
+  | { mondai: 4; type: `short`; questions: number; together: false }
+  | { mondai: 6; type: `info`; questions: number; together: false }
+  | { mondai: 5; type: `mid`; questions: number; together: true };
 
 export type DeckPlan = MixPlan | PassagePlan | ReadingPlan;
 
@@ -61,14 +66,14 @@ export type DeckPlan = MixPlan | PassagePlan | ReadingPlan;
  */
 export const BLUEPRINTS: Readonly<Record<TestId, readonly DeckPlan[]>> = {
   bunpou: [
-    { mondai: 1, mix: { 1: 3, 2: 4, 3: 2 } },
-    { mondai: 2, mix: { 1: 1, 2: 2, 3: 1 } },
-    { mondai: 3, blanks: 4 }
+    { mondai: 1, type: `form`, mix: { 1: 3, 2: 4, 3: 2 } },
+    { mondai: 2, type: `compose`, mix: { 1: 1, 2: 2, 3: 1 } },
+    { mondai: 3, type: `passage`, blanks: 4 }
   ],
   dokkai: [
-    { mondai: 4, questions: 2, together: false },
-    { mondai: 5, questions: 2, together: true },
-    { mondai: 6, questions: 1, together: false }
+    { mondai: 4, type: `short`, questions: 2, together: false },
+    { mondai: 5, type: `mid`, questions: 2, together: true },
+    { mondai: 6, type: `info`, questions: 1, together: false }
   ]
 };
 

@@ -24,6 +24,7 @@ import {
   type FormItem,
   type InfoItem,
   type Item,
+  type ItemType,
   type MidItem,
   type PassageItem,
   type ReadingQuestion,
@@ -56,6 +57,9 @@ export interface ExamQuestion {
   itemId: string;
   /** Which slot, window or blank of the item was asked, 1-based. */
   slot: number;
+  /** The kind of question: its instructions, timer and card. */
+  type: ItemType;
+  /** The 問題 number the card shows. */
   mondai: Mondai;
   /** 1-based, numbered straight through the test, as on the paper. */
   number: number;
@@ -117,16 +121,16 @@ export interface ExamQuestion {
  * higher because arranging takes longer than choosing; 問題3 lower because its
  * passage adds most of the time.
  */
-export const BASE_MS: Readonly<Record<Mondai, number>> = {
-  1: 40_000,
-  2: 60_000,
-  3: 30_000,
+export const BASE_MS: Readonly<Record<ItemType, number>> = {
+  form: 40_000,
+  compose: 60_000,
+  passage: 30_000,
   // Reading: per question, and the text is read once per card on top.
-  4: 30_000,
-  5: 30_000,
+  short: 30_000,
+  mid: 30_000,
   // A picture may need opening at full size before it can be read: the user's
   // condition for pictures taller than a chat window.
-  6: 60_000
+  info: 60_000
 };
 
 /** Reading time per character of text the player has to read. */
@@ -137,13 +141,13 @@ export const PER_CHAR_MS = 500;
  *
  * Set against the real paper (the user's choice, 2026-11-22). N5's grammar-and-reading section is 22 questions in 40 minutes, and /bunpou and /dokkai are those 22. /bunpou keeps the formula's pace, about a minute a question, as guides advise for grammar. Reading gets the rest, about 22 minutes: about 3.4 minutes for a 問題4 question, 5.4 for a 問題5 question and 4.5 for 問題6, near the guides' 3 for a short text and 5 to 6 for a longer one. The factors turn the formula's average for each 問題 into those times, and keep longer texts longer. The corpus test holds the pair to the real 40 minutes.
  */
-export const PACE: Readonly<Record<Mondai, number>> = {
-  1: 1,
-  2: 1,
-  3: 1,
-  4: 2,
-  5: 2.5,
-  6: 1.8
+export const PACE: Readonly<Record<ItemType, number>> = {
+  form: 1,
+  compose: 1,
+  passage: 1,
+  short: 2,
+  mid: 2.5,
+  info: 1.8
 };
 
 /** How a ★ line shows its four blanks, with the star in one. */
@@ -179,7 +183,7 @@ const tokenFrom = (random: Random): string =>
  * countdown shows.
  */
 export const timeoutFor = (
-  mondai: Mondai,
+  type: ItemType,
   text: string,
   options: readonly string[]
 ): number => {
@@ -187,7 +191,7 @@ export const timeoutFor = (
     plain(text).length +
     options.reduce((sum, option) => sum + plain(option).length, 0);
   return (
-    Math.ceil(((BASE_MS[mondai] + chars * PER_CHAR_MS) * PACE[mondai]) / 1000) *
+    Math.ceil(((BASE_MS[type] + chars * PER_CHAR_MS) * PACE[type]) / 1000) *
     1000
   );
 };
@@ -218,25 +222,23 @@ interface Card {
 }
 
 /** A deck whose cards are drawn one by one, by difficulty. */
-type DeckMondai = MixPlan[`mondai`] | 4 | 6;
+type DeckType = MixPlan[`type`] | `short` | `info`;
 
 /**
- * 問題1's cards are slots; 問題2's are windows; 問題4's and 問題6's are the questions of their texts and pictures.
+ * A form's cards are its slots; a compose item's are its windows; a short text's and a picture's are their questions.
  */
-const cardsOf = (items: readonly Item[], mondai: DeckMondai): Card[] =>
+const cardsOf = (items: readonly Item[], type: DeckType): Card[] =>
   items.flatMap((item): Card[] => {
+    if (item.type !== type) return [];
     const units: ReadonlyArray<{
       difficulty: Difficulty;
       points?: readonly string[];
     }> =
-      mondai === 1 && item.type === `form`
+      item.type === `form`
         ? item.slots
-        : mondai === 2 && item.type === `compose`
+        : item.type === `compose`
           ? item.windows
-          : (mondai === 4 && item.type === `short`) ||
-              (mondai === 6 && item.type === `info`)
-            ? item.questions
-            : [];
+          : item.questions;
     return units.map((unit, index) => ({
       item,
       index,
@@ -264,10 +266,10 @@ const LEVELS: readonly Difficulty[] = [1, 2, 3];
  */
 export const drawDeck = (
   items: readonly Item[],
-  plan: { mondai: DeckMondai; mix: Mix },
+  plan: { type: DeckType; mix: Mix },
   random: Random
 ): Array<{ item: Item; index: number }> => {
-  const cards = cardsOf(items, plan.mondai);
+  const cards = cardsOf(items, plan.type);
   const wanted = LEVELS.flatMap((level) =>
     Array.from({ length: plan.mix[level] }, () => level)
   );
@@ -326,6 +328,7 @@ export const formQuestion = (
   return {
     itemId: item.id,
     slot: asked,
+    type: `form`,
     mondai: 1,
     number,
     card: number,
@@ -338,7 +341,7 @@ export const formQuestion = (
     en: item.en,
     note: slot.note,
     token: tokenFrom(random),
-    timeoutMs: timeoutFor(1, prompt, options)
+    timeoutMs: timeoutFor(`form`, prompt, options)
   };
 };
 
@@ -391,6 +394,7 @@ export const composeQuestion = (
   return {
     itemId: item.id,
     slot: windowIndex + 1,
+    type: `compose`,
     mondai: 2,
     number,
     card: number,
@@ -403,7 +407,7 @@ export const composeQuestion = (
     en: item.en,
     note: window.note,
     token: tokenFrom(random),
-    timeoutMs: timeoutFor(2, prompt, options)
+    timeoutMs: timeoutFor(`compose`, prompt, options)
   };
 };
 
@@ -467,6 +471,7 @@ export const passageQuestions = (
     return {
       itemId: item.id,
       slot,
+      type: `passage`,
       mondai: 3,
       number: numberOf(slot),
       card: firstNumber,
@@ -480,7 +485,7 @@ export const passageQuestions = (
       en: position === asked.length - 1 ? item.en : ``,
       note: blank.note,
       token: tokenFrom(random),
-      timeoutMs: timeoutFor(3, position === 0 ? prompt : ``, options)
+      timeoutMs: timeoutFor(`passage`, position === 0 ? prompt : ``, options)
     };
   });
 };
@@ -562,6 +567,7 @@ export const readingQuestions = (
     return {
       itemId: item.id,
       slot: index + 1,
+      type: item.type,
       mondai,
       number: firstNumber + position,
       card: firstNumber,
@@ -580,7 +586,7 @@ export const readingQuestions = (
       en: position === asked.length - 1 ? item.en : ``,
       note: question.note,
       token: tokenFrom(random),
-      timeoutMs: timeoutFor(mondai, `${read}${question.question}`, options)
+      timeoutMs: timeoutFor(item.type, `${read}${question.question}`, options)
     };
   });
 };
@@ -733,7 +739,7 @@ export const drawTest = (
       }
       for (const { item, index } of drawDeck(
         items,
-        { mondai: plan.mondai, mix: mixOf(levels) },
+        { type: plan.type, mix: mixOf(levels) },
         random
       )) {
         if (item.type === `short` || item.type === `info`) {
