@@ -106,7 +106,7 @@
 
 - id: n5-g3-0008
   type: context
-  status: draft
+  status: reviewed
   sentence: "あたまが いたいですから、（　）を のみました。"
   en: "I had a headache, so I took some medicine."
   answer: くすり
@@ -116,7 +116,7 @@
 
 - id: n5-g3-0009
   type: context
-  status: draft
+  status: reviewed
   sentence: "この みせの ケーキは とても （　）です。"
   en: "The cakes at this shop are very good."
   answer: おいしい
@@ -126,7 +126,7 @@
 
 - id: n5-g3-0010
   type: context
-  status: draft
+  status: reviewed
   sentence: "えきの まえで ともだちを （　）。"
   en: "I waited for my friend in front of the station."
   answer: まちました
@@ -136,7 +136,7 @@
 
 - id: n5-g3-0011
   type: context
-  status: draft
+  status: reviewed
   sentence: "（　）が ふって いますから、かさを もって いきます。"
   en: "It is raining, so I will take an umbrella."
   answer: あめ
@@ -146,7 +146,7 @@
 
 - id: n5-g3-0012
   type: context
-  status: draft
+  status: reviewed
   sentence: "あついですね。つめたい （　）を のみませんか。"
   en: "It's hot, isn't it? Shall we have a cold juice?"
   answer: ジュース
@@ -156,7 +156,7 @@
 
 - id: n5-g3-0013
   type: context
-  status: draft
+  status: reviewed
   sentence: "にわに ねこが 2（　） います。"
   en: "There are two cats in the garden."
   answer: ひき
@@ -166,7 +166,7 @@
 
 - id: n5-g3-0014
   type: context
-  status: draft
+  status: reviewed
   sentence: "この カレーは とても （　）ですから、こどもは たべません。"
   en: "This curry is very hot, so the children won't eat it."
   answer: からい
@@ -182,7 +182,7 @@
 
 - id: n5-g3-0015
   type: context
-  status: draft
+  status: reviewed
   sentence: "（　）で きってを かいました。"
   en: "I bought stamps at the post office."
   answer: ゆうびんきょく
@@ -198,7 +198,7 @@
 
 - id: n5-g3-0016
   type: context
-  status: draft
+  status: reviewed
   sentence: "ねる まえに シャワーを （　）。"
   en: "I take a shower before I go to bed."
   answer: あびます
@@ -214,7 +214,7 @@
 
 - id: n5-g3-0017
   type: context
-  status: draft
+  status: reviewed
   sentence: "ちちの おかあさんは わたしの （　）です。"
   en: "My father's mother is my grandmother."
   answer: おばあさん
@@ -230,7 +230,7 @@
 
 - id: n5-g3-0018
   type: context
-  status: draft
+  status: reviewed
   sentence: "この もんだいは （　）ですから、すぐ こたえが わかりました。"
   en: "This question was easy, so I knew the answer at once."
   answer: やさしい
@@ -246,7 +246,7 @@
 
 - id: n5-g3-0019
   type: context
-  status: draft
+  status: reviewed
   sentence: "ここは としょかんですから、（　） はなして ください。"
   en: "This is a library, so please talk quietly."
   answer: しずかに
@@ -262,7 +262,7 @@
 
 - id: n5-g3-0020
   type: context
-  status: draft
+  status: reviewed
   sentence: "この かみを 3（　） ください。"
   en: "Three sheets of this paper, please."
   answer: まい
@@ -278,7 +278,7 @@
 
 - id: n5-g3-0021
   type: context
-  status: draft
+  status: reviewed
   sentence: "あには わたしより 3さい （　）です。"
   en: "My older brother is three years older than me."
   answer: うえ
@@ -294,7 +294,7 @@
 
 - id: n5-g3-0022
   type: context
-  status: draft
+  status: reviewed
   sentence: "わたしの へやは 2かいです。（　）を あがって、みぎの へやです。"
   en: "My room is on the second floor. Go up the stairs; it's the room on the right."
   answer: かいだん
@@ -310,7 +310,7 @@
 
 - id: n5-g3-0023
   type: context
-  status: draft
+  status: reviewed
   sentence: "えきまで あるいて 1じかん かかります。とても （　）ですね。"
   en: "It takes an hour to walk to the station. That's a long way, isn't it?"
   answer: とおい
@@ -326,7 +326,7 @@
 
 - id: n5-g3-0024
   type: context
-  status: draft
+  status: reviewed
   sentence: "A「ひるごはんは たべましたか。」\nB「いいえ、（　） たべて いません。」"
   en: "A: Have you had lunch? B: No, not yet."
   answer: まだ
@@ -342,7 +342,7 @@
 
 - id: n5-g3-0025
   type: context
-  status: draft
+  status: reviewed
   sentence: "この くすりは ごはんを たべた （　）に のんで ください。"
   en: "Please take this medicine after you eat."
   answer: あと

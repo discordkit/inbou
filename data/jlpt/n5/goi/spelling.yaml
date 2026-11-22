@@ -104,7 +104,7 @@
 
 - id: n5-g2-0007
   type: spelling
-  status: draft
+  status: reviewed
   word: 山
   sentence: "たかい __やま__に のぼりました。"
   en: "I climbed a high mountain."
@@ -115,7 +115,7 @@
 
 - id: n5-g2-0008
   type: spelling
-  status: draft
+  status: reviewed
   word: 花
   sentence: "こうえんに きれいな __はな__が さいて います。"
   en: "Pretty flowers are blooming in the park."
@@ -126,7 +126,7 @@
 
 - id: n5-g2-0009
   type: spelling
-  status: draft
+  status: reviewed
   word: 口
   sentence: "__くち__を おおきく あけて ください。"
   en: "Please open your mouth wide."
@@ -137,7 +137,7 @@
 
 - id: n5-g2-0010
   type: spelling
-  status: draft
+  status: reviewed
   word: 兄
   sentence: "わたしの __あに__は いしゃです。"
   en: "My older brother is a doctor."
@@ -148,7 +148,7 @@
 
 - id: n5-g2-0011
   type: spelling
-  status: draft
+  status: reviewed
   word: 目
   sentence: "__め__が あかいですね。"
   en: "Your eyes are red."
@@ -165,7 +165,7 @@
 
 - id: n5-g2-0012
   type: spelling
-  status: draft
+  status: reviewed
   word: 人
   sentence: "あそこに いる __ひと__は だれですか。"
   en: "Who is the person over there?"
@@ -182,7 +182,7 @@
 
 - id: n5-g2-0013
   type: spelling
-  status: draft
+  status: reviewed
   word: テレビ
   sentence: "まいばん __てれび__で ニュースを みます。"
   en: "I watch the news on TV every evening."
@@ -199,7 +199,7 @@
 
 - id: n5-g2-0014
   type: spelling
-  status: draft
+  status: reviewed
   word: 休む
   sentence: "あたまが いたいですから、がっこうを __やすみます__。"
   en: "I have a headache, so I will stay home from school."
@@ -216,7 +216,7 @@
 
 - id: n5-g2-0015
   type: spelling
-  status: draft
+  status: reviewed
   word: 本
   sentence: "としょかんで __ほん__を 3さつ かりました。"
   en: "I borrowed three books from the library."
@@ -233,7 +233,7 @@
 
 - id: n5-g2-0016
   type: spelling
-  status: draft
+  status: reviewed
   word: 耳
   sentence: "ねこの __みみ__は おおきいですね。"
   en: "The cat has big ears."
@@ -250,7 +250,7 @@
 
 - id: n5-g2-0017
   type: spelling
-  status: draft
+  status: reviewed
   word: 午後
   sentence: "__ごご__ さんじに えきで あいましょう。"
   en: "Let's meet at the station at three in the afternoon."
@@ -267,7 +267,7 @@
 
 - id: n5-g2-0018
   type: spelling
-  status: draft
+  status: reviewed
   word: 話す
   sentence: "ともだちと にほんごで __はなします__。"
   en: "I talk with my friends in Japanese."
@@ -284,7 +284,7 @@
 
 - id: n5-g2-0019
   type: spelling
-  status: draft
+  status: reviewed
   word: 図書館
   sentence: "__としょかん__は なんじまで あいて いますか。"
   en: "Until what time is the library open?"

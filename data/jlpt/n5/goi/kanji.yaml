@@ -98,7 +98,7 @@
 
 - id: n5-g1-0007
   type: kanji
-  status: draft
+  status: reviewed
   word: 足
   sentence: "きのう たくさん あるいて、__足__が いたいです。"
   en: "I walked a lot yesterday, and my feet hurt."
@@ -109,7 +109,7 @@
 
 - id: n5-g1-0008
   type: kanji
-  status: draft
+  status: reviewed
   word: 夏
   sentence: "__夏__は うみで およぎます。"
   en: "In summer I swim in the sea."
@@ -120,7 +120,7 @@
 
 - id: n5-g1-0009
   type: kanji
-  status: draft
+  status: reviewed
   word: 朝
   sentence: "__朝__ ろくじに おきます。"
   en: "I get up at six in the morning."
@@ -131,7 +131,7 @@
 
 - id: n5-g1-0010
   type: kanji
-  status: draft
+  status: reviewed
   word: 犬
   sentence: "うちには __犬__が 2ひき います。"
   en: "We have two dogs at home."
@@ -142,7 +142,7 @@
 
 - id: n5-g1-0011
   type: kanji
-  status: draft
+  status: reviewed
   word: 古い
   sentence: "この かばんは __古い__です。"
   en: "This bag is old."
@@ -153,7 +153,7 @@
 
 - id: n5-g1-0012
   type: kanji
-  status: draft
+  status: reviewed
   word: 肉
   sentence: "スーパーで __肉__と やさいを かいました。"
   en: "I bought meat and vegetables at the supermarket."
@@ -164,7 +164,7 @@
 
 - id: n5-g1-0013
   type: kanji
-  status: draft
+  status: reviewed
   word: 学生
   sentence: "わたしは だいがくの __学生__です。"
   en: "I am a university student."
@@ -181,7 +181,7 @@
 
 - id: n5-g1-0014
   type: kanji
-  status: draft
+  status: reviewed
   word: 一人
   sentence: "きのうは __一人__で えいがを みました。"
   en: "Yesterday I saw a film on my own."
@@ -198,7 +198,7 @@
 
 - id: n5-g1-0015
   type: kanji
-  status: draft
+  status: reviewed
   word: 毎日
   sentence: "__毎日__ にほんごを べんきょうします。"
   en: "I study Japanese every day."
@@ -215,7 +215,7 @@
 
 - id: n5-g1-0016
   type: kanji
-  status: draft
+  status: reviewed
   word: 外国
   sentence: "らいねん __外国__へ いきます。"
   en: "I am going abroad next year."
@@ -232,7 +232,7 @@
 
 - id: n5-g1-0017
   type: kanji
-  status: draft
+  status: reviewed
   word: 病気
   sentence: "ははは __病気__で ねて います。"
   en: "My mother is ill in bed."
@@ -249,7 +249,7 @@
 
 - id: n5-g1-0018
   type: kanji
-  status: draft
+  status: reviewed
   word: 先生
   sentence: "__先生__は いま きょうしつに います。"
   en: "The teacher is in the classroom now."
@@ -266,7 +266,7 @@
 
 - id: n5-g1-0019
   type: kanji
-  status: draft
+  status: reviewed
   word: 牛肉
   sentence: "__牛肉__を すこし かいました。"
   en: "I bought a little beef."
@@ -283,7 +283,7 @@
 
 - id: n5-g1-0020
   type: kanji
-  status: draft
+  status: reviewed
   word: 自転車
   sentence: "__自転車__で がっこうへ いきます。"
   en: "I go to school by bicycle."
@@ -300,7 +300,7 @@
 
 - id: n5-g1-0021
   type: kanji
-  status: draft
+  status: reviewed
   word: 八百屋
   sentence: "えきの まえの __八百屋__で トマトを かいました。"
   en: "I bought tomatoes at the greengrocer's in front of the station."
@@ -317,7 +317,7 @@
 
 - id: n5-g1-0022
   type: kanji
-  status: draft
+  status: reviewed
   word: 今朝
   sentence: "__今朝__は なにを たべましたか。"
   en: "What did you eat this morning?"
@@ -334,7 +334,7 @@
 
 - id: n5-g1-0023
   type: kanji
-  status: draft
+  status: reviewed
   word: 八日
   sentence: "こんげつの __八日__に テストが あります。"
   en: "There is a test on the 8th of this month."
@@ -351,7 +351,7 @@
 
 - id: n5-g1-0024
   type: kanji
-  status: draft
+  status: reviewed
   word: 上手
   sentence: "ははは りょうりが __上手__です。"
   en: "My mother is good at cooking."

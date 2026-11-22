@@ -112,7 +112,7 @@
 
 - id: n5-g4-0008
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしは すしが だいすきです。"
   en: "I love sushi."
   answer: "わたしは すしが とても すきです。"
@@ -125,7 +125,7 @@
 
 - id: n5-g4-0009
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "きょうは いい てんきです。"
   en: "The weather is nice today."
   answer: "きょうは はれて います。"
@@ -138,7 +138,7 @@
 
 - id: n5-g4-0010
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "ちちは いま でかけて います。"
   en: "My father is out right now."
   answer: "ちちは いま うちに いません。"
@@ -151,7 +151,7 @@
 
 - id: n5-g4-0011
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしは ことし はたちです。"
   en: "I am twenty this year."
   answer: "わたしは ことし にじゅっさいです。"
@@ -167,7 +167,7 @@
 
 - id: n5-g4-0012
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "この こうえんは にぎやかです。"
   en: "This park is lively."
   answer: "この こうえんには ひとが おおぜい います。"
@@ -183,7 +183,7 @@
 
 - id: n5-g4-0013
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしは あさごはんを たべませんでした。"
   en: "I didn't have breakfast."
   answer: "わたしは けさ なにも たべませんでした。"
@@ -199,7 +199,7 @@
 
 - id: n5-g4-0014
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "この みせは よる 9じに しまります。"
   en: "This shop closes at nine at night."
   answer: "この みせは よる 9じまで あいて います。"
@@ -215,7 +215,7 @@
 
 - id: n5-g4-0015
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "ははの おとうとは いしゃです。"
   en: "My mother's younger brother is a doctor."
   answer: "わたしの おじさんは いしゃです。"
@@ -231,7 +231,7 @@
 
 - id: n5-g4-0016
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしは きのう がっこうを やすみました。"
   en: "I stayed home from school yesterday."
   answer: "わたしは きのう がっこうへ いきませんでした。"
