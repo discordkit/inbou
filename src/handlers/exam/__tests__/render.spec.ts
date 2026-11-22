@@ -7,6 +7,7 @@ import {
   followUpText,
   heading2,
   LABEL_MAX,
+  myResultsPages,
   myResultsText,
   parseResults,
   parseVote,
@@ -394,6 +395,39 @@ describe(`results`, () => {
     expect(text).toContain(`1 ❌ を → **で** · [で](<${DE.url}>)`);
     expect(text).toContain(`2 ✅ で\n`);
     expect(text).not.toContain(TO.url);
+  });
+
+  it(`splits My results across messages rather than drop a why, each why beside its question`, () => {
+    // WHY: a why is the reason My results exists (the private follow-up vanishes on reload), and Discord rejects a message over 2,000 characters, so a student who missed most of /goi's 21 questions would see nothing. A why on the wrong page would explain the wrong question.
+    const questions = Array.from({ length: 21 }, (_, i) =>
+      question({
+        number: i + 1,
+        whys: [`WHY-${String(i + 1)} ${`x`.repeat(120)}`, ``, ``, ``]
+      })
+    );
+    const answers = questions.map((q) => ({
+      number: q.number,
+      chose: 0,
+      correct: false,
+      points: 0
+    }));
+    const result = { userId: `ann`, points: 0, max: 42, correct: 0, asked: 21 };
+    const pages = myResultsPages(questions, answers, result);
+    expect(pages.length).toBeGreaterThan(1);
+    for (const page of pages) {
+      expect(page.length).toBeLessThanOrEqual(CONTENT_MAX);
+    }
+    for (const q of questions) {
+      const n = String(q.number);
+      const page = pages.find((p) => p.includes(`WHY-${n} `)) ?? ``;
+      expect(page).toContain(`${n} ❌ を → **で**\n> WHY-${n} `);
+    }
+    // A short result is the one message it always was.
+    expect(
+      myResultsPages(questions.slice(0, 2), answers.slice(0, 2), result)
+    ).toEqual([
+      myResultsText(questions.slice(0, 2), answers.slice(0, 2), result)
+    ]);
   });
 
   it(`escapes square brackets in a link's label`, () => {

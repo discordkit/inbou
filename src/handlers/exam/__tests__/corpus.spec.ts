@@ -42,7 +42,7 @@ import {
   CONTENT_MAX,
   followUpText,
   LABEL_MAX,
-  myResultsText,
+  myResultsPages,
   questionMessage,
   revealMessage
 } from "../render.js";
@@ -404,8 +404,8 @@ describe(`the mock-test corpus`, () => {
     expect(minutes).toBeLessThan(21);
   });
 
-  it(`fits My results for /goi however much a student misses`, () => {
-    // WHY: My results keeps every missed question's why, because a private follow-up vanishes when Discord reloads; only links are dropped to fit. /goi asks 21 questions, so a student who missed most of a test with long whys could pass Discord's 2,000 characters and get no reply at all. Measured at the worst any draw could do: each deck's longest misses, through the real renderer.
+  it(`sends My results for /goi in messages that each fit, however much a student misses`, () => {
+    // WHY: My results keeps every missed question's why, because a private follow-up vanishes when Discord reloads; only links are dropped to fit. /goi asks 21 questions, and a student who missed most of a test can have more whys than one message holds: the first batch of /goi content came to 2,393 characters. Every message must fit, or Discord rejects it and the student sees nothing, and every why must arrive. Measured at the worst any draw could do: each deck's longest misses, through the real renderer.
     const plans = BLUEPRINTS.goi.filter(
       (plan): plan is MixPlan => `mix` in plan
     );
@@ -437,7 +437,7 @@ describe(`the mock-test corpus`, () => {
       ...question,
       number: index + 1
     }));
-    const text = myResultsText(
+    const pages = myResultsPages(
       questions,
       misses.map(({ chose }, index) => ({
         number: index + 1,
@@ -453,7 +453,14 @@ describe(`the mock-test corpus`, () => {
         asked: questions.length
       }
     );
-    expect(text.length).toBeLessThanOrEqual(CONTENT_MAX);
+    for (const page of pages) {
+      expect(page.length).toBeLessThanOrEqual(CONTENT_MAX);
+    }
+    const all = pages.join(`\n`);
+    for (const { question, chose } of misses) {
+      const why = question.whys?.at(chose) ?? ``;
+      if (why !== ``) expect(all).toContain(display(why));
+    }
   });
 
   it(`fits every private follow-up in one message`, () => {

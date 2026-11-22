@@ -808,3 +808,34 @@ export const myResultsText = (
   }
   return withLinks(0);
 };
+
+/**
+ * My results as messages that each fit Discord's 2,000 characters: one, or more when the whys alone run past it.
+ *
+ * Links are dropped first, as {@link myResultsText} does. Whys are never dropped, because a private follow-up vanishes when Discord reloads and this is where a student reads it again; /goi asks 21 questions, and a student who missed most of them can have more whys than one message holds. So the rest go in further messages, and a question always stays with its why.
+ */
+export const myResultsPages = (
+  questions: readonly ExamQuestion[],
+  answers: readonly Answer[],
+  result: Result | undefined
+): string[] => {
+  const text = myResultsText(questions, answers, result);
+  if (text.length <= CONTENT_MAX) return [text];
+
+  // A why is the `> ` line under its question, and moves with it.
+  const blocks = text
+    .split(`\n`)
+    .reduce<string[]>(
+      (all, line) =>
+        line.startsWith(`> `) && all.length > 0
+          ? [...all.slice(0, -1), `${all.at(-1) ?? ``}\n${line}`]
+          : [...all, line],
+      []
+    );
+  return blocks.reduce<string[]>((pages, block) => {
+    const last = pages.at(-1);
+    return last !== undefined && last.length + 1 + block.length <= CONTENT_MAX
+      ? [...pages.slice(0, -1), `${last}\n${block}`]
+      : [...pages, block];
+  }, []);
+};

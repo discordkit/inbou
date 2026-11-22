@@ -26,6 +26,7 @@ import {
   type ExamActor,
   type ExamEvent
 } from "../machine.js";
+import { CONTENT_MAX } from "../render.js";
 
 /**
  * A whole mock test, against stubs.
@@ -519,6 +520,60 @@ describe(`private follow-ups after a reading reveal`, () => {
     const first = calls.findIndex((call) => call.kind === `followUp`);
     expect(reveal).toBeGreaterThan(-1);
     expect(first).toBeGreaterThan(reveal);
+  });
+
+  it(`sends My results in more than one private message when the whys do not fit in one`, async () => {
+    // WHY: Discord rejects a reply over 2,000 characters, and My results never drops a why. The rest must follow on the same press, privately and in order, or the student who missed the most sees nothing.
+    const long = (n: number): ShortItem => {
+      const base = explained(n);
+      const [q] = base.questions;
+      if (q === undefined || !(`wrong` in q)) throw new Error(`no question`);
+      return {
+        ...base,
+        questions: [
+          {
+            ...q,
+            wrong: q.wrong.map((option) =>
+              typeof option === `string`
+                ? option
+                : { ...option, why: `${option.why} ${`x`.repeat(1100)}` }
+            )
+          }
+        ]
+      };
+    };
+    const run = setup({ items: [long(1), long(2)] });
+    await startTest(run.deps, interaction, `chan`, `guild`, `dokkai`);
+    for (let card = 0; card < 2; card += 1) {
+      await handleResume(run.deps, `chan`);
+      const view = await run.deps.session.current();
+      const open = view?.context.questions.at(view.context.index);
+      if (open === undefined) throw new Error(`no open question`);
+      await handleVote(run.deps, press(`ann`, `vote-${String(card)}`), `chan`, {
+        userId: `ann`,
+        token: open.token,
+        option: open.options.indexOf(`B`)
+      });
+      await handleTimeout(run.deps, `chan`);
+    }
+    const testId = (await run.deps.session.current())?.context.testId ?? ``;
+
+    const before = run.calls.length;
+    await myResults(run.deps, press(`ann`, `results`), testId, `ann`);
+    const sent = run.calls.slice(before);
+    expect(sent.map((call) => call.kind)).toEqual([`reply`, `followUp`]);
+    const [reply, rest] = sent;
+    expect(rest).toEqual({
+      kind: `followUp`,
+      token: `results`,
+      content: expect.stringContaining(`WHY-B`) as string
+    });
+    expect(reply?.kind === `reply` ? reply.content : ``).toContain(`WHY-B`);
+    for (const call of sent) {
+      const content =
+        call.kind === `reply` || call.kind === `followUp` ? call.content : ``;
+      expect(content.length).toBeLessThanOrEqual(CONTENT_MAX);
+    }
   });
 
   it(`sends at most FOLLOW_UP_MAX follow-ups from one reveal`, async () => {

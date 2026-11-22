@@ -18,7 +18,7 @@ import {
   closedQuestionMessage,
   followUpText,
   introMessage,
-  myResultsText,
+  myResultsPages,
   questionMessage,
   resultsMessage,
   revealMessage,
@@ -441,12 +441,17 @@ export const myResults = async (
   const result = resultsOf(view.context).find(
     (entry) => entry.userId === userId
   );
-  await deps.discord.reply(interaction, {
-    content: myResultsText(
-      view.context.questions,
-      answersOf(view.context, userId),
-      result
-    ),
-    ephemeral: true
-  });
+  const [first = ``, ...rest] = myResultsPages(
+    view.context.questions,
+    answersOf(view.context, userId),
+    result
+  );
+  await deps.discord.reply(interaction, { content: first, ephemeral: true });
+
+  // The rest follow privately on the same press, in order: whys that did not fit in one message.
+  const { applicationId, token } = interaction as Partial<Interaction>;
+  if (typeof applicationId !== `string` || typeof token !== `string`) return;
+  for (const page of rest) {
+    await deps.followUps.send({ application: applicationId, token }, page);
+  }
 };
