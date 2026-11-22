@@ -1082,7 +1082,7 @@
 
 - id: n5-g3-0078
   type: context
-  status: draft
+  status: reviewed
   sentence: "（　）で てを あらいます。"
   en: "I wash my hands with soap."
   answer: せっけん
@@ -1092,7 +1092,7 @@
 
 - id: n5-g3-0079
   type: context
-  status: draft
+  status: reviewed
   sentence: "つかれましたから、（　）で ねます。"
   en: "I'm tired, so I'll sleep in bed."
   answer: ベッド
@@ -1102,7 +1102,7 @@
 
 - id: n5-g3-0080
   type: context
-  status: draft
+  status: reviewed
   sentence: "この （　）は おもしろいですから、まいしゅう かって よみます。"
   en: "This magazine is interesting, so I buy and read it every week."
   answer: ざっし
@@ -1112,7 +1112,7 @@
 
 - id: n5-g3-0081
   type: context
-  status: draft
+  status: reviewed
   sentence: "ケーキは （　）で たべましょう。"
   en: "Let's eat the cake with a fork."
   answer: フォーク
@@ -1122,7 +1122,7 @@
 
 - id: n5-g3-0082
   type: context
-  status: draft
+  status: reviewed
   sentence: "あたまが とても （　）ですから、びょういんへ いきます。"
   en: "My head really hurts, so I'm going to the hospital."
   answer: いたい
@@ -1132,7 +1132,7 @@
 
 - id: n5-g3-0083
   type: context
-  status: draft
+  status: reviewed
   sentence: "わたしの （　）は 5がつ 10かです。"
   en: "My birthday is May 10th."
   answer: たんじょうび
@@ -1142,7 +1142,7 @@
 
 - id: n5-g3-0084
   type: context
-  status: draft
+  status: reviewed
   sentence: "あした テストが ありますから、ことばを （　）。"
   en: "There's a test tomorrow, so I'll memorise the words."
   answer: おぼえます
@@ -1158,7 +1158,7 @@
 
 - id: n5-g3-0085
   type: context
-  status: draft
+  status: reviewed
   sentence: "さいふを （　）、こまって います。"
   en: "I've lost my wallet and I'm in trouble."
   answer: なくして
@@ -1174,7 +1174,7 @@
 
 - id: n5-g3-0086
   type: context
-  status: draft
+  status: reviewed
   sentence: "まいにち しごとが おおくて、とても （　）です。"
   en: "I have a lot of work every day, so I'm very busy."
   answer: いそがしい
@@ -1190,7 +1190,7 @@
 
 - id: n5-g3-0087
   type: context
-  status: draft
+  status: reviewed
   sentence: "きょうは あついですね。（　） ビールが のみたいです。"
   en: "It's hot today, isn't it? I want a cold beer."
   answer: つめたい
@@ -1206,7 +1206,7 @@
 
 - id: n5-g3-0088
   type: context
-  status: draft
+  status: reviewed
   sentence: "ケーキを （　） たべましたから、もう ありません。"
   en: "I ate all the cake, so there's none left."
   answer: ぜんぶ
@@ -1222,7 +1222,7 @@
 
 - id: n5-g3-0089
   type: context
-  status: draft
+  status: reviewed
   sentence: "つぎの （　）を わたって、みぎに まがって ください。"
   en: "Cross the next intersection, then turn right."
   answer: こうさてん
@@ -1238,7 +1238,7 @@
 
 - id: n5-g3-0090
   type: context
-  status: draft
+  status: reviewed
   sentence: "この ぼうしは ちいさくて、とても （　）ですね。"
   en: "This hat is small and very cute."
   answer: かわいい
@@ -1254,7 +1254,7 @@
 
 - id: n5-g3-0091
   type: context
-  status: draft
+  status: reviewed
   sentence: "わたしは まいあさ 6じに おきます。きょうは 7じに おきましたから、いつもより （　） おきました。"
   en: "I get up at six every morning. Today I got up at seven, so I got up later than usual."
   answer: おそく
@@ -1270,7 +1270,7 @@
 
 - id: n5-g3-0092
   type: context
-  status: draft
+  status: reviewed
   sentence: "A「コーヒーと こうちゃと、どちらが すきですか。」\nB「コーヒーの （　）が すきです。」"
   en: "A: Which do you like, coffee or tea? B: I like coffee better."
   answer: ほう
@@ -1286,7 +1286,7 @@
 
 - id: n5-g3-0093
   type: context
-  status: draft
+  status: reviewed
   sentence: "りんごを みっつ かいました。いもうとに ひとつ あげましたから、いま （　） あります。"
   en: "I bought three apples. I gave one to my sister, so now I have two."
   answer: ふたつ
@@ -1302,7 +1302,7 @@
 
 - id: n5-g3-0094
   type: context
-  status: draft
+  status: reviewed
   sentence: "この スープは ちょっと （　）ですね。しおを いれましょう。"
   en: "This soup is a bit bland. Let's add salt."
   answer: うすい
@@ -1318,7 +1318,7 @@
 
 - id: n5-g3-0095
   type: context
-  status: draft
+  status: reviewed
   sentence: "この かばんは わたしのでは ありません。（　）のですか。"
   en: "This bag isn't mine. Whose is it?"
   answer: だれ

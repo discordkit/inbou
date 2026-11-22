@@ -668,7 +668,7 @@
 
 - id: n5-g4-0045
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "きょうは たいへん さむいです。"
   en: "It is very cold today."
   answer: "きょうは とても さむいです。"
@@ -681,7 +681,7 @@
 
 - id: n5-g4-0046
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "こんばん ともだちに でんわします。"
   en: "I'll phone a friend this evening."
   answer: "きょうの よる ともだちに でんわします。"
@@ -694,7 +694,7 @@
 
 - id: n5-g4-0047
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "きょうは ひまです。"
   en: "I'm free today."
   answer: "きょうは いそがしく ありません。"
@@ -707,7 +707,7 @@
 
 - id: n5-g4-0048
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "けさ こうえんを さんぽしました。"
   en: "I took a walk in the park this morning."
   answer: "きょうの あさ こうえんを さんぽしました。"
@@ -720,7 +720,7 @@
 
 - id: n5-g4-0049
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "あには おととし けっこんしました。"
   en: "My older brother got married the year before last."
   answer: "あには にねんまえに けっこんしました。"
@@ -736,7 +736,7 @@
 
 - id: n5-g4-0050
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "にわに はなが たくさん さいて います。"
   en: "Lots of flowers are blooming in the garden."
   answer: "にわに はなが いっぱい さいて います。"
@@ -752,7 +752,7 @@
 
 - id: n5-g4-0051
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "また あそびに きて ください。"
   en: "Please come and visit again."
   answer: "もう いちど あそびに きて ください。"
@@ -768,7 +768,7 @@
 
 - id: n5-g4-0052
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "となりの へやが うるさいです。"
   en: "The next room is noisy."
   answer: "となりの へやの おとが おおきいです。"
@@ -784,7 +784,7 @@
 
 - id: n5-g4-0053
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしは さらいねん だいがくを でます。"
   en: "I will graduate from university the year after next."
   answer: "わたしは らいねんの つぎの とし だいがくを でます。"
@@ -800,7 +800,7 @@
 
 - id: n5-g4-0054
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "この クラスで やまださんが いちばん せが たかいです。"
   en: "Yamada is the tallest in this class."
   answer: "この クラスに やまださんより せが たかい ひとは いません。"
@@ -816,7 +816,7 @@
 
 - id: n5-g4-0055
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしには きょうだいが いません。"
   en: "I have no brothers or sisters."
   answer: "わたしには あにも あねも おとうとも いもうとも いません。"
@@ -832,7 +832,7 @@
 
 - id: n5-g4-0056
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "あねは わたしと おなじ がっこうの がくせいです。"
   en: "My older sister is a student at the same school as me."
   answer: "わたしも あねも その がっこうの がくせいです。"

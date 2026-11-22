@@ -892,7 +892,7 @@
 
 - id: n5-g2-0059
   type: spelling
-  status: draft
+  status: reviewed
   word: ギター
   sentence: "あには __ぎたー__を ひきます。"
   en: "My older brother plays the guitar."
@@ -909,7 +909,7 @@
 
 - id: n5-g2-0060
   type: spelling
-  status: draft
+  status: reviewed
   word: スカート
   sentence: "あかい __すかーと__を はきます。"
   en: "I'll wear a red skirt."
@@ -926,7 +926,7 @@
 
 - id: n5-g2-0061
   type: spelling
-  status: draft
+  status: reviewed
   word: ホテル
   sentence: "えきの まえに __ほてる__が あります。"
   en: "There is a hotel in front of the station."
@@ -943,7 +943,7 @@
 
 - id: n5-g2-0062
   type: spelling
-  status: draft
+  status: reviewed
   word: タクシー
   sentence: "えきから __たくしー__で いきました。"
   en: "I went from the station by taxi."
@@ -960,7 +960,7 @@
 
 - id: n5-g2-0063
   type: spelling
-  status: draft
+  status: reviewed
   word: スプーン
   sentence: "__すぷーん__で スープを のみます。"
   en: "I eat soup with a spoon."
@@ -977,7 +977,7 @@
 
 - id: n5-g2-0064
   type: spelling
-  status: draft
+  status: reviewed
   word: ネクタイ
   sentence: "ちちは まいにち __ねくたい__を します。"
   en: "My father wears a tie every day."
@@ -994,7 +994,7 @@
 
 - id: n5-g2-0065
   type: spelling
-  status: draft
+  status: reviewed
   word: ハンカチ
   sentence: "ポケットに __はんかち__が あります。"
   en: "There is a handkerchief in my pocket."
@@ -1011,7 +1011,7 @@
 
 - id: n5-g2-0066
   type: spelling
-  status: draft
+  status: reviewed
   word: エレベーター
   sentence: "__えれべーたー__で 5かいへ いきます。"
   en: "I'll take the lift to the fifth floor."
@@ -1028,7 +1028,7 @@
 
 - id: n5-g2-0067
   type: spelling
-  status: draft
+  status: reviewed
   word: 乗る
   sentence: "えきから バスに __のります__。"
   en: "I get on the bus at the station."
@@ -1045,7 +1045,7 @@
 
 - id: n5-g2-0068
   type: spelling
-  status: draft
+  status: reviewed
   word: 入る
   sentence: "ドアを あけて、へやに __はいります__。"
   en: "I open the door and go into the room."
@@ -1062,7 +1062,7 @@
 
 - id: n5-g2-0069
   type: spelling
-  status: draft
+  status: reviewed
   word: 作る
   sentence: "ははと いっしょに ケーキを __つくります__。"
   en: "I make a cake with my mother."
@@ -1079,7 +1079,7 @@
 
 - id: n5-g2-0070
   type: spelling
-  status: draft
+  status: reviewed
   word: シャツ
   sentence: "しろい __しゃつ__を かいました。"
   en: "I bought a white shirt."
@@ -1096,7 +1096,7 @@
 
 - id: n5-g2-0071
   type: spelling
-  status: draft
+  status: reviewed
   word: パーティー
   sentence: "どようびに うちで __ぱーてぃー__を します。"
   en: "I'm having a party at home on Saturday."
@@ -1113,7 +1113,7 @@
 
 - id: n5-g2-0072
   type: spelling
-  status: draft
+  status: reviewed
   word: 売る
   sentence: "この みせは やさいを __うって__ います。"
   en: "This shop sells vegetables."
