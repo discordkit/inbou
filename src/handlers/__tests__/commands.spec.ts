@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vite-plus/test";
+import { TESTS } from "../exam/commands.js";
 import { OPTION_HELP } from "../quiz/config.js";
 
 /**
@@ -85,11 +86,13 @@ describe(`the options registered with Discord`, () => {
     ]
       .map((path) => readFileSync(path, `utf8`))
       .join(`\n`);
-    const routed = new Set(
-      [...handler.matchAll(/name === `(?<name>[a-z]+)`/gu)].map(
+    // The mock tests route by a table, one entry per test, rather than by name.
+    const routed = new Set([
+      ...[...handler.matchAll(/name === `(?<name>[a-z]+)`/gu)].map(
         (match) => match.groups?.name ?? ``
-      )
-    );
+      ),
+      ...Object.keys(TESTS)
+    ]);
 
     // Top-level entries only — a subcommand is nested inside one of these, and
     // the router reaches those through `invocation.subcommand`. Matched by

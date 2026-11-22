@@ -21,6 +21,8 @@
   // the corpus — neither belongs inside an object that wakes from hibernation
   // constantly.
   "services": [{ "binding": "SELF", "service": "inbou-handlers" }],
+  // Where the 問題6 pictures are hosted: the inbou-assets Worker (wrangler.assets.jsonc). corpus.json names each picture under it. Not secret: Discord fetches these URLs from anywhere.
+  "vars": { "ASSET_BASE": "https://inbou-assets.saeris.workers.dev/" },
   // Cross-session scores. The session object holds a session; this holds what
   // survives it, which is the only thing a leaderboard can be built from.
   // Reads dominate: a finished session writes one row per player, while

@@ -17,13 +17,19 @@
  *  - **The checks are the app's own.** `items.ts` imports only valibot so this
  *    script can load it, and `blueprint.ts` only a type, so the coverage report
  *    reads the same blueprint the draw does.
+ *  - **Each 問題6 picture is named here, and drawn by `exam:draw`.** The name
+ *    is a hash of what the picture draws (see `lib/pictures.mjs`), so the
+ *    handlers can link a picture's URL before it is drawn, and a changed
+ *    picture gets a new URL.
  *
  * Usage: `vp run exam:build`, or `vp run exam:build -- --drafts` to preview.
  */
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import * as v from "valibot";
 import { parse } from "yaml";
-import { BLUEPRINTS } from "../src/handlers/exam/blueprint.ts";
+// Before the templates load: it lets their "./kit.js" imports reach the .ts files.
+import "./lib/ts-hooks.mjs";
+import { BLUEPRINTS, READING_MIX } from "../src/handlers/exam/blueprint.ts";
 import {
   corpusProblems,
   grammarPointsSchema,
@@ -33,6 +39,13 @@ import {
   pointsOf,
   reviewLinksOf
 } from "../src/handlers/exam/items.ts";
+import { pictureName, versionsOf } from "./lib/pictures.mjs";
+
+// Dynamic, so the hook above is in place: the templates import "./kit.js".
+const { materialHtml, materialWidth } = await import(
+  `../src/handlers/exam/material/index.ts`
+);
+const { bare } = await import(`../src/handlers/exam/items.ts`);
 
 const ROOT = `data/jlpt/n5`;
 const OUT = `src/handlers/exam/corpus.json`;
@@ -62,12 +75,21 @@ if (pointIds.size !== points.length) {
   process.exit(1);
 }
 
-const items = readdirSync(`${ROOT}/bunpou`)
-  .filter((file) => file.endsWith(`.yaml`))
-  .sort()
-  .flatMap((file) =>
-    parseOrExit(itemsSchema, read(`${ROOT}/bunpou/${file}`), file)
-  );
+/** Grammar, then reading: one folder of YAML each. */
+const DECKS = [`bunpou`, `dokkai`];
+
+const items = DECKS.flatMap((deck) =>
+  readdirSync(`${ROOT}/${deck}`)
+    .filter((file) => file.endsWith(`.yaml`))
+    .sort()
+    .flatMap((file) =>
+      parseOrExit(
+        itemsSchema,
+        read(`${ROOT}/${deck}/${file}`),
+        `${deck}/${file}`
+      )
+    )
+);
 
 const problems = [
   ...corpusProblems(items),
@@ -85,9 +107,23 @@ for (const hint of hints) console.log(`hint: ${hint}`);
 
 const shipped = items.filter((item) => DRAFTS || item.status === `reviewed`);
 const review = reviewLinksOf(points, shipped);
+const versions = versionsOf(process.cwd());
+const pictures = Object.fromEntries(
+  shipped
+    .filter((item) => item.type === `info`)
+    .map((item) => [
+      item.id,
+      pictureName(
+        item.id,
+        materialHtml(item.material, bare),
+        materialWidth(item.material),
+        versions
+      )
+    ])
+);
 writeFileSync(
   OUT,
-  `${JSON.stringify({ level: `N5`, drafts: DRAFTS, items: shipped, review }, null, 2)}\n`
+  `${JSON.stringify({ level: `N5`, drafts: DRAFTS, items: shipped, review, pictures }, null, 2)}\n`
 );
 
 console.log(
@@ -122,9 +158,53 @@ const report = (label, have, draw) =>
     `${label}: ${String(have)} cards, a test draws ${String(draw)} (${have >= draw * 2 ? `ok` : `short`})`
   );
 
+// Reading: items and questions per type, drafts included, so a batch's progress shows before anyone reviews it. A test asks one question of a 問題4 or 問題6 item, and two of a 問題5 item.
+const READING = { short: `問題4`, mid: `問題5`, info: `問題6` };
+for (const [type, label] of Object.entries(READING)) {
+  const of = items.filter((item) => item.type === type);
+  const questions = of.flatMap((item) => item.questions);
+  const reviewed = of.filter((item) => item.status === `reviewed`).length;
+  const levels = [1, 2, 3]
+    .map(
+      (level) =>
+        `d${String(level)} ${String(questions.filter((question) => question.difficulty === level).length)}`
+    )
+    .join(`, `);
+  console.log(
+    `dokkai ${label}: ${String(of.length)} items (${String(reviewed)} reviewed), ${String(questions.length)} questions (${levels})`
+  );
+
+  // Fixed-order answers drift to the middle: in one draft, 23 of 28 were option 2 or 3. A student who learns that guesses better than chance.
+  const spread = [1, 2, 3, 4].map(
+    (position) =>
+      questions.filter(
+        (question) => `options` in question && question.answer === position
+      ).length
+  );
+  const ordered = spread.reduce((sum, count) => sum + count, 0);
+  if (ordered >= 8 && Math.min(...spread) < ordered / 4 / 2) {
+    console.log(
+      `hint: dokkai ${label} fixed-order answers sit at ${spread.map((count, i) => `${String(i + 1)}: ${String(count)}`).join(`, `)}; choose distractors so the answer lands on every position`
+    );
+  }
+}
+
 for (const [test, plans] of Object.entries(BLUEPRINTS)) {
   for (const plan of plans) {
-    if (plan.mondai === 3) {
+    if (`questions` in plan) {
+      // Reading shares one mix across its decks, shuffled each test, so a deck may be dealt a level up to as often as the mix holds it.
+      const type = { 4: `short`, 5: `mid`, 6: `info` }[plan.mondai];
+      const questions = shipped
+        .filter((item) => item.type === type)
+        .flatMap((item) => item.questions);
+      for (const level of [1, 2, 3]) {
+        report(
+          `${test} 問題${String(plan.mondai)} difficulty ${String(level)}`,
+          questions.filter((question) => question.difficulty === level).length,
+          Math.min(plan.questions, READING_MIX[level])
+        );
+      }
+    } else if (plan.mondai === 3) {
       const passages = shipped.filter(
         (item) => item.type === `passage` && item.blanks.length >= plan.blanks
       ).length;

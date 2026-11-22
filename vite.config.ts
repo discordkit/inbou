@@ -307,6 +307,16 @@ export default defineConfig({
       "exam:links": {
         command: `node scripts/check-review-links.mjs`,
         cache: false
+      },
+      // Draws the 問題6 pictures corpus.json names into dist/assets. Fails if corpus.json is stale or a picture does not fit.
+      "exam:draw": {
+        command: `node scripts/draw-exam.mjs`,
+        cache: false
+      },
+      // Publishes the pictures on their own, for the dev loop: a `--drafts` corpus names draft pictures, and Discord can only show what is hosted. Production deploys them through `deploy`.
+      "assets:deploy": {
+        command: `node scripts/draw-exam.mjs && wrangler deploy --config wrangler.assets.jsonc`,
+        cache: false
       }
     }
   },

@@ -22,9 +22,11 @@ const recordingDeps = () => {
   const deps: ExamDeps = {
     discord: { reply: async () => {} },
     cards: { post: async () => `m1`, edit: async () => {} },
+    followUps: { send: async () => {} },
     session,
     items: [],
     review: {},
+    pictures: {},
     random: Math.random,
     now: Date.now,
     quizRunning: async () => false
@@ -79,5 +81,54 @@ describe(`the exam router`, () => {
     await expect(handleExamInteraction(deps, button(`exam:end`))).resolves.toBe(
       true
     );
+  });
+
+  it(`starts the test each command names, and only that test`, async () => {
+    // WHY: both commands share one router. If /dokkai started the grammar test, students would sit the wrong paper, and nothing would look broken.
+    const grammarOnly = () => {
+      const { deps, reached } = recordingDeps();
+      const replies: string[] = [];
+      return {
+        reached,
+        replies,
+        deps: {
+          ...deps,
+          discord: {
+            reply: async (_i: Interaction, body: { content?: string }) => {
+              replies.push(body.content ?? ``);
+            }
+          },
+          items: [
+            {
+              id: `n5-b1-0001`,
+              type: `form` as const,
+              status: `reviewed` as const,
+              sentence: `ぶん（1）です。`,
+              en: `A sentence.`,
+              slots: [
+                {
+                  answer: `あ`,
+                  wrong: [`い`, `う`, `え`],
+                  difficulty: 1 as const,
+                  points: [`p`],
+                  note: `n`
+                }
+              ]
+            }
+          ]
+        }
+      };
+    };
+
+    const reading = grammarOnly();
+    await handleExamInteraction(reading.deps, command(`dokkai`, `start`));
+    expect(reading.replies).toEqual([
+      `No questions are ready for this test yet.`
+    ]);
+    expect(reading.reached).not.toContain(`begin`);
+
+    const grammar = grammarOnly();
+    await handleExamInteraction(grammar.deps, command(`bunpou`, `start`));
+    expect(grammar.reached).toContain(`begin`);
   });
 });

@@ -397,6 +397,41 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fontsource-variable/noto-sans-jp@npm:5.3.1":
+  version: 5.3.1
+  resolution: "@fontsource-variable/noto-sans-jp@npm:5.3.1"
+  checksum: 10/337b79f555293b9da98c2f13eb49a8e0fde8594b5bf54c52d345d94d4ba39e9eb391c46bfd9489989432fe3ca60ee89b3dd4b97381cb0844d6e74f4a3f0d5d74
+  languageName: node
+  linkType: hard
+
+"@fontsource-variable/noto-serif-jp@npm:5.3.1":
+  version: 5.3.1
+  resolution: "@fontsource-variable/noto-serif-jp@npm:5.3.1"
+  checksum: 10/7990a812c1ffbd725382b267779039a9d6660d5476d7fb7eecc6a573e34899d5a8bdb610a39ecdc73ac5c0ec0b915d6d8e95e414b47d87c9fab75d31752e404f
+  languageName: node
+  linkType: hard
+
+"@fontsource/dotgothic16@npm:5.3.1":
+  version: 5.3.1
+  resolution: "@fontsource/dotgothic16@npm:5.3.1"
+  checksum: 10/ddd290509011a14a4481b5b26e2c6937275d137bdbb98cb16fbc700ccca1a1b3b9a723bd27143c6baf3b22794e9904aaf6f5f3823b17147f1c07846a79e88f49
+  languageName: node
+  linkType: hard
+
+"@fontsource/klee-one@npm:5.3.1":
+  version: 5.3.1
+  resolution: "@fontsource/klee-one@npm:5.3.1"
+  checksum: 10/76a938370ebb36cf7f58bb2c5c134072e73de71b081dc90e5ae2a9faae15e8a26ec0cbb42023c07f08e8f7f0a8a271f9da82902385521a0350ef46ae7cb88dca
+  languageName: node
+  linkType: hard
+
+"@fontsource/zen-maru-gothic@npm:5.3.1":
+  version: 5.3.1
+  resolution: "@fontsource/zen-maru-gothic@npm:5.3.1"
+  checksum: 10/dcc7ab43ceeb2493aa9e63ddf68eeee375ed981ebb4a9ad3d252364845c4d9556c0acd2e6c4c97713f2b5762628c9851375e8427136ce5a7e6a5ea8f5b397259
+  languageName: node
+  linkType: hard
+
 "@img/colour@npm:^1.1.0":
   version: 1.1.0
   resolution: "@img/colour@npm:1.1.0"
@@ -1157,6 +1192,130 @@ __metadata:
   version: 1.2.24
   resolution: "@speed-highlight/core@npm:1.2.24"
   checksum: 10/36df2c1f1c77585297d8844d9d907895b471a5c90f822d0c6396523a7db327e7de59a63abb5688eab6edea1a8578176a4f83131b4778bbd83f6ce7a3274b9ece
+  languageName: node
+  linkType: hard
+
+"@takumi-rs/core-darwin-arm64@npm:2.20.0":
+  version: 2.20.0
+  resolution: "@takumi-rs/core-darwin-arm64@npm:2.20.0"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@takumi-rs/core-darwin-x64@npm:2.20.0":
+  version: 2.20.0
+  resolution: "@takumi-rs/core-darwin-x64@npm:2.20.0"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@takumi-rs/core-linux-arm64-gnu@npm:2.20.0":
+  version: 2.20.0
+  resolution: "@takumi-rs/core-linux-arm64-gnu@npm:2.20.0"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@takumi-rs/core-linux-arm64-musl@npm:2.20.0":
+  version: 2.20.0
+  resolution: "@takumi-rs/core-linux-arm64-musl@npm:2.20.0"
+  conditions: os=linux & cpu=arm64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@takumi-rs/core-linux-x64-gnu@npm:2.20.0":
+  version: 2.20.0
+  resolution: "@takumi-rs/core-linux-x64-gnu@npm:2.20.0"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@takumi-rs/core-linux-x64-musl@npm:2.20.0":
+  version: 2.20.0
+  resolution: "@takumi-rs/core-linux-x64-musl@npm:2.20.0"
+  conditions: os=linux & cpu=x64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@takumi-rs/core-win32-arm64-msvc@npm:2.20.0":
+  version: 2.20.0
+  resolution: "@takumi-rs/core-win32-arm64-msvc@npm:2.20.0"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@takumi-rs/core-win32-x64-msvc@npm:2.20.0":
+  version: 2.20.0
+  resolution: "@takumi-rs/core-win32-x64-msvc@npm:2.20.0"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@takumi-rs/core@npm:2.20.0":
+  version: 2.20.0
+  resolution: "@takumi-rs/core@npm:2.20.0"
+  dependencies:
+    "@takumi-rs/core-darwin-arm64": "npm:2.20.0"
+    "@takumi-rs/core-darwin-x64": "npm:2.20.0"
+    "@takumi-rs/core-linux-arm64-gnu": "npm:2.20.0"
+    "@takumi-rs/core-linux-arm64-musl": "npm:2.20.0"
+    "@takumi-rs/core-linux-x64-gnu": "npm:2.20.0"
+    "@takumi-rs/core-linux-x64-musl": "npm:2.20.0"
+    "@takumi-rs/core-win32-arm64-msvc": "npm:2.20.0"
+    "@takumi-rs/core-win32-x64-msvc": "npm:2.20.0"
+    "@takumi-rs/helpers": "npm:2.20.0"
+  peerDependencies:
+    csstype: "*"
+  dependenciesMeta:
+    "@takumi-rs/core-darwin-arm64":
+      optional: true
+    "@takumi-rs/core-darwin-x64":
+      optional: true
+    "@takumi-rs/core-linux-arm64-gnu":
+      optional: true
+    "@takumi-rs/core-linux-arm64-musl":
+      optional: true
+    "@takumi-rs/core-linux-x64-gnu":
+      optional: true
+    "@takumi-rs/core-linux-x64-musl":
+      optional: true
+    "@takumi-rs/core-win32-arm64-msvc":
+      optional: true
+    "@takumi-rs/core-win32-x64-msvc":
+      optional: true
+  peerDependenciesMeta:
+    csstype:
+      optional: true
+  checksum: 10/52b8a467fba812483ae1136f54de682e13f8e5bc314c2679cb99186fd5f411debfbd6268c04ad175f6cfe7723ae431e2ad89f2199d9f28a1b1b892ae49705845
+  languageName: node
+  linkType: hard
+
+"@takumi-rs/helpers@npm:2.20.0":
+  version: 2.20.0
+  resolution: "@takumi-rs/helpers@npm:2.20.0"
+  peerDependencies:
+    preact: ^10.0.0 || ^11.0.0
+    react: ^18.0.0 || ^19.0.0
+  peerDependenciesMeta:
+    preact:
+      optional: true
+    react:
+      optional: true
+  checksum: 10/b0070c736c0fb10eae9c1ab755027b6c26daa31211c25268de36cd9d7d1444a47ba43d76d2856bbee3fda9d55e308e62b21ecb746cc6c46532c14a128d2bb1ce
+  languageName: node
+  linkType: hard
+
+"@takumi-rs/wasm@npm:2.20.0":
+  version: 2.20.0
+  resolution: "@takumi-rs/wasm@npm:2.20.0"
+  dependencies:
+    "@takumi-rs/helpers": "npm:2.20.0"
+  peerDependencies:
+    csstype: "*"
+  peerDependenciesMeta:
+    csstype:
+      optional: true
+  checksum: 10/58df6d2cbe335b8359fc17bec9312ffa08906af983ab932ef3582188302a977002d7e34b651656ec2c940aab6c7211160d1da3627a997b4da8c50c58e9b8b0a1
   languageName: node
   linkType: hard
 
@@ -1950,10 +2109,16 @@ __metadata:
     "@discordkit/client": "npm:^4.6.0"
     "@discordkit/core": "npm:^4.3.0"
     "@discordkit/gateway": "npm:^1.0.3"
+    "@fontsource-variable/noto-sans-jp": "npm:5.3.1"
+    "@fontsource-variable/noto-serif-jp": "npm:5.3.1"
+    "@fontsource/dotgothic16": "npm:5.3.1"
+    "@fontsource/klee-one": "npm:5.3.1"
+    "@fontsource/zen-maru-gothic": "npm:5.3.1"
     "@saeris/configs": "npm:1.6.1"
     "@varlock/bumpy": "npm:1.19.0"
     msw: "npm:^3.0.4"
     nostics: "npm:1.3.0"
+    takumi-js: "npm:2.20.0"
     typescript: "npm:^6.0.3"
     valibot: "npm:^1.5.0"
     varlock: "npm:^1.24.0"
@@ -2733,6 +2898,17 @@ __metadata:
   version: 1.0.0
   resolution: "tagged-tag@npm:1.0.0"
   checksum: 10/e37653df3e495daa7ea7790cb161b810b00075bba2e4d6c93fb06a709e747e3ae9da11a120d0489833203926511b39e038a2affbd9d279cfb7a2f3fcccd30b5d
+  languageName: node
+  linkType: hard
+
+"takumi-js@npm:2.20.0":
+  version: 2.20.0
+  resolution: "takumi-js@npm:2.20.0"
+  dependencies:
+    "@takumi-rs/core": "npm:2.20.0"
+    "@takumi-rs/helpers": "npm:2.20.0"
+    "@takumi-rs/wasm": "npm:2.20.0"
+  checksum: 10/2a16eec54323fe6e5c8e6c64698eb090d5bd3b807c429452eff62952a94fb5dc27810fc9369feecf3f9dac410904b39a525edc8bdc6a59c20d22a29a5bf7fcdd
   languageName: node
   linkType: hard
 

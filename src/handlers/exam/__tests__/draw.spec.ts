@@ -7,16 +7,23 @@ import {
   formQuestion,
   OPTION_COUNT,
   passageQuestions,
+  PER_CHAR_MS,
+  readingQuestions,
   reviewOf,
   timeoutFor,
   type Random
 } from "../draw.js";
-import type {
-  ComposeItem,
-  Difficulty,
-  FormItem,
-  Item,
-  PassageItem
+import {
+  materialMarkup,
+  plain,
+  type ComposeItem,
+  type Difficulty,
+  type FormItem,
+  type InfoItem,
+  type Item,
+  type MidItem,
+  type PassageItem,
+  type ShortItem
 } from "../items.js";
 
 /**
@@ -529,5 +536,189 @@ describe(`a full grammar test`, () => {
       expect(new Set(questions.map((q) => q.itemId)).size).toBe(1);
       expect(new Set(questions.map((q) => q.slot)).size).toBe(4);
     }
+  });
+});
+
+describe(`a reading test`, () => {
+  const pad = (n: number): string => String(n).padStart(4, `0`);
+  const asks = (
+    n: number,
+    difficulties: readonly Difficulty[]
+  ): ShortItem[`questions`] =>
+    difficulties.map((difficulty, q) => ({
+      question: `しつもん${String(n)}-${String(q)}`,
+      answer: `こたえ${String(n)}-${String(q)}`,
+      wrong: [`か`, `き`, `く`].map((w) => `${w}${String(n)}-${String(q)}`),
+      difficulty,
+      note: `n`
+    }));
+  const short = (n: number, difficulties: Difficulty[]): ShortItem => ({
+    id: `n5-d4-${pad(n)}`,
+    type: `short`,
+    status: `reviewed`,
+    text: `ぶんしょう${String(n)}`,
+    en: `Text ${String(n)}.`,
+    questions: asks(n, difficulties)
+  });
+  const mid = (n: number, difficulties: Difficulty[]): MidItem => ({
+    ...short(n, difficulties),
+    id: `n5-d5-${pad(n)}`,
+    type: `mid`
+  });
+  const info = (n: number, difficulties: Difficulty[]): InfoItem => ({
+    id: `n5-d6-${pad(n)}`,
+    type: `info`,
+    status: `reviewed`,
+    material: {
+      kind: `notice`,
+      title: `おしらせ${String(n)}`,
+      blocks: [{ text: [`あしたは やすみです。`] }]
+    },
+    en: `Notice ${String(n)}.`,
+    questions: asks(n, difficulties)
+  });
+
+  /** Enough of every level in every deck for any deal of the mix. */
+  const corpus: Item[] = [
+    ...[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) =>
+      short(n, [(((n - 1) % 3) + 1) as Difficulty])
+    ),
+    mid(1, [1, 2, 3, 1]),
+    mid(2, [2, 2, 1, 3]),
+    mid(3, [3, 1, 2, 2]),
+    ...[1, 2, 3, 4, 5, 6].map((n) =>
+      info(n, [(((n - 1) % 3) + 1) as Difficulty])
+    )
+  ];
+
+  it(`draws 2 + 2 + 1, numbered 1 to 5, in the paper's order`, () => {
+    // WHY: the real paper's reading is two short texts, one longer text with two questions, and one page to search. A student practises that shape.
+    const test = drawTest(`dokkai`, corpus, {}, seeded(3));
+    expect(test.map((q) => q.mondai)).toEqual([4, 4, 5, 5, 6]);
+    expect(test.map((q) => q.number)).toEqual([1, 2, 3, 4, 5]);
+    // Two short cards, then the long text's two questions on one card, then the page.
+    expect(test.map((q) => q.card)).toEqual([1, 2, 3, 3, 5]);
+    const items = test.map((q) => q.itemId);
+    expect(new Set(items).size).toBe(4);
+  });
+
+  it(`asks 2 easy, 2 medium and 1 hard every test, dealt to different 問題 from test to test`, () => {
+    // WHY: equal difficulty keeps scores comparable from test to test; the shuffle lets every deck's easy and hard questions come up. A fixed level per deck would never ask 問題6's easy or hard ones (the user's choice, 2026-11-22).
+    const hardIn = new Set<number>();
+    for (let seed = 1; seed <= 40; seed += 1) {
+      // Spread out: small seeds give this generator nearly the same first draw.
+      const test = drawTest(`dokkai`, corpus, {}, seeded(seed * 1_000_003));
+      expect(test.map((q) => q.difficulty).sort((a, b) => a - b)).toEqual([
+        1, 1, 2, 2, 3
+      ]);
+      const hard = test.find((q) => q.difficulty === 3);
+      if (hard !== undefined) hardIn.add(hard.mondai);
+    }
+    expect([...hardIn].sort((a, b) => a - b)).toEqual([4, 5, 6]);
+  });
+
+  it(`asks a 問題5 text's two questions in the order the text answers them`, () => {
+    // WHY: the paper asks about a long text in reading order. Asked out of order, the second question would send the student back up the text.
+    for (let seed = 1; seed <= 20; seed += 1) {
+      const pair = drawTest(`dokkai`, corpus, {}, seeded(seed)).filter(
+        (q) => q.mondai === 5
+      );
+      expect(pair).toHaveLength(2);
+      expect(pair[0]?.itemId).toBe(pair[1]?.itemId);
+      expect(pair[0]?.slot ?? 0).toBeLessThan(pair[1]?.slot ?? 0);
+    }
+  });
+
+  it(`keeps fixed-order options in the order they are written`, () => {
+    // WHY: times and prices print in order on the paper. Shuffled, 9:30 could sit above 9:00, and a student would have to hunt for the time they had already worked out.
+    const timed: ShortItem = {
+      ...short(1, [1]),
+      questions: [
+        {
+          question: `{何時|なんじ}ですか。`,
+          options: [`9:00`, `9:30`, `10:00`, `10:30`],
+          answer: 3,
+          difficulty: 1,
+          note: `n`
+        }
+      ]
+    };
+    for (let seed = 1; seed <= 20; seed += 1) {
+      const [q] = readingQuestions(timed, [0], 1, seeded(seed));
+      expect(q?.options).toEqual([`9:00`, `9:30`, `10:00`, `10:30`]);
+      expect(q?.correct).toBe(2);
+    }
+  });
+
+  it(`keeps each why beside its own option through the shuffle`, () => {
+    // WHY: a student is told privately why the option THEY chose is wrong. A why that drifted to another option would explain the wrong mistake, confidently.
+    const explained: ShortItem = {
+      ...short(1, [2]),
+      questions: [
+        {
+          question: `どう しますか。`,
+          answer: `A`,
+          wrong: [
+            { option: `B`, why: `why B` },
+            { option: `C`, why: `why C` },
+            { option: `D`, why: `why D` },
+            { option: `E`, why: `why E` }
+          ],
+          difficulty: 2,
+          note: `n`
+        }
+      ]
+    };
+    for (let seed = 1; seed <= 30; seed += 1) {
+      const [q] = readingQuestions(explained, [0], 1, seeded(seed));
+      q?.options.forEach((option, index) => {
+        expect(q.whys?.at(index)).toBe(option === `A` ? `` : `why ${option}`);
+      });
+    }
+  });
+
+  it(`links each 問題6 question to its own hosted picture`, () => {
+    // WHY: the card shows a picture only when its question carries the URL. Another page's URL would show the wrong document under the question; no URL, when one is hosted, would show text where the student expects a picture.
+    const hosted = Object.fromEntries(
+      corpus
+        .filter((entry) => entry.type === `info`)
+        .map((entry) => [entry.id, `https://assets.example/${entry.id}.webp`])
+    );
+    for (let seed = 1; seed <= 10; seed += 1) {
+      const page = drawTest(
+        `dokkai`,
+        corpus,
+        {},
+        seeded(seed * 1_000_003),
+        hosted
+      ).find((q) => q.mondai === 6);
+      expect(page?.image).toBe(
+        `https://assets.example/${page?.itemId ?? ``}.webp`
+      );
+    }
+    const unhosted = drawTest(`dokkai`, corpus, {}, seeded(3)).find(
+      (q) => q.mondai === 6
+    );
+    expect(unhosted?.image).toBeUndefined();
+  });
+
+  it(`counts a text once per card, and gives a picture a minute on top`, () => {
+    // WHY: two questions on one text should not make the student "read" it twice; and a picture may need opening at full size before it can be read (the user's condition for tall pictures).
+    const [first, second] = readingQuestions(
+      mid(1, [1, 2, 3, 1]),
+      [0, 2],
+      3,
+      seeded(1)
+    );
+    expect(second?.timeoutMs).toBe(
+      timeoutFor(5, second?.question ?? ``, second?.options ?? [])
+    );
+    expect(first?.timeoutMs).toBeGreaterThan(second?.timeoutMs ?? 0);
+
+    const [page] = readingQuestions(info(1, [1]), [0], 5, seeded(1));
+    const material = materialMarkup(info(1, [1]).material);
+    expect(page?.timeoutMs).toBeGreaterThanOrEqual(
+      60_000 + plain(material).length * PER_CHAR_MS
+    );
   });
 });

@@ -1,24 +1,34 @@
 import {
   BLUEPRINTS,
+  READING_MIX,
+  type Mix,
   type MixPlan,
   type Mondai,
   type PassagePlan,
+  type ReadingPlan,
   type TestId
 } from "./blueprint.js";
 import {
   chunksOf,
   fill,
   joinChunks,
+  materialMarkup,
+  optionText,
   parse,
   partsOf,
   plain,
+  whyOf,
   WINDOW_SIZE,
   type ComposeItem,
   type Difficulty,
   type FormItem,
+  type InfoItem,
   type Item,
+  type MidItem,
   type PassageItem,
+  type ReadingQuestion,
   type ReviewLink,
+  type ShortItem,
   type Slot
 } from "./items.js";
 
@@ -84,6 +94,20 @@ export interface ExamQuestion {
   /** Routes a vote to this exact question; a press on any other is stale. */
   token: string;
   timeoutMs: number;
+  /**
+   * A reading question's stem: 「ゆいさんは 何を しますか。」. Grammar has none, because its prompt is the question.
+   */
+  question?: string;
+  /**
+   * Why each option is wrong, in display order, as the item says: `` for the answer, and for an option the item does not explain. Reading only. Sent privately to a student who chose that option, never shown in the channel.
+   */
+  whys?: string[];
+  /** 問題6: the picture's text, for its alt text, its readings line and its timer. */
+  material?: string;
+  /**
+   * 問題6: where the picture is hosted. Until the picture pipeline sets it, the card shows the material as text.
+   */
+  image?: string;
 }
 
 /**
@@ -96,11 +120,31 @@ export interface ExamQuestion {
 export const BASE_MS: Readonly<Record<Mondai, number>> = {
   1: 40_000,
   2: 60_000,
-  3: 30_000
+  3: 30_000,
+  // Reading: per question, and the text is read once per card on top.
+  4: 30_000,
+  5: 30_000,
+  // A picture may need opening at full size before it can be read: the user's
+  // condition for pictures taller than a chat window.
+  6: 60_000
 };
 
 /** Reading time per character of text the player has to read. */
 export const PER_CHAR_MS = 500;
+
+/**
+ * How much longer than the formula above each 問題 runs.
+ *
+ * Set against the real paper (the user's choice, 2026-11-22). N5's grammar-and-reading section is 22 questions in 40 minutes, and /bunpou and /dokkai are those 22. /bunpou keeps the formula's pace, about a minute a question, as guides advise for grammar. Reading gets the rest, about 22 minutes: about 3.4 minutes for a 問題4 question, 5.4 for a 問題5 question and 4.5 for 問題6, near the guides' 3 for a short text and 5 to 6 for a longer one. The factors turn the formula's average for each 問題 into those times, and keep longer texts longer. The corpus test holds the pair to the real 40 minutes.
+ */
+export const PACE: Readonly<Record<Mondai, number>> = {
+  1: 1,
+  2: 1,
+  3: 1,
+  4: 2,
+  5: 2.5,
+  6: 1.8
+};
 
 /** How a ★ line shows its four blanks, with the star in one. */
 const BLANK_LINE = `＿＿`;
@@ -130,8 +174,9 @@ const tokenFrom = (random: Random): string =>
  * How long a question stays open.
  *
  * A base per type plus time per character the player must read — the text and
- * all four options — so a long question gets longer. Rounded up to whole
- * seconds, which is all the countdown shows.
+ * all four options — so a long question gets longer, then set to the real
+ * paper's pace by {@link PACE}. Rounded up to whole seconds, which is all the
+ * countdown shows.
  */
 export const timeoutFor = (
   mondai: Mondai,
@@ -141,7 +186,10 @@ export const timeoutFor = (
   const chars =
     plain(text).length +
     options.reduce((sum, option) => sum + plain(option).length, 0);
-  return Math.ceil((BASE_MS[mondai] + chars * PER_CHAR_MS) / 1000) * 1000;
+  return (
+    Math.ceil(((BASE_MS[mondai] + chars * PER_CHAR_MS) * PACE[mondai]) / 1000) *
+    1000
+  );
 };
 
 /** Underline each part of an answer: a pair (は／は) is two parts, two blanks. */
@@ -169,20 +217,31 @@ interface Card {
   points: readonly string[];
 }
 
-/** 問題1's cards are slots; 問題2's are windows. */
-const cardsOf = (items: readonly Item[], mondai: MixPlan[`mondai`]): Card[] =>
+/** A deck whose cards are drawn one by one, by difficulty. */
+type DeckMondai = MixPlan[`mondai`] | 4 | 6;
+
+/**
+ * 問題1's cards are slots; 問題2's are windows; 問題4's and 問題6's are the questions of their texts and pictures.
+ */
+const cardsOf = (items: readonly Item[], mondai: DeckMondai): Card[] =>
   items.flatMap((item): Card[] => {
-    const units =
+    const units: ReadonlyArray<{
+      difficulty: Difficulty;
+      points?: readonly string[];
+    }> =
       mondai === 1 && item.type === `form`
         ? item.slots
         : mondai === 2 && item.type === `compose`
           ? item.windows
-          : [];
+          : (mondai === 4 && item.type === `short`) ||
+              (mondai === 6 && item.type === `info`)
+            ? item.questions
+            : [];
     return units.map((unit, index) => ({
       item,
       index,
       difficulty: unit.difficulty,
-      points: unit.points
+      points: unit.points ?? []
     }));
   });
 
@@ -205,7 +264,7 @@ const LEVELS: readonly Difficulty[] = [1, 2, 3];
  */
 export const drawDeck = (
   items: readonly Item[],
-  plan: MixPlan,
+  plan: { mondai: DeckMondai; mix: Mix },
   random: Random
 ): Array<{ item: Item; index: number }> => {
   const cards = cardsOf(items, plan.mondai);
@@ -439,6 +498,166 @@ const drawPassage = (
   return passages.at(Math.floor(random() * passages.length)) ?? null;
 };
 
+/** A text or picture with questions about it. */
+export type ReadingItem = ShortItem | MidItem | InfoItem;
+
+const MONDAI_OF: Readonly<Record<ReadingItem[`type`], 4 | 5 | 6>> = {
+  short: 4,
+  mid: 5,
+  info: 6
+};
+
+/**
+ * A reading question's four options, with each option's why beside it.
+ *
+ * Drawn options are shuffled as pairs, so a why can never end up under another option. Ordered options keep the order they are written in: the paper prints times and prices in order, and shuffled, 9:30 could come before 9:00.
+ */
+const readingOptions = (
+  question: ReadingQuestion,
+  random: Random
+): { options: string[]; whys: string[]; correct: number } => {
+  if (`wrong` in question) {
+    const drawn = shuffle(question.wrong, random).slice(0, OPTION_COUNT - 1);
+    const all = shuffle([question.answer, ...drawn], random);
+    return {
+      options: all.map(optionText),
+      whys: all.map((option) => whyOf(option) ?? ``),
+      correct: all.indexOf(question.answer)
+    };
+  }
+  return {
+    options: question.options.map(optionText),
+    whys: question.options.map((option) => whyOf(option) ?? ``),
+    correct: question.answer - 1
+  };
+};
+
+/**
+ * 問題4–6: the asked questions of one text or picture, on one card.
+ *
+ * The text, or the picture's material, counts toward the first question's time only, as a passage does: it is read once, however many questions ask about it. The English goes with the last question, which the reveal shows once.
+ */
+export const readingQuestions = (
+  item: ReadingItem,
+  /** 0-based, in the order the text answers them. */
+  asked: readonly number[],
+  firstNumber: number,
+  random: Random,
+  /** 問題6: the hosted picture's URL, when there is one. */
+  image?: string
+): ExamQuestion[] => {
+  const mondai = MONDAI_OF[item.type];
+  const text = item.type === `info` ? `` : item.text;
+  const material =
+    item.type === `info` ? materialMarkup(item.material) : undefined;
+  const intro = item.type === `info` ? undefined : item.intro;
+
+  return asked.map((index, position) => {
+    const question = item.questions.at(index);
+    if (question === undefined) {
+      throw new Error(`${item.id} has no question ${String(index + 1)}`);
+    }
+    const { options, whys, correct } = readingOptions(question, random);
+    const read = position === 0 ? `${text}${material ?? ``}` : ``;
+    return {
+      itemId: item.id,
+      slot: index + 1,
+      mondai,
+      number: firstNumber + position,
+      card: firstNumber,
+      prompt: text,
+      // Reading reveals never repeat the text: the closed card stays just above.
+      answered: text,
+      ...(intro === undefined ? {} : { intro }),
+      question: question.question,
+      ...(material === undefined ? {} : { material }),
+      ...(material === undefined || image === undefined ? {} : { image }),
+      options,
+      whys,
+      correct,
+      difficulty: question.difficulty,
+      points: [...(question.points ?? [])],
+      en: position === asked.length - 1 ? item.en : ``,
+      note: question.note,
+      token: tokenFrom(random),
+      timeoutMs: timeoutFor(mondai, `${read}${question.question}`, options)
+    };
+  });
+};
+
+/** Every way to choose `size` entries of `list`, each in list order. */
+const choices = <T>(list: readonly T[], size: number): T[][] =>
+  size === 0
+    ? [[]]
+    : list.flatMap((first, index) =>
+        choices(list.slice(index + 1), size - 1).map((rest) => [first, ...rest])
+      );
+
+/**
+ * 問題5: one text, and which of its questions to ask.
+ *
+ * The questions nearest the levels the test dealt this deck, kept in text order as the paper does. Among equally near choices, any is fair, so one is picked at random: a repeated text then asks something new.
+ */
+export const drawTogether = (
+  items: readonly Item[],
+  levels: readonly Difficulty[],
+  random: Random
+): { item: MidItem; asked: number[] } | null => {
+  const wanted = [...levels].sort((a, b) => a - b);
+  const options = items
+    .filter((item): item is MidItem => item.type === `mid`)
+    .flatMap((item) =>
+      choices(
+        item.questions.map((_, index) => index),
+        wanted.length
+      ).map((asked) => {
+        // Sorted against sorted is the closest pairing of two lists of levels.
+        const got = asked
+          .map((index) => item.questions.at(index)?.difficulty ?? 1)
+          .sort((a, b) => a - b);
+        const cost = got.reduce(
+          (sum, level, k) => sum + Math.abs(level - (wanted.at(k) ?? level)),
+          0
+        );
+        return { item, asked, cost };
+      })
+    );
+  if (options.length === 0) return null;
+  const best = Math.min(...options.map((option) => option.cost));
+  const pool = options.filter((option) => option.cost === best);
+  const pick = pool.at(Math.floor(random() * pool.length));
+  return pick === undefined ? null : { item: pick.item, asked: pick.asked };
+};
+
+/** How many of each level a list holds. */
+const mixOf = (levels: readonly Difficulty[]): Mix => ({
+  1: levels.filter((level) => level === 1).length,
+  2: levels.filter((level) => level === 2).length,
+  3: levels.filter((level) => level === 3).length
+});
+
+/**
+ * The test's reading levels, shuffled and dealt to its decks in blueprint order.
+ *
+ * Every test gets the same levels, so every test is about equally hard. Which deck gets the hard one changes, so every question of every deck can come up.
+ */
+export const dealLevels = (
+  plans: readonly ReadingPlan[],
+  mix: Mix,
+  random: Random
+): Difficulty[][] => {
+  const levels = shuffle(
+    LEVELS.flatMap((level) => Array.from({ length: mix[level] }, () => level)),
+    random
+  );
+  let at = 0;
+  return plans.map((plan) => {
+    const dealt = levels.slice(at, at + plan.questions);
+    at += plan.questions;
+    return dealt;
+  });
+};
+
 /**
  * The review links for a question's grammar points, each page once.
  *
@@ -468,11 +687,21 @@ export const drawTest = (
   test: TestId,
   items: readonly Item[],
   links: Readonly<Record<string, ReviewLink>>,
-  random: Random
+  random: Random,
+  /** Each hosted 問題6 picture's URL, by item id. */
+  pictures: Readonly<Record<string, string>> = {}
 ): ExamQuestion[] => {
   const questions: ExamQuestion[] = [];
-  for (const plan of BLUEPRINTS[test]) {
-    if (plan.mondai === 3) {
+  const plans = BLUEPRINTS[test];
+  const reading = plans.filter(
+    (plan): plan is ReadingPlan => `questions` in plan
+  );
+  // Dealt only for a test with reading, so a grammar test's draw is unchanged.
+  const dealt =
+    reading.length === 0 ? [] : dealLevels(reading, READING_MIX, random);
+
+  for (const plan of plans) {
+    if (`blanks` in plan) {
       const passage = drawPassage(items, plan, random);
       if (passage !== null) {
         questions.push(
@@ -483,6 +712,41 @@ export const drawTest = (
             random
           )
         );
+      }
+      continue;
+    }
+    if (`questions` in plan) {
+      const levels = dealt.at(reading.indexOf(plan)) ?? [];
+      if (plan.together) {
+        const text = drawTogether(items, levels, random);
+        if (text !== null) {
+          questions.push(
+            ...readingQuestions(
+              text.item,
+              text.asked,
+              questions.length + 1,
+              random
+            )
+          );
+        }
+        continue;
+      }
+      for (const { item, index } of drawDeck(
+        items,
+        { mondai: plan.mondai, mix: mixOf(levels) },
+        random
+      )) {
+        if (item.type === `short` || item.type === `info`) {
+          questions.push(
+            ...readingQuestions(
+              item,
+              [index],
+              questions.length + 1,
+              random,
+              pictures[item.id]
+            )
+          );
+        }
       }
       continue;
     }

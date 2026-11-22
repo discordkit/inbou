@@ -62,12 +62,15 @@ The full design is in [docs/specs/conjugation-quiz.md](docs/specs/conjugation-qu
 
 Practice in the shape of the real JLPT paper. The bot asks one question at a time with numbered buttons. Everyone votes privately, can change their vote until the question closes, and scores if they are right. Speed does not count, and harder questions are worth more. Each reveal teaches the point the question tested and, where Tofugu has an article on it, links there. The end of a test shows everyone's score, with a private breakdown for each player that links each missed question the same way.
 
-| Command         | What it does                                                                                                  |
-| --------------- | ------------------------------------------------------------------------------------------------------------- |
-| `/bunpou start` | An N5 grammar (文法) test, shaped like the paper: 9 forms to choose, 4 sentences to order (★), and a passage. |
-| `/bunpou end`   | End the test in this channel and show the results.                                                            |
+| Command         | What it does                                                                                                               |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `/bunpou start` | An N5 grammar (文法) test, shaped like the paper: 9 forms to choose, 4 sentences to order (★), and a passage.              |
+| `/dokkai start` | An N5 reading (読解) test, shaped like the paper: two short texts, a longer text with two questions, and a page to search. |
+| `/bunpou end`   | End the test in this channel and show the results. `/dokkai end` does the same.                                            |
 
-Every question is written and reviewed by hand. The design, and the plan for reading (`/dokkai`) and full-section tests (`/moshi`), is in [docs/specs/jlpt-mock-tests.md](docs/specs/jlpt-mock-tests.md).
+Together the two tests are the real paper's grammar-and-reading section, 22 questions, and their timers add up to its 40 minutes. In a reading test, a student who chose a wrong option is told privately why it was wrong, just after the answer is revealed; the channel sees only the answer and a short note. The page to search is a picture of a real kind of Japanese document, such as a bus-stop timetable, a receipt or a medicine bag, drawn in code at build time.
+
+Every question is written and reviewed by hand. The design, and the plan for full-section tests (`/moshi`), is in [docs/specs/jlpt-mock-tests.md](docs/specs/jlpt-mock-tests.md).
 
 ### What it stores, and how to stop it
 
@@ -123,6 +126,8 @@ handlers Worker  (src/handlers/)   ← app logic; edit freely, session survives
   │    └─ state + the question timer, on an alarm
   └─ D1 (SCORES)   the cross-session leaderboard
 ```
+
+A third Worker, **`inbou-assets`** ([wrangler.assets.jsonc](wrangler.assets.jsonc)), runs no code. It only serves the mock tests' 問題6 pictures, so publishing a picture never touches the other two.
 
 Discord allows exactly **one Gateway session per bot**, and a Worker invocation cannot hold a socket open past the request that created it. A Durable Object can: it is addressable, single-instance, and — the part that matters — its alarms survive eviction. So the connection lives in the DO.
 
@@ -185,16 +190,18 @@ identically and keeps no leaderboard, rather than refusing to start.
 
 ## 🔧 Running it
 
-| What              | Command                    | Notes                                                       |
-| ----------------- | -------------------------- | ----------------------------------------------------------- |
-| Local dev         | `vp run dev`               | Runs both Workers and the DO in real workerd via Miniflare. |
-| Tests             | `vp test`                  | Drives a real Durable Object inside workerd.                |
-| Bundle check      | `vp run check:bundle`      | Fails if the bundle pulls in a Node builtin.                |
-| Register commands | `vp run commands:register` | Dev: pushes to `DISCORD_GUILD_ID`, instantly.               |
-| Publish commands  | `vp run commands:publish`  | Global: every guild that has the bot. What users get.       |
-| Migrate scores    | `vp run scores:migrate`    | Applies the D1 schema locally. Add `--remote` for live.     |
-| Rebuild corpus    | `vp run corpus:build`      | Regenerates the word list from JMdict. Rarely needed.       |
-| Deploy            | `vp run deploy`            | Build, migrate, deploy both Workers, register commands.     |
+| What              | Command                    | Notes                                                              |
+| ----------------- | -------------------------- | ------------------------------------------------------------------ |
+| Local dev         | `vp run dev`               | Runs both Workers and the DO in real workerd via Miniflare.        |
+| Tests             | `vp test`                  | Drives a real Durable Object inside workerd.                       |
+| Bundle check      | `vp run check:bundle`      | Fails if the bundle pulls in a Node builtin.                       |
+| Register commands | `vp run commands:register` | Dev: pushes to `DISCORD_GUILD_ID`, instantly.                      |
+| Publish commands  | `vp run commands:publish`  | Global: every guild that has the bot. What users get.              |
+| Migrate scores    | `vp run scores:migrate`    | Applies the D1 schema locally. Add `--remote` for live.            |
+| Rebuild corpus    | `vp run corpus:build`      | Regenerates the word list from JMdict. Rarely needed.              |
+| Build mock tests  | `vp run exam:build`        | Checks the test items and writes the reviewed ones.                |
+| Draw pictures     | `vp run exam:draw`         | Draws the 問題6 pictures into `dist/assets`.                       |
+| Deploy            | `vp run deploy`            | Build, draw, migrate, deploy all three Workers, register commands. |
 
 Slash commands are registered over REST and persist on Discord's side, so this is a deliberate step rather than something the bot does at boot. Re-running it replaces the whole set, which is what makes a removed command disappear.
 
@@ -261,15 +268,18 @@ production without a version and a changelog line.
 1. **`vp build`** — Vite's build, not wrangler's. Wrangler bundles on its own
    and would apply neither the `?raw` SQL import nor the `__BUILD__` define, so
    `/feedback` would report `dev` as the build for every production report.
-2. **D1 migrations**, before the Worker that reads the table. Idempotent.
-3. **The handlers Worker, then the bot Worker.** This order is load-bearing:
-   the bot declares a service binding to `inbou-handlers`, and Cloudflare fails
-   a deploy that binds a Worker which does not exist yet.
-4. **Slash commands last**, so Discord never offers a command the running code
+2. **The 問題6 pictures are drawn** into `dist/assets`. This stops the deploy
+   if `corpus.json` is stale or a picture does not fit.
+3. **D1 migrations**, before the Worker that reads the table. Idempotent.
+4. **`inbou-assets`, then the handlers Worker, then the bot Worker.** This
+   order is load-bearing: the pictures go up before the handlers that link
+   them, and the bot declares a service binding to `inbou-handlers`, and
+   Cloudflare fails a deploy that binds a Worker which does not exist yet.
+5. **Slash commands last**, so Discord never offers a command the running code
    cannot answer.
 
-If any step after the first deploy fails, both Workers are rolled back to the
-versions they were serving beforehand, pinned by id. The schema, the code and
+If any step after the first deploy fails, every Worker deployed so far is rolled
+back to the version it was serving beforehand, pinned by id. The schema, the code and
 the command list only work as a set — code expecting a column D1 does not have
 is broken, and so are commands the running code cannot answer.
 
@@ -292,7 +302,7 @@ production deploy went out green and then threw `1101` on every request.
 
 | Secret                   | Used for                                  |
 | ------------------------ | ----------------------------------------- |
-| `CLOUDFLARE_API_TOKEN`   | Deploying both Workers and applying D1    |
+| `CLOUDFLARE_API_TOKEN`   | Deploying the Workers and applying D1     |
 | `CLOUDFLARE_ACCOUNT_ID`  | Same                                      |
 | `DISCORD_BOT_TOKEN`      | Registering slash commands after deploy   |
 | `DISCORD_APPLICATION_ID` | Same                                      |

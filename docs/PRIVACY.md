@@ -2,7 +2,7 @@
 
 **鸚法 (inbou)** — a Japanese conjugation practice bot for Discord.
 
-Last updated: 26 August 2026
+Last updated: 22 November 2026
 
 This describes what the bot stores, why, and how to remove it. It reflects what
 the code actually does; the tables it names are in
@@ -57,6 +57,12 @@ answers, no timestamps beyond the two above.
 A session holds, in storage attached to that channel: the current question, who
 has answered it, what they typed, and the running scores. This is what makes
 the game work — the standings, the reveal, and `/review`.
+
+In a reading mock test (`/dokkai`), the session also holds, for the question on
+screen only, a reply token from each player's last button press. It lets the
+bot tell a player privately why their answer was wrong, once the question
+closes. Discord makes such a token useless after 15 minutes, and the session
+drops every token when the next question opens.
 
 **It is replaced when the next session starts in that channel.** A finished
 session's state stays there until then, so the most recent game in a channel is

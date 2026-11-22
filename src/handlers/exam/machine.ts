@@ -30,6 +30,16 @@ import { WEIGHT } from "./items.js";
 /** Votes on one question, by player. The value is the option pressed. */
 export type Ballot = Record<string, number>;
 
+/**
+ * How to reply privately to a player after their vote: the interaction's application and token.
+ *
+ * A token can post as the bot for fifteen minutes, so it is a credential: kept only for the card it was pressed on, never logged, and gone when the next card opens.
+ */
+export interface Reply {
+  application: string;
+  token: string;
+}
+
 /** What starts a test. */
 export interface ExamInput {
   /**
@@ -75,6 +85,12 @@ export interface ExamContext {
    * the record is always their latest choice.
    */
   votes: Partial<Record<number, Ballot>>;
+  /**
+   * Each player's latest press on the open card, so its reveal can tell them privately why their choice was wrong. Only for cards that explain their wrong options; a grammar card keeps none.
+   *
+   * Optional because a test saved before this field existed may still be running when it deploys.
+   */
+  replies?: Partial<Record<string, Reply>>;
   /** The final votes on each closed question, by question index. */
   ballots: Ballot[];
   /** Epoch ms. Set only while `asking` (the timer) or `paused` (the wait). */
@@ -97,7 +113,14 @@ export interface ExamContext {
 
 export type ExamEvent =
   /** A vote on one question of the open card, by its index in the test. */
-  | { type: `VOTE`; userId: string; question: number; option: number }
+  | {
+      type: `VOTE`;
+      userId: string;
+      question: number;
+      option: number;
+      /** Set only on a card that explains its wrong options. */
+      reply?: Reply;
+    }
   | { type: `TIMEOUT` }
   /** Open the next stored question. */
   | { type: `NEXT`; now: number }
@@ -146,6 +169,8 @@ const openQuestion = assign<
   never
 >({
   votes: {},
+  // The last card's tokens are spent: nothing more is said about it.
+  replies: {},
   posted: true,
   // The previous card's message, deliberately dropped: carrying it would make
   // the next timeout settle a message the channel has moved past.
@@ -189,6 +214,7 @@ export const examMachine = setup({
     questions: input.questions,
     index: 0,
     votes: {},
+    replies: {},
     ballots: [],
     deadline: input.introUntil,
     posted: false,
@@ -210,7 +236,12 @@ export const examMachine = setup({
                 ...context.votes[event.question],
                 [event.userId]: event.option
               }
-            })
+            }),
+            // The latest press wins, as the vote does: its token is the freshest.
+            replies: ({ context, event }) =>
+              event.reply === undefined
+                ? context.replies
+                : { ...context.replies, [event.userId]: event.reply }
           })
         },
         // Only here: a `POSTED` arriving later would be for a closed question.
@@ -429,7 +460,7 @@ export interface VoteResult {
  */
 export const castVote = (
   actor: ExamActor,
-  vote: { userId: string; token: string; option: number }
+  vote: { userId: string; token: string; option: number; reply?: Reply }
 ): VoteResult => {
   const before = actor.getSnapshot();
   if (before.value !== `asking`) return { outcome: `not-open` };
@@ -447,11 +478,14 @@ export const castVote = (
 
   const question = index + offset;
   const hadVoted = Object.hasOwn(votes[question] ?? {}, vote.userId);
+  // A token is a credential: kept only where a reveal will use it.
+  const explains = card.some((on) => on.whys !== undefined);
   actor.send({
     type: `VOTE`,
     userId: vote.userId,
     question,
-    option: vote.option
+    option: vote.option,
+    ...(explains && vote.reply !== undefined ? { reply: vote.reply } : {})
   });
 
   const playersIn = (ballots: ExamContext[`votes`]): number =>

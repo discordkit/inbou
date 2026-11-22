@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // The 問題6 pictures, and nothing else. Assets only: no script runs, and static asset requests are free and unlimited on every plan.
+  //
+  // A Worker of its own, so publishing a picture never redeploys the bot: every bot deploy restarts its Gateway connection. Deployed BEFORE the handlers (see scripts/deploy.mjs), because a card must never link a picture that is not there yet.
+  "name": "inbou-assets",
+  "compatibility_date": "2026-08-11",
+  // `vp run exam:draw` writes here. Each picture is named by a hash of what it draws, so a new picture gets a new URL and Discord's cache never serves an old one.
+  "assets": { "directory": "./dist/assets" },
+  // Public on workers.dev, so Discord can fetch the pictures cards link to. The handlers know this address as ASSET_BASE.
+  "workers_dev": true,
+  "preview_urls": false
+}

@@ -10,11 +10,18 @@ import {
   itemHints,
   itemProblems,
   corpusProblems,
+  materialMarkup,
   parse,
   plain,
+  reviewLinksOf,
   type ComposeItem,
   type FormItem,
-  type PassageItem
+  type InfoItem,
+  type Material,
+  type Option,
+  type PassageItem,
+  type Sheet,
+  type ShortItem
 } from "../items.js";
 
 /**
@@ -394,6 +401,463 @@ describe(`passage items`, () => {
         new Set(FOUR)
       )
     ).toEqual([`n5-b3-0001: blanks （2） and （3） sit side by side`]);
+  });
+});
+
+describe(`reading items`, () => {
+  const short = (overrides: Partial<ShortItem> = {}): ShortItem => ({
+    id: `n5-d4-0001`,
+    type: `short`,
+    status: `draft`,
+    text: `{今日|きょう}は 6{時|じ}に {帰|かえ}ります。`,
+    en: `I will be home at six today.`,
+    questions: [
+      {
+        question: `{何時|なんじ}に {帰|かえ}りますか。`,
+        options: [`5{時|じ}`, `6{時|じ}`, `7{時|じ}`, `8{時|じ}`],
+        answer: 2,
+        difficulty: 1,
+        note: `6{時|じ}に {帰|かえ}ります.`
+      }
+    ],
+    ...overrides
+  });
+
+  const infoOf = (material: Material): InfoItem => ({
+    id: `n5-d6-0001`,
+    type: `info`,
+    status: `draft`,
+    material,
+    en: `Bus times.`,
+    questions: [
+      {
+        question: `{何時|なんじ}の バスに {乗|の}りますか。`,
+        answer: `8:10`,
+        wrong: [
+          { option: `7:40`, why: `too early` },
+          { option: `8:40`, why: `too late` },
+          { option: `9:10`, why: `much too late` }
+        ],
+        difficulty: 2,
+        note: `n`
+      }
+    ]
+  });
+
+  const info = (blocks: Sheet[`blocks`]): InfoItem =>
+    infoOf({ kind: `notice`, title: `バスの {時間|じかん}`, blocks });
+
+  type Receipt = Extract<Material, { kind: `receipt` }>;
+  const till = (overrides: Partial<Receipt> = {}): Receipt => ({
+    kind: `receipt`,
+    store: `コンビニ`,
+    items: [
+      { name: `おにぎり`, price: 150 },
+      { name: `お{茶|ちゃ}`, price: 130 }
+    ],
+    total: { label: `{合計|ごうけい}`, amount: 280 },
+    paid: { label: `おあずかり`, amount: 300 },
+    change: { label: `おつり`, amount: 20 },
+    ...overrides
+  });
+
+  const asked = (
+    answer: string,
+    wrong: Option[]
+  ): ShortItem[`questions`][number] => ({
+    question: `どう しますか。`,
+    answer,
+    wrong,
+    difficulty: 1,
+    note: `n`
+  });
+
+  it(`passes a well-formed text and a well-formed picture`, () => {
+    expect(itemProblems(short(), POINTS)).toEqual([]);
+    expect(
+      itemProblems(
+        info([
+          {
+            table: {
+              head: [`{駅|えき}`, `{大学|だいがく}`],
+              rows: [[`8:10`, `8:35`]]
+            }
+          }
+        ]),
+        POINTS
+      )
+    ).toEqual([]);
+  });
+
+  it(`catches a bracketed number in reading text`, () => {
+    // WHY: to the parser, （1） is a blank. A notice that numbers its points that way would show the paper's empty blank in the middle of the text.
+    expect(
+      itemProblems(short({ text: `（1） {本|ほん}を {読|よ}みます。` }), POINTS)
+    ).toEqual([
+      `n5-d4-0001: reading text has no （n） blanks; write the number another way`
+    ]);
+  });
+
+  it(`catches the answer hiding in a question's wrong pool`, () => {
+    // WHY: two options would both be the answer, and the one marked right would be chosen by the draw, not by the text.
+    expect(
+      itemProblems(
+        short({
+          questions: [
+            asked(`バスで`, [`バスで`, `{電車|でんしゃ}で`, `あるいて`])
+          ]
+        }),
+        POINTS
+      )
+    ).toEqual([`n5-d4-0001 question 1: the answer is also in the wrong pool`]);
+  });
+
+  it(`catches two ordered options that are the same`, () => {
+    // WHY: a student who found the right time could not tell which of two identical buttons the bot counts as right.
+    expect(
+      itemProblems(
+        short({
+          questions: [
+            {
+              question: `{何時|なんじ}に {帰|かえ}りますか。`,
+              options: [`5{時|じ}`, `6{時|じ}`, `6{時|じ}`, `8{時|じ}`],
+              answer: 2,
+              difficulty: 1,
+              note: `n`
+            }
+          ]
+        }),
+        POINTS
+      )
+    ).toEqual([`n5-d4-0001 question 1: two options are the same`]);
+  });
+
+  it(`asks a medium or hard question to say why each wrong option is wrong`, () => {
+    // WHY: reading is comprehension, not a grammar point. A student who chose a wrong option at medium or hard needs to see what in the text rules it out; an easy question's note, which says what was asked, is enough.
+    const explained = (difficulty: 1 | 2 | 3): ShortItem =>
+      short({
+        questions: [
+          {
+            ...asked(`バスで`, [
+              { option: `{電車|でんしゃ}で`, why: `no train` },
+              `あるいて`,
+              { option: `タクシーで`, why: `no taxi` }
+            ]),
+            difficulty
+          }
+        ]
+      });
+    expect(itemProblems(explained(1), POINTS)).toEqual([]);
+    for (const difficulty of [2, 3] as const) {
+      expect(itemProblems(explained(difficulty), POINTS)).toEqual([
+        `n5-d4-0001 question 1: a medium or hard question says why each wrong option is wrong; "あるいて" has no why`
+      ]);
+    }
+  });
+
+  it(`asks for the whys of an ordered question's wrong options, never its answer's`, () => {
+    // WHY: an ordered question keeps all four options in one list, so the answer sits among them. A why on the answer would tell the student the right option is wrong.
+    const ordered = (options: Option[]): ShortItem =>
+      short({
+        questions: [
+          {
+            question: `{何時|なんじ}に {帰|かえ}りますか。`,
+            options,
+            answer: 2,
+            difficulty: 2,
+            note: `n`
+          }
+        ]
+      });
+    expect(
+      itemProblems(
+        ordered([
+          { option: `5{時|じ}`, why: `early` },
+          `6{時|じ}`,
+          { option: `7{時|じ}`, why: `late` },
+          { option: `8{時|じ}`, why: `later` }
+        ]),
+        POINTS
+      )
+    ).toEqual([]);
+    expect(
+      itemProblems(
+        ordered([
+          { option: `5{時|じ}`, why: `early` },
+          { option: `6{時|じ}`, why: `right` },
+          `7{時|じ}`,
+          { option: `8{時|じ}`, why: `later` }
+        ]),
+        POINTS
+      )
+    ).toEqual([
+      `n5-d4-0001 question 1: the answer has a why, as if it were wrong`,
+      `n5-d4-0001 question 1: a medium or hard question says why each wrong option is wrong; "7{時|じ}" has no why`
+    ]);
+  });
+
+  it(`catches a reading question's grammar point that is not in the list`, () => {
+    // WHY: the reveal links a point's review page by its id. An id that is not in the list links nothing, and the student loses the one pointer to what decided the question.
+    expect(
+      itemProblems(
+        short({
+          questions: [
+            {
+              ...asked(`バスで`, [
+                `あるいて`,
+                `{電車|でんしゃ}で`,
+                `タクシーで`
+              ]),
+              points: [`particle-made-ni`]
+            }
+          ]
+        }),
+        POINTS
+      )
+    ).toEqual([
+      `n5-d4-0001 question 1: grammar point "particle-made-ni" is not in the list`
+    ]);
+  });
+
+  it(`links the review page of a point a reading question names`, () => {
+    // WHY: corpus.json carries only the links of points in use. A reading question's point left out of that count would reach the reveal with no page to link.
+    const point = {
+      id: `particle-de-means`,
+      pattern: `で`,
+      meaning: `by`,
+      tofugu: `particle-de`
+    };
+    const item = short({
+      questions: [
+        {
+          ...asked(`バスで`, [`あるいて`, `{電車|でんしゃ}で`, `タクシーで`]),
+          points: [`particle-de-means`]
+        }
+      ]
+    });
+    expect(Object.keys(reviewLinksOf([point], [item]))).toEqual([
+      `particle-de-means`
+    ]);
+  });
+
+  it(`catches a table row that does not fill its head`, () => {
+    // WHY: the picture would put a value under the wrong heading, and the student would read a wrong time from it.
+    expect(
+      itemProblems(
+        info([
+          {
+            table: { head: [`{駅|えき}`, `{大学|だいがく}`], rows: [[`8:10`]] }
+          }
+        ]),
+        POINTS
+      )
+    ).toEqual([`n5-d6-0001 block 1 row 1: 1 cells, but the head has 2`]);
+  });
+
+  it(`checks the kanji in a picture as well as in the text`, () => {
+    // WHY: the picture is read like the text, and its readings line comes from the same markup. A kanji with no reading, or one above N4, would be just as unreadable there.
+    expect(
+      itemProblems(
+        info([
+          {
+            lists: [
+              { head: `ゆうびん`, rows: [[`{切手|きって}`, `{郵|ゆう}`]] }
+            ]
+          }
+        ]),
+        POINTS
+      )
+    ).toEqual([
+      `n5-d6-0001 blocks 1 lists 1 rows 1 2: kanji 郵 is above N4; write the word in kana`
+    ]);
+  });
+
+  it(`checks the kanji in every panel line`, () => {
+    // WHY: on a route chart the fare and the time sit in a panel's lines, and the question turns on them. A kanji there that the student cannot read hides the answer.
+    expect(
+      itemProblems(
+        info([
+          {
+            panels: [
+              { head: `① バス`, lines: [`30{分|ぷん}`] },
+              {
+                head: `② {電車|でんしゃ}`,
+                lines: [`{郵|ゆう}びんきょくの まえ`]
+              }
+            ]
+          }
+        ]),
+        POINTS
+      )
+    ).toEqual([
+      `n5-d6-0001 blocks 1 panels 2 lines 1: kanji 郵 is above N4; write the word in kana`
+    ]);
+  });
+
+  it(`checks the kanji in every field of a document, not only in sheets`, () => {
+    // WHY: a receipt, a timetable or a chat has its own fields, and new kinds will add more. The check walks every string, so a field nobody listed is still read for kanji the student cannot read.
+    expect(
+      itemProblems(
+        infoOf(
+          till({
+            items: [
+              { name: `{郵|ゆう}びん`, price: 150 },
+              { name: `お{茶|ちゃ}`, price: 130 }
+            ]
+          })
+        ),
+        POINTS
+      )
+    ).toEqual([
+      `n5-d6-0001 items 1 name: kanji 郵 is above N4; write the word in kana`
+    ]);
+  });
+
+  it(`catches a receipt whose sums do not add up`, () => {
+    // WHY: a question asks how much was paid or what change came back. A till never prints wrong sums, so a picture that does teaches the student to distrust a right answer.
+    expect(itemProblems(infoOf(till()), POINTS)).toEqual([]);
+    expect(
+      itemProblems(
+        infoOf(
+          till({
+            total: { label: `{合計|ごうけい}`, amount: 300 },
+            change: { label: `おつり`, amount: 50 }
+          })
+        ),
+        POINTS
+      )
+    ).toEqual([
+      `n5-d6-0001: the items add up to ¥280, but the total says ¥300`,
+      `n5-d6-0001: ¥300 paid for ¥300 leaves ¥0, but the change says ¥50`
+    ]);
+  });
+
+  it(`catches a timetable hour that does not fill its columns`, () => {
+    // WHY: the minutes would slide under the wrong kind of day, and a student would take a Saturday bus that only runs on weekdays.
+    expect(
+      itemProblems(
+        infoOf({
+          kind: `stop-timetable`,
+          mode: `bus`,
+          stop: `{駅前|えきまえ}`,
+          bound: `{大学|だいがく}ゆき`,
+          columns: [`{月|げつ}〜{金|きん}`, `{土|ど}・{日|にち}`],
+          rows: [{ hour: 8, minutes: [[`10`, `40`]] }]
+        }),
+        POINTS
+      )
+    ).toEqual([
+      `n5-d6-0001 hour 8: 1 lists of minutes, but there are 2 columns`
+    ]);
+  });
+
+  it(`catches a calendar colour the legend does not explain`, () => {
+    // WHY: the colour is the only thing that says what a marked day is for. Without its legend entry the student would have to guess, and the paper never makes them guess.
+    expect(
+      itemProblems(
+        infoOf({
+          kind: `calendar`,
+          title: `2{月|がつ}`,
+          week: [
+            `{日|にち}`,
+            `{月|げつ}`,
+            `{火|か}`,
+            `{水|すい}`,
+            `{木|もく}`,
+            `{金|きん}`,
+            `{土|ど}`
+          ],
+          first: 0,
+          days: 28,
+          legend: [{ tone: `green`, short: `もえる`, label: `もえる ごみ` }],
+          marks: [
+            { day: 2, tone: `green` },
+            { day: 4, tone: `blue` }
+          ]
+        }),
+        POINTS
+      )
+    ).toEqual([`n5-d6-0001: day 4 is blue, which the legend does not explain`]);
+  });
+
+  it(`writes out every line of the picture for its alt text`, () => {
+    // WHY: a student who cannot see the picture reads this instead, and the line left out could be the one that holds the answer. Empty corner cells add nothing to read.
+    expect(
+      materialMarkup({
+        kind: `notice`,
+        title: `みどり {図書館|としょかん}`,
+        blocks: [
+          {
+            table: {
+              head: [``, `{時間|じかん}`],
+              rows: [[`{月|げつ}`, `やすみ`]]
+            }
+          },
+          {
+            lists: [
+              { head: `{飲|の}みもの`, rows: [[`ミルク`, `150{円|えん}`]] }
+            ]
+          },
+          { text: [`5さつまで {借|か}りられます。`] },
+          {
+            panels: [
+              { head: `① バス`, lines: [`30{分|ぷん}`, `220{円|えん}`] },
+              { head: `② タクシー`, lines: [`10{分|ぷん}`] }
+            ]
+          }
+        ]
+      })
+    ).toBe(
+      [
+        `みどり {図書館|としょかん}`,
+        `{時間|じかん}`,
+        `{月|げつ} やすみ`,
+        `{飲|の}みもの`,
+        `ミルク 150{円|えん}`,
+        `5さつまで {借|か}りられます。`,
+        `① バス`,
+        `30{分|ぷん}`,
+        `220{円|えん}`,
+        `② タクシー`,
+        `10{分|ぷん}`
+      ].join(`\n`)
+    );
+  });
+
+  it(`points out whole words every reading option shares`, () => {
+    // WHY: バスで 行きます。 and あるいて 行きます。 make the student read 行きます four times. It belongs in the question: 何で 行きますか。
+    expect(
+      itemHints(
+        short({
+          questions: [
+            asked(`バスで {行|い}きます。`, [
+              `{電車|でんしゃ}で {行|い}きます。`,
+              `あるいて {行|い}きます。`,
+              `タクシーで {行|い}きます。`
+            ])
+          ]
+        })
+      )
+    ).toEqual([
+      `n5-d4-0001 question 1: every option ends in "行きます。"; move it into the sentence unless it is part of what varies`
+    ]);
+  });
+
+  it(`stays quiet about a shared ます。, which cannot move`, () => {
+    // WHY: nearly every reading option is a short sentence ending in ます。 A hint on each would teach reviewers to ignore the hint.
+    expect(
+      itemHints(
+        short({
+          questions: [
+            asked(`{食|た}べます。`, [
+              `{飲|の}みます。`,
+              `{読|よ}みます。`,
+              `{書|か}きます。`
+            ])
+          ]
+        })
+      )
+    ).toEqual([]);
   });
 });
 

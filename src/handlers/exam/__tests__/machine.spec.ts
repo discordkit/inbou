@@ -283,3 +283,48 @@ describe(`a card of several questions`, () => {
     expect(vote(actor, `ben`, 0, `tok2`).voters).toBe(2);
   });
 });
+
+describe(`reply tokens`, () => {
+  const press = (
+    actor: ExamActor,
+    userId: string,
+    option: number,
+    token: string,
+    tok = `tok1`
+  ) =>
+    castVote(actor, {
+      userId,
+      token: tok,
+      option,
+      reply: { application: `app`, token }
+    });
+  const explained = (number: number): ExamQuestion => ({
+    ...question(number),
+    mondai: 4,
+    whys: [``, `why`, `why`, `why`]
+  });
+
+  it(`keeps a token only where a reveal will explain something`, () => {
+    // WHY: a token can post as the bot for 15 minutes. A grammar card sends no private why, so holding its voters' tokens would keep credentials for nothing.
+    const grammar = started([question(1)]);
+    press(grammar, `ann`, 1, `secret`);
+    expect(viewOf(grammar).context.replies).toEqual({});
+
+    const reading = started([explained(1)]);
+    press(reading, `ann`, 1, `first`);
+    press(reading, `ann`, 2, `second`);
+    // The latest press: its token is the freshest, and its vote is the one explained.
+    expect(viewOf(reading).context.replies).toEqual({
+      ann: { application: `app`, token: `second` }
+    });
+  });
+
+  it(`forgets the last card's tokens when the next card opens`, () => {
+    // WHY: a token outlives its card by minutes. Kept, a later reveal could answer a press made on an earlier question, about a card that student never saw explained.
+    const actor = started([explained(1), explained(2)]);
+    press(actor, `ann`, 1, `secret`);
+    closeQuestion(actor);
+    actor.send({ type: `NEXT`, now: 2_000 });
+    expect(viewOf(actor).context.replies).toEqual({});
+  });
+});

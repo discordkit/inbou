@@ -2,16 +2,21 @@ import { readdirSync, readFileSync } from "node:fs";
 import * as v from "valibot";
 import { describe, expect, it } from "vite-plus/test";
 import { parse } from "yaml";
+import { pictureName, versionsOf } from "../../../../scripts/lib/pictures.mjs";
 import { BLUEPRINTS } from "../blueprint.js";
 import corpus from "../corpus.json" with { type: "json" };
 import {
   composeQuestion,
+  drawTest,
   formQuestion,
   passageQuestions,
+  readingQuestions,
   reviewOf,
   type ExamQuestion
 } from "../draw.js";
+import { materialHtml, materialWidth } from "../material/index.js";
 import {
+  bare,
   chunksOf,
   corpusProblems,
   display,
@@ -19,12 +24,21 @@ import {
   grammarPointsSchema,
   itemProblems,
   itemsSchema,
+  materialMarkup,
+  optionText,
   reviewLinksOf,
   WINDOW_SIZE,
+  type InfoItem,
   type Item,
   type Slot
 } from "../items.js";
-import { LABEL_MAX, questionMessage, revealMessage } from "../render.js";
+import {
+  CONTENT_MAX,
+  followUpText,
+  LABEL_MAX,
+  questionMessage,
+  revealMessage
+} from "../render.js";
 
 /**
  * The whole corpus, every run.
@@ -43,10 +57,12 @@ const points = v.parse(
   read(`${ROOT}/grammar-points.yaml`)
 );
 const pointIds = new Set(points.map((point) => point.id));
-const items = readdirSync(`${ROOT}/bunpou`)
-  .filter((file) => file.endsWith(`.yaml`))
-  .sort()
-  .flatMap((file) => v.parse(itemsSchema, read(`${ROOT}/bunpou/${file}`)));
+const items = [`bunpou`, `dokkai`].flatMap((deck) =>
+  readdirSync(`${ROOT}/${deck}`)
+    .filter((file) => file.endsWith(`.yaml`))
+    .sort()
+    .flatMap((file) => v.parse(itemsSchema, read(`${ROOT}/${deck}/${file}`)))
+);
 
 /** Discord's limits on one Components V2 message. */
 const COMPONENTS_MAX = 40;
@@ -134,6 +150,37 @@ const longestCards = (item: Item): ExamQuestion[][] => {
         )
       );
     }
+    // Each question alone, or for 問題5 every pair a test could ask, in text order.
+    case `short`:
+    case `mid`:
+    case `info`: {
+      const longest = {
+        ...item,
+        questions: item.questions.map((question) =>
+          `wrong` in question
+            ? {
+                ...question,
+                wrong: [...question.wrong]
+                  .sort((a, b) => optionText(b).length - optionText(a).length)
+                  .slice(0, 3)
+              }
+            : question
+        )
+      };
+      const indices = item.questions.map((_, index) => index);
+      const sets =
+        item.type === `mid`
+          ? choices(indices, 2)
+          : indices.map((index) => [index]);
+      return sets.map((asked) =>
+        readingQuestions(longest, asked, 1, zero).map((question) =>
+          // As shipped: the picture hosted, its text in the alt and the readings line.
+          question.material === undefined
+            ? question
+            : { ...question, image: `https://assets.example/${item.id}.webp` }
+        )
+      );
+    }
   }
 };
 
@@ -152,6 +199,11 @@ const optionsOf = (item: Item): string[] => {
           .map((chunk) => chunk.text)
       );
     }
+    // Reading options sit in the card, not on the buttons, which show only the number.
+    case `short`:
+    case `mid`:
+    case `info`:
+      return [];
   }
 };
 
@@ -169,6 +221,44 @@ describe(`the mock-test corpus`, () => {
       ...items.flatMap((item) => itemProblems(item, pointIds))
     ];
     expect(problems).toEqual([]);
+  });
+
+  it(`writes every word of every picture into its alt text`, () => {
+    // WHY: the alt text is the picture for a student who cannot see it, and
+    // the readings line under the picture is built from it. A field that a
+    // template draws but the alt text leaves out could hold the answer, and its
+    // kanji would get no reading. Walks the data, so a new kind is covered the
+    // day its first item exists.
+    const notText = new Set([
+      `kind`,
+      `tone`,
+      `icon`,
+      `variant`,
+      `mode`,
+      `sky`,
+      `arrow`
+    ]);
+    const texts = (value: unknown, key = ``): string[] => {
+      if (typeof value === `string`) {
+        return notText.has(key) || value === `` ? [] : [value];
+      }
+      if (Array.isArray(value))
+        return value.flatMap((entry) => texts(entry, key));
+      if (typeof value === `object` && value !== null) {
+        return Object.entries(value).flatMap(([name, entry]) =>
+          texts(entry, name)
+        );
+      }
+      return [];
+    };
+    const missing = items.flatMap((item) => {
+      if (item.type !== `info`) return [];
+      const alt = materialMarkup(item.material);
+      return texts(item.material)
+        .filter((text) => !alt.includes(text))
+        .map((text) => `${item.id}: ${text}`);
+    });
+    expect(missing).toEqual([]);
   });
 
   it(`renders every card inside Discord's limits`, () => {
@@ -206,6 +296,73 @@ describe(`the mock-test corpus`, () => {
     expect(over).toEqual([]);
   });
 
+  it(`closes every reading card while its voters' reply tokens still work`, () => {
+    // WHY: a student's private why is sent on the token of their vote, and a token works for 15 minutes. A card open longer would reach its reveal with dead tokens, and the whys would silently go nowhere. One minute is kept back for the reveal itself.
+    const TOKEN_LIFE_MS = 15 * 60_000;
+    const long = items.flatMap((item) =>
+      longestCards(item)
+        .filter((card) => card.some((question) => question.mondai >= 4))
+        .map((card) => ({
+          id: item.id,
+          ms: card.reduce((sum, question) => sum + question.timeoutMs, 0)
+        }))
+        .filter(({ ms }) => ms > TOKEN_LIFE_MS - 60_000)
+        .map(({ id, ms }) => `${id}: ${String(ms / 1000)} s`)
+    );
+    expect(long).toEqual([]);
+  });
+
+  it(`gives grammar and reading together the real paper's 40 minutes`, () => {
+    // WHY: /bunpou and /dokkai are the 22 questions of the real N5 grammar-and-reading section, which allows 40 minutes. Students practise to finish inside that limit (the user's aim, 2026-11-22): much less, and the test feels beyond them; much more, and they never learn the pace. Measured as the average over many draws, so a batch of longer texts that shifts it shows here.
+    const shipped = items.filter((item) => item.status === `reviewed`);
+    let state = 11;
+    const random = (): number => {
+      state = (state * 1_664_525 + 1_013_904_223) % 4_294_967_296;
+      return state / 4_294_967_296;
+    };
+    const RUNS = 300;
+    const minutes = ([`bunpou`, `dokkai`] as const).reduce(
+      (sum, test) =>
+        sum +
+        Array.from({ length: RUNS }, () =>
+          drawTest(test, shipped, {}, random).reduce(
+            (total, question) => total + question.timeoutMs,
+            0
+          )
+        ).reduce((total, ms) => total + ms, 0) /
+          RUNS /
+          60_000,
+      0
+    );
+    expect(minutes).toBeGreaterThan(38);
+    expect(minutes).toBeLessThan(42);
+  });
+
+  it(`fits every private follow-up in one message`, () => {
+    // WHY: Discord rejects a follow-up over 2,000 characters, and the student would hear nothing. Measured at the worst a card can do: every question on it answered wrong, with its longest why.
+    const over = items.flatMap((item) =>
+      longestCards(item).flatMap((card) => {
+        const picks = card.flatMap((question) => {
+          const longestWhy = (question.whys ?? []).reduce(
+            (best, why, index) =>
+              why.length > (question.whys?.at(best)?.length ?? 0)
+                ? index
+                : best,
+            0
+          );
+          return longestWhy === question.correct
+            ? []
+            : [{ question, chose: longestWhy }];
+        });
+        const text = followUpText(picks) ?? ``;
+        return text.length > CONTENT_MAX
+          ? [`${item.id}: ${String(text.length)} characters`]
+          : [];
+      })
+    );
+    expect(over).toEqual([]);
+  });
+
   it(`never needs to trim an option to fit its button`, () => {
     // WHY: the renderer trims a long label with "…", which keeps Discord
     // happy but could hide the very difference between two options. So no
@@ -225,6 +382,29 @@ describe(`the mock-test corpus`, () => {
     expect(corpus.drafts).toBe(false);
     expect(corpus.items).toEqual(
       items.filter((item) => item.status === `reviewed`)
+    );
+  });
+
+  it(`names every reviewed picture as its template draws it today`, () => {
+    // WHY: a card links its picture by the name in corpus.json, and the draw writes the file under the name the template gives now. A template, font or material changed without a rebuild would link a picture nobody drew: a broken image in the middle of a test.
+    const versions = versionsOf(process.cwd());
+    expect(corpus.pictures).toEqual(
+      Object.fromEntries(
+        items
+          .filter(
+            (item): item is InfoItem =>
+              item.type === `info` && item.status === `reviewed`
+          )
+          .map((item) => [
+            item.id,
+            pictureName(
+              item.id,
+              materialHtml(item.material, bare),
+              materialWidth(item.material),
+              versions
+            )
+          ])
+      )
     );
   });
 

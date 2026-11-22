@@ -64,6 +64,14 @@ export const diagnostics = defineDiagnostics({
       why: (p: { name: string }) => `No handler for interaction \`${p.name}\`.`,
       fix: (_p: { name: string }) =>
         `Re-run \`vp run commands:register\`, or add a case for it in commands.ts. The registered list is replaced wholesale, so a removed command disappears.`
+    },
+
+    /** More wrong answers on one card than one invocation may follow up. */
+    FOLLOW_UPS_CAPPED: {
+      why: (p: { sent: number; skipped: number }) =>
+        `A reveal sent ${String(p.sent)} private follow-ups and skipped ${String(p.skipped)}, to stay inside the free plan's 50 calls per invocation.`,
+      fix: (_p: { sent: number; skipped: number }) =>
+        `The skipped players can still read their whys in My results. If classes this large are usual, send the rest from a second invocation (see FOLLOW_UP_MAX in exam/flow.ts).`
     }
   }
 });

@@ -92,7 +92,8 @@ export const parseResults = (customId: string): string | null => {
 
 /** What each test is called on its cards. */
 export const TEST_NAMES: Readonly<Record<TestId, string>> = {
-  bunpou: `文法(ぶんぽう) · N5`
+  bunpou: `文法(ぶんぽう) · N5`,
+  dokkai: `読解(どっかい) · N5`
 };
 
 /**
@@ -103,8 +104,18 @@ export const TEST_NAMES: Readonly<Record<TestId, string>> = {
 export const INSTRUCTIONS: Readonly<Record<Mondai, string>> = {
   1: `${BLANK}に {何|なに}を {入|い}れますか。1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
   2: `★に {入|はい}る ものは どれですか。1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
-  3: `［　］に {何|なに}を {入|い}れますか。ぶんしょうの いみを かんがえて、1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`
+  3: `［　］に {何|なに}を {入|い}れますか。ぶんしょうの いみを かんがえて、1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
+  4: `つぎの ぶんしょうを {読|よ}んで、しつもんに こたえて ください。こたえは、1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
+  5: `つぎの ぶんしょうを {読|よ}んで、しつもんに こたえて ください。こたえは、1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
+  // The paper's 右の ページ: here the picture sits in the card, so つぎの.
+  6: `つぎの ページを {見|み}て、しつもんに こたえて ください。こたえは、1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`
 };
+
+/** Reading puts its options in the card, and its buttons show only the number. */
+const isReading = (question: ExamQuestion): boolean => question.mondai >= 4;
+
+/** Discord's cap on a picture's description, its alt text. */
+const ALT_MAX = 1024;
 
 /**
  * A sentence as a heading, every line of it.
@@ -203,21 +214,160 @@ const optionRow = (question: ExamQuestion, closed: boolean): ActionRow => ({
  * number, so the whole passage is answered on one card: about 32 of Discord's
  * 40 components for four blanks.
  */
-const questionBody = (
-  view: QuestionView,
-  closed: boolean
-): MessageComponent => {
+/** The card's top line: which 問題, which questions, and the clock. */
+const headingOf = (view: QuestionView, closed: boolean): string => {
   const first = view.questions.at(0);
-  if (first === undefined) return [];
   const voters =
     view.voters === undefined || view.voters === 0
       ? ``
       : ` · ${String(view.voters)} answered`;
   // A relative timestamp is ticked down by the client for free. It must be
   // replaced on close, or it goes on saying "ends 5 minutes ago" forever.
-  const heading = `**もんだい${String(first.mondai)}** · ${numbersOf(view.questions)} / ${String(view.total)} · ${
+  return `**もんだい${String(first?.mondai ?? ``)}** · ${numbersOf(view.questions)} / ${String(view.total)} · ${
     closed ? `closed` : `ends <t:${String(view.endsAt)}:R>`
   }${voters}`;
+};
+
+/** The End test button, outside the card, and only while it is open. */
+const endRow = (closed: boolean): MessageComponent =>
+  closed
+    ? []
+    : [
+        {
+          type: ComponentType.ActionRow as const,
+          components: [
+            {
+              type: ComponentType.Button as const,
+              style: ButtonStyle.Danger as const,
+              label: `End test`,
+              customId: BUTTON.end
+            }
+          ]
+        }
+      ];
+
+/** What a card may hold: anything but another card. */
+type InCard = Extract<
+  MessageComponent[number],
+  { type: ComponentType.Container }
+>[`components`][number];
+
+/** Fit alt text inside Discord's limit. Its readings are on the card in full. */
+const fitAlt = (text: string): string =>
+  text.length <= ALT_MAX ? text : `${text.slice(0, ALT_MAX - 1)}…`;
+
+/**
+ * A reading card: the text or picture once, then each question with its options in the card.
+ *
+ * Reading options are sentences, too long for a button and too important to trim, so they sit in the card as the paper prints them, numbered 1–4, and the buttons show only the number. A 問題6 card puts its question above the picture, as the paper puts it above the page. Until the picture pipeline hosts the picture, its text stands in.
+ */
+const readingBody = (view: QuestionView, closed: boolean): MessageComponent => {
+  const first = view.questions.at(0);
+  if (first === undefined) return [];
+  const several = view.questions.length > 1;
+
+  const stem = (question: ExamQuestion): string =>
+    sentenceBlock(
+      several
+        ? `［${String(question.number)}］ ${question.question ?? ``}`
+        : (question.question ?? ``)
+    );
+  const optionsOf = (question: ExamQuestion): string =>
+    withReadings(
+      question.options
+        .map((option, index) => `### ${String(index + 1)}　${bare(option)}`)
+        .join(`\n`),
+      question.options.join(` `)
+    );
+  const numberRow = (question: ExamQuestion): ActionRow => ({
+    type: ComponentType.ActionRow as const,
+    components: question.options.map((_, index) => ({
+      type: ComponentType.Button as const,
+      style: ButtonStyle.Secondary as const,
+      label: String(index + 1),
+      customId: BUTTON.vote(question.token, index),
+      ...(closed ? { disabled: true } : {})
+    }))
+  });
+
+  const material = first.material ?? ``;
+  const picture: InCard[] =
+    first.material === undefined
+      ? []
+      : first.image === undefined
+        ? [{ type: ComponentType.TextDisplay, content: passageBlock(material) }]
+        : [
+            {
+              type: ComponentType.MediaGallery,
+              items: [
+                {
+                  media: { url: first.image },
+                  description: fitAlt(bare(material).replace(/\n/gu, ` / `))
+                }
+              ]
+            },
+            {
+              type: ComponentType.TextDisplay,
+              content: withReadings(``, material).trimStart()
+            }
+          ];
+
+  const asks = view.questions.flatMap((question, index) => [
+    ...(index > 0 || first.material === undefined
+      ? [{ type: ComponentType.TextDisplay as const, content: stem(question) }]
+      : []),
+    { type: ComponentType.TextDisplay as const, content: optionsOf(question) },
+    numberRow(question)
+  ]);
+
+  return [
+    {
+      type: ComponentType.Container,
+      accentColor: closed ? SLATE : INDIGO,
+      components: [
+        { type: ComponentType.TextDisplay, content: headingOf(view, closed) },
+        {
+          type: ComponentType.TextDisplay,
+          content: `-# ${display(INSTRUCTIONS[first.mondai])}`
+        },
+        ...(first.intro === undefined
+          ? []
+          : [
+              {
+                type: ComponentType.TextDisplay as const,
+                content: withReadings(bare(first.intro), first.intro)
+              }
+            ]),
+        ...(first.material === undefined
+          ? [
+              {
+                type: ComponentType.TextDisplay as const,
+                content: passageBlock(first.prompt)
+              }
+            ]
+          : [
+              {
+                type: ComponentType.TextDisplay as const,
+                content: stem(first)
+              },
+              ...picture
+            ]),
+        { type: ComponentType.Separator, divider: true, spacing: 1 },
+        ...asks
+      ]
+    },
+    ...endRow(closed)
+  ];
+};
+
+const questionBody = (
+  view: QuestionView,
+  closed: boolean
+): MessageComponent => {
+  const first = view.questions.at(0);
+  if (first === undefined) return [];
+  if (isReading(first)) return readingBody(view, closed);
+  const heading = headingOf(view, closed);
 
   const rows =
     view.questions.length === 1
@@ -261,21 +411,7 @@ const questionBody = (
     },
     // Outside the card, and only while open: a closed card has nothing left
     // to end.
-    ...(closed
-      ? []
-      : [
-          {
-            type: ComponentType.ActionRow as const,
-            components: [
-              {
-                type: ComponentType.Button as const,
-                style: ButtonStyle.Danger as const,
-                label: `End test`,
-                customId: BUTTON.end
-              }
-            ]
-          }
-        ])
+    ...endRow(closed)
   ];
 };
 
@@ -333,6 +469,7 @@ export const revealMessage = (
 ): MessageComponent => {
   const only = results.at(0);
   if (only === undefined) return [];
+  if (isReading(only.question)) return readingReveal(results);
 
   if (results.length === 1) {
     const { question, tally } = only;
@@ -395,6 +532,77 @@ export const revealMessage = (
       ]
     }
   ];
+};
+
+/**
+ * A reading card's reveal: for each question, its stem, the answer, the note and how the room answered, then the English once.
+ *
+ * Never the text again: the closed card sits just above. And never a why: each student who chose wrong is told theirs privately, which keeps the channel short (the user's choice, 2026-11-22). The note stays public, so a student who did not vote still learns where the answer was.
+ */
+const readingReveal = (
+  results: ReadonlyArray<{ question: ExamQuestion; tally: Tally }>
+): MessageComponent => {
+  const several = results.length > 1;
+  const parts = results.flatMap(({ question, tally }, index) => {
+    const answer = display(question.options.at(question.correct) ?? ``);
+    const stem = bare(question.question ?? ``).replace(/\n/gu, ` `);
+    return [
+      ...(index > 0
+        ? [
+            {
+              type: ComponentType.Separator as const,
+              divider: true,
+              spacing: 1 as const
+            }
+          ]
+        : []),
+      {
+        type: ComponentType.TextDisplay as const,
+        content: `${several ? `**［${String(question.number)}］** ` : ``}${stem}\n✅ **${String(question.correct + 1)} ${answer}** · ${summaryOf(tally)}\n${display(question.note)}${reviewLine(question.review)}`
+      },
+      {
+        type: ComponentType.TextDisplay as const,
+        content: distribution(question, tally)
+      }
+    ];
+  });
+  const en = results
+    .map(({ question }) => question.en)
+    .find((text) => text !== ``);
+
+  return [
+    {
+      type: ComponentType.Container,
+      accentColor: MOSS,
+      components: [
+        ...parts,
+        ...(en === undefined
+          ? []
+          : [{ type: ComponentType.TextDisplay as const, content: `_${en}_` }])
+      ]
+    }
+  ];
+};
+
+/**
+ * One student's private follow-up on a reading card: why each wrong option they ended on is wrong.
+ *
+ * Null when there is nothing to say: they chose right, or chose an option the item does not explain (an easy question's note, public in the reveal, covers those).
+ */
+export const followUpText = (
+  picks: ReadonlyArray<{ question: ExamQuestion; chose: number }>
+): string | null => {
+  const parts = picks.flatMap(({ question, chose }) => {
+    if (chose === question.correct) return [];
+    const why = question.whys?.at(chose) ?? ``;
+    if (why === ``) return [];
+    const mine = display(question.options.at(chose) ?? ``);
+    const right = display(question.options.at(question.correct) ?? ``);
+    return [
+      `**${String(question.number)}.** You chose **${String(chose + 1)} ${mine}**.\n${display(why)}\nThe answer is **${String(question.correct + 1)} ${right}**.${reviewLine(question.review)}`
+    ];
+  });
+  return parts.length === 0 ? null : parts.join(`\n\n`);
 };
 
 /**
@@ -521,16 +729,24 @@ export const myResultsText = (
   const lines = answers.map((answer) => {
     const number = String(answer.number);
     const question = questions.find((q) => q.number === answer.number);
-    if (question === undefined) return { text: `${number} ?`, links: `` };
+    if (question === undefined) {
+      return { text: `${number} ?`, links: ``, why: `` };
+    }
     const right = display(question.options.at(question.correct) ?? ``);
-    if (answer.correct) return { text: `${number} ✅ ${right}`, links: `` };
+    if (answer.correct) {
+      return { text: `${number} ✅ ${right}`, links: ``, why: `` };
+    }
     const chose =
       answer.chose === null
         ? `no answer`
         : display(question.options.at(answer.chose) ?? ``);
+    // A reading why, kept here because the private follow-up disappears when Discord reloads; this is where a student reads it again.
+    const why =
+      answer.chose === null ? `` : (question.whys?.at(answer.chose) ?? ``);
     return {
       text: `${number} ❌ ${chose} → **${right}**`,
-      links: reviewLinks(question.review)
+      links: reviewLinks(question.review),
+      why: why === `` ? `` : `\n> ${display(why)}`
     };
   });
 
@@ -539,10 +755,14 @@ export const myResultsText = (
     const leftOut = lines.slice(kept).some((line) => line.links !== ``);
     return [
       head,
-      ...lines.map((line, index) =>
-        index < kept && line.links !== ``
-          ? `${line.text} · ${line.links}`
-          : line.text
+      // Links go before the why, so they stay on the answer's line. Only links are dropped to fit: a why is the reason this reply exists.
+      ...lines.map(
+        (line, index) =>
+          `${
+            index < kept && line.links !== ``
+              ? `${line.text} · ${line.links}`
+              : line.text
+          }${line.why}`
       ),
       ...(leftOut ? [LINKS_LEFT_OUT] : []),
       GUIDE
