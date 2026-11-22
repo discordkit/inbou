@@ -843,3 +843,239 @@
       why: "さんぜんえん is 3,000 yen."
   difficulty: 3
   note: "This asks the total: three notebooks at 100 yen is 300 yen, read さんびゃくえん."
+
+- id: n5-g3-0061
+  type: context
+  status: draft
+  sentence: "あついですから、（　）を つけましょう。"
+  en: "It's hot, so let's turn on the air conditioner."
+  answer: エアコン
+  wrong: [ストーブ, ラジオ, カメラ]
+  difficulty: 1
+  note: "This asks what you turn on when it is hot: the エアコン, the air conditioner. A ストーブ is a heater, for cold days."
+
+- id: n5-g3-0062
+  type: context
+  status: draft
+  sentence: "（　）に のって、かわを わたりました。"
+  en: "I crossed the river by boat."
+  answer: ふね
+  wrong: [つくえ, まど, かべ]
+  difficulty: 1
+  note: "This asks what you ride across a river: a ふね, a boat."
+
+- id: n5-g3-0063
+  type: context
+  status: draft
+  sentence: "さむいですから、（　）を しめて ください。"
+  en: "It's cold, so please close the door."
+  answer: ドア
+  wrong: [ラジオ, くつ, いす]
+  difficulty: 1
+  note: "This asks what you close when it is cold: the ドア, the door."
+
+- id: n5-g3-0064
+  type: context
+  status: draft
+  sentence: "とりが そらを （　） います。"
+  en: "Birds are flying in the sky."
+  answer: とんで
+  wrong: [およいで, はしって, あるいて]
+  difficulty: 1
+  note: "This asks what birds do in the sky: とぶ, fly."
+
+- id: n5-g3-0065
+  type: context
+  status: draft
+  sentence: "この みせは ひとが たくさん いて、とても （　）です。"
+  en: "This shop is full of people and very lively."
+  answer: にぎやか
+  wrong: [しずか, ひま, じょうぶ]
+  difficulty: 1
+  note: "This asks what a place full of people is like: にぎやか, lively."
+
+- id: n5-g3-0066
+  type: context
+  status: draft
+  sentence: "いもうとは まいにち ピアノを （　）。"
+  en: "My younger sister plays the piano every day."
+  answer: ひきます
+  wrong: [うたいます, およぎます, はきます]
+  difficulty: 1
+  note: "This asks the verb for playing the piano: ひく."
+
+- id: n5-g3-0067
+  type: context
+  status: draft
+  sentence: "バスが きません。もう 30ぷん （　） います。"
+  en: "The bus isn't coming. I've been waiting for 30 minutes."
+  answer: まって
+  wrong:
+    - option: きて
+      why: "The bus is what is not coming. You have been waiting: まって いる."
+    - option: のって
+      why: "You cannot have been riding a bus that has not come."
+    - option: おりて
+      why: "おりる is getting off. The bus has not come yet."
+  difficulty: 2
+  note: "This asks what you have been doing for 30 minutes when the bus does not come: まって いる, waiting."
+
+- id: n5-g3-0068
+  type: context
+  status: draft
+  sentence: "わたしは まいあさ しんぶんを よんでから、うちを （　）。"
+  en: "Every morning I read the paper, then leave home."
+  answer: でます
+  wrong:
+    - option: はいります
+      why: "はいる is to go in. うちを, from home, goes with でる, to leave."
+    - option: かえります
+      why: "かえる is to go home. You read the paper at home, then leave."
+    - option: つきます
+      why: "つく is to arrive, and takes に, not を."
+  difficulty: 2
+  note: "This asks what you do from home after reading the paper: うちを でる, leave home."
+
+- id: n5-g3-0069
+  type: context
+  status: draft
+  sentence: "すみません、えきへ いく （　）を おしえて ください。"
+  en: "Excuse me, please tell me the way to the station."
+  answer: みち
+  wrong:
+    - option: ちず
+      why: "ちず is a map. You ask someone the way: みち."
+    - option: なまえ
+      why: "なまえ is a name. You ask the way to the station: みち."
+    - option: くるま
+      why: "くるま is a car. You ask the way: みち."
+  difficulty: 2
+  note: "This asks what you ask for to get to the station: the みち, the way."
+
+- id: n5-g3-0070
+  type: context
+  status: draft
+  sentence: "ゆうべ よく ねましたから、きょうは とても （　）です。"
+  en: "I slept well last night, so today I feel great."
+  answer: げんき
+  wrong:
+    - option: ひま
+      why: "ひま is having free time. Sleeping well makes you feel well, not free."
+    - option: しずか
+      why: "しずか is quiet. Sleeping well makes you feel well: げんき."
+    - option: きれい
+      why: "きれい is pretty or clean. Sleeping well makes you feel well: げんき."
+  difficulty: 2
+  note: "This asks how you feel after a good night's sleep: げんき, well and lively."
+
+- id: n5-g3-0071
+  type: context
+  status: draft
+  sentence: "この みちを まっすぐ いって、つぎの かどを みぎに （　） ください。"
+  en: "Go straight along this road, then turn right at the next corner."
+  answer: まがって
+  wrong:
+    - option: わたって
+      why: "わたる is to cross, for a road or a bridge. At a corner you turn: まがる."
+    - option: おりて
+      why: "おりる is to get off, not a way to go round a corner."
+    - option: のって
+      why: "のる is to get on. At a corner you turn: まがる."
+  difficulty: 2
+  note: "This asks what you do at a corner to go right: まがる, turn."
+
+- id: n5-g3-0072
+  type: context
+  status: draft
+  sentence: "つかれましたから、あそこの （　）に すわりましょう。"
+  en: "I'm tired, so let's sit on that chair over there."
+  answer: いす
+  wrong:
+    - option: まど
+      why: "まど is a window. You sit on a chair, not a window."
+    - option: いけ
+      why: "いけ is a pond. You cannot sit on a pond."
+    - option: そら
+      why: "そら is the sky. You cannot sit on the sky."
+  difficulty: 2
+  note: "This asks what you sit on: an いす, a chair."
+
+- id: n5-g3-0073
+  type: context
+  status: draft
+  sentence: "わたしは にほんごが （　） わかりません。もう いちど いって ください。"
+  en: "I don't really understand Japanese. Please say it once more."
+  answer: よく
+  wrong:
+    - option: すぐ
+      why: "すぐ is at once. It does not go with わかりません here."
+    - option: とても
+      why: "とても goes with a positive. It does not go with わかりません."
+    - option: たくさん
+      why: "たくさん is a lot, for amounts. It does not go with わかる."
+  difficulty: 3
+  note: "This asks which word goes with a negative here: よく わかりません, I don't really understand."
+
+- id: n5-g3-0074
+  type: context
+  status: draft
+  sentence: "あねは わたしより 3さい うえです。あねは いま 20さいですから、わたしは （　）です。"
+  en: "My sister is three years older than me. She is 20 now, so I am 17."
+  answer: 17さい
+  wrong:
+    - option: 23さい
+      why: "23 is three years older than your sister. You are younger: 20 minus 3."
+    - option: 20さい
+      why: "20 is your sister's age. You are three years younger."
+    - option: 3さい
+      why: "3 is the difference in age, not your age."
+  difficulty: 3
+  note: "This asks your age. Your sister is 20 and three years older, so you are 17."
+
+- id: n5-g3-0075
+  type: context
+  status: draft
+  sentence: "でんしゃが （　） いますから、タクシーで いきましょう。"
+  en: "The trains have stopped, so let's take a taxi."
+  answer: とまって
+  wrong:
+    - option: はしって
+      why: "If the trains were running, there would be no need for a taxi."
+    - option: ついて
+      why: "ついて いる is that it has arrived: no reason to take a taxi."
+    - option: あいて
+      why: "あいて いる is open or empty. An empty train is no reason to take a taxi."
+  difficulty: 3
+  note: "This asks why you would take a taxi: the trains have stopped, とまって いる."
+
+- id: n5-g3-0076
+  type: context
+  status: draft
+  sentence: "この くすりは 1にち 3かい、ごはんの あとに （　） ください。"
+  en: "Take this medicine three times a day, after meals."
+  answer: のんで
+  wrong:
+    - option: たべて
+      why: "Medicine is taken with のむ in Japanese, not たべる, even as a tablet."
+    - option: あびて
+      why: "あびる is for a shower."
+    - option: すって
+      why: "すう is to breathe in or to smoke."
+  difficulty: 3
+  note: "This asks the verb for taking medicine: くすりを のむ, even for tablets."
+
+- id: n5-g3-0077
+  type: context
+  status: draft
+  sentence: "らいねん にほんの だいがくへ いきます。いま にほんごを （　） います。"
+  en: "I'm going to a Japanese university next year. I'm learning Japanese now."
+  answer: ならって
+  wrong:
+    - option: おしえて
+      why: "You are the one going to study, so you are learning, not teaching."
+    - option: わすれて
+      why: "わすれる is to forget, which would not help you get ready."
+    - option: わかって
+      why: "わかる takes が, not を, and says you understand already."
+  difficulty: 3
+  note: "This asks what you do with Japanese before going to a Japanese university: ならう, learn it."

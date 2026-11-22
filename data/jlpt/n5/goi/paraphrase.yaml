@@ -530,3 +530,138 @@
       why: "From nine to twelve is three hours, not four."
   difficulty: 3
   note: "This asks how long the class was: from nine to twelve, 3じかん."
+
+- id: n5-g4-0036
+  type: paraphrase
+  status: draft
+  sentence: "わたしは にくより さかなが すきです。"
+  en: "I like fish more than meat."
+  answer: "わたしは さかなの ほうが すきです。"
+  wrong:
+    - "わたしは にくの ほうが すきです。"
+    - "わたしは にくも さかなも すきです。"
+    - "わたしは にくも さかなも きらいです。"
+  difficulty: 1
+  note: "This asks for another way to say you like fish more than meat: さかなの ほうが すき."
+
+- id: n5-g4-0037
+  type: paraphrase
+  status: draft
+  sentence: "ここは きっさてんです。"
+  en: "This is a café."
+  answer: "ここで コーヒーを のみます。"
+  wrong:
+    - "ここで ほんを かります。"
+    - "ここで くすりを かいます。"
+    - "ここで ねます。"
+  difficulty: 1
+  note: "This asks what a きっさてん is: a place to drink coffee, コーヒーを のむ ところ."
+
+- id: n5-g4-0038
+  type: paraphrase
+  status: draft
+  sentence: "わたしは いつも 7じに おきます。"
+  en: "I always get up at seven."
+  answer: "わたしは まいあさ 7じに おきます。"
+  wrong:
+    - "わたしは ときどき 7じに おきます。"
+    - "わたしは まいばん 7じに おきます。"
+    - "わたしは きのう 7じに おきました。"
+  difficulty: 1
+  note: "This asks for another way to say you always get up at seven: まいあさ, every morning."
+
+- id: n5-g4-0039
+  type: paraphrase
+  status: draft
+  sentence: "わたしは きのう かぜを ひきました。"
+  en: "I caught a cold yesterday."
+  answer: "わたしは きのう びょうきに なりました。"
+  wrong:
+    - option: "わたしは きのう げんきに なりました。"
+      why: "げんきに なる is getting well, the opposite."
+    - option: "きのうは かぜが つよかったです。"
+      why: "This かぜ is the wind. かぜを ひく, with ひく, is catching a cold."
+    - option: "わたしは きのう くすりを かいました。"
+      why: "This says you bought medicine, not that you fell ill."
+  difficulty: 2
+  note: "This asks what かぜを ひく means: to catch a cold, to fall ill, びょうきに なる."
+
+- id: n5-g4-0040
+  type: paraphrase
+  status: draft
+  sentence: "ははは いま だいどころで りょうりを して います。"
+  en: "My mother is cooking in the kitchen now."
+  answer: "ははは いま だいどころで ごはんを つくって います。"
+  wrong:
+    - option: "ははは いま だいどころで ごはんを たべて います。"
+      why: "たべる is eating. りょうりを する is cooking: making the food."
+    - option: "ははは いま だいどころで おさらを あらって います。"
+      why: "This is washing the dishes, not cooking."
+    - option: "ははは いま だいどころで ごはんを かって います。"
+      why: "かう is to buy. Nobody buys food in their kitchen."
+  difficulty: 2
+  note: "This asks what りょうりを する means: to cook, ごはんを つくる."
+
+- id: n5-g4-0041
+  type: paraphrase
+  status: draft
+  sentence: "わたしは まいにち さんぽを します。"
+  en: "I take a walk every day."
+  answer: "わたしは まいにち すこし あるきます。"
+  wrong:
+    - option: "わたしは まいにち すこし はしります。"
+      why: "はしる is to run. さんぽ is a walk."
+    - option: "わたしは まいにち すこし およぎます。"
+      why: "およぐ is to swim. さんぽ is a walk."
+    - option: "わたしは ときどき すこし あるきます。"
+      why: "ときどき is sometimes. まいにち is every day."
+  difficulty: 2
+  note: "This asks what さんぽを する means: to go for a walk, すこし あるく."
+
+- id: n5-g4-0042
+  type: paraphrase
+  status: draft
+  sentence: "わたしは らいねん 20さいに なります。"
+  en: "I will be 20 next year."
+  answer: "わたしは ことし 19さいです。"
+  wrong:
+    - option: "わたしは ことし 20さいです。"
+      why: "If you turn 20 next year, you are 19 this year."
+    - option: "わたしは ことし 21さいです。"
+      why: "21 is older than you will be next year."
+    - option: "わたしは きょねん 20さいでした。"
+      why: "Last year you were 18. 20 comes next year."
+  difficulty: 3
+  note: "This asks your age now. If you turn 20 next year, this year you are 19."
+
+- id: n5-g4-0043
+  type: paraphrase
+  status: draft
+  sentence: "いま 1じ 15ふんです。じゅぎょうは 30ぷん あとに はじまります。"
+  en: "It's 1:15 now. The class starts in 30 minutes."
+  answer: "じゅぎょうは 1じ 45ふんに はじまります。"
+  wrong:
+    - option: "じゅぎょうは 1じ 30ぷんに はじまります。"
+      why: "1:30 is only 15 minutes from now."
+    - option: "じゅぎょうは 12じ 45ふんに はじまりました。"
+      why: "That is 30 minutes ago. The class starts 30 minutes from now."
+    - option: "じゅぎょうは 2じ 15ふんに はじまります。"
+      why: "2:15 is an hour from now, not 30 minutes."
+  difficulty: 3
+  note: "This asks when the class starts: 30 minutes after 1:15 is 1:45."
+
+- id: n5-g4-0044
+  type: paraphrase
+  status: draft
+  sentence: "わたしは たなかさんに ペンを かしました。"
+  en: "I lent Tanaka a pen."
+  answer: "たなかさんは わたしに ペンを かりました。"
+  wrong:
+    - option: "たなかさんは わたしに ペンを かしました。"
+      why: "This turns it round: here たなかさん lent the pen."
+    - option: "わたしは たなかさんに ペンを かりました。"
+      why: "This says you borrowed it, the other way round."
+    - option: "わたしは たなかさんに ペンを もらいました。"
+      why: "もらう is to receive and keep, and here it goes the other way."
+  difficulty: 3
+  note: "This asks for the same lending from the other side: if you lent it, たなかさん borrowed it from you, かりました."

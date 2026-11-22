@@ -905,3 +905,273 @@
       why: "あさって has no dakuten."
   difficulty: 3
   note: "This asks the reading of 明後日, the day after tomorrow. It is read as one word: あさって."
+
+- id: n5-g1-0061
+  type: kanji
+  status: draft
+  word: 海
+  sentence: "なつやすみに __海__へ いきました。"
+  en: "I went to the sea in the summer holidays."
+  answer: うみ
+  wrong: [やま, かわ, いけ]
+  difficulty: 1
+  note: "This asks the reading of 海, the sea. やま is a mountain, かわ a river and いけ a pond."
+
+- id: n5-g1-0062
+  type: kanji
+  status: draft
+  word: 楽しい
+  sentence: "きのうの パーティーは __楽しい__ パーティーでした。"
+  en: "Yesterday's party was a fun party."
+  answer: たのしい
+  wrong: [いそがしい, つまらない, むずかしい]
+  difficulty: 1
+  note: "This asks the reading of 楽しい, fun. いそがしい is busy, つまらない dull and むずかしい difficult."
+
+- id: n5-g1-0063
+  type: kanji
+  status: draft
+  word: 紙
+  sentence: "この __紙__に なまえを かいて ください。"
+  en: "Please write your name on this paper."
+  answer: かみ
+  wrong: [かさ, え, じ]
+  difficulty: 1
+  note: "This asks the reading of 紙, paper. かさ is an umbrella, え a picture and じ a letter."
+
+- id: n5-g1-0064
+  type: kanji
+  status: draft
+  word: 茶色
+  sentence: "__茶色__の かばんを かいました。"
+  en: "I bought a brown bag."
+  answer: ちゃいろ
+  wrong: [きいろ, くろ, みどり]
+  difficulty: 1
+  note: "This asks the reading of 茶色, brown. きいろ is yellow, くろ black and みどり green."
+
+- id: n5-g1-0065
+  type: kanji
+  status: draft
+  word: 家族
+  sentence: "わたしの __家族__は 4にんです。"
+  en: "There are four people in my family."
+  answer: かぞく
+  wrong: [きょうだい, ともだち, がっこう]
+  difficulty: 1
+  note: "This asks the reading of 家族, a family. きょうだい is brothers and sisters, ともだち friends and がっこう a school."
+
+- id: n5-g1-0066
+  type: kanji
+  status: draft
+  word: 日曜日
+  sentence: "__日曜日__は いつも うちで やすみます。"
+  en: "I always rest at home on Sundays."
+  answer: にちようび
+  wrong: [どようび, げつようび, きんようび]
+  difficulty: 1
+  note: "This asks the reading of 日曜日, Sunday. どようび is Saturday, げつようび Monday and きんようび Friday."
+
+- id: n5-g1-0067
+  type: kanji
+  status: draft
+  word: 英語
+  sentence: "あには __英語__を おしえて います。"
+  en: "My older brother teaches English."
+  answer: えいご
+  wrong:
+    - option: えいこ
+      why: "語 has a dakuten: ご."
+    - option: えご
+      why: "英 is a long えい."
+    - option: いんご
+      why: "英 is えい in this word."
+  difficulty: 2
+  note: "This asks the reading of 英語, English: a long えい, then ご."
+
+- id: n5-g1-0068
+  type: kanji
+  status: draft
+  word: 午前
+  sentence: "__午前__ 10じに えきで あいましょう。"
+  en: "Let's meet at the station at 10 in the morning."
+  answer: ごぜん
+  wrong:
+    - option: ごせん
+      why: "前 has a dakuten in this word: ぜん."
+    - option: ごまえ
+      why: "まえ is 前 on its own, but ぜん in this word."
+    - option: こぜん
+      why: "午 has a dakuten: ご."
+  difficulty: 2
+  note: "This asks the reading of 午前, the morning (a.m.): ご and ぜん."
+
+- id: n5-g1-0069
+  type: kanji
+  status: draft
+  word: 問題
+  sentence: "この __問題__は むずかしいです。"
+  en: "This question is difficult."
+  answer: もんだい
+  wrong:
+    - option: もんたい
+      why: "題 has a dakuten: だい."
+    - option: もうだい
+      why: "問 is もん, ending in ん."
+    - option: とうだい
+      why: "問 is もん in this word."
+  difficulty: 2
+  note: "This asks the reading of 問題, a question or problem: もん and だい."
+
+- id: n5-g1-0070
+  type: kanji
+  status: draft
+  word: 毎週
+  sentence: "__毎週__ どようびに テニスを します。"
+  en: "I play tennis every Saturday."
+  answer: まいしゅう
+  wrong:
+    - option: まいしゅ
+      why: "週 is a long しゅう."
+    - option: まいじゅう
+      why: "週 has no dakuten: しゅう."
+    - option: めいしゅう
+      why: "毎 is まい."
+  difficulty: 2
+  note: "This asks the reading of 毎週, every week: まい and a long しゅう."
+
+- id: n5-g1-0071
+  type: kanji
+  status: draft
+  word: 大切
+  sentence: "この しゃしんは とても __大切__です。"
+  en: "This photo is very precious."
+  answer: たいせつ
+  wrong:
+    - option: だいせつ
+      why: "大 is たい in this word, with no dakuten."
+    - option: たいきり
+      why: "切 is せつ in this word. き(る) is its sound in the verb."
+    - option: おおせつ
+      why: "おお is 大 in some words, but たい in this one."
+  difficulty: 2
+  note: "This asks the reading of 大切, important or precious: たい and せつ."
+
+- id: n5-g1-0072
+  type: kanji
+  status: draft
+  word: 建物
+  sentence: "あの たかい __建物__は なんですか。"
+  en: "What is that tall building?"
+  answer: たてもの
+  wrong:
+    - option: けんもの
+      why: "建 is たて in this word."
+    - option: たてぶつ
+      why: "物 is もの here. ぶつ is its sound in other words."
+    - option: だてもの
+      why: "建 has no dakuten: たて."
+  difficulty: 2
+  note: "This asks the reading of 建物, a building: たて and もの."
+
+- id: n5-g1-0073
+  type: kanji
+  status: draft
+  word: 大使館
+  sentence: "__大使館__は どこに ありますか。"
+  en: "Where is the embassy?"
+  answer: たいしかん
+  wrong:
+    - option: だいしかん
+      why: "大 is たい in this word, with no dakuten."
+    - option: たいしがん
+      why: "館 is かん, with no dakuten."
+    - option: たいつかん
+      why: "使 is し in this word. つか(う) is its sound in the verb."
+  difficulty: 2
+  note: "This asks the reading of 大使館, an embassy: たい, し and かん."
+
+- id: n5-g1-0074
+  type: kanji
+  status: draft
+  word: 一日
+  sentence: "らいげつの __一日__は げつようびです。"
+  en: "The 1st of next month is a Monday."
+  answer: ついたち
+  wrong:
+    - option: ついだち
+      why: "ついたち has no dakuten."
+    - option: つうたち
+      why: "つい is short: ついたち."
+    - option: いちか
+      why: "The 1st of the month has its own reading: ついたち."
+  difficulty: 3
+  note: "This asks the reading of 一日 as a date, the 1st of the month: ついたち."
+
+- id: n5-g1-0075
+  type: kanji
+  status: draft
+  word: 五日
+  sentence: "5がつ __五日__は こどもの ひです。"
+  en: "May 5th is Children's Day."
+  answer: いつか
+  wrong:
+    - option: ごか
+      why: "五 is ご when you count, but the 5th of the month is いつか."
+    - option: いつっか
+      why: "いつか has no small っ."
+    - option: いつつか
+      why: "いつつ is five things. The 5th of the month is いつか."
+  difficulty: 3
+  note: "This asks the reading of 五日, the 5th of the month. It has its own reading: いつか."
+
+- id: n5-g1-0076
+  type: kanji
+  status: draft
+  word: 大好き
+  sentence: "わたしは ケーキが __大好き__です。"
+  en: "I love cake."
+  answer: だいすき
+  wrong:
+    - option: おおすき
+      why: "大 is だい in this word."
+    - option: たいすき
+      why: "大 has a dakuten in this word: だい."
+    - option: だいずき
+      why: "すき keeps its own sound here, with no dakuten."
+  difficulty: 3
+  note: "This asks the reading of 大好き, to love: だい and すき."
+
+- id: n5-g1-0077
+  type: kanji
+  status: draft
+  word: 三日
+  sentence: "__三日__ まえに この ほんを かいました。"
+  en: "I bought this book three days ago."
+  answer: みっか
+  wrong:
+    - option: さんか
+      why: "三 is さん when you count, but three days is みっか."
+    - option: みつか
+      why: "みっか has a small っ."
+    - option: みっつか
+      why: "みっつ is three things. Three days is みっか."
+  difficulty: 3
+  note: "This asks the reading of 三日, three days or the 3rd: みっか."
+
+- id: n5-g1-0078
+  type: kanji
+  status: draft
+  word: 八つ
+  sentence: "りんごを __八つ__ ください。"
+  en: "Eight apples, please."
+  answer: やっつ
+  wrong:
+    - option: はちつ
+      why: "Things are counted ひとつ, ふたつ … やっつ: eight is やっつ."
+    - option: やっづ
+      why: "やっつ has no dakuten."
+    - option: よっつ
+      why: "よっつ is four. Eight is やっつ."
+  difficulty: 3
+  note: "This asks the reading of 八つ, eight things: やっつ."

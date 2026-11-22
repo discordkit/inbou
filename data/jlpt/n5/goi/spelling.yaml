@@ -692,3 +692,200 @@
       why: "姉 is an older sister: 市 on the right, not 子."
   difficulty: 3
   note: "This asks how すき is written: 好き, 女 beside 子."
+
+- id: n5-g2-0046
+  type: spelling
+  status: draft
+  word: 手紙
+  sentence: "ははに __てがみ__を かきました。"
+  en: "I wrote a letter to my mother."
+  answer: 手紙
+  wrong: [切手, 手帳, 手袋]
+  difficulty: 1
+  note: "This asks how てがみ, a letter, is written: 手紙, hand and paper. 切手 is a stamp, 手帳 a notebook and 手袋 gloves."
+
+- id: n5-g2-0047
+  type: spelling
+  status: draft
+  word: 食べ物
+  sentence: "すきな __たべもの__は なんですか。"
+  en: "What food do you like?"
+  answer: 食べ物
+  wrong: [飲み物, 着物, 果物]
+  difficulty: 1
+  note: "This asks how たべもの, food, is written: 食べ物. 飲み物 is a drink, 着物 a kimono and 果物 fruit."
+
+- id: n5-g2-0048
+  type: spelling
+  status: draft
+  word: 洋服
+  sentence: "デパートで あたらしい __ようふく__を かいました。"
+  en: "I bought new clothes at the department store."
+  answer: 洋服
+  wrong: [和服, 洋食, 衣服]
+  difficulty: 1
+  note: "This asks how ようふく, Western clothes, is written: 洋服. 和服 is Japanese dress, 洋食 Western food and 衣服 clothing in general, read いふく."
+
+- id: n5-g2-0049
+  type: spelling
+  status: draft
+  word: 去年
+  sentence: "__きょねん__ にほんへ きました。"
+  en: "I came to Japan last year."
+  answer: 去年
+  wrong: [今年, 来年, 毎年]
+  difficulty: 1
+  note: "This asks how きょねん, last year, is written: 去年. 今年 is this year, 来年 next year and 毎年 every year."
+
+- id: n5-g2-0050
+  type: spelling
+  status: draft
+  word: 薬
+  sentence: "かぜを ひきましたから、__くすり__を のみました。"
+  en: "I caught a cold, so I took some medicine."
+  answer: 薬
+  wrong:
+    - option: 楽
+      why: "楽 is fun, as in たのしい. 薬 adds grass on top."
+    - option: 葉
+      why: "葉 is a leaf. 薬 has 楽 under the grass."
+    - option: 茶
+      why: "茶 is tea. 薬 has 楽 under the grass."
+  difficulty: 2
+  note: "This asks how くすり, medicine, is written: 薬, 楽 under grass (艹)."
+
+- id: n5-g2-0051
+  type: spelling
+  status: draft
+  word: 池
+  sentence: "こうえんの __いけ__に さかなが います。"
+  en: "There are fish in the pond in the park."
+  answer: 池
+  wrong:
+    - option: 地
+      why: "地 is the ground, with 土 on the left. 池 has water on the left."
+    - option: 他
+      why: "他 means other, with a person on the left."
+    - option: 治
+      why: "治 is to cure: water on the left, but 台 on the right."
+  difficulty: 2
+  note: "This asks how いけ, a pond, is written: 池, with water (氵) on the left."
+
+- id: n5-g2-0052
+  type: spelling
+  status: draft
+  word: 歌
+  sentence: "すきな __うた__を うたって ください。"
+  en: "Please sing a song you like."
+  answer: 歌
+  wrong:
+    - option: 欠
+      why: "欠 means lacking. 歌 has 哥 on its left."
+    - option: 哥
+      why: "哥 is only part of this kanji. 歌 adds 欠 on the right."
+    - option: 欲
+      why: "欲 means to want, with 谷 on the left."
+  difficulty: 2
+  note: "This asks how うた, a song, is written: 歌."
+
+- id: n5-g2-0053
+  type: spelling
+  status: draft
+  word: 自動車
+  sentence: "ちちは __じどうしゃ__の かいしゃで はたらいて います。"
+  en: "My father works for a car company."
+  answer: 自動車
+  wrong:
+    - option: 自転車
+      why: "自転車 is じてんしゃ, a bicycle: 転, turning, not 動, moving."
+    - option: 自働車
+      why: "働 is to work, with a person on the left. どう here is 動, moving."
+    - option: 自動者
+      why: "者 is a person. しゃ here is 車, a vehicle."
+  difficulty: 2
+  note: "This asks how じどうしゃ, a car, is written: 自動車, a vehicle (車) that moves (動) by itself (自)."
+
+- id: n5-g2-0054
+  type: spelling
+  status: draft
+  word: 近い
+  sentence: "えきは ここから __ちかい__です。"
+  en: "The station is close to here."
+  answer: 近い
+  wrong:
+    - option: 遠い
+      why: "遠い is とおい, far: the opposite."
+    - option: 近かい
+      why: "ちかい keeps only い after the kanji: 近い."
+    - option: 返い
+      why: "返 is to return: 反 inside, not 斤."
+  difficulty: 2
+  note: "This asks how ちかい, near, is written: 近い."
+
+- id: n5-g2-0055
+  type: spelling
+  status: draft
+  word: 重い
+  sentence: "この かばんは とても __おもい__です。"
+  en: "This bag is very heavy."
+  answer: 重い
+  wrong:
+    - option: 軽い
+      why: "軽い is かるい, light: the opposite."
+    - option: 動い
+      why: "動 is to move: 重 with 力 on the right."
+    - option: 重もい
+      why: "おもい keeps only い after the kanji: 重い."
+  difficulty: 2
+  note: "This asks how おもい, heavy, is written: 重い."
+
+- id: n5-g2-0056
+  type: spelling
+  status: draft
+  word: 教える
+  sentence: "せんせいが にほんごを __おしえます__。"
+  en: "The teacher teaches Japanese."
+  answer: 教えます
+  wrong:
+    - option: 孝えます
+      why: "孝 is respect for parents. 教 adds 攵 on the right."
+    - option: 救えます
+      why: "救 is to rescue: 求 on the left. 教 has 孝 on the left."
+    - option: 教しえます
+      why: "おしえます keeps only えます after the kanji: 教えます."
+  difficulty: 3
+  note: "This asks how おしえます, to teach, is written: 教えます."
+
+- id: n5-g2-0057
+  type: spelling
+  status: draft
+  word: 借りる
+  sentence: "としょかんで ほんを __かります__。"
+  en: "I borrow books from the library."
+  answer: 借ります
+  wrong:
+    - option: 貸ります
+      why: "貸 is かす, to lend: the other way round."
+    - option: 措ります
+      why: "措 has a hand (扌) on the left. 借 has a person (亻)."
+    - option: 昔ります
+      why: "昔 is long ago. 借 adds a person on the left."
+  difficulty: 3
+  note: "This asks how かります, to borrow, is written: 借ります, a person beside 昔."
+
+- id: n5-g2-0058
+  type: spelling
+  status: draft
+  word: 働く
+  sentence: "あには ぎんこうで __はたらいて__ います。"
+  en: "My older brother works at a bank."
+  answer: 働いて
+  wrong:
+    - option: 動いて
+      why: "動 is to move. 働 adds a person on the left."
+    - option: 働らいて
+      why: "はたらいて keeps only いて after the kanji: 働いて."
+    - option: 億いて
+      why: "億 is a hundred million: 意 beside a person."
+  difficulty: 3
+  note: "This asks how はたらいて is written: 働いて, a person (亻) beside 動."
