@@ -250,7 +250,18 @@ interface Spoils {
   options: string[];
 }
 
+/** Each item's spoils, worked out once: a test compares them many times, inside the Worker's CPU budget. */
+const SPOILS = new WeakMap<VocabItem, Spoils>();
+
 const spoilsOf = (item: VocabItem): Spoils => {
+  const known = SPOILS.get(item);
+  if (known !== undefined) return known;
+  const spoils = worked(item);
+  SPOILS.set(item, spoils);
+  return spoils;
+};
+
+const worked = (item: VocabItem): Spoils => {
   const options = [item.answer, ...item.wrong.map(optionText)];
   const shown = [
     item.sentence,
@@ -334,7 +345,10 @@ export const drawDeck = (
   random: Random,
   asked: readonly Item[] = []
 ): Array<{ item: Item; index: number }> => {
-  const cards = cardsOf(items, plan.type);
+  // Filtered once against what the test holds, then again only against each new pick, so a draw stays cheap.
+  let cards = cardsOf(items, plan.type).filter(
+    (card) => !asked.some((other) => giveAway(card.item, other))
+  );
   const wanted = LEVELS.flatMap((level) =>
     Array.from({ length: plan.mix[level] }, () => level)
   );
@@ -344,12 +358,7 @@ export const drawDeck = (
   const usedPoints = new Set<string>();
 
   for (const want of wanted) {
-    const held = [...asked, ...chosen.map((card) => card.item)];
-    const open = cards.filter(
-      (card) =>
-        !usedItems.has(card.item.id) &&
-        !held.some((other) => giveAway(card.item, other))
-    );
+    const open = cards.filter((card) => !usedItems.has(card.item.id));
     if (open.length === 0) break;
 
     const nearest = Math.min(
@@ -368,6 +377,9 @@ export const drawDeck = (
     chosen.push(card);
     usedItems.add(card.item.id);
     for (const point of card.points) usedPoints.add(point);
+    cards = cards.filter(
+      (other) => other.item === card.item || !giveAway(other.item, card.item)
+    );
   }
 
   return shuffle(chosen, random).map(({ item, index }) => ({ item, index }));
