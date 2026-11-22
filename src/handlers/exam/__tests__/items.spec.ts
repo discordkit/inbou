@@ -10,11 +10,14 @@ import {
   itemHints,
   itemProblems,
   corpusProblems,
+  materialMarkup,
   parse,
   plain,
   type ComposeItem,
   type FormItem,
-  type PassageItem
+  type InfoItem,
+  type PassageItem,
+  type ShortItem
 } from "../items.js";
 
 /**
@@ -394,6 +397,214 @@ describe(`passage items`, () => {
         new Set(FOUR)
       )
     ).toEqual([`n5-b3-0001: blanks （2） and （3） sit side by side`]);
+  });
+});
+
+describe(`reading items`, () => {
+  const short = (overrides: Partial<ShortItem> = {}): ShortItem => ({
+    id: `n5-d4-0001`,
+    type: `short`,
+    status: `draft`,
+    text: `{今日|きょう}は 6{時|じ}に {帰|かえ}ります。`,
+    en: `I will be home at six today.`,
+    questions: [
+      {
+        question: `{何時|なんじ}に {帰|かえ}りますか。`,
+        options: [`5{時|じ}`, `6{時|じ}`, `7{時|じ}`, `8{時|じ}`],
+        answer: 2,
+        difficulty: 1,
+        note: `6{時|じ}に {帰|かえ}ります.`
+      }
+    ],
+    ...overrides
+  });
+
+  const info = (blocks: InfoItem[`material`][`blocks`]): InfoItem => ({
+    id: `n5-d6-0001`,
+    type: `info`,
+    status: `draft`,
+    material: { title: `バスの {時間|じかん}`, blocks },
+    en: `Bus times.`,
+    questions: [
+      {
+        question: `{何時|なんじ}の バスに {乗|の}りますか。`,
+        answer: `8:10`,
+        wrong: [`7:40`, `8:40`, `9:10`],
+        difficulty: 2,
+        note: `n`
+      }
+    ]
+  });
+
+  const asked = (
+    answer: string,
+    wrong: string[]
+  ): ShortItem[`questions`][number] => ({
+    question: `どう しますか。`,
+    answer,
+    wrong,
+    difficulty: 1,
+    note: `n`
+  });
+
+  it(`passes a well-formed text and a well-formed picture`, () => {
+    expect(itemProblems(short(), POINTS)).toEqual([]);
+    expect(
+      itemProblems(
+        info([
+          {
+            table: {
+              head: [`{駅|えき}`, `{大学|だいがく}`],
+              rows: [[`8:10`, `8:35`]]
+            }
+          }
+        ]),
+        POINTS
+      )
+    ).toEqual([]);
+  });
+
+  it(`catches a bracketed number in reading text`, () => {
+    // WHY: to the parser, （1） is a blank. A notice that numbers its points that way would show the paper's empty blank in the middle of the text.
+    expect(
+      itemProblems(short({ text: `（1） {本|ほん}を {読|よ}みます。` }), POINTS)
+    ).toEqual([
+      `n5-d4-0001: reading text has no （n） blanks; write the number another way`
+    ]);
+  });
+
+  it(`catches the answer hiding in a question's wrong pool`, () => {
+    // WHY: two options would both be the answer, and the one marked right would be chosen by the draw, not by the text.
+    expect(
+      itemProblems(
+        short({
+          questions: [
+            asked(`バスで`, [`バスで`, `{電車|でんしゃ}で`, `あるいて`])
+          ]
+        }),
+        POINTS
+      )
+    ).toEqual([`n5-d4-0001 question 1: the answer is also in the wrong pool`]);
+  });
+
+  it(`catches two ordered options that are the same`, () => {
+    // WHY: a student who found the right time could not tell which of two identical buttons the bot counts as right.
+    expect(
+      itemProblems(
+        short({
+          questions: [
+            {
+              question: `{何時|なんじ}に {帰|かえ}りますか。`,
+              options: [`5{時|じ}`, `6{時|じ}`, `6{時|じ}`, `8{時|じ}`],
+              answer: 2,
+              difficulty: 1,
+              note: `n`
+            }
+          ]
+        }),
+        POINTS
+      )
+    ).toEqual([`n5-d4-0001 question 1: two options are the same`]);
+  });
+
+  it(`catches a table row that does not fill its head`, () => {
+    // WHY: the picture would put a value under the wrong heading, and the student would read a wrong time from it.
+    expect(
+      itemProblems(
+        info([
+          {
+            table: { head: [`{駅|えき}`, `{大学|だいがく}`], rows: [[`8:10`]] }
+          }
+        ]),
+        POINTS
+      )
+    ).toEqual([`n5-d6-0001 block 1 row 1: 1 cells, but the head has 2`]);
+  });
+
+  it(`checks the kanji in a picture as well as in the text`, () => {
+    // WHY: the picture is read like the text, and its readings line comes from the same markup. A kanji with no reading, or one above N4, would be just as unreadable there.
+    expect(
+      itemProblems(
+        info([
+          {
+            lists: [
+              { head: `ゆうびん`, rows: [[`{切手|きって}`, `{郵|ゆう}`]] }
+            ]
+          }
+        ]),
+        POINTS
+      )
+    ).toEqual([
+      `n5-d6-0001 block 1: kanji 郵 is above N4; write the word in kana`
+    ]);
+  });
+
+  it(`writes out every line of the picture for its alt text`, () => {
+    // WHY: a student who cannot see the picture reads this instead, and the line left out could be the one that holds the answer. Empty corner cells add nothing to read.
+    expect(
+      materialMarkup({
+        title: `みどり {図書館|としょかん}`,
+        blocks: [
+          {
+            table: {
+              head: [``, `{時間|じかん}`],
+              rows: [[`{月|げつ}`, `やすみ`]]
+            }
+          },
+          {
+            lists: [
+              { head: `{飲|の}みもの`, rows: [[`ミルク`, `150{円|えん}`]] }
+            ]
+          },
+          { text: [`5さつまで {借|か}りられます。`] }
+        ]
+      })
+    ).toBe(
+      [
+        `みどり {図書館|としょかん}`,
+        `{時間|じかん}`,
+        `{月|げつ} やすみ`,
+        `{飲|の}みもの`,
+        `ミルク 150{円|えん}`,
+        `5さつまで {借|か}りられます。`
+      ].join(`\n`)
+    );
+  });
+
+  it(`points out whole words every reading option shares`, () => {
+    // WHY: バスで 行きます。 and あるいて 行きます。 make the student read 行きます four times. It belongs in the question: 何で 行きますか。
+    expect(
+      itemHints(
+        short({
+          questions: [
+            asked(`バスで {行|い}きます。`, [
+              `{電車|でんしゃ}で {行|い}きます。`,
+              `あるいて {行|い}きます。`,
+              `タクシーで {行|い}きます。`
+            ])
+          ]
+        })
+      )
+    ).toEqual([
+      `n5-d4-0001 question 1: every option ends in "行きます。"; move it into the sentence unless it is part of what varies`
+    ]);
+  });
+
+  it(`stays quiet about a shared ます。, which cannot move`, () => {
+    // WHY: nearly every reading option is a short sentence ending in ます。 A hint on each would teach reviewers to ignore the hint.
+    expect(
+      itemHints(
+        short({
+          questions: [
+            asked(`{食|た}べます。`, [
+              `{飲|の}みます。`,
+              `{読|よ}みます。`,
+              `{書|か}きます。`
+            ])
+          ]
+        })
+      )
+    ).toEqual([]);
   });
 });
 

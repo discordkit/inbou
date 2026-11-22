@@ -62,12 +62,21 @@ if (pointIds.size !== points.length) {
   process.exit(1);
 }
 
-const items = readdirSync(`${ROOT}/bunpou`)
-  .filter((file) => file.endsWith(`.yaml`))
-  .sort()
-  .flatMap((file) =>
-    parseOrExit(itemsSchema, read(`${ROOT}/bunpou/${file}`), file)
-  );
+/** Grammar, then reading: one folder of YAML each. */
+const DECKS = [`bunpou`, `dokkai`];
+
+const items = DECKS.flatMap((deck) =>
+  readdirSync(`${ROOT}/${deck}`)
+    .filter((file) => file.endsWith(`.yaml`))
+    .sort()
+    .flatMap((file) =>
+      parseOrExit(
+        itemsSchema,
+        read(`${ROOT}/${deck}/${file}`),
+        `${deck}/${file}`
+      )
+    )
+);
 
 const problems = [
   ...corpusProblems(items),
@@ -121,6 +130,23 @@ const report = (label, have, draw) =>
   console.log(
     `${label}: ${String(have)} cards, a test draws ${String(draw)} (${have >= draw * 2 ? `ok` : `short`})`
   );
+
+// Reading: items and questions per type, drafts included, so a batch's progress shows before anyone reviews it. A test asks one question of a 問題4 or 問題6 item, and two of a 問題5 item.
+const READING = { short: `問題4`, mid: `問題5`, info: `問題6` };
+for (const [type, label] of Object.entries(READING)) {
+  const of = items.filter((item) => item.type === type);
+  const questions = of.flatMap((item) => item.questions);
+  const reviewed = of.filter((item) => item.status === `reviewed`).length;
+  const levels = [1, 2, 3]
+    .map(
+      (level) =>
+        `d${String(level)} ${String(questions.filter((question) => question.difficulty === level).length)}`
+    )
+    .join(`, `);
+  console.log(
+    `dokkai ${label}: ${String(of.length)} items (${String(reviewed)} reviewed), ${String(questions.length)} questions (${levels})`
+  );
+}
 
 for (const [test, plans] of Object.entries(BLUEPRINTS)) {
   for (const plan of plans) {

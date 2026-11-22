@@ -1,0 +1,162 @@
+# 問題6 情報検索 — information to search, shown as a picture, and a question that needs it.
+#
+# The picture holds only the information: never the options. Its `material` is structured, and a template draws it, so an edit here is a reviewable diff. Blocks are `text` (lines), `table` (a head and rows of the same width) and `lists` (side-by-side lists of name and value pairs, such as a menu).
+#
+# Keep it small. The picture must read at chat size, about 300 px wide on a phone: about eight rows of about twenty characters. A real 問題6 page holds more; ours are simpler versions of the same kinds of page.
+#
+# One picture serves several questions, and a test asks one. Questions combine conditions, as the paper's do: a budget, then the cheapest; a time, then the latest bus. Same rules as 問題4 otherwise (see short.yaml).
+
+- id: n5-d6-0001
+  type: info
+  status: draft
+  material:
+    title: "さくら しょくどう"
+    blocks:
+      - lists:
+          - head: "{食|た}べもの"
+            rows:
+              - ["カレー", "600{円|えん}"]
+              - ["ラーメン", "550{円|えん}"]
+              - ["うどん", "450{円|えん}"]
+              - ["おにぎり", "200{円|えん}"]
+          - head: "{飲|の}みもの"
+            rows:
+              - ["コーヒー", "250{円|えん}"]
+              - ["こうちゃ", "250{円|えん}"]
+              - ["ジュース", "200{円|えん}"]
+              - ["ミルク", "150{円|えん}"]
+  en: "Sakura Diner. Food: curry 600 yen, ramen 550 yen, udon 450 yen, rice ball 200 yen. Drinks: coffee 250 yen, black tea 250 yen, juice 200 yen, milk 150 yen."
+  questions:
+    - question: |-
+        マリアさんは お{金|かね}が 700{円|えん} あります。
+        {食|た}べものを {一|ひと}つと {飲|の}みものを {一|ひと}つ たのみたいです。
+        どれを たのむ ことが できますか。
+      answer: "うどんと ジュース"
+      wrong:
+        - "カレーと ミルク"
+        - "ラーメンと ジュース"
+        - "ラーメンと コーヒー"
+        - "カレーと こうちゃ"
+      difficulty: 2
+      note: "うどん 450{円|えん} + ジュース 200{円|えん} = 650{円|えん}. Every other pair costs 750{円|えん} or more."
+    - question: |-
+        いちばん {安|やす}い {食|た}べものと、いちばん {安|やす}い {飲|の}みものを たのみます。
+        ぜんぶで いくらですか。
+      options:
+        - "250{円|えん}"
+        - "300{円|えん}"
+        - "350{円|えん}"
+        - "400{円|えん}"
+      answer: 3
+      difficulty: 2
+      note: "The cheapest food is おにぎり (200{円|えん}) and the cheapest drink is ミルク (150{円|えん}): 350{円|えん}."
+    - question: |-
+        {田中|たなか}さんは 1000{円|えん} {持|も}って います。
+        ラーメンと こうちゃを たのみました。
+        おつりは いくらですか。
+      options:
+        - "150{円|えん}"
+        - "200{円|えん}"
+        - "250{円|えん}"
+        - "300{円|えん}"
+      answer: 2
+      difficulty: 3
+      note: "ラーメン 550{円|えん} + こうちゃ 250{円|えん} = 800{円|えん}. おつり, the change, is 1000 − 800 = 200{円|えん}."
+
+- id: n5-d6-0002
+  type: info
+  status: draft
+  material:
+    title: "みどり {図書館|としょかん}"
+    blocks:
+      - table:
+          head: ["", "あいて いる {時間|じかん}"]
+          rows:
+            - ["{月|げつ}", "やすみ"]
+            - ["{火|か}〜{金|きん}", "9:00〜19:00"]
+            - ["{土|ど}", "9:00〜17:00"]
+            - ["{日|にち}", "10:00〜17:00"]
+      - text:
+          - "{本|ほん}は 5さつまで、2{週間|しゅうかん} {借|か}りる ことが できます。"
+  en: "Midori Library. Opening hours: Monday closed; Tuesday to Friday 9:00–19:00; Saturday 9:00–17:00; Sunday 10:00–17:00. You can borrow up to five books for two weeks."
+  questions:
+    - question: "{図書館|としょかん}が やすみの {日|ひ}は いつですか。"
+      options:
+        - "{月曜日|げつようび}"
+        - "{水曜日|すいようび}"
+        - "{土曜日|どようび}"
+        - "{日曜日|にちようび}"
+      answer: 1
+      difficulty: 1
+      note: "The Monday row says やすみ: closed."
+    - question: "{土曜日|どようび}、{図書館|としょかん}は {何時|なんじ}に しまりますか。"
+      options:
+        - "{午後|ごご}5{時|じ}"
+        - "{午後|ごご}6{時|じ}"
+        - "{午後|ごご}7{時|じ}"
+        - "{午後|ごご}9{時|じ}"
+      answer: 1
+      difficulty: 2
+      note: "On Saturday it is open 9:00〜17:00, and 17:00 is {午後|ごご}5{時|じ}. 19:00, {午後|ごご}7{時|じ}, is the closing time on weekdays."
+    - question: |-
+        {今日|きょう}は {火曜日|かようび}です。
+        {本|ほん}を 3さつ {借|か}ります。
+        いつまでに かえしますか。
+      options:
+        - "{来週|らいしゅう}の {火曜日|かようび}"
+        - "{来週|らいしゅう}の {金曜日|きんようび}"
+        - "さらいしゅうの {火曜日|かようび}"
+        - "さらいしゅうの {土曜日|どようび}"
+      answer: 3
+      difficulty: 3
+      note: "Books are lent for two weeks, 2{週間|しゅうかん}. Two weeks from a Tuesday is the Tuesday after next: さらいしゅうの {火曜日|かようび}."
+
+- id: n5-d6-0003
+  type: info
+  status: draft
+  material:
+    title: "バス　{駅前|えきまえ} → {大学|だいがく}"
+    blocks:
+      - table:
+          head: ["{駅前|えきまえ}", "{大学|だいがく}"]
+          rows:
+            - ["7:40", "8:05"]
+            - ["8:10", "8:35"]
+            - ["8:40", "9:05"]
+            - ["9:10", "9:35"]
+      - text:
+          - "{土曜日|どようび}と {日曜日|にちようび}は バスが ありません。"
+  en: "Bus from Ekimae (in front of the station) to the university. Leaves Ekimae 7:40, 8:10, 8:40, 9:10; arrives at the university 8:05, 8:35, 9:05, 9:35. There are no buses on Saturdays and Sundays."
+  questions:
+    - question: |-
+        {大学|だいがく}に 9{時|じ}までに {着|つ}きたいです。
+        でも、{朝|あさ}は ゆっくり したいです。
+        {何時|なんじ}の バスに {乗|の}りますか。
+      options:
+        - "7:40"
+        - "8:10"
+        - "8:40"
+        - "9:10"
+      answer: 2
+      difficulty: 2
+      note: "The 8:10 bus arrives at 8:35, before nine. The 8:40 bus arrives at 9:05, too late. The 7:40 bus is in time too, but the question wants the latest one that is."
+    - question: |-
+        8{時|じ}40{分|ぷん}の バスに {乗|の}りました。
+        {大学|だいがく}に {何時|なんじ}に {着|つ}きますか。
+      options:
+        - "8:35"
+        - "8:40"
+        - "9:05"
+        - "9:35"
+      answer: 3
+      difficulty: 1
+      note: "Read across the 8:40 row: it arrives at 9:05."
+    - question: "バスは {駅前|えきまえ}から {大学|だいがく}まで {何分|なんぷん} かかりますか。"
+      options:
+        - "15{分|ふん}"
+        - "20{分|ぷん}"
+        - "25{分|ふん}"
+        - "30{分|ぷん}"
+      answer: 3
+      difficulty: 2
+      note: "Every bus takes the same time: 7:40 to 8:05 is 25{分|ふん}."

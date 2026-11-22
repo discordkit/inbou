@@ -43,10 +43,12 @@ const points = v.parse(
   read(`${ROOT}/grammar-points.yaml`)
 );
 const pointIds = new Set(points.map((point) => point.id));
-const items = readdirSync(`${ROOT}/bunpou`)
-  .filter((file) => file.endsWith(`.yaml`))
-  .sort()
-  .flatMap((file) => v.parse(itemsSchema, read(`${ROOT}/bunpou/${file}`)));
+const items = [`bunpou`, `dokkai`].flatMap((deck) =>
+  readdirSync(`${ROOT}/${deck}`)
+    .filter((file) => file.endsWith(`.yaml`))
+    .sort()
+    .flatMap((file) => v.parse(itemsSchema, read(`${ROOT}/${deck}/${file}`)))
+);
 
 /** Discord's limits on one Components V2 message. */
 const COMPONENTS_MAX = 40;
@@ -134,6 +136,11 @@ const longestCards = (item: Item): ExamQuestion[][] => {
         )
       );
     }
+    // No test draws reading yet: its cards arrive with /dokkai, and are measured here then.
+    case `short`:
+    case `mid`:
+    case `info`:
+      return [];
   }
 };
 
@@ -152,6 +159,11 @@ const optionsOf = (item: Item): string[] => {
           .map((chunk) => chunk.text)
       );
     }
+    // Reading options sit in the card, not on the buttons, which show only the number.
+    case `short`:
+    case `mid`:
+    case `info`:
+      return [];
   }
 };
 

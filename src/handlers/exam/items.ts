@@ -139,10 +139,127 @@ export const passageItemSchema = v.strictObject({
   blanks: v.pipe(v.array(slotSchema), v.minLength(4))
 });
 
+// ─── Reading: 問題4–6 ───────────────────────────────────────────────────────
+//
+// A reading item is a text, or a picture's material, with several questions. A test asks one or two of them, so an item that comes up again asks something new. Reading questions test no grammar point, so they carry no points and no review link.
+
+/**
+ * A reading question whose options are drawn: the answer and three of `wrong`, shuffled, as for a slot.
+ */
+const drawnQuestionSchema = v.strictObject({
+  /** The stem. One sentence per line: the card shows each line as a heading. */
+  question: text,
+  answer: text,
+  /** Three or more, each wrong for THIS text. Three are drawn. */
+  wrong: v.pipe(v.array(text), v.minLength(3)),
+  difficulty: v.picklist([1, 2, 3]),
+  note: text
+});
+
+/**
+ * A reading question whose four options keep the order they are written in.
+ *
+ * For options with an order of their own, as the paper prints them: times, prices, days. Shuffled, 9:30 could come before 9:00. `answer` counts from 1, as the buttons do.
+ */
+const orderedQuestionSchema = v.strictObject({
+  question: text,
+  options: v.pipe(v.array(text), v.length(4)),
+  answer: v.picklist([1, 2, 3, 4]),
+  difficulty: v.picklist([1, 2, 3]),
+  note: text
+});
+
+const readingQuestionSchema = v.union([
+  drawnQuestionSchema,
+  orderedQuestionSchema
+]);
+
+/** 問題4: a short text, about 80 characters. A test asks one of its questions. */
+export const shortItemSchema = v.strictObject({
+  id: idSchema,
+  type: v.literal(`short`),
+  status: v.picklist([`draft`, `reviewed`]),
+  /** Above the text: the setting and who reads it, such as （{学校|がっこう}で）. */
+  intro: v.optional(text),
+  text: text,
+  /** The text in English, shown at the reveal. */
+  en: text,
+  questions: v.pipe(v.array(readingQuestionSchema), v.minLength(1))
+});
+
+/** 問題5: a text of about 250 characters. A test asks two of its questions. */
+export const midItemSchema = v.strictObject({
+  id: idSchema,
+  type: v.literal(`mid`),
+  status: v.picklist([`draft`, `reviewed`]),
+  intro: v.optional(text),
+  text: text,
+  en: text,
+  /**
+   * In the order the text answers them. A test asks two and keeps this order, as the paper does, so each must stand alone: no question may give another's answer away.
+   */
+  questions: v.pipe(v.array(readingQuestionSchema), v.minLength(2))
+});
+
+/** Lines of text: a notice, the details on a flyer. */
+const textBlockSchema = v.strictObject({
+  text: v.pipe(v.array(text), v.minLength(1))
+});
+
+/**
+ * A grid: a timetable, opening hours, a class schedule. Every row is as wide as the head. A cell may be empty, such as the corner of a schedule.
+ */
+const tableBlockSchema = v.strictObject({
+  table: v.strictObject({
+    head: v.pipe(v.array(v.string()), v.minLength(2)),
+    rows: v.pipe(v.array(v.array(v.string())), v.minLength(1))
+  })
+});
+
+/** Lists side by side, each a heading over name and value pairs: a menu, a price list. */
+const listsBlockSchema = v.strictObject({
+  lists: v.pipe(
+    v.array(
+      v.strictObject({
+        head: text,
+        rows: v.pipe(v.array(v.tuple([text, text])), v.minLength(1))
+      })
+    ),
+    v.minLength(1)
+  )
+});
+
+/**
+ * What a 問題6 picture shows. Structured rather than drawn, so a template lays it out and an edit is a reviewable diff.
+ *
+ * Short on purpose. The picture must read at chat size, about 300 px wide on a phone, so it holds about eight rows of about twenty characters.
+ */
+const materialSchema = v.strictObject({
+  title: text,
+  blocks: v.pipe(
+    v.array(v.union([textBlockSchema, tableBlockSchema, listsBlockSchema])),
+    v.minLength(1)
+  )
+});
+
+/** 問題6: information to search, shown as a picture. A test asks one of its questions. */
+export const infoItemSchema = v.strictObject({
+  id: idSchema,
+  type: v.literal(`info`),
+  status: v.picklist([`draft`, `reviewed`]),
+  material: materialSchema,
+  /** The material in English, shown at the reveal. */
+  en: text,
+  questions: v.pipe(v.array(readingQuestionSchema), v.minLength(1))
+});
+
 export const itemSchema = v.variant(`type`, [
   formItemSchema,
   composeItemSchema,
-  passageItemSchema
+  passageItemSchema,
+  shortItemSchema,
+  midItemSchema,
+  infoItemSchema
 ]);
 export const itemsSchema = v.array(itemSchema);
 
@@ -151,6 +268,11 @@ export type Window = v.InferOutput<typeof windowSchema>;
 export type FormItem = v.InferOutput<typeof formItemSchema>;
 export type ComposeItem = v.InferOutput<typeof composeItemSchema>;
 export type PassageItem = v.InferOutput<typeof passageItemSchema>;
+export type ReadingQuestion = v.InferOutput<typeof readingQuestionSchema>;
+export type Material = v.InferOutput<typeof materialSchema>;
+export type ShortItem = v.InferOutput<typeof shortItemSchema>;
+export type MidItem = v.InferOutput<typeof midItemSchema>;
+export type InfoItem = v.InferOutput<typeof infoItemSchema>;
 export type Item = v.InferOutput<typeof itemSchema>;
 
 /** How many chunks a ★ question arranges, as on the paper. */
@@ -210,13 +332,43 @@ export const tofuguUrl = (page: string): string => {
 };
 
 /** Every grammar point an item tests, across its slots, windows or blanks. */
-export const pointsOf = (item: Item): string[] =>
-  (item.type === `form`
-    ? item.slots
-    : item.type === `compose`
-      ? item.windows
-      : item.blanks
-  ).flatMap((unit) => unit.points);
+export const pointsOf = (item: Item): string[] => {
+  switch (item.type) {
+    case `form`:
+      return item.slots.flatMap((unit) => unit.points);
+    case `compose`:
+      return item.windows.flatMap((unit) => unit.points);
+    case `passage`:
+      return item.blanks.flatMap((unit) => unit.points);
+    // Reading tests reading, not a grammar point.
+    case `short`:
+    case `mid`:
+    case `info`:
+      return [];
+  }
+};
+
+/**
+ * A picture's material as markup, one line per line of the picture.
+ *
+ * The one text form of the picture: its alt text, the readings line under it, and its share of the timer all come from here, so none can drift from what the picture shows.
+ */
+export const materialMarkup = (material: Material): string =>
+  [
+    material.title,
+    ...material.blocks.flatMap((block) =>
+      `text` in block
+        ? block.text
+        : `table` in block
+          ? [block.table.head, ...block.table.rows].map((row) =>
+              row.filter((cell) => cell !== ``).join(` `)
+            )
+          : block.lists.flatMap((list) => [
+              list.head,
+              ...list.rows.map((row) => row.join(` `))
+            ])
+    )
+  ].join(`\n`);
 
 /**
  * The review link for every point an item uses, by point id.
@@ -600,6 +752,90 @@ const passageBlankProblems = (item: PassageItem): string[] => {
   return problems;
 };
 
+/**
+ * Reading markup: ruby only. `（1）` is a blank to the parser, and reading has none, so a number in brackets must be written another way.
+ */
+const readingMarkupProblems = (markup: string, where: string): string[] => [
+  ...(parse(markup).some((segment) => segment.kind === `blank`)
+    ? [
+        `${where}: reading text has no （n） blanks; write the number another way`
+      ]
+    : []),
+  ...markupProblems(markup, where)
+];
+
+const readingQuestionProblems = (
+  question: ReadingQuestion,
+  where: string
+): string[] => {
+  const problems = readingMarkupProblems(
+    question.question,
+    `${where} question`
+  );
+  if (`wrong` in question) {
+    if (question.wrong.includes(question.answer)) {
+      problems.push(`${where}: the answer is also in the wrong pool`);
+    }
+    if (new Set(question.wrong).size !== question.wrong.length) {
+      problems.push(`${where}: the wrong pool repeats an option`);
+    }
+    problems.push(
+      ...readingMarkupProblems(question.answer, `${where} answer`),
+      ...question.wrong.flatMap((wrong) =>
+        readingMarkupProblems(wrong, `${where} wrong`)
+      )
+    );
+  } else {
+    if (new Set(question.options).size !== question.options.length) {
+      problems.push(`${where}: two options are the same`);
+    }
+    problems.push(
+      ...question.options.flatMap((option) =>
+        readingMarkupProblems(option, `${where} option`)
+      )
+    );
+  }
+  return problems;
+};
+
+const materialProblems = (material: Material, where: string): string[] => [
+  ...readingMarkupProblems(material.title, `${where} title`),
+  ...material.blocks.flatMap((block, index) => {
+    const at = `${where} block ${String(index + 1)}`;
+    if (`text` in block) {
+      return block.text.flatMap((line) => readingMarkupProblems(line, at));
+    }
+    if (`table` in block) {
+      const { head, rows } = block.table;
+      return [
+        ...rows.flatMap((row, number) =>
+          row.length === head.length
+            ? []
+            : [
+                `${at} row ${String(number + 1)}: ${String(row.length)} cells, but the head has ${String(head.length)}`
+              ]
+        ),
+        ...[head, ...rows]
+          .flat()
+          .flatMap((cell) => readingMarkupProblems(cell, at))
+      ];
+    }
+    return block.lists.flatMap((list) =>
+      [list.head, ...list.rows.flat()].flatMap((cell) =>
+        readingMarkupProblems(cell, at)
+      )
+    );
+  })
+];
+
+const questionsProblems = (
+  questions: readonly ReadingQuestion[],
+  id: string
+): string[] =>
+  questions.flatMap((question, index) =>
+    readingQuestionProblems(question, `${id} question ${String(index + 1)}`)
+  );
+
 export const itemProblems = (
   item: Item,
   points: ReadonlySet<string>
@@ -616,6 +852,20 @@ export const itemProblems = (
           : markupProblems(item.intro, `${item.id} intro`)),
         ...blankedProblems(item.text, item.blanks, points, item.id),
         ...passageBlankProblems(item)
+      ];
+    case `short`:
+    case `mid`:
+      return [
+        ...(item.intro === undefined
+          ? []
+          : readingMarkupProblems(item.intro, `${item.id} intro`)),
+        ...readingMarkupProblems(item.text, item.id),
+        ...questionsProblems(item.questions, item.id)
+      ];
+    case `info`:
+      return [
+        ...materialProblems(item.material, item.id),
+        ...questionsProblems(item.questions, item.id)
       ];
   }
 };
@@ -657,17 +907,42 @@ const sharedEnding = (texts: readonly string[]): string => {
  * the timer grows with it. A hint, not a problem, because code cannot tell a
  * shared です from an ending that is part of what varies. The reviewer decides.
  */
-export const itemHints = (item: Item): string[] =>
-  (item.type === `form`
-    ? item.slots
-    : item.type === `passage`
-      ? item.blanks
-      : []
-  ).flatMap((slot, index) => {
-    const ending = sharedEnding([slot.answer, ...slot.wrong].map(plain));
+export const itemHints = (item: Item): string[] => {
+  // Reading options are short sentences, and nearly all end in ます。, which cannot move. So for reading only whole shared words count: the ending after its first space. バスで 行きます。 and あるいて 行きます。 share 行きます。; 食べます。 and 飲みます。 share nothing worth moving. Ordered options are left out: times and prices share 時 or 円 because the paper writes them that way.
+  const pools: Array<{ label: string; options: string[]; words: boolean }> =
+    item.type === `form` || item.type === `passage`
+      ? (item.type === `form` ? item.slots : item.blanks).map(
+          (slot, index) => ({
+            label: `slot ${String(index + 1)}`,
+            options: [slot.answer, ...slot.wrong],
+            words: false
+          })
+        )
+      : item.type === `compose`
+        ? []
+        : item.questions.flatMap((question, index) =>
+            `wrong` in question
+              ? [
+                  {
+                    label: `question ${String(index + 1)}`,
+                    options: [question.answer, ...question.wrong],
+                    words: true
+                  }
+                ]
+              : []
+          );
+  return pools.flatMap(({ label, options, words }) => {
+    const shared = sharedEnding(options.map(plain));
+    const space = shared.indexOf(` `);
+    const ending = !words
+      ? shared
+      : space === -1
+        ? ``
+        : shared.slice(space + 1);
     return ending === ``
       ? []
       : [
-          `${item.id} slot ${String(index + 1)}: every option ends in "${ending}"; move it into the sentence unless it is part of what varies`
+          `${item.id} ${label}: every option ends in "${ending}"; move it into the sentence unless it is part of what varies`
         ];
   });
+};

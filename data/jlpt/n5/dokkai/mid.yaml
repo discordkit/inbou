@@ -1,0 +1,93 @@
+# 問題5 内容理解（中文） — a text of about 250 characters, usually a student's essay, and questions about it.
+#
+# Same rules as 問題4 (see short.yaml): original texts, spaces between phrases, every kanji N5 or N4 with a reading, and every wrong option wrong for THIS text.
+#
+# A text has about four questions, written in the order the text answers them. A test asks two and keeps that order, as the paper does. So each question must stand alone: no option of one question may give away the answer to another.
+
+- id: n5-d5-0001
+  type: mid
+  status: draft
+  intro: "これは ケンさんが {書|か}いた さくぶんです。"
+  text: |-
+    {私|わたし}は {先月|せんげつ}から、{毎週|まいしゅう} {土曜日|どようび}に {料理|りょうり}{教室|きょうしつ}へ {行|い}って います。{教室|きょうしつ}は {駅|えき}の {近|ちか}くの ビルの 3がいに あります。
+    {先生|せんせい}は {日本人|にほんじん}の おばあさんで、とても やさしいです。{先週|せんしゅう}は てんぷらを {作|つく}りました。てんぷらは むずかしかったですが、おいしく できました。
+    {家|いえ}に {帰|かえ}って、{同|おな}じ アパートの {友|とも}だちに てんぷらを あげました。{友|とも}だちは「おいしい」と {言|い}って、ぜんぶ {食|た}べました。とても うれしかったです。
+    {来週|らいしゅう}は すしを {作|つく}ります。すしの {写真|しゃしん}を とって、{国|くに}の {母|はは}に {送|おく}りたいです。
+  en: 'Since last month I have been going to a cooking class every Saturday. The class is on the third floor of a building near the station. The teacher is a Japanese grandmother, and she is very kind. Last week we made tempura. Tempura was difficult, but it turned out delicious. When I got home, I gave the tempura to a friend who lives in the same apartment building. My friend said "delicious" and ate it all. I was very happy. Next week we will make sushi. I want to take a photo of the sushi and send it to my mother back home.'
+  questions:
+    - question: "{料理|りょうり}{教室|きょうしつ}は どこに ありますか。"
+      answer: "{駅|えき}の {近|ちか}くの ビル"
+      wrong:
+        - "ケンさんの アパート"
+        - "{先生|せんせい}の {家|いえ}"
+        - "{駅|えき}の {中|なか}"
+      difficulty: 1
+      note: "{教室|きょうしつ}は {駅|えき}の {近|ちか}くの ビルの 3がいに あります: the third floor of a building near the station."
+    - question: "{先週|せんしゅう}の てんぷらは どうでしたか。"
+      answer: "むずかしかったですが、おいしかったです。"
+      wrong:
+        - "かんたんで、おいしかったです。"
+        - "むずかしくて、おいしく なかったです。"
+        - "かんたんでしたが、おいしく なかったです。"
+      difficulty: 2
+      note: "むずかしかったですが、おいしく できました: hard to make, but it came out well. Both halves have to match."
+    - question: "ケンさんは {作|つく}った てんぷらを どう しましたか。"
+      answer: "{友|とも}だちに あげました。"
+      wrong:
+        - "{先生|せんせい}に あげました。"
+        - "{教室|きょうしつ}の みんなで {食|た}べました。"
+        - "ぜんぶ {自分|じぶん}で {食|た}べました。"
+      difficulty: 1
+      note: "Ken gave it to a friend in the same building: {同|おな}じ アパートの {友|とも}だちに てんぷらを あげました. The friend ate it all, not Ken."
+    - question: "ケンさんは すしの {写真|しゃしん}を だれに {送|おく}りたいですか。"
+      answer: "お{母|かあ}さん"
+      wrong:
+        - "{料理|りょうり}の {先生|せんせい}"
+        - "アパートの {友|とも}だち"
+        - "お{父|とう}さん"
+      difficulty: 1
+      note: "{国|くに}の {母|はは}に {送|おく}りたいです: to Ken's mother back home. {母|はは} is how you speak of your own mother; お{母|かあ}さん is the polite word."
+
+- id: n5-d5-0002
+  type: mid
+  status: draft
+  intro: "これは リーさんが {書|か}いた さくぶんです。"
+  text: |-
+    {先週|せんしゅう}の {金曜日|きんようび}、{私|わたし}は かさを なくしました。{青|あお}くて {大|おお}きい かさです。{学校|がっこう}の {帰|かえ}りに {電車|でんしゃ}の {中|なか}に わすれたと {思|おも}いました。
+    つぎの {日|ひ}、{駅|えき}へ {行|い}って、{駅|えき}の {人|ひと}に {聞|き}きました。でも、かさは ありませんでした。
+    {月曜日|げつようび}に {学校|がっこう}へ {行|い}きました。{教室|きょうしつ}の うしろに {私|わたし}の かさが ありました。{金曜日|きんようび}は {朝|あさ} {雨|あめ}が ふって いましたが、{午後|ごご}は はれて いました。それで、{教室|きょうしつ}に わすれて いました。
+    これからは {気|き}を つけます。
+  en: "Last Friday I lost my umbrella. It is a big blue umbrella. I thought I had left it on the train on my way home from school. The next day I went to the station and asked the station staff, but the umbrella was not there. On Monday I went to school. My umbrella was at the back of the classroom. On Friday it had rained in the morning, but in the afternoon it was sunny. That is why I left it in the classroom. From now on I will be careful."
+  questions:
+    - question: "リーさんの かさは どんな かさですか。"
+      answer: "{青|あお}くて {大|おお}きい"
+      wrong:
+        - "{青|あお}くて {小|ちい}さい"
+        - "{黒|くろ}くて {大|おお}きい"
+        - "{白|しろ}くて {小|ちい}さい"
+      difficulty: 1
+      note: "{青|あお}くて {大|おお}きい かさです: big and blue."
+    - question: "リーさんは {土曜日|どようび}に {何|なに}を しましたか。"
+      answer: "{駅|えき}の {人|ひと}に かさの ことを {聞|き}きました。"
+      wrong:
+        - "{学校|がっこう}で かさを さがしました。"
+        - "あたらしい かさを {買|か}いました。"
+        - "{電車|でんしゃ}の {中|なか}で かさを さがしました。"
+      difficulty: 2
+      note: "Lee lost it on Friday, and つぎの {日|ひ}, the next day, is Saturday: Lee asked the station staff, and went back to school on Monday."
+    - question: "かさは どこに ありましたか。"
+      answer: "{教室|きょうしつ}の うしろ"
+      wrong:
+        - "{電車|でんしゃ}の {中|なか}"
+        - "{駅|えき}の {人|ひと}の ところ"
+        - "{学校|がっこう}の {入口|いりぐち}"
+      difficulty: 1
+      note: "{教室|きょうしつ}の うしろに {私|わたし}の かさが ありました: at the back of the classroom. Lee only thought it was left on the train."
+    - question: "リーさんは どうして かさを わすれましたか。"
+      answer: "{午後|ごご}は {雨|あめ}が ふって いなかったから"
+      wrong:
+        - "{朝|あさ}は {雨|あめ}が ふって いなかったから"
+        - "{電車|でんしゃ}が こんで いたから"
+        - "いそいで {帰|かえ}ったから"
+      difficulty: 3
+      note: 'It rained in the morning, but the afternoon was sunny (はれて いました), so Lee went home without needing it. それで, "so", links the weather to the forgetting.'
