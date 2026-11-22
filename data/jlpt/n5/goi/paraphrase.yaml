@@ -533,7 +533,7 @@
 
 - id: n5-g4-0036
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしは にくより さかなが すきです。"
   en: "I like fish more than meat."
   answer: "わたしは さかなの ほうが すきです。"
@@ -546,7 +546,7 @@
 
 - id: n5-g4-0037
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "ここは きっさてんです。"
   en: "This is a café."
   answer: "ここで コーヒーを のみます。"
@@ -559,7 +559,7 @@
 
 - id: n5-g4-0038
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしは いつも 7じに おきます。"
   en: "I always get up at seven."
   answer: "わたしは まいあさ 7じに おきます。"
@@ -572,7 +572,7 @@
 
 - id: n5-g4-0039
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしは きのう かぜを ひきました。"
   en: "I caught a cold yesterday."
   answer: "わたしは きのう びょうきに なりました。"
@@ -588,7 +588,7 @@
 
 - id: n5-g4-0040
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "ははは いま だいどころで りょうりを して います。"
   en: "My mother is cooking in the kitchen now."
   answer: "ははは いま だいどころで ごはんを つくって います。"
@@ -604,7 +604,7 @@
 
 - id: n5-g4-0041
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしは まいにち さんぽを します。"
   en: "I take a walk every day."
   answer: "わたしは まいにち すこし あるきます。"
@@ -620,7 +620,7 @@
 
 - id: n5-g4-0042
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしは らいねん 20さいに なります。"
   en: "I will be 20 next year."
   answer: "わたしは ことし 19さいです。"
@@ -636,7 +636,7 @@
 
 - id: n5-g4-0043
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "いま 1じ 15ふんです。じゅぎょうは 30ぷん あとに はじまります。"
   en: "It's 1:15 now. The class starts in 30 minutes."
   answer: "じゅぎょうは 1じ 45ふんに はじまります。"
@@ -652,7 +652,7 @@
 
 - id: n5-g4-0044
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしは たなかさんに ペンを かしました。"
   en: "I lent Tanaka a pen."
   answer: "たなかさんは わたしに ペンを かりました。"

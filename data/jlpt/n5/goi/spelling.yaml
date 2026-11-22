@@ -695,7 +695,7 @@
 
 - id: n5-g2-0046
   type: spelling
-  status: draft
+  status: reviewed
   word: 手紙
   sentence: "ははに __てがみ__を かきました。"
   en: "I wrote a letter to my mother."
@@ -706,7 +706,7 @@
 
 - id: n5-g2-0047
   type: spelling
-  status: draft
+  status: reviewed
   word: 食べ物
   sentence: "すきな __たべもの__は なんですか。"
   en: "What food do you like?"
@@ -717,7 +717,7 @@
 
 - id: n5-g2-0048
   type: spelling
-  status: draft
+  status: reviewed
   word: 洋服
   sentence: "デパートで あたらしい __ようふく__を かいました。"
   en: "I bought new clothes at the department store."
@@ -728,7 +728,7 @@
 
 - id: n5-g2-0049
   type: spelling
-  status: draft
+  status: reviewed
   word: 去年
   sentence: "__きょねん__ にほんへ きました。"
   en: "I came to Japan last year."
@@ -739,7 +739,7 @@
 
 - id: n5-g2-0050
   type: spelling
-  status: draft
+  status: reviewed
   word: 薬
   sentence: "かぜを ひきましたから、__くすり__を のみました。"
   en: "I caught a cold, so I took some medicine."
@@ -756,7 +756,7 @@
 
 - id: n5-g2-0051
   type: spelling
-  status: draft
+  status: reviewed
   word: 池
   sentence: "こうえんの __いけ__に さかなが います。"
   en: "There are fish in the pond in the park."
@@ -773,7 +773,7 @@
 
 - id: n5-g2-0052
   type: spelling
-  status: draft
+  status: reviewed
   word: 歌
   sentence: "すきな __うた__を うたって ください。"
   en: "Please sing a song you like."
@@ -790,7 +790,7 @@
 
 - id: n5-g2-0053
   type: spelling
-  status: draft
+  status: reviewed
   word: 自動車
   sentence: "ちちは __じどうしゃ__の かいしゃで はたらいて います。"
   en: "My father works for a car company."
@@ -807,7 +807,7 @@
 
 - id: n5-g2-0054
   type: spelling
-  status: draft
+  status: reviewed
   word: 近い
   sentence: "えきは ここから __ちかい__です。"
   en: "The station is close to here."
@@ -824,7 +824,7 @@
 
 - id: n5-g2-0055
   type: spelling
-  status: draft
+  status: reviewed
   word: 重い
   sentence: "この かばんは とても __おもい__です。"
   en: "This bag is very heavy."
@@ -841,7 +841,7 @@
 
 - id: n5-g2-0056
   type: spelling
-  status: draft
+  status: reviewed
   word: 教える
   sentence: "せんせいが にほんごを __おしえます__。"
   en: "The teacher teaches Japanese."
@@ -858,7 +858,7 @@
 
 - id: n5-g2-0057
   type: spelling
-  status: draft
+  status: reviewed
   word: 借りる
   sentence: "としょかんで ほんを __かります__。"
   en: "I borrow books from the library."
@@ -875,7 +875,7 @@
 
 - id: n5-g2-0058
   type: spelling
-  status: draft
+  status: reviewed
   word: 働く
   sentence: "あには ぎんこうで __はたらいて__ います。"
   en: "My older brother works at a bank."

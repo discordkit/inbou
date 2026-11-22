@@ -846,7 +846,7 @@
 
 - id: n5-g3-0061
   type: context
-  status: draft
+  status: reviewed
   sentence: "あついですから、（　）を つけましょう。"
   en: "It's hot, so let's turn on the air conditioner."
   answer: エアコン
@@ -856,7 +856,7 @@
 
 - id: n5-g3-0062
   type: context
-  status: draft
+  status: reviewed
   sentence: "（　）に のって、かわを わたりました。"
   en: "I crossed the river by boat."
   answer: ふね
@@ -866,7 +866,7 @@
 
 - id: n5-g3-0063
   type: context
-  status: draft
+  status: reviewed
   sentence: "さむいですから、（　）を しめて ください。"
   en: "It's cold, so please close the door."
   answer: ドア
@@ -876,7 +876,7 @@
 
 - id: n5-g3-0064
   type: context
-  status: draft
+  status: reviewed
   sentence: "とりが そらを （　） います。"
   en: "Birds are flying in the sky."
   answer: とんで
@@ -886,7 +886,7 @@
 
 - id: n5-g3-0065
   type: context
-  status: draft
+  status: reviewed
   sentence: "この みせは ひとが たくさん いて、とても （　）です。"
   en: "This shop is full of people and very lively."
   answer: にぎやか
@@ -896,7 +896,7 @@
 
 - id: n5-g3-0066
   type: context
-  status: draft
+  status: reviewed
   sentence: "いもうとは まいにち ピアノを （　）。"
   en: "My younger sister plays the piano every day."
   answer: ひきます
@@ -906,7 +906,7 @@
 
 - id: n5-g3-0067
   type: context
-  status: draft
+  status: reviewed
   sentence: "バスが きません。もう 30ぷん （　） います。"
   en: "The bus isn't coming. I've been waiting for 30 minutes."
   answer: まって
@@ -922,7 +922,7 @@
 
 - id: n5-g3-0068
   type: context
-  status: draft
+  status: reviewed
   sentence: "わたしは まいあさ しんぶんを よんでから、うちを （　）。"
   en: "Every morning I read the paper, then leave home."
   answer: でます
@@ -938,7 +938,7 @@
 
 - id: n5-g3-0069
   type: context
-  status: draft
+  status: reviewed
   sentence: "すみません、えきへ いく （　）を おしえて ください。"
   en: "Excuse me, please tell me the way to the station."
   answer: みち
@@ -954,7 +954,7 @@
 
 - id: n5-g3-0070
   type: context
-  status: draft
+  status: reviewed
   sentence: "ゆうべ よく ねましたから、きょうは とても （　）です。"
   en: "I slept well last night, so today I feel great."
   answer: げんき
@@ -970,7 +970,7 @@
 
 - id: n5-g3-0071
   type: context
-  status: draft
+  status: reviewed
   sentence: "この みちを まっすぐ いって、つぎの かどを みぎに （　） ください。"
   en: "Go straight along this road, then turn right at the next corner."
   answer: まがって
@@ -986,7 +986,7 @@
 
 - id: n5-g3-0072
   type: context
-  status: draft
+  status: reviewed
   sentence: "つかれましたから、あそこの （　）に すわりましょう。"
   en: "I'm tired, so let's sit on that chair over there."
   answer: いす
@@ -1002,7 +1002,7 @@
 
 - id: n5-g3-0073
   type: context
-  status: draft
+  status: reviewed
   sentence: "わたしは にほんごが （　） わかりません。もう いちど いって ください。"
   en: "I don't really understand Japanese. Please say it once more."
   answer: よく
@@ -1018,7 +1018,7 @@
 
 - id: n5-g3-0074
   type: context
-  status: draft
+  status: reviewed
   sentence: "あねは わたしより 3さい うえです。あねは いま 20さいですから、わたしは （　）です。"
   en: "My sister is three years older than me. She is 20 now, so I am 17."
   answer: 17さい
@@ -1034,7 +1034,7 @@
 
 - id: n5-g3-0075
   type: context
-  status: draft
+  status: reviewed
   sentence: "でんしゃが （　） いますから、タクシーで いきましょう。"
   en: "The trains have stopped, so let's take a taxi."
   answer: とまって
@@ -1050,7 +1050,7 @@
 
 - id: n5-g3-0076
   type: context
-  status: draft
+  status: reviewed
   sentence: "この くすりは 1にち 3かい、ごはんの あとに （　） ください。"
   en: "Take this medicine three times a day, after meals."
   answer: のんで
@@ -1066,7 +1066,7 @@
 
 - id: n5-g3-0077
   type: context
-  status: draft
+  status: reviewed
   sentence: "らいねん にほんの だいがくへ いきます。いま にほんごを （　） います。"
   en: "I'm going to a Japanese university next year. I'm learning Japanese now."
   answer: ならって
