@@ -539,6 +539,28 @@ describe(`reading items`, () => {
     ]);
   });
 
+  it(`checks the kanji in every panel line`, () => {
+    // WHY: on a route chart the fare and the time sit in a panel's lines, and the question turns on them. A kanji there that the student cannot read hides the answer.
+    expect(
+      itemProblems(
+        info([
+          {
+            panels: [
+              { head: `① バス`, lines: [`30{分|ぷん}`] },
+              {
+                head: `② {電車|でんしゃ}`,
+                lines: [`{郵|ゆう}びんきょくの まえ`]
+              }
+            ]
+          }
+        ]),
+        POINTS
+      )
+    ).toEqual([
+      `n5-d6-0001 block 1: kanji 郵 is above N4; write the word in kana`
+    ]);
+  });
+
   it(`writes out every line of the picture for its alt text`, () => {
     // WHY: a student who cannot see the picture reads this instead, and the line left out could be the one that holds the answer. Empty corner cells add nothing to read.
     expect(
@@ -556,7 +578,13 @@ describe(`reading items`, () => {
               { head: `{飲|の}みもの`, rows: [[`ミルク`, `150{円|えん}`]] }
             ]
           },
-          { text: [`5さつまで {借|か}りられます。`] }
+          { text: [`5さつまで {借|か}りられます。`] },
+          {
+            panels: [
+              { head: `① バス`, lines: [`30{分|ぷん}`, `220{円|えん}`] },
+              { head: `② タクシー`, lines: [`10{分|ぷん}`] }
+            ]
+          }
         ]
       })
     ).toBe(
@@ -566,7 +594,12 @@ describe(`reading items`, () => {
         `{月|げつ} やすみ`,
         `{飲|の}みもの`,
         `ミルク 150{円|えん}`,
-        `5さつまで {借|か}りられます。`
+        `5さつまで {借|か}りられます。`,
+        `① バス`,
+        `30{分|ぷん}`,
+        `220{円|えん}`,
+        `② タクシー`,
+        `10{分|ぷん}`
       ].join(`\n`)
     );
   });

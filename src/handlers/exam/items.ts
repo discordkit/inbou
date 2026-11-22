@@ -229,6 +229,19 @@ const listsBlockSchema = v.strictObject({
   )
 });
 
+/** Boxes two to a row, each a heading over a few lines: the routes on a route chart, the notices on a board. */
+const panelsBlockSchema = v.strictObject({
+  panels: v.pipe(
+    v.array(
+      v.strictObject({
+        head: text,
+        lines: v.pipe(v.array(text), v.minLength(1))
+      })
+    ),
+    v.minLength(2)
+  )
+});
+
 /**
  * What a 問題6 picture shows. Structured rather than drawn, so a template lays it out and an edit is a reviewable diff.
  *
@@ -237,7 +250,14 @@ const listsBlockSchema = v.strictObject({
 const materialSchema = v.strictObject({
   title: text,
   blocks: v.pipe(
-    v.array(v.union([textBlockSchema, tableBlockSchema, listsBlockSchema])),
+    v.array(
+      v.union([
+        textBlockSchema,
+        tableBlockSchema,
+        listsBlockSchema,
+        panelsBlockSchema
+      ])
+    ),
     v.minLength(1)
   )
 });
@@ -363,10 +383,12 @@ export const materialMarkup = (material: Material): string =>
           ? [block.table.head, ...block.table.rows].map((row) =>
               row.filter((cell) => cell !== ``).join(` `)
             )
-          : block.lists.flatMap((list) => [
-              list.head,
-              ...list.rows.map((row) => row.join(` `))
-            ])
+          : `lists` in block
+            ? block.lists.flatMap((list) => [
+                list.head,
+                ...list.rows.map((row) => row.join(` `))
+              ])
+            : block.panels.flatMap((panel) => [panel.head, ...panel.lines])
     )
   ].join(`\n`);
 
@@ -820,9 +842,16 @@ const materialProblems = (material: Material, where: string): string[] => [
           .flatMap((cell) => readingMarkupProblems(cell, at))
       ];
     }
-    return block.lists.flatMap((list) =>
-      [list.head, ...list.rows.flat()].flatMap((cell) =>
-        readingMarkupProblems(cell, at)
+    if (`lists` in block) {
+      return block.lists.flatMap((list) =>
+        [list.head, ...list.rows.flat()].flatMap((cell) =>
+          readingMarkupProblems(cell, at)
+        )
+      );
+    }
+    return block.panels.flatMap((panel) =>
+      [panel.head, ...panel.lines].flatMap((line) =>
+        readingMarkupProblems(line, at)
       )
     );
   })
