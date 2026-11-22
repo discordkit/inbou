@@ -144,6 +144,35 @@ export const passageItemSchema = v.strictObject({
 // A reading item is a text, or a picture's material, with several questions. A test asks one or two of them, so an item that comes up again asks something new. Reading questions test no grammar point, so they carry no points and no review link.
 
 /**
+ * A reading option: its text, or its text and why it is wrong.
+ *
+ * Reading is comprehension, not a grammar point, so a student who chose a wrong option needs to know what in the text rules it out. A medium or hard question explains every wrong option; an easy one may leave its note to say what the question asked.
+ */
+const optionSchema = v.union([
+  text,
+  v.strictObject({
+    option: text,
+    /** What in the text makes this option wrong. Shown at the reveal to a student who chose it. */
+    why: text
+  })
+]);
+
+export type Option = v.InferOutput<typeof optionSchema>;
+
+/** An option's text, with or without its why. */
+export const optionText = (option: Option): string =>
+  typeof option === `string` ? option : option.option;
+
+/** Why an option is wrong, if the item says. */
+export const whyOf = (option: Option): string | undefined =>
+  typeof option === `string` ? undefined : option.why;
+
+/**
+ * Grammar points that decide a reading question, when one does. Most reading questions turn on the text, not on a point, so this is optional; where it is given, the reveal links the point's review page.
+ */
+const readingPoints = v.optional(v.pipe(v.array(text), v.minLength(1)));
+
+/**
  * A reading question whose options are drawn: the answer and three of `wrong`, shuffled, as for a slot.
  */
 const drawnQuestionSchema = v.strictObject({
@@ -151,8 +180,10 @@ const drawnQuestionSchema = v.strictObject({
   question: text,
   answer: text,
   /** Three or more, each wrong for THIS text. Three are drawn. */
-  wrong: v.pipe(v.array(text), v.minLength(3)),
+  wrong: v.pipe(v.array(optionSchema), v.minLength(3)),
   difficulty: v.picklist([1, 2, 3]),
+  points: readingPoints,
+  /** What the question asks, and where the text answers it. */
   note: text
 });
 
@@ -163,9 +194,11 @@ const drawnQuestionSchema = v.strictObject({
  */
 const orderedQuestionSchema = v.strictObject({
   question: text,
-  options: v.pipe(v.array(text), v.length(4)),
+  /** The answer's option is plain text: only the wrong ones say why. */
+  options: v.pipe(v.array(optionSchema), v.length(4)),
   answer: v.picklist([1, 2, 3, 4]),
   difficulty: v.picklist([1, 2, 3]),
+  points: readingPoints,
   note: text
 });
 
@@ -695,11 +728,11 @@ export const pointsOf = (item: Item): string[] => {
       return item.windows.flatMap((unit) => unit.points);
     case `passage`:
       return item.blanks.flatMap((unit) => unit.points);
-    // Reading tests reading, not a grammar point.
+    // Reading tests reading. A question names a point only where one decides it.
     case `short`:
     case `mid`:
     case `info`:
-      return [];
+      return item.questions.flatMap((question) => question.points ?? []);
   }
 };
 
@@ -1296,34 +1329,60 @@ const readingMarkupProblems = (markup: string, where: string): string[] => [
 
 const readingQuestionProblems = (
   question: ReadingQuestion,
+  points: ReadonlySet<string>,
   where: string
 ): string[] => {
   const problems = readingMarkupProblems(
     question.question,
     `${where} question`
   );
+  // The wrong options, whichever way the question holds them.
+  const wrongs =
+    `wrong` in question
+      ? question.wrong
+      : question.options.filter((_, index) => index + 1 !== question.answer);
   if (`wrong` in question) {
-    if (question.wrong.includes(question.answer)) {
+    const texts = question.wrong.map(optionText);
+    if (texts.includes(question.answer)) {
       problems.push(`${where}: the answer is also in the wrong pool`);
     }
-    if (new Set(question.wrong).size !== question.wrong.length) {
+    if (new Set(texts).size !== texts.length) {
       problems.push(`${where}: the wrong pool repeats an option`);
     }
     problems.push(
       ...readingMarkupProblems(question.answer, `${where} answer`),
-      ...question.wrong.flatMap((wrong) =>
+      ...texts.flatMap((wrong) =>
         readingMarkupProblems(wrong, `${where} wrong`)
       )
     );
   } else {
-    if (new Set(question.options).size !== question.options.length) {
+    const texts = question.options.map(optionText);
+    if (new Set(texts).size !== texts.length) {
       problems.push(`${where}: two options are the same`);
     }
+    const answer = question.options.at(question.answer - 1);
+    if (answer !== undefined && whyOf(answer) !== undefined) {
+      problems.push(`${where}: the answer has a why, as if it were wrong`);
+    }
     problems.push(
-      ...question.options.flatMap((option) =>
+      ...texts.flatMap((option) =>
         readingMarkupProblems(option, `${where} option`)
       )
     );
+  }
+  if (question.difficulty > 1) {
+    for (const wrong of wrongs) {
+      if (whyOf(wrong) === undefined) {
+        problems.push(
+          `${where}: a medium or hard question says why each wrong option is wrong; "${optionText(wrong)}" has no why`
+        );
+      }
+    }
+  }
+  for (const point of question.points ?? []) {
+    if (!points.has(point)) {
+      problems.push(`${where}: grammar point "${point}" is not in the list`);
+    }
   }
   return problems;
 };
@@ -1472,10 +1531,15 @@ const materialProblems = (material: Material, where: string): string[] => [
 
 const questionsProblems = (
   questions: readonly ReadingQuestion[],
+  points: ReadonlySet<string>,
   id: string
 ): string[] =>
   questions.flatMap((question, index) =>
-    readingQuestionProblems(question, `${id} question ${String(index + 1)}`)
+    readingQuestionProblems(
+      question,
+      points,
+      `${id} question ${String(index + 1)}`
+    )
   );
 
 export const itemProblems = (
@@ -1502,12 +1566,12 @@ export const itemProblems = (
           ? []
           : readingMarkupProblems(item.intro, `${item.id} intro`)),
         ...readingMarkupProblems(item.text, item.id),
-        ...questionsProblems(item.questions, item.id)
+        ...questionsProblems(item.questions, points, item.id)
       ];
     case `info`:
       return [
         ...materialProblems(item.material, item.id),
-        ...questionsProblems(item.questions, item.id)
+        ...questionsProblems(item.questions, points, item.id)
       ];
   }
 };
@@ -1567,7 +1631,10 @@ export const itemHints = (item: Item): string[] => {
               ? [
                   {
                     label: `question ${String(index + 1)}`,
-                    options: [question.answer, ...question.wrong],
+                    options: [
+                      question.answer,
+                      ...question.wrong.map(optionText)
+                    ],
                     words: true
                   }
                 ]

@@ -14,7 +14,7 @@
 
 - id: n5-d6-0001
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: machine
     variant: tickets
@@ -44,39 +44,49 @@
         どれを たのむ ことが できますか。
       answer: "うどんと ジュース"
       wrong:
-        - "カレーと ミルク"
-        - "ラーメンと ジュース"
-        - "うどんと コーヒー"
-        - "カレーと こうちゃ"
+        - option: "カレーと ミルク"
+          why: "600円 + 150円 = 750円, over 700円."
+        - option: "ラーメンと ジュース"
+          why: "550円 + 200円 = 750円, over 700円."
+        - option: "うどんと コーヒー"
+          why: "Exactly 700円, but the コーヒー button says 売り切れ: sold out."
+        - option: "カレーと こうちゃ"
+          why: "600円 + 250円 = 850円, over 700円."
       difficulty: 2
-      note: "うどん 450{円|えん} + ジュース 200{円|えん} = 650{円|えん}. うどんと コーヒー is exactly 700{円|えん}, but the コーヒー button says {売|う}り{切|き}れ: sold out. Every other pair costs 750{円|えん} or more."
+      note: "This asks which food-and-drink pair fits in 700円. On a ticket machine each button shows its price, and a lit 売り切れ means sold out. うどん 450円 + ジュース 200円 = 650円."
     - question: |-
         いちばん {安|やす}い {食|た}べものと、いちばん {安|やす}い {飲|の}みものを たのみます。
         ぜんぶで いくらですか。
       options:
-        - "250{円|えん}"
-        - "300{円|えん}"
+        - option: "250{円|えん}"
+          why: "That is less than the cheapest pair, おにぎり 200円 + ミルク 150円."
+        - option: "300{円|えん}"
+          why: "That needs a 100円 drink, and the cheapest drink is ミルク, 150円."
         - "350{円|えん}"
-        - "400{円|えん}"
+        - option: "400{円|えん}"
+          why: "That pairs おにぎり with ジュース, 200円, but ミルク is cheaper at 150円."
       answer: 3
       difficulty: 2
-      note: "The cheapest food is おにぎり (200{円|えん}) and the cheapest drink is ミルク (150{円|えん}): 350{円|えん}."
+      note: "This asks the total for the cheapest food and the cheapest drink: おにぎり 200円 and ミルク 150円, so 350円."
     - question: |-
         {田中|たなか}さんは 1000{円|えん} {持|も}って います。
         ラーメンと こうちゃを たのみました。
         おつりは いくらですか。
       options:
-        - "150{円|えん}"
+        - option: "150{円|えん}"
+          why: "That means a meal of 850円, as with カレー and こうちゃ."
         - "200{円|えん}"
-        - "250{円|えん}"
-        - "300{円|えん}"
+        - option: "250{円|えん}"
+          why: "That means a meal of 750円, but こうちゃ is 250円, not 200円."
+        - option: "300{円|えん}"
+          why: "That means a meal of 700円, but ラーメン is 550円 and こうちゃ 250円."
       answer: 2
       difficulty: 3
-      note: "ラーメン 550{円|えん} + こうちゃ 250{円|えん} = 800{円|えん}. おつり, the change, is 1000 − 800 = 200{円|えん}."
+      note: "This asks for the change from 1000円. ラーメン 550円 + こうちゃ 250円 = 800円, and おつり is 1000 − 800 = 200円."
 
 - id: n5-d6-0002
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: calendar
     title: "みどり {図書館|としょかん}　3{月|がつ}"
@@ -115,38 +125,47 @@
   questions:
     - question: "3{月|がつ}に {図書館|としょかん}が やすみの {日|ひ}は {何日|なんにち} ありますか。"
       options:
-        - "4{日|か}"
-        - "5{日|か}"
+        - option: "4{日|か}"
+          why: "There are five red Mondays alone, before the cleaning day is counted."
+        - option: "5{日|か}"
+          why: "That counts the five red Mondays but misses the そうじ day, the 26th: そうじの {日|ひ}：やすみです."
         - "6{日|か}"
-        - "7{日|か}"
+        - option: "7{日|か}"
+          why: "Only six days are marked: five Mondays and the 26th. Sundays are open, 10:00〜17:00."
       answer: 3
       difficulty: 2
-      note: "Five Mondays are red, the 2nd, 9th, 16th, 23rd and 30th, and the 26th is a cleaning day, closed too: 6{日|か} (むいか)."
+      note: "This asks how many days the library is closed in March. On this calendar each colour is a kind of day, and the legend says which: five red やすみ Mondays, plus the そうじ day, the 26th, which is closed too. 6日 (むいか)."
     - question: "{土曜日|どようび}、{図書館|としょかん}は {何時|なんじ}に しまりますか。"
       options:
         - "{午後|ごご}5{時|じ}"
-        - "{午後|ごご}6{時|じ}"
-        - "{午後|ごご}7{時|じ}"
-        - "{午後|ごご}9{時|じ}"
+        - option: "{午後|ごご}6{時|じ}"
+          why: "No hours line ends at 18:00."
+        - option: "{午後|ごご}7{時|じ}"
+          why: "19:00, 午後7時, is the closing time on weekdays, 火〜金."
+        - option: "{午後|ごご}9{時|じ}"
+          why: "9 is the opening time, in the morning: 9:00〜."
       answer: 1
       difficulty: 2
-      note: "On Saturday it is open 9:00〜17:00, and 17:00 is {午後|ごご}5{時|じ}. 19:00, {午後|ごご}7{時|じ}, is the closing time on weekdays."
+      note: "This asks when the library closes on Saturday. The hours line for 土 says 9:00〜17:00, and 17:00 is 午後5時."
     - question: |-
         {今日|きょう}は 3{月|がつ} 10{日|か}です。
         {本|ほん}を 3さつ {借|か}ります。
         いつまでに かえしますか。
       options:
-        - "3{月|がつ} 17{日|にち}"
-        - "3{月|がつ} 23{日|にち}"
+        - option: "3{月|がつ} 17{日|にち}"
+          why: "That is one week, but books are lent for two: 2{週間|しゅうかん}."
+        - option: "3{月|がつ} 23{日|にち}"
+          why: "The 23rd is a red Monday, when the library is closed, and two weeks run to the 24th."
         - "3{月|がつ} 24{日|か}"
-        - "3{月|がつ} 31{日|にち}"
+        - option: "3{月|がつ} 31{日|にち}"
+          why: "That is three weeks, not two."
       answer: 3
       difficulty: 3
-      note: "Books are lent for two weeks, 2{週間|しゅうかん}. Two weeks from Tuesday the 10th is Tuesday the 24th, and the library is open that day. The 23rd is a Monday, when it is closed."
+      note: "This asks when to return books borrowed today, the 10th. Books are lent for 2{週間|しゅうかん}, two weeks, and two weeks from Tuesday the 10th is Tuesday the 24th, an open day."
 
 - id: n5-d6-0003
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: stop-timetable
     mode: bus
@@ -168,39 +187,48 @@
         でも、{朝|あさ}は ゆっくり したいです。
         {何時|なんじ}の バスに {乗|の}りますか。
       options:
-        - "8:05"
+        - option: "8:05"
+          why: "It arrives in time, at 8:30, but the question wants a slow morning: the latest bus that is still in time."
         - "8:20"
-        - "8:40"
-        - "8:55"
+        - option: "8:40"
+          why: "8:40 + 25分 is 9:05, after nine."
+        - option: "8:55"
+          why: "8:55 + 25分 is 9:20, after nine."
       answer: 2
       difficulty: 2
-      note: "The ride takes 25{分|ふん}. The 8:20 bus arrives at 8:45, before nine; the 8:40 bus arrives at 9:05, too late. The 8:05 bus is in time too, but the question wants the latest one that is."
+      note: "This asks for the latest weekday bus that still reaches the university before nine. On a bus-stop timetable the hours run down the side and the minutes run across, in the weekday column, 月〜金. The ride is 25{分|ふん}, so the 8:20 bus arrives at 8:45."
     - question: |-
         {土曜日|どようび}の {朝|あさ} 8{時|じ}に バスていに {来|き}ました。
         つぎの バスは {何時|なんじ}ですか。
       options:
-        - "8:05"
-        - "8:20"
+        - option: "8:05"
+          why: "8:05 is in the weekday column, 月〜金."
+        - option: "8:20"
+          why: "8:20 is in the weekday column, 月〜金."
         - "8:30"
-        - "9:30"
+        - option: "9:30"
+          why: "There is an earlier Saturday bus, 8:30."
       answer: 3
       difficulty: 2
-      note: "On Saturday, read the {土|ど}・{日|にち} column: the 8 o'clock row has only 30, so 8:30. 8:05 and 8:20 are weekday buses."
+      note: "This asks for the next Saturday bus after eight. Saturday uses the 土・日 column, where the 8 row has only 30: 8:30."
     - question: |-
         {水曜日|すいようび}に 9{時|じ}40{分|ぷん}の バスに {乗|の}ります。
         {大学|だいがく}に {何時|なんじ}に {着|つ}きますか。
       options:
         - "10:05"
-        - "10:15"
-        - "10:25"
-        - "10:40"
+        - option: "10:15"
+          why: "That adds 35 minutes. The ride is 25分."
+        - option: "10:25"
+          why: "That adds 45 minutes. The ride is 25分."
+        - option: "10:40"
+          why: "10:40 is the next bus, not the arrival."
       answer: 1
       difficulty: 2
-      note: "The note says the ride is 25{分|ふん}: 9:40 + 25 minutes is 10:05."
+      note: "This asks when the 9:40 bus reaches the university. The note under the timetable gives the ride, {大学|だいがく}まで 25{分|ふん}: 9:40 + 25 minutes = 10:05."
 
 - id: n5-d6-0004
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: signboard
     tone: green
@@ -235,38 +263,48 @@
         {何曜日|なんようび}ですか。
       options:
         - "{水曜日|すいようび}と {土曜日|どようび}"
-        - "{水曜日|すいようび}と {日曜日|にちようび}"
-        - "{木曜日|もくようび}と {土曜日|どようび}"
-        - "{土曜日|どようび}と {日曜日|にちようび}"
+        - option: "{水曜日|すいようび}と {日曜日|にちようび}"
+          why: "Sunday is closed all day, mornings too: {日曜日|にちようび}は やすみです."
+        - option: "{木曜日|もくようび}と {土曜日|どようび}"
+          why: "Thursday afternoon is ○, open."
+        - option: "{土曜日|どようび}と {日曜日|にちようび}"
+          why: "Sunday is closed in the morning too, and the other × afternoon is Wednesday."
       answer: 1
       difficulty: 2
-      note: "The × marks in the {午後|ごご} row are under {水|すい} and {土|ど}. Sunday is closed all day, mornings too, so it is not one of these days, and Thursday afternoon is ○."
+      note: "This asks which days are open in the morning but closed in the afternoon. A clinic sign shows the week as a grid, ○ open and × closed, and the × marks in the {午後|ごご} row are under 水 and 土."
     - question: |-
         ケンさんは {月曜日|げつようび}から {金曜日|きんようび}まで、{午前|ごぜん} 9{時|じ}から {午後|ごご} 6{時|じ}まで {仕事|しごと}を します。
         いつ {病院|びょういん}へ {行|い}きますか。
       answer: "{土曜日|どようび}の {午前|ごぜん}"
       wrong:
-        - "{土曜日|どようび}の {午後|ごご}"
-        - "{水曜日|すいようび}の {午後|ごご}"
-        - "{金曜日|きんようび}の {午後|ごご}"
-        - "{日曜日|にちようび}の {午前|ごぜん}"
+        - option: "{土曜日|どようび}の {午後|ごご}"
+          why: "Saturday afternoon is ×, closed."
+        - option: "{水曜日|すいようび}の {午後|ごご}"
+          why: "Wednesday afternoon is ×, and Ken works on weekdays anyway."
+        - option: "{金曜日|きんようび}の {午後|ごご}"
+          why: "Ken works until 6 on Friday, and the clinic closes at 6:00."
+        - option: "{日曜日|にちようび}の {午前|ごぜん}"
+          why: "Sunday is closed all day: {日曜日|にちようび}は やすみです."
       difficulty: 2
-      note: "Ken works until 6 on weekdays, and the hospital closes at 6:00, so no weekday works. On Saturday the {午前|ごぜん} box is ○ and the {午後|ごご} box is ×. Sunday is closed."
+      note: "This asks when Ken can go, around a job from nine to six on weekdays. The clinic closes at 6:00, so no weekday works. On Saturday the {午前|ごぜん} box is ○."
     - question: |-
         {今日|きょう}は {水曜日|すいようび}の {午後|ごご} 1{時|じ}です。
         いちばん はやく {病院|びょういん}へ {行|い}く ことが できる のは いつですか。
       options:
-        - "{今日|きょう}の {午後|ごご} 3{時|じ}"
-        - "{今日|きょう}の {午後|ごご} 5{時|じ}"
-        - "{今日|きょう}の {午後|ごご} 6{時|じ}"
+        - option: "{今日|きょう}の {午後|ごご} 3{時|じ}"
+          why: "3:00 is when afternoons open, but Wednesday afternoon is ×."
+        - option: "{今日|きょう}の {午後|ごご} 5{時|じ}"
+          why: "Wednesday afternoon is ×, closed all afternoon."
+        - option: "{今日|きょう}の {午後|ごご} 6{時|じ}"
+          why: "6:00 is closing time, and Wednesday afternoon is closed anyway."
         - "あしたの {午前|ごぜん} 9{時|じ}"
       answer: 4
       difficulty: 3
-      note: "Wednesday afternoon is ×, so not today. Tomorrow is Thursday, and Thursday morning is ○: the hospital opens at 9:00."
+      note: "This asks for the earliest visit from Wednesday at one. Wednesday's {午後|ごご} box is ×, so not today. Tomorrow is Thursday, and Thursday's {午前|ごぜん} box is ○: it opens at 9:00."
 
 - id: n5-d6-0005
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: calendar
     title: "2{月|がつ}の ごみの {日|ひ}"
@@ -319,39 +357,46 @@
       options:
         - "6{日|か}と 20{日|か}"
         - "11{日|にち}と 25{日|にち}"
-        - "{毎週|まいしゅう} {金曜日|きんようび}"
+        - option: "{毎週|まいしゅう} {金曜日|きんようび}"
+          why: "Both are Fridays, but not every Friday: the 13th and the 27th have no mark."
         - "{毎週|まいしゅう} {月曜日|げつようび}と {木曜日|もくようび}"
       answer: 1
       difficulty: 1
-      note: "The green {新聞|しんぶん} days, old books and newspapers, are the 6th and the 20th. Both are Fridays, but not every Friday: the 13th and the 27th have no mark."
+      note: "This asks when old newspapers go out. The legend puts 古い 本、新聞 under 新聞, and its days are the 6th and the 20th."
     - question: |-
         {今日|きょう}は 2{月|がつ} 12{日|にち}です。
         {古|ふる}い かさを {出|だ}したいです。
         いつ {出|だ}しますか。
       options:
-        - "13{日|にち}"
-        - "16{日|にち}"
-        - "20{日|か}"
+        - option: "13{日|にち}"
+          why: "The 13th has no mark, so nothing goes out."
+        - option: "16{日|にち}"
+          why: "The 16th is もえる ごみ, for paper and food."
+        - option: "20{日|か}"
+          why: "The 20th is for old books and newspapers."
         - "25{日|にち}"
       answer: 4
       difficulty: 2
-      note: "An umbrella is もえない ごみ, the blue days: the 11th and the 25th. The 11th has gone, so the next one is the 25th."
+      note: "This asks when an old umbrella goes out. The legend puts かさ under もえない ごみ, on the 11th and the 25th. The 11th has passed, so the 25th."
     - question: |-
         {今日|きょう}は 19{日|にち}、{木曜日|もくようび}です。
         {今|いま}、{朝|あさ} 9{時|じ}です。
         {紙|かみ}の ごみは いつ {出|だ}しますか。
       options:
-        - "19{日|にち}"
-        - "20{日|か}"
+        - option: "19{日|にち}"
+          why: "Today is a もえる day, but it is 9 now, and rubbish goes out by eight."
+        - option: "20{日|か}"
+          why: "The 20th is the 新聞 day, for old books and newspapers. The legend lists 紙 under もえる ごみ."
         - "23{日|にち}"
-        - "25{日|にち}"
+        - option: "25{日|にち}"
+          why: "The 25th is もえない ごみ, for umbrellas and cups."
       answer: 3
       difficulty: 3
-      note: "Paper is もえる ごみ, the orange days, and today, the 19th, is one. But rubbish goes out by 8 in the morning, and it is 9 now. The next orange day is Monday the 23rd. The 20th is for newspapers and the 25th for もえない ごみ."
+      note: "This asks when paper rubbish goes out, from the 19th at nine. The legend lists 紙 under もえる ごみ, and today is one of its days, but rubbish goes out by eight: {朝|あさ} 8{時|じ}までに. The next もえる day is Monday the 23rd."
 
 - id: n5-d6-0006
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: directory
     title: "さくら デパート"
@@ -376,37 +421,46 @@
         - "1かい"
         - "2かい"
         - "3かい"
-        - "ちか1かい"
+        - option: "ちか1かい"
+          why: "ちか1かい, the basement, is food and drinks."
       answer: 1
       difficulty: 1
-      note: "くつ is on 1かい, with bags and umbrellas. ちか1かい, the basement, is food and drinks."
+      note: "This asks which floor sells shoes. A store directory lists each floor with what it sells: くつ is on 1かい."
     - question: |-
         {妹|いもうと}は 6さいです。
         {妹|いもうと}の {服|ふく}と、{妹|いもうと}に あげる {本|ほん}を {買|か}います。
         {何|なん}かいと {何|なん}かいへ {行|い}きますか。
       answer: "3かいと 4かい"
       wrong:
-        - "2かいと 4かい"
-        - "3かいと 5かい"
-        - "2かいと 3かい"
-        - "1かいと 4かい"
+        - option: "2かいと 4かい"
+          why: "2かい is 大人の 服, clothes for adults. A six-year-old needs 子どもの 服."
+        - option: "3かいと 5かい"
+          why: "5かい is restaurants. Books are on 4かい."
+        - option: "2かいと 3かい"
+          why: "2かい is clothes for adults, and neither floor sells books."
+        - option: "1かいと 4かい"
+          why: "1かい is shoes, bags and umbrellas, not clothes."
       difficulty: 2
-      note: "A six-year-old's clothes are {子|こ}どもの {服|ふく}, on 3かい, and books are on 4かい. 2かい is clothes for adults."
+      note: "This asks which two floors sell a six-year-old's clothes and a book. 子どもの 服 is on 3かい, and books are on 4かい."
     - question: |-
         {午後|ごご} 9{時|じ}に デパートへ {来|き}ました。
         {何|なに}を する ことが できますか。
       answer: "5かいで ごはんを {食|た}べる"
       wrong:
-        - "1かいで くつを {買|か}う"
-        - "ちか1かいで {飲|の}みものを {買|か}う"
-        - "4かいで ノートを {買|か}う"
-        - "2かいで {服|ふく}を {見|み}る"
+        - option: "1かいで くつを {買|か}う"
+          why: "The shops close at 20:00, an hour before 21:00."
+        - option: "ちか1かいで {飲|の}みものを {買|か}う"
+          why: "The basement food floor keeps the store's hours and closes at 20:00."
+        - option: "4かいで ノートを {買|か}う"
+          why: "The shops close at 20:00. Only the restaurants stay open later."
+        - option: "2かいで {服|ふく}を {見|み}る"
+          why: "The shops close at 20:00, an hour before 21:00."
       difficulty: 3
-      note: "{午後|ごご} 9{時|じ} is 21:00. The store closes at 20:00, but the restaurants on 5かい are open until 22:00."
+      note: "This asks what is still open at 9 p.m., which is 21:00. The store closes at 20:00, but the small print gives the restaurants their own hours: レストランは 11:00〜22:00."
 
 - id: n5-d6-0007
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: whiteboard
     title: "{今週|こんしゅう}の よてい"
@@ -429,35 +483,43 @@
       options:
         - "{火曜日|かようび}"
         - "{水曜日|すいようび}"
-        - "{木曜日|もくようび}"
+        - option: "{木曜日|もくようび}"
+          why: "Thursday's アルバイト is in リン's column."
         - "{金曜日|きんようび}"
       answer: 1
       difficulty: 1
-      note: "In ケン's column, アルバイト is on {火|か}. {木|もく} is one of リン's part-time job days."
+      note: "This asks which day Ken works. On a shared whiteboard each person has a column, and in ケン's column アルバイト is on 火."
     - question: |-
         リンさんと ケンさんは いっしょに {映画|えいが}を {見|み}に {行|い}きたいです。
         {何曜日|なんようび}が いいですか。
       answer: "{金曜日|きんようび}"
       wrong:
-        - "{火曜日|かようび}"
-        - "{水曜日|すいようび}"
-        - "{木曜日|もくようび}"
-        - "{日曜日|にちようび}"
+        - option: "{火曜日|かようび}"
+          why: "Ken has アルバイト on Tuesday."
+        - option: "{水曜日|すいようび}"
+          why: "Rin has じゅぎょう, class, on Wednesday."
+        - option: "{木曜日|もくようび}"
+          why: "Rin has アルバイト on Thursday."
+        - option: "{日曜日|にちようび}"
+          why: "Ken is away on 旅行, a trip, on Sunday."
       difficulty: 2
-      note: "Friday is the only day with － for both. On {火|か} and {日|にち} only リン is free; on {水|すい} and {木|もく} only ケン is."
+      note: "This asks which day both are free. － means no plans, and Friday is the only row with － in both columns."
     - question: "リンさんは {今週|こんしゅう}、よていが ある {日|ひ}が {何日|なんにち} ありますか。"
       options:
-        - "1{日|にち}"
-        - "2{日|か}"
-        - "3{日|か}"
+        - option: "1{日|にち}"
+          why: "Rin has plans on four days: 月, 水, 木 and 土."
+        - option: "2{日|か}"
+          why: "That counts only the アルバイト days. Rin also has plans on 水 and 土."
+        - option: "3{日|か}"
+          why: "That misses one: 月, 水, 木 and 土 all have plans."
         - "4{日|か}"
       answer: 4
       difficulty: 2
-      note: "リン has plans on {月|げつ}, {水|すい}, {木|もく} and {土|ど}: four days, 4{日|か} (よっか)."
+      note: "This asks how many days Rin has plans. In リン's column every day without － has a plan: 月, 水, 木 and 土, four days, 4日 (よっか)."
 
 - id: n5-d6-0008
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: signboard
     tone: blue
@@ -483,39 +545,46 @@
       options:
         - "200{円|えん}"
         - "300{円|えん}"
-        - "500{円|えん}"
+        - option: "500{円|えん}"
+          why: "500円 is the weekday price, 月〜金."
         - "700{円|えん}"
       answer: 4
       difficulty: 1
-      note: "Saturday is the {土|ど}・{日|にち} row, and the {大人|おとな} price there is 700{円|えん}."
+      note: "This asks one adult's price on Saturday. A price board is a grid: find the 土・日 row and the 大人 column, 700円."
     - question: |-
         {日曜日|にちようび}に、{父|ちち}と わたしで {行|い}きます。
         わたしは 10さいです。
         ぜんぶで いくらですか。
       options:
-        - "700{円|えん}"
-        - "900{円|えん}"
+        - option: "700{円|えん}"
+          why: "That is the father alone. The child pays 300円."
+        - option: "900{円|えん}"
+          why: "That takes the weekday price, 200円, for the child."
         - "1000{円|えん}"
-        - "1400{円|えん}"
+        - option: "1400{円|えん}"
+          why: "That charges the ten-year-old as an adult, but children pay the 子ども price up to 12."
       answer: 3
       difficulty: 2
-      note: "On Sunday an adult pays 700{円|えん} and a ten-year-old pays 300{円|えん}: 1000{円|えん}. 900{円|えん} takes the weekday price for the child."
+      note: "This asks the total for a father and a ten-year-old on Sunday. Sunday is the 土・日 row: 大人 700円 + 子ども 300円 = 1000円. Ten is within 12さいまで, so the child price applies."
     - question: |-
         {金曜日|きんようび}に、{大人|おとな} ふたりと {子|こ}ども ふたりで {行|い}きます。
         {子|こ}どもは 8さいと 3さいです。
         ぜんぶで いくらですか。
       options:
-        - "1000{円|えん}"
+        - option: "1000{円|えん}"
+          why: "That is only the two adults. The eight-year-old pays 200円."
         - "1200{円|えん}"
-        - "1400{円|えん}"
-        - "1700{円|えん}"
+        - option: "1400{円|えん}"
+          why: "That charges the three-year-old too, but under-fives are free."
+        - option: "1700{円|えん}"
+          why: "That uses the weekend prices, 700円 and 300円, but Friday is a weekday."
       answer: 2
       difficulty: 3
-      note: "Friday is a weekday: two adults are 500 × 2 = 1000{円|えん}, the eight-year-old is 200{円|えん}, and the three-year-old is free. 1000 + 200 = 1200{円|えん}. 1400{円|えん} charges the three-year-old too."
+      note: "This asks the total for a family of four on Friday, a weekday. Two adults are 500 × 2 = 1000円, the eight-year-old is 200円, and the small print makes the three-year-old free: 5さいまでの {子|こ}どもは お{金|かね}が いりません."
 
 - id: n5-d6-0009
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: route-search
     from: "さくら{駅|えき}"
@@ -559,39 +628,46 @@
         そして、いちばん はやく {着|つ}きたいです。
         どれで {行|い}きますか。
       options:
-        - "①"
-        - "②"
+        - option: "①"
+          why: "① is under 300円, but it takes 30分, longer than ③'s 25分."
+        - option: "②"
+          why: "② is fast, but 350円 is over 300円."
         - "③"
-        - "④"
+        - option: "④"
+          why: "④ is the fastest, but 1200円 is far over 300円."
       answer: 3
       difficulty: 2
-      note: "Under 300{円|えん} are ① (220{円|えん}) and ③ (250{円|えん}). ③ takes 25{分|ふん} and ① takes 30{分|ぷん}, so ③ is faster. ② and ④ are faster still, but cost too much."
+      note: "This asks for the fastest route under 300円. A route-search app lists each route with its time, fare and changes. Under 300円 are ① (220円) and ③ (250円), and ③ takes 25分 against ①'s 30分."
     - question: "いちばん {安|やす}い のは どれですか。"
       options:
         - "①"
         - "②"
-        - "③"
+        - option: "③"
+          why: "③ is next, at 250円, 30円 more than ①."
         - "④"
       answer: 1
       difficulty: 1
-      note: "① is 220{円|えん}, the cheapest. ③ is next, at 250{円|えん}."
+      note: "This asks for the cheapest route. The app's 安 badge marks it, and the fares agree: ① is 220円."
     - question: |-
         {歩|ある}きたく ないです。
         そして、30{分|ぷん}より はやく {着|つ}きたいです。
         {安|やす}い ほうが いいです。
         どれで {行|い}きますか。
       options:
-        - "①"
+        - option: "①"
+          why: "① takes exactly 30分. The question asks for faster than 30."
         - "②"
-        - "③"
-        - "④"
+        - option: "③"
+          why: "③ ends with a walk: {歩|ある}く 10{分|ぷん}."
+        - option: "④"
+          why: "④ meets both conditions, but so does ②, at 350円, not 1200円."
       answer: 2
       difficulty: 3
-      note: "③ ends with a walk, so not ③. Faster than 30{分|ぷん} leaves ② (20{分|ぷん}) and ④ (10{分|ぷん}); ① takes exactly 30. ② is 350{円|えん} and ④ is 1200{円|えん}, so ②."
+      note: "This asks for the cheapest route with no walking that is faster than 30分. ③ ends with a ten-minute walk, and ① takes exactly 30分, not less. That leaves ② (350円) and ④ (1200円), so ②."
 
 - id: n5-d6-0010
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: poster
     tone: orange
@@ -618,31 +694,37 @@
         - "3かいの {教室|きょうしつ}"
       answer: 1
       difficulty: 1
-      note: "The 10:00 row: ダンス in the たいいくかん, the gym."
+      note: "This asks where the dance is. On the poster's table, the 10:00 row is ダンス, in the たいいくかん, the gym."
     - question: |-
         マリアさんは {午後|ごご} 4{時|じ}に かえります。
         {午後|ごご}、お{金|かね}を つかわないで、さいごまで {見|み}る ことが できる ものは どれですか。
       options:
-        - "ダンス"
-        - "カレー"
+        - option: "ダンス"
+          why: "The dance is at 10:00, in the morning."
+        - option: "カレー"
+          why: "Curry costs 300円, and it is at 11:30, in the morning."
         - "{歌|うた}"
-        - "{映画|えいが}"
+        - option: "{映画|えいが}"
+          why: "The film lasts 2時間, so it ends at 17:00, after Maria leaves at four."
       answer: 3
       difficulty: 3
-      note: "The afternoon has {歌|うた} at 13:00 and {映画|えいが} at 15:00, and both are free. The film is two hours, so it ends at 17:00, after Maria leaves. {歌|うた} ends at 14:00."
+      note: "This asks what Maria can watch to the end in the afternoon, for free, leaving at four. The afternoon has 歌 at 13:00 and 映画 at 15:00, both free. Each event lasts an hour, but the film lasts two, so it ends at 17:00. 歌 ends at 14:00."
     - question: "{映画|えいが}は {何時|なんじ}に おわりますか。"
       options:
-        - "{午後|ごご} 4{時|じ}"
+        - option: "{午後|ごご} 4{時|じ}"
+          why: "That is one hour, but the film alone lasts two: {映画|えいが}だけ 2{時間|じかん}."
         - "{午後|ごご} 5{時|じ}"
-        - "{午後|ごご} 6{時|じ}"
-        - "{午後|ごご} 7{時|じ}"
+        - option: "{午後|ごご} 6{時|じ}"
+          why: "That is three hours after 15:00. The film lasts two."
+        - option: "{午後|ごご} 7{時|じ}"
+          why: "That is four hours after 15:00. The film lasts two."
       answer: 2
       difficulty: 2
-      note: "The film starts at 15:00 and lasts 2{時間|じかん}, so it ends at 17:00: {午後|ごご} 5{時|じ}."
+      note: "This asks when the film ends. It starts at 15:00, and the small print says it lasts two hours: {映画|えいが}だけ 2{時間|じかん}です. So 午後 5時."
 
 - id: n5-d6-0011
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: flyer
     title: "スーパー まるや　セール"
@@ -666,39 +748,49 @@
         {火曜日|かようび}に りんごを 6こ {買|か}います。
         いちばん {安|やす}く {買|か}うと、いくらですか。
       options:
-        - "400{円|えん}"
+        - option: "400{円|えん}"
+          why: "400円 buys only five. The sixth costs 100円 more."
         - "500{円|えん}"
-        - "600{円|えん}"
-        - "800{円|えん}"
+        - option: "600{円|えん}"
+          why: "That is six at 100円 each, but five together cost only 400円."
+        - option: "800{円|えん}"
+          why: "That is two lots of five, ten apples, more than six."
       answer: 2
       difficulty: 2
-      note: "Buy five for 400{円|えん} and one more for 100{円|えん}: 500{円|えん}. Six at 100{円|えん} each would be 600{円|えん}."
+      note: "This asks the cheapest way to buy six apples on Tuesday. A sale flyer often gives a bulk price beside the single price: 5こ 400円 plus 1こ 100円 = 500円."
     - question: |-
         マリアさんは {金曜日|きんようび}に ジュースを もらいました。
         マリアさんは {何|なに}を {買|か}いましたか。
       answer: "パンを 5こ"
       wrong:
-        - "パンを 3こ"
-        - "たまごを 10こ"
-        - "バナナを 5{本|ほん}"
-        - "りんごを 5こ"
+        - option: "パンを 3こ"
+          why: "The rule needs five pieces of bread. Three is not enough."
+        - option: "たまごを 10こ"
+          why: "Eggs are on sale on Friday, but only bread earns the juice."
+        - option: "バナナを 5{本|ほん}"
+          why: "Bananas are on sale on Friday, but only bread earns the juice."
+        - option: "りんごを 5こ"
+          why: "Apples are a Tuesday sale, and only bread earns the juice."
       difficulty: 2
-      note: "On Friday the juice goes to people who buy five pieces of bread. Three is not enough, and nothing else earns the juice."
+      note: "This asks what Maria bought to earn the juice. The flyer's small print gives Friday's rule: パンを 5こ {買|か}った {人|ひと}に ジュースを 1{本|ぽん} あげます."
     - question: |-
         たまごと ぎゅうにゅうを {安|やす}く {買|か}いたいです。
         いつ スーパーへ {行|い}きますか。
       options:
-        - "{火曜日|かようび}だけ"
-        - "{金曜日|きんようび}だけ"
-        - "{月曜日|げつようび}と {金曜日|きんようび}"
+        - option: "{火曜日|かようび}だけ"
+          why: "Tuesday has the milk, but the eggs are on Friday."
+        - option: "{金曜日|きんようび}だけ"
+          why: "Friday has the eggs, but the milk is on Tuesday."
+        - option: "{月曜日|げつようび}と {金曜日|きんようび}"
+          why: "Monday has no sale. The milk is on Tuesday."
         - "{火曜日|かようび}と {金曜日|きんようび}"
       answer: 4
       difficulty: 2
-      note: "Milk is on sale on Tuesday and eggs on Friday, so both days."
+      note: "This asks when to shop for cheap eggs and cheap milk. The flyer splits the sale by day: milk under 火曜日, eggs under 金曜日."
 
 - id: n5-d6-0012
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: timetable
     icon: school
@@ -725,32 +817,39 @@
         - "6{回|かい}"
       answer: 1
       difficulty: 1
-      note: "{会話|かいわ} is on {月|げつ} (2{時間目|じかんめ}), and on {水|すい} and {金|きん} (1{時間目|じかんめ}): three times."
+      note: "This asks how many 会話 classes there are in a week. A school timetable is a grid of days and periods, and 会話 is on 月, 水 and 金: three times."
     - question: |-
         リンさんは {毎日|まいにち}、{午前|ごぜん} 10{時|じ}まで アルバイトを します。
         {漢字|かんじ}の じゅぎょうに {出|で}たいです。
         {何曜日|なんようび}に {出|で}ますか。
       answer: "{火曜日|かようび}"
       wrong:
-        - "{月曜日|げつようび}"
-        - "{水曜日|すいようび}"
-        - "{木曜日|もくようび}"
-        - "{金曜日|きんようび}"
+        - option: "{月曜日|げつようび}"
+          why: "Monday's 漢字 is in 1時間目, from 9:00, while Lin is at work."
+        - option: "{水曜日|すいようび}"
+          why: "Wednesday has 会話 and テスト, no 漢字."
+        - option: "{木曜日|もくようび}"
+          why: "Thursday's 漢字 is in 1時間目, from 9:00, while Lin is at work."
+        - option: "{金曜日|きんようび}"
+          why: "Friday has 会話, then no class: やすみ."
       difficulty: 2
-      note: "Lin works until 10:00, so 1{時間目|じかんめ} (9:00〜10:30) is out. {漢字|かんじ} in 2{時間目|じかんめ} is only on {火|か}. {月|げつ} and {木|もく} have {漢字|かんじ} in 1{時間目|じかんめ}."
+      note: "This asks which 漢字 class Lin can attend after working until ten. 1時間目 runs 9:00〜10:30, so only 2時間目 works, and 漢字 is in 2時間目 only on 火."
     - question: "テストは {何曜日|なんようび}の {何時|なんじ}から ですか。"
       options:
-        - "{水曜日|すいようび}の 9{時|じ}"
-        - "{水曜日|すいようび}の 10{時|じ}{半|はん}"
+        - option: "{水曜日|すいようび}の 9{時|じ}"
+          why: "9:00 is 1時間目, which is 会話 on Wednesday."
+        - option: "{水曜日|すいようび}の 10{時|じ}{半|はん}"
+          why: "10:30 is when 1時間目 ends. 2時間目 starts at 11:00."
         - "{水曜日|すいようび}の 11{時|じ}"
-        - "{金曜日|きんようび}の 11{時|じ}"
+        - option: "{金曜日|きんようび}の 11{時|じ}"
+          why: "Friday's 2時間目 is やすみ. The test is on Wednesday."
       answer: 3
       difficulty: 2
-      note: "テスト is in the {水|すい} row, 2{時間目|じかんめ}, which starts at 11:00. 10:30 is when 1{時間目|じかんめ} ends."
+      note: "This asks when the test starts. テスト is in the 水 row under 2時間目, and the times under the grid say 2時間目 starts at 11:00."
 
 - id: n5-d6-0013
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: board
     title: "{大学|だいがく}の クラブ"
@@ -781,13 +880,16 @@
         お{金|かね}は 1か{月|げつ} 1000{円|えん}までです。
         どの クラブに {入|はい}りますか。
       options:
-        - "①"
-        - "②"
+        - option: "①"
+          why: "Tennis starts at 16:00, while classes run until 17:00."
+        - option: "②"
+          why: "Cooking starts at 16:30, during class, and 2000円 is over the budget."
         - "③"
-        - "④"
+        - option: "④"
+          why: "Saturday is free of class, but 1500円 a month is over 1000円."
       answer: 3
       difficulty: 3
-      note: "Classes run until 17:00 on weekdays, so ① (16:00) and ② (16:30) start too early. ④ is on Saturday, but 1500{円|えん} is over the budget. ③ starts at 18:00 and is free."
+      note: "This asks which club fits weekday classes until five and a budget of 1000円 a month. ③ meets at 18:00, after class, and is free: お{金|かね}は いりません."
     - question: "{土曜日|どようび}に ある クラブは どれですか。"
       options:
         - "①"
@@ -796,22 +898,25 @@
         - "④"
       answer: 4
       difficulty: 1
-      note: "④ {写真|しゃしん} meets on {土|ど}, Saturday."
+      note: "This asks which club meets on Saturday: ④ 写真 meets on 土."
     - question: |-
         テニスの クラブに 3か{月|げつ} {入|はい}ります。
         お{金|かね}は ぜんぶで いくらですか。
       options:
-        - "1000{円|えん}"
+        - option: "1000{円|えん}"
+          why: "That is one month. The question asks for three."
         - "3000{円|えん}"
-        - "4500{円|えん}"
-        - "6000{円|えん}"
+        - option: "4500{円|えん}"
+          why: "That is three months of ④ 写真, at 1500円."
+        - option: "6000{円|えん}"
+          why: "That is three months of ② 料理, at 2000円."
       answer: 2
       difficulty: 2
-      note: "Tennis is 1000{円|えん} a month: 1000 × 3 = 3000{円|えん}. 4500 and 6000 are three months of ④ and ②."
+      note: "This asks the total for three months of tennis: 1か{月|げつ} 1000{円|えん}, so 1000 × 3 = 3000円."
 
 - id: n5-d6-0014
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: weather
     title: "{来週|らいしゅう}の {天気|てんき}"
@@ -883,32 +988,39 @@
         - "{土曜日|どようび}と {日曜日|にちようび}"
       answer: 1
       difficulty: 1
-      note: "{雨|あめ} is on {水|すい} and {木|もく}."
+      note: "This asks which days it rains. A weekly forecast gives each day a column, and 雨 is on 水 and 木."
     - question: |-
         はれの {日|ひ}に {海|うみ}へ {行|い}きたいです。
         あつい ほうが いいです。
         {何曜日|なんようび}に {行|い}きますか。
       answer: "{土曜日|どようび}"
       wrong:
-        - "{月曜日|げつようび}"
-        - "{金曜日|きんようび}"
-        - "{日曜日|にちようび}"
-        - "{火曜日|かようび}"
+        - option: "{月曜日|げつようび}"
+          why: "Monday is sunny, but 22℃ is cooler than Saturday's 24℃."
+        - option: "{金曜日|きんようび}"
+          why: "Friday is the hottest, 26℃, but it is cloudy, くもり."
+        - option: "{日曜日|にちようび}"
+          why: "Sunday is cloudy, くもり."
+        - option: "{火曜日|かようび}"
+          why: "Tuesday is cloudy, くもり."
       difficulty: 2
-      note: "The sunny days are {月|げつ} (22℃) and {土|ど} (24℃), and Saturday is warmer. Friday is the hottest day, 26℃, but it is cloudy."
+      note: "This asks for the hottest sunny day. The sunny days, はれ, are 月 (22℃) and 土 (24℃), and Saturday is warmer."
     - question: "{火曜日|かようび}の さいこう きおんは、{月曜日|げつようび}より {何度|なんど} {低|ひく}いですか。"
       options:
-        - "1{度|ど}"
-        - "2{度|ど}"
+        - option: "1{度|ど}"
+          why: "That compares the lows, さいてい (13℃ and 12℃). The question asks about the highs, さいこう."
+        - option: "2{度|ど}"
+          why: "Read the さいこう row: 22℃ and 19℃, three degrees apart."
         - "3{度|ど}"
-        - "4{度|ど}"
+        - option: "4{度|ど}"
+          why: "22 − 19 is three, not four."
       answer: 3
       difficulty: 2
-      note: "Monday is 22℃ and Tuesday is 19℃: 22 − 19 = 3{度|ど}."
+      note: "This asks how much lower Tuesday's high is than Monday's. The さいこう row gives Monday 22℃ and Tuesday 19℃: 22 − 19 = 3度."
 
 - id: n5-d6-0015
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: notice
     head: ["5{月|がつ}10{日|か}"]
@@ -936,35 +1048,43 @@
       options:
         - "8{時|じ}"
         - "8{時|じ}{半|はん}"
-        - "9{時|じ}"
+        - option: "9{時|じ}"
+          why: "9:00 is when the bus leaves. Everyone meets earlier, at 8:30."
         - "10{時|じ}{半|はん}"
       answer: 2
       difficulty: 1
-      note: "Everyone meets, {集|あつ}まる, at school at 8:30. 9:00 is when the bus leaves."
+      note: "This asks when to be at school. A school notice lists the day as a schedule: 8:30 {学校|がっこう}に {集|あつ}まる."
     - question: "どうぶつえんに {何時間|なんじかん} いますか。"
       options:
-        - "2{時間|じかん}{半|はん}"
-        - "3{時間|じかん}"
+        - option: "2{時間|じかん}{半|はん}"
+          why: "That would end at 13:00, but the bus leaves the zoo at 14:00."
+        - option: "3{時間|じかん}"
+          why: "That would end at 13:30, but the bus leaves the zoo at 14:00."
         - "3{時間|じかん}{半|はん}"
-        - "4{時間|じかん}"
+        - option: "4{時間|じかん}"
+          why: "That would end at 14:30, but the bus leaves the zoo at 14:00."
       answer: 3
       difficulty: 2
-      note: "The bus arrives at 10:30 and leaves again at 14:00: 3{時間|じかん}{半|はん}. 15:30 is when it reaches school."
+      note: "This asks how long they stay at the zoo: from arriving at 10:30 to boarding the bus at 14:00, 3{時間|じかん}{半|はん}."
     - question: |-
         えんそくの {日|ひ}、{朝|あさ}から {雨|あめ}が ふって います。
         {何|なに}を しますか。
       answer: "{学校|がっこう}で {勉強|べんきょう}します。"
       wrong:
-        - "かさを {持|も}って、どうぶつえんへ {行|い}きます。"
-        - "バスで どうぶつえんへ {行|い}きます。"
-        - "{家|いえ}で {休|やす}みます。"
-        - "つぎの {日|ひ}に どうぶつえんへ {行|い}きます。"
+        - option: "かさを {持|も}って、どうぶつえんへ {行|い}きます。"
+          why: "The かさ on the list is for a shower during the trip. On a rainy day the trip does not go."
+        - option: "バスで どうぶつえんへ {行|い}きます。"
+          why: "On a rainy day there is no trip. Everyone studies at school."
+        - option: "{家|いえ}で {休|やす}みます。"
+          why: "School goes on: everyone studies at school."
+        - option: "つぎの {日|ひ}に どうぶつえんへ {行|い}きます。"
+          why: "The notice gives no other day for the trip."
       difficulty: 3
-      note: "The last line says that on a rainy day, {雨|あめ}の {日|ひ}, everyone studies at school. The かさ on the list is for a shower during the trip, not a sign the trip goes ahead in the rain."
+      note: "This asks what happens if it rains on the day. The notice's last line covers it: {雨|あめ}の {日|ひ}は {学校|がっこう}で {勉強|べんきょう}します."
 
 - id: n5-d6-0016
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: receipt
     store: "ハッピーマート さくら{駅前|えきまえ}{店|てん}"
@@ -983,35 +1103,44 @@
   questions:
     - question: "おにぎりは ぜんぶで いくらでしたか。"
       options:
-        - "130{円|えん}"
-        - "150{円|えん}"
-        - "200{円|えん}"
+        - option: "130{円|えん}"
+          why: "That is only the うめ rice ball. There are two."
+        - option: "150{円|えん}"
+          why: "That is only the さけ rice ball. There are two."
+        - option: "200{円|えん}"
+          why: "¥200 is the notebook, ノート."
         - "280{円|えん}"
       answer: 4
       difficulty: 2
-      note: "There are two rice balls: さけ 150 and うめ 130. 150 + 130 = 280{円|えん}."
+      note: "This asks what the rice balls cost together. A receipt lists each item on its own line: おにぎり（さけ） ¥150 and おにぎり（うめ） ¥130, so 280円."
     - question: "この {人|ひと}は いくら はらいましたか。"
       options:
-        - "200{円|えん}"
+        - option: "200{円|えん}"
+          why: "¥200 is おつり, the change that came back."
         - "800{円|えん}"
-        - "1000{円|えん}"
-        - "1200{円|えん}"
+        - option: "1000{円|えん}"
+          why: "¥1,000 is おあずかり, the note handed over. ¥200 of it came back."
+        - option: "1200{円|えん}"
+          why: "That adds the change to the money handed over, but the change came back."
       answer: 2
       difficulty: 2
-      note: "{合計|ごうけい}, the total, is ¥800. おあずかり ¥1,000 is the note handed over, and おつり ¥200 came back, so the shopping cost 800{円|えん}."
+      note: "This asks what the shopping cost. On a receipt, {合計|ごうけい} is the total: ¥800. おあずかり is the money handed over, and おつり is the change."
     - question: "この {人|ひと}は {何時|なんじ}に {買|か}いものを しましたか。"
       options:
-        - "{午前|ごぜん} 6{時|じ}42{分|ふん}"
-        - "{午後|ごご} 6{時|じ}24{分|ぷん}"
+        - option: "{午前|ごぜん} 6{時|じ}42{分|ふん}"
+          why: "18:42 is in the evening. Morning would be 6:42."
+        - option: "{午後|ごご} 6{時|じ}24{分|ぷん}"
+          why: "The minutes are 42, not 24."
         - "{午後|ごご} 6{時|じ}42{分|ふん}"
-        - "{午後|ごご} 8{時|じ}42{分|ふん}"
+        - option: "{午後|ごご} 8{時|じ}42{分|ふん}"
+          why: "18 − 12 is 6, so 18:42 is 午後 6時, not 8時."
       answer: 3
       difficulty: 2
-      note: "The receipt says 18:42, a 24-hour time: {午後|ごご} 6{時|じ}42{分|ふん}."
+      note: "This asks when the shopping happened. The receipt prints the time beside the date, in 24-hour form: 18:42, which is 午後 6時42分."
 
 - id: n5-d6-0017
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: departure-board
     head: ["しゅべつ", "じこく", "{行|い}き{先|さき}", "{乗|の}り{場|ば}"]
@@ -1057,18 +1186,21 @@
         - "4ばん"
       answer: 2
       difficulty: 1
-      note: "Read across the 10:09 row to the last column, {乗|の}り{場|ば}: platform 2."
+      note: "This asks the platform for the 10:09 train. A departure board gives each train a row: read across from 10:09 to the 乗り場 column, platform 2."
     - question: |-
         みなみ{駅|えき}へ {行|い}きます。
         みなみ{駅|えき}に とまる {電車|でんしゃ}で、いちばん はやく {出|で}る のは どれですか。
       options:
         - "10:05の ふつう"
-        - "10:09の かいそく"
-        - "10:15の {特急|とっきゅう}"
-        - "10:21の ふつう"
+        - option: "10:09の かいそく"
+          why: "かいそく does not stop at みなみ駅: とまりません."
+        - option: "10:15の {特急|とっきゅう}"
+          why: "特急 does not stop at みなみ駅: とまりません."
+        - option: "10:21の ふつう"
+          why: "This ふつう stops there, but the 10:05 ふつう leaves first."
       answer: 1
       difficulty: 2
-      note: "The line along the bottom says かいそく and {特急|とっきゅう} do not stop at みなみ{駅|えき}. Only ふつう trains do, and the first is 10:05."
+      note: "This asks for the first train that stops at みなみ駅. The line along the bottom says かいそく and 特急 do not stop there, so only ふつう trains do, and the first is 10:05."
     - question: "{特急|とっきゅう}は {何時|なんじ}に {出|で}ますか。"
       options:
         - "10:05"
@@ -1077,11 +1209,11 @@
         - "10:21"
       answer: 3
       difficulty: 1
-      note: "The {特急|とっきゅう} row, in red, leaves at 10:15."
+      note: "This asks when the 特急 leaves. Find 特急 in the しゅべつ column, the type of train: 10:15."
 
 - id: n5-d6-0018
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: fare-chart
     title: "きっぷの ねだん（{大人|おとな}）"
@@ -1105,34 +1237,40 @@
         - "260{円|えん}"
       answer: 1
       difficulty: 1
-      note: "The box under {大学前|だいがくまえ}, next to さくら, says 150{円|えん}."
+      note: "This asks the adult fare to 大学前. A fare chart draws the line with you at 今 ここ, and each station's box gives the fare from there: 150円."
     - question: |-
         {大人|おとな} ふたりで {東|ひがし}まちへ {行|い}きます。
         きっぷは ぜんぶで いくらですか。
       options:
-        - "220{円|えん}"
+        - option: "220{円|えん}"
+          why: "That is one adult. There are two."
         - "440{円|えん}"
-        - "520{円|えん}"
-        - "660{円|えん}"
+        - option: "520{円|えん}"
+          why: "That is two adults to みなみ, at 260円."
+        - option: "660{円|えん}"
+          why: "That is three adults, not two."
       answer: 2
       difficulty: 2
-      note: "{東|ひがし}まち is 220{円|えん} for one adult: 220 × 2 = 440{円|えん}."
+      note: "This asks the fare for two adults to 東まち: 220円 each, so 440円."
     - question: |-
         {母|はは}と わたしで みなみへ {行|い}きます。
         わたしは 8さいです。
         きっぷは ぜんぶで いくらですか。
       options:
-        - "130{円|えん}"
-        - "260{円|えん}"
+        - option: "130{円|えん}"
+          why: "That is only the child's half fare. The mother pays 260円."
+        - option: "260{円|えん}"
+          why: "That is only the mother's fare. The child pays 130円 more."
         - "390{円|えん}"
-        - "520{円|えん}"
+        - option: "520{円|えん}"
+          why: "That charges the child the adult fare, but children pay half."
       answer: 3
       difficulty: 3
-      note: "みなみ is 260{円|えん} for an adult, and a child pays half, 130{円|えん}: 260 + 130 = 390{円|えん}. 520{円|えん} charges the child the adult fare."
+      note: "This asks the fare to みなみ for an adult and an eight-year-old. The adult pays 260円, and the small print halves it for a child: {子|こ}どもは {大人|おとな}の {半分|はんぶん}です. 260 + 130 = 390円."
 
 - id: n5-d6-0019
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: medicine-bag
     clinic: "さくら {薬|やっ}きょく"
@@ -1153,36 +1291,46 @@
     - question: "この {薬|くすり}は いつ {飲|の}みますか。"
       answer: "{朝|あさ}ごはんと {夜|よる}ごはんの あと"
       wrong:
-        - "{朝|あさ}ごはんと {昼|ひる}ごはんの あと"
-        - "{昼|ひる}ごはんと {夜|よる}ごはんの あと"
-        - "{朝|あさ}ごはんと {夜|よる}ごはんの まえ"
-        - "{朝|あさ}ごはんの あとと ねる {前|まえ}"
+        - option: "{朝|あさ}ごはんと {昼|ひる}ごはんの あと"
+          why: "The 昼 box is empty. The ticked times are 朝 and 夜."
+        - option: "{昼|ひる}ごはんと {夜|よる}ごはんの あと"
+          why: "The 昼 box is empty. The ticked times are 朝 and 夜."
+        - option: "{朝|あさ}ごはんと {夜|よる}ごはんの まえ"
+          why: "The times are right, but {食後|しょくご} means after the meal, not before."
+        - option: "{朝|あさ}ごはんの あとと ねる {前|まえ}"
+          why: "The ねる {前|まえ} box is empty. The second time is 夜."
       difficulty: 2
-      note: "The ticked boxes are {朝|あさ} and {夜|よる}, and {食後|しょくご} means after a meal: after breakfast and after dinner."
+      note: "This asks when to take the medicine. A pharmacy bag ticks the times of day: 朝 and 夜 are ticked, and {食後|しょくご} means after a meal."
     - question: "1{日|にち}に {薬|くすり}を いくつ {飲|の}みますか。"
       options:
-        - "1つ"
-        - "2つ"
-        - "3つ"
+        - option: "1つ"
+          why: "Each dose is two: 1{回|かい}に 2つ."
+        - option: "2つ"
+          why: "That is one dose. There are two doses a day, morning and night."
+        - option: "3つ"
+          why: "Two doses of two each make four."
         - "4つ"
       answer: 4
       difficulty: 2
-      note: "Two at a time, 1{回|かい}に 2つ, twice a day, morning and night: 2 × 2 = 4つ."
+      note: "This asks how many to take in a day. 1{回|かい}に 2つ is two each time, and two times are ticked: 2 × 2 = 4つ."
     - question: |-
         {月曜日|げつようび}の {朝|あさ}から {飲|の}みます。
         さいごに {飲|の}む のは いつですか。
       options:
-        - "{木曜日|もくようび}の {夜|よる}"
-        - "{金曜日|きんようび}の {朝|あさ}"
-        - "{金曜日|きんようび}の {昼|ひる}"
+        - option: "{木曜日|もくようび}の {夜|よる}"
+          why: "That is only four days. {5日分|いつかぶん} runs to Friday."
+        - option: "{金曜日|きんようび}の {朝|あさ}"
+          why: "Friday is the last day, but it has a night dose too."
+        - option: "{金曜日|きんようび}の {昼|ひる}"
+          why: "There is no midday dose: the 昼 box is empty."
         - "{金曜日|きんようび}の {夜|よる}"
       answer: 4
       difficulty: 3
-      note: "5{日|か}{分|ぶん} is five days' worth: Monday, Tuesday, Wednesday, Thursday and Friday. The last dose is Friday night. There is no midday dose."
+      note: "This asks when the last dose is, starting on Monday morning. {5日分|いつかぶん} is five days' worth, Monday to Friday, ending on Friday night."
 
 - id: n5-d6-0020
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: form
     variant: delivery
@@ -1214,36 +1362,45 @@
     - question: "この かみを {書|か}いた のは だれですか。"
       answer: "さくら たっきゅうびんの {人|ひと}"
       wrong:
-        - "やまだ はなこさん"
-        - "わたしの {家族|かぞく}"
-        - "となりの {家|いえ}の {人|ひと}"
-        - "ゆうびんきょくの {人|ひと}"
+        - option: "やまだ はなこさん"
+          why: "やまだ はなこ is the sender, おくった {人|ひと}, not the one who left the slip."
+        - option: "わたしの {家族|かぞく}"
+          why: "The slip comes from the delivery company, which came while nobody was home."
+        - option: "となりの {家|いえ}の {人|ひと}"
+          why: "The slip comes from the delivery company. No neighbour is named."
+        - option: "ゆうびんきょくの {人|ひと}"
+          why: "さくら たっきゅうびん is a delivery company, not the post office."
       difficulty: 2
-      note: "The slip comes from the delivery company at the top, さくら たっきゅうびん. やまだ はなこ is the person who sent the parcel, おくった {人|ひと}."
+      note: "This asks who left the slip. A missed-delivery slip names the delivery company at the top: さくら たっきゅうびん."
     - question: "にもつは いつまで {会社|かいしゃ}に ありますか。"
       options:
-        - "6{月|がつ}3{日|か}"
+        - option: "6{月|がつ}3{日|か}"
+          why: "6{月|がつ}{3日|みっか} is the day the driver came: {来|き}た {日|ひ}."
         - "6{月|がつ}6{日|か}"
         - "6{月|がつ}8{日|か}"
         - "6{月|がつ}10{日|か}"
       answer: 4
       difficulty: 1
-      note: "The last line: the parcel stays at the company until 6{月|がつ}10{日|か}. 6{月|がつ}3{日|か} is the day the driver came."
+      note: "This asks how long the company keeps the parcel. The last line says: 6{月|がつ}{10日|とおか}まで {会社|かいしゃ}に あります."
     - question: |-
         {夜|よる} 7{時|じ}ごろ にもつを もらいたいです。
         どう しますか。
       answer: "{電話|でんわ}を して、18〜21{時|じ}と {言|い}います。"
       wrong:
-        - "{電話|でんわ}を して、16〜18{時|じ}と {言|い}います。"
-        - "やまださんに {電話|でんわ}を します。"
-        - "{夜|よる} 7{時|じ}に {会社|かいしゃ}へ {行|い}きます。"
-        - "6{月|がつ}10{日|か}まで {家|いえ}で {待|ま}ちます。"
+        - option: "{電話|でんわ}を して、16〜18{時|じ}と {言|い}います。"
+          why: "16〜18時 ends at six. Seven in the evening is 19:00, inside 18〜21時."
+        - option: "やまださんに {電話|でんわ}を します。"
+          why: "やまだ is the sender. The number to call is the company's: 0120-123-456."
+        - option: "{夜|よる} 7{時|じ}に {会社|かいしゃ}へ {行|い}きます。"
+          why: "The slip asks you to phone, and it never gives the company's opening hours."
+        - option: "6{月|がつ}10{日|か}まで {家|いえ}で {待|ま}ちます。"
+          why: "The driver comes again only after you phone. The 10th is when the company stops holding the parcel."
       difficulty: 3
-      note: "The slip asks you to phone and say the day and time. Seven in the evening is 19:00, inside 18〜21{時|じ}."
+      note: "This asks how to get the parcel at about seven in the evening. The slip asks you to phone with a day and a time, and seven in the evening, 19:00, falls inside 18〜21{時|じ}."
 
 - id: n5-d6-0021
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: form
     variant: application
@@ -1273,34 +1430,40 @@
     - question: "マリアさんの たんじょうびは いつですか。"
       answer: "11{月|がつ} 5{日|か}"
       wrong:
-        - "4{月|がつ} 2{日|か}"
+        - option: "4{月|がつ} 2{日|か}"
+          why: "4月 2日 is the date the form was filled in, at the top."
         - "5{月|がつ} 11{日|にち}"
         - "4{月|がつ} 10{日|か}"
         - "11{月|がつ} 15{日|にち}"
       difficulty: 1
-      note: "{生|う}まれた {日|ひ}, the day she was born, is 1998{年|ねん} 11{月|がつ} 5{日|か}. 4{月|がつ} 2{日|か} is the date on the form."
+      note: "This asks for Maria's birthday. An application form labels each field, and {生|う}まれた {日|ひ}, the day of birth, says 11月 5日."
     - question: "マリアさんは いつ クラスに {行|い}きますか。"
       answer: "{火曜日|かようび}と {木曜日|もくようび}の {午後|ごご}"
       wrong:
-        - "{月曜日|げつようび}と {水曜日|すいようび}の {午前|ごぜん}"
-        - "{土曜日|どようび}の {午前|ごぜん}"
-        - "{火曜日|かようび}と {木曜日|もくようび}の {午前|ごぜん}"
-        - "{月曜日|げつようび}と {水曜日|すいようび}の {午後|ごご}"
+        - option: "{月曜日|げつようび}と {水曜日|すいようび}の {午前|ごぜん}"
+          why: "That box, 月・水 {午前|ごぜん}, is empty."
+        - option: "{土曜日|どようび}の {午前|ごぜん}"
+          why: "That box, 土 {午前|ごぜん}, is empty."
+        - option: "{火曜日|かようび}と {木曜日|もくようび}の {午前|ごぜん}"
+          why: "The days are right, but the ticked box says {午後|ごご}, afternoon."
+        - option: "{月曜日|げつようび}と {水曜日|すいようび}の {午後|ごご}"
+          why: "No class runs then. The 月・水 class is in the morning, and its box is empty."
       difficulty: 2
-      note: "Only one class box is ticked: {火|か}・{木|もく} {午後|ごご}, Tuesday and Thursday afternoons."
+      note: "This asks when Maria goes to class. On a form, the ticked box is the choice made, and only 火・木 {午後|ごご} is ticked."
     - question: "この かみは いつまでに {出|だ}しますか。"
       options:
-        - "4{月|がつ} 2{日|か}"
+        - option: "4{月|がつ} 2{日|か}"
+          why: "4月 2日 is the date the form was filled in, not the deadline."
         - "4{月|がつ} 5{日|か}"
         - "4{月|がつ} 8{日|か}"
         - "4{月|がつ} 10{日|か}"
       answer: 4
       difficulty: 1
-      note: "The line under the form says to hand it in by 4{月|がつ}10{日|か}."
+      note: "This asks the deadline for handing in the form. The line under it says 4{月|がつ}{10日|とおか}までに."
 
 - id: n5-d6-0022
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: machine
     variant: drinks
@@ -1326,12 +1489,16 @@
     - question: "あたたかい {飲|の}みもので、いちばん {安|やす}い のは どれですか。"
       answer: "こうちゃ"
       wrong:
-        - "お{茶|ちゃ}"
-        - "{水|みず}"
-        - "コーヒー"
-        - "コーンスープ"
+        - option: "お{茶|ちゃ}"
+          why: "お茶 is 130円 too, but it is in the cold row, つめたい."
+        - option: "{水|みず}"
+          why: "水 is the cheapest drink of all, but it is cold, つめたい."
+        - option: "コーヒー"
+          why: "コーヒー is hot, but 140円 is more than こうちゃ's 130円."
+        - option: "コーンスープ"
+          why: "コーンスープ is hot, but at 150円 it is the dearest hot drink."
       difficulty: 2
-      note: "The hot row, あたたかい, has コーヒー 140, こうちゃ 130 and コーンスープ 150. {水|みず} and お{茶|ちゃ} are cheap too, but they are cold."
+      note: "This asks for the cheapest hot drink. A drinks machine sorts its rows into つめたい, cold, and あたたかい, hot. In the hot row, こうちゃ is the cheapest at 130円."
     - question: "{今|いま} {買|か}う ことが できない のは どれですか。"
       answer: "ジュース"
       wrong:
@@ -1340,22 +1507,26 @@
         - "お{茶|ちゃ}"
         - "{水|みず}"
       difficulty: 1
-      note: "The light under ジュース says {売|う}り{切|き}れ: sold out."
+      note: "This asks which drink cannot be bought now. On a drinks machine a lit 売り切れ means sold out, and it is under ジュース."
     - question: |-
         100{円|えん}だま 1つと 10{円|えん}だま 2つが あります。
         {買|か}う ことが できる のは どれですか。
       answer: "{水|みず}"
       wrong:
-        - "お{茶|ちゃ}"
-        - "こうちゃ"
-        - "コーヒー"
-        - "コーラ"
+        - option: "お{茶|ちゃ}"
+          why: "お茶 is 130円, ten yen more than 120円."
+        - option: "こうちゃ"
+          why: "こうちゃ is 130円, ten yen more than 120円."
+        - option: "コーヒー"
+          why: "コーヒー is 140円, more than 120円."
+        - option: "コーラ"
+          why: "コーラ is 160円, more than 120円."
       difficulty: 3
-      note: "100 + 10 + 10 = 120{円|えん}. Only {水|みず}, at 110{円|えん}, costs that little or less."
+      note: "This asks what 120円 can buy. 100 + 10 + 10 = 120円, and only 水, at 110円, costs that or less."
 
 - id: n5-d6-0023
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: chat
     room: "{日本語|にほんご}クラス (4)"
@@ -1402,29 +1573,35 @@
         - "{日本語|にほんご}の クラス"
         - "マリアさんの {家|いえ}"
       difficulty: 1
-      note: "ケン says {駅|えき}の {前|まえ}で {会|あ}いましょう: let's meet in front of the station."
+      note: "This asks where everyone meets. In a group chat, read the last plan someone makes: ケン says {駅|えき}の {前|まえ}で {会|あ}いましょう."
     - question: "リンさんは {何時|なんじ}ごろ {来|き}ますか。"
       options:
-        - "2{時|じ}ごろ"
+        - option: "2{時|じ}ごろ"
+          why: "2 is when the others start. Rin works in the morning and comes later."
         - "3{時|じ}ごろ"
-        - "5{時|じ}ごろ"
-        - "6{時|じ}ごろ"
+        - option: "5{時|じ}ごろ"
+          why: "5 is when karaoke ends: 2{時|じ}から 5{時|じ}まで."
+        - option: "6{時|じ}ごろ"
+          why: "6 is when Maria must be home: {夜|よる} 6{時|じ}までに {家|いえ}に {帰|かえ}ります."
       answer: 2
       difficulty: 2
-      note: "リン's last message: after work, around 3. 2 is when the others start."
+      note: "This asks when Rin will come. Rin's last message sets Rin's own time: アルバイトの あとで、3{時|じ}ごろ {行|い}きます."
     - question: "「わたし」は {何時|なんじ}に {駅|えき}へ {行|い}きますか。"
       options:
         - "1{時|じ}50{分|ぷん}"
-        - "2{時|じ}"
-        - "3{時|じ}"
-        - "5{時|じ}"
+        - option: "2{時|じ}"
+          why: "2 is when karaoke starts. You go ten minutes early."
+        - option: "3{時|じ}"
+          why: "3 is when Rin comes, after work."
+        - option: "5{時|じ}"
+          why: "5 is when karaoke ends."
       answer: 1
       difficulty: 2
-      note: "The green message on the right is the reader's own: 1{時|じ}50{分|ぷん}に {駅|えき}へ {行|い}きます."
+      note: "This asks when you, 「わたし」, go to the station. In a chat app your own messages sit on the right, in green: 1{時|じ}50{分|ぷん}に {駅|えき}へ {行|い}きます."
 
 - id: n5-d6-0024
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: station-signs
     signs:
@@ -1450,31 +1627,35 @@
         - "{下|した}"
       answer: 1
       difficulty: 1
-      note: "バス のりば is on the {北口|きたぐち} sign, and its arrow points left."
+      note: "This asks which way to the buses. Station signs group places by exit: バス のりば is on the {北口|きたぐち} sign, and its arrow points left."
     - question: |-
         タクシーで {病院|びょういん}へ {行|い}きます。
         どの {出口|でぐち}から {出|で}ますか。
       answer: "{南口|みなみぐち}"
       wrong:
-        - "{北口|きたぐち}"
+        - option: "{北口|きたぐち}"
+          why: "北口 has the buses and the library, not taxis or the hospital."
         - "{東口|ひがしぐち}"
         - "{西口|にしぐち}"
         - "ちかてつの {出口|でぐち}"
       difficulty: 1
-      note: "タクシー のりば and {病院|びょういん} are both on the {南口|みなみぐち} sign."
+      note: "This asks which exit to use for a taxi to the hospital. タクシー のりば and {病院|びょういん} are both on the {南口|みなみぐち} sign."
     - question: "ちかてつに のりかえます。どちらへ {行|い}きますか。"
       options:
-        - "{左|ひだり}"
-        - "{右|みぎ}"
+        - option: "{左|ひだり}"
+          why: "Left, ←, is the 北口 sign: buses and the library."
+        - option: "{右|みぎ}"
+          why: "Right, →, is the 南口 sign: taxis and the hospital."
         - "まっすぐ"
-        - "{下|した}"
+        - option: "{下|した}"
+          why: "↓ points to the toilets and the lift. The のりかえ arrow is ↑, straight ahead."
       answer: 3
       difficulty: 2
-      note: "The navy のりかえ sign points up. On a sign that hangs overhead, ↑ means straight ahead."
+      note: "This asks which way to change to the subway. The navy のりかえ sign points ↑, and on a sign that hangs overhead, ↑ means straight ahead."
 
 - id: n5-d6-0025
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: chalkboard
     head: ["ランチ　11:00〜14:00"]
@@ -1502,38 +1683,45 @@
         ランチの B と コーヒーを たのみます。
         ぜんぶで いくらですか。
       options:
-        - "900{円|えん}"
+        - option: "900{円|えん}"
+          why: "That is lunch B alone. The coffee adds 200円."
         - "1100{円|えん}"
-        - "1200{円|えん}"
-        - "1300{円|えん}"
+        - option: "1200{円|えん}"
+          why: "That adds 300円 for the coffee, but with a lunch every drink is 200円."
+        - option: "1300{円|えん}"
+          why: "That pays the full 400円 for the coffee, but with a lunch it is 200円."
       answer: 2
       difficulty: 2
-      note: "B is 900{円|えん}, and with a lunch any drink is 200{円|えん}: 1100{円|えん}. 1300{円|えん} pays the full 400 for the coffee."
+      note: "This asks the total for lunch B and a coffee. B is 900円, and the board's small print cuts the drink: ランチと いっしょだと、{飲|の}みものは どれも 200{円|えん}です. 900 + 200 = 1100円."
     - question: "いちばん {安|やす}い ランチは どれですか。"
       options:
         - "Aの カレー"
         - "Bの パスタ"
         - "Cの サンドイッチ"
-        - "ケーキセット"
+        - option: "ケーキセット"
+          why: "The ケーキセット is cheaper, at 650円, but it is not a lunch."
       answer: 3
       difficulty: 1
-      note: "Of the three lunches, C is 700{円|えん}, the cheapest. The ケーキセット is cheaper still, but it is not a lunch."
+      note: "This asks for the cheapest lunch. Under ランチ, C is 700円."
     - question: |-
         {午後|ごご} 3{時|じ}に {来|き}ました。
         ケーキと こうちゃを たのみます。
         いくらですか。
       options:
-        - "200{円|えん}"
-        - "400{円|えん}"
+        - option: "200{円|えん}"
+          why: "200円 drinks come only with a lunch, and lunch ends at 14:00. The cake costs money too."
+        - option: "400{円|えん}"
+          why: "That is the tea alone. The ケーキセット gives cake and tea together."
         - "650{円|えん}"
-        - "1050{円|えん}"
+        - option: "1050{円|えん}"
+          why: "That adds a 400円 tea to the set, but the set already has a drink."
       answer: 3
       difficulty: 3
-      note: "Cake with a drink is the ケーキセット, 650{円|えん}. The 200{円|えん} drinks are only with a lunch, and lunch ends at 14:00."
+      note: "This asks the price of cake and tea at 3 p.m. Cake with a drink is the ケーキセット, 650円. Lunch ends at 14:00, so the 200円 drink price does not apply."
 
 - id: n5-d6-0026
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: ticket
     venue: "さくら シネマ"
@@ -1550,37 +1738,44 @@
   questions:
     - question: "{映画|えいが}は {何時|なんじ}に はじまりますか。"
       options:
-        - "{午後|ごご} 2{時|じ}10{分|ぷん}"
+        - option: "{午後|ごご} 2{時|じ}10{分|ぷん}"
+          why: "14:10 is {入|はい}れる {時間|じかん}, when the doors open."
         - "{午後|ごご} 2{時|じ}{半|はん}"
-        - "{午後|ごご} 4{時|じ}10{分|ぷん}"
-        - "{午後|ごご} 4{時|じ}{半|はん}"
+        - option: "{午後|ごご} 4{時|じ}10{分|ぷん}"
+          why: "14:10 is 午後 2時10分, and it is when the doors open."
+        - option: "{午後|ごご} 4{時|じ}{半|はん}"
+          why: "14:30 is 午後 2時半: take away 12, not 10."
       answer: 2
       difficulty: 2
-      note: "はじまる {時間|じかん} is 14:30, {午後|ごご} 2{時|じ}{半|はん}. 14:10 is when the doors open."
+      note: "This asks when the film starts. A cinema ticket gives two times: はじまる {時間|じかん}, the start, is 14:30, 午後 2{時|じ}{半|はん}."
     - question: |-
         {映画|えいが}は 2{時間|じかん}です。
         {何時|なんじ}に おわりますか。
       options:
         - "{午後|ごご} 4{時|じ}{半|はん}"
-        - "{午後|ごご} 5{時|じ}"
-        - "{午後|ごご} 6{時|じ}{半|はん}"
-        - "{午後|ごご} 7{時|じ}"
+        - option: "{午後|ごご} 5{時|じ}"
+          why: "That counts two hours from 15:00, but the film starts at 14:30."
+        - option: "{午後|ごご} 6{時|じ}{半|はん}"
+          why: "16:30 is 午後 4時半. 6:30 would be 18:30."
+        - option: "{午後|ごご} 7{時|じ}"
+          why: "That is four and a half hours after 14:30. The film lasts two."
       answer: 1
       difficulty: 2
-      note: "It starts at 14:30 and lasts two hours: 16:30, {午後|ごご} 4{時|じ}{半|はん}."
+      note: "This asks when the two-hour film ends. It starts at 14:30, 午後 2{時|じ}{半|はん}, so it ends at 16:30, 午後 4{時|じ}{半|はん}."
     - question: "{何|なん}ばんの スクリーンへ {行|い}きますか。"
       answer: "3ばん"
       wrong:
-        - "12ばん"
+        - option: "12ばん"
+          why: "12 is part of the seat, せき F-12."
         - "9ばん"
         - "8ばん"
         - "14ばん"
       difficulty: 1
-      note: "スクリーン is 3. 12 is the seat number, F-12, and 8 and 9 are the date."
+      note: "This asks which screen to go to: スクリーン 3."
 
 - id: n5-d6-0027
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: sign
     tone: red
@@ -1596,36 +1791,47 @@
   questions:
     - question: "お{店|みせ}が やすみの {日|ひ}は {何日|なんにち} ありますか。"
       options:
-        - "3{日|か}"
+        - option: "3{日|か}"
+          why: "That is 17 − 14, but から〜まで counts both ends, the 14th and the 17th."
         - "4{日|か}"
-        - "5{日|か}"
-        - "7{日|か}"
+        - option: "5{日|か}"
+          why: "That counts the 18th too, but the shop opens that day, from 1 p.m."
+        - option: "7{日|か}"
+          why: "Only Tuesday to Friday are closed, four days."
       answer: 2
       difficulty: 2
-      note: "From the 14th to the 17th: the 14th, 15th, 16th and 17th, four days, 4{日|か} (よっか)."
+      points: ["particle-kara-made"]
+      note: "This asks how many days the shop is closed. From the 14th to the 17th, both counted, is four days: {4日|よっか}."
     - question: |-
         7{月|がつ}18{日|にち}の {朝|あさ} 10{時|じ}に、パンを {買|か}いに {行|い}きました。
         どう でしたか。
       answer: "まだ お{店|みせ}が あいて いませんでした。"
       wrong:
-        - "パンを {買|か}う ことが できました。"
-        - "お{店|みせ}は {一日|いちにち} やすみでした。"
-        - "お{店|みせ}は もう しまって いました。"
+        - option: "パンを {買|か}う ことが できました。"
+          why: "The shop opened at 1 p.m., three hours later."
+        - option: "お{店|みせ}は {一日|いちにち} やすみでした。"
+          why: "The 18th is not a closed day. The shop opens at 1 p.m."
+        - option: "お{店|みせ}は もう しまって いました。"
+          why: "もう しまって says it had closed already. On the 18th it had not opened yet: まだ."
       difficulty: 2
-      note: "On the 18th the shop opens at 1 in the afternoon, so at 10 in the morning it is not open yet. It is open that day, from 1."
+      points: ["adverb-mada", "adverb-mou"]
+      note: "This asks what happened at ten on the 18th. The sign's last line says the shop opens that day at {午後|ごご} 1{時|じ}, so at ten it was not open yet."
     - question: "お{店|みせ}が また あく のは いつですか。"
       options:
-        - "{金曜日|きんようび}の {午後|ごご} 1{時|じ}"
-        - "{土曜日|どようび}の {午前|ごぜん} 10{時|じ}"
+        - option: "{金曜日|きんようび}の {午後|ごご} 1{時|じ}"
+          why: "Friday the 17th is the last closed day."
+        - option: "{土曜日|どようび}の {午前|ごぜん} 10{時|じ}"
+          why: "Saturday is right, but the shop opens in the afternoon: {午後|ごご} 1{時|じ}から."
         - "{土曜日|どようび}の {午後|ごご} 1{時|じ}"
-        - "{日曜日|にちようび}の {午後|ごご} 1{時|じ}"
+        - option: "{日曜日|にちようび}の {午後|ごご} 1{時|じ}"
+          why: "The shop opens a day earlier, on Saturday the 18th."
       answer: 3
       difficulty: 2
-      note: "Closed until Friday the 17th; on Saturday the 18th it opens at {午後|ごご} 1{時|じ}."
+      note: "This asks when the shop opens again: closed until Friday the 17th, then 18{日|にち}（{土|ど}）は {午後|ごご} 1{時|じ}から."
 
 - id: n5-d6-0028
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: stamp-card
     shop: "カフェ まめ"
@@ -1648,33 +1854,39 @@
         - "10こ"
       answer: 1
       difficulty: 1
-      note: "Seven circles carry the red stamp: 7こ."
+      note: "This asks how many stamps the card has. Count the stamped circles, or read the count printed on the card: 7こ."
     - question: |-
         コーヒーを 1ぱい もらいたいです。
         あと いくら {買|か}いものを しますか。
       options:
-        - "500{円|えん}"
-        - "1000{円|えん}"
+        - option: "500{円|えん}"
+          why: "That is one stamp. Three more are needed, from 7 to 10."
+        - option: "1000{円|えん}"
+          why: "That is two stamps. Three more are needed, from 7 to 10."
         - "1500{円|えん}"
-        - "2000{円|えん}"
+        - option: "2000{円|えん}"
+          why: "That is four stamps, one more than needed."
       answer: 3
       difficulty: 2
-      note: "The coffee is at stamp 10, and there are 7, so three more stamps. Each is 500{円|えん}: 500 × 3 = 1500{円|えん}."
+      note: "This asks how much more to spend for the free coffee. The coffee comes at stamp 10, and there are 7, so three more. Each stamp is 500{円|えん}: 500 × 3 = 1500円."
     - question: |-
         {今日|きょう} 1000{円|えん} {買|か}いものを しました。
         スタンプは いくつに なりますか。
       options:
-        - "8こ"
+        - option: "8こ"
+          why: "1000円 is two lots of 500円, so two stamps, not one."
         - "9こ"
-        - "10こ"
-        - "12こ"
+        - option: "10こ"
+          why: "That would need three stamps, 1500円 of shopping."
+        - option: "12こ"
+          why: "That adds five stamps, but 1000円 earns two."
       answer: 2
       difficulty: 3
-      note: "1000{円|えん} is two lots of 500, so two stamps: 7 + 2 = 9こ."
+      note: "This asks how many stamps there are after spending 1000円 today. 500円 earns one stamp, so 1000円 earns two: 7 + 2 = 9こ."
 
 - id: n5-d6-0029
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: notice
     head: ["9{月|がつ}2{日|か}"]
@@ -1698,33 +1910,43 @@
         どう しますか。
       answer: "かいだんを つかいます。"
       wrong:
-        - "エレベーターを つかいます。"
-        - "かんりかいしゃに {電話|でんわ}を します。"
-        - "{午後|ごご} 3{時|じ}まで {外|そと}で {待|ま}ちます。"
-        - "マンションに {入|はい}る ことが できません。"
+        - option: "エレベーターを つかいます。"
+          why: "The lift is out of use from 10:00 to 12:00 on the 10th."
+        - option: "かんりかいしゃに {電話|でんわ}を します。"
+          why: "The notice already says what to do: use the stairs."
+        - option: "{午後|ごご} 3{時|じ}まで {外|そと}で {待|ま}ちます。"
+          why: "15:00 is the end of the 11th's check, not the 10th's, and the stairs work anyway."
+        - option: "マンションに {入|はい}る ことが できません。"
+          why: "Only the lift is out. The stairs can still be used."
       difficulty: 2
-      note: "On the 10th the lift is out of use from 10:00 to 12:00, and 11 o'clock is inside that. The notice says to use the stairs, かいだん."
+      note: "This asks what to do at 11 a.m. on the 10th. The notice's table gives the 10th 10:00〜12:00, and 11 is inside it, so the lift is out. The notice says: かいだんを つかって ください."
     - question: "エレベーターが つかえない {時間|じかん}は、ぜんぶで {何時間|なんじかん}ですか。"
       options:
-        - "1{時間|じかん}"
-        - "2{時間|じかん}"
-        - "3{時間|じかん}"
+        - option: "1{時間|じかん}"
+          why: "Each day's check is two hours, and there are two days."
+        - option: "2{時間|じかん}"
+          why: "That counts only one day. There are two."
+        - option: "3{時間|じかん}"
+          why: "Each day is two hours: 2 + 2 = 4."
         - "4{時間|じかん}"
       answer: 4
       difficulty: 2
-      note: "Two hours on the 10th and two hours on the 11th: 4{時間|じかん}. 2{時間|じかん} counts only one day."
+      note: "This asks the total time the lift is out: 10:00〜12:00 on the 10th and 13:00〜15:00 on the 11th, two hours each, 4{時間|じかん}."
     - question: "9{月|がつ}11{日|にち}の {午前中|ごぜんちゅう}、エレベーターは どうですか。"
       answer: "つかう ことが できます。"
       wrong:
-        - "つかう ことが できません。"
-        - "10{時|じ}から 12{時|じ}まで つかえません。"
-        - "{午前|ごぜん} 11{時|じ}まで つかえません。"
+        - option: "つかう ことが できません。"
+          why: "The 11th's check is in the afternoon, 13:00〜15:00."
+        - option: "10{時|じ}から 12{時|じ}まで つかえません。"
+          why: "10:00〜12:00 is the 10th's check, not the 11th's."
+        - option: "{午前|ごぜん} 11{時|じ}まで つかえません。"
+          why: "No check ends at 11. The 11th's runs 13:00〜15:00."
       difficulty: 2
-      note: "On the 11th the inspection is 13:00〜15:00, in the afternoon. In the morning the lift works. 10:00〜12:00 is the 10th."
+      note: "This asks about the lift on the morning of the 11th. The table gives the 11th 13:00〜15:00, the afternoon, so in the morning the lift works."
 
 - id: n5-d6-0030
   type: info
-  status: reviewed
+  status: draft
   material:
     kind: stop-timetable
     mode: train
@@ -1751,33 +1973,43 @@
         {土曜日|どようび}の {朝|あさ} 8{時|じ}に {駅|えき}に {着|つ}きました。
         つぎの {電車|でんしゃ}は {何時|なんじ}ですか。
       options:
-        - "8:00"
+        - option: "8:00"
+          why: "8:00 is in the weekday column, 月〜金."
         - "8:10"
-        - "8:18"
-        - "8:35"
+        - option: "8:18"
+          why: "8:18 is in the weekday column, 月〜金."
+        - option: "8:35"
+          why: "There is an earlier Saturday train, 8:10."
       answer: 2
       difficulty: 2
-      note: "On Saturday, read the {土|ど}・{日|にち} column: the 8 o'clock row starts with 10, so 8:10. 8:00 and 8:18 are weekday trains."
+      note: "This asks for the next Saturday train after eight. Saturday uses the 土・日 column, and its 8 row starts with 10: 8:10."
     - question: |-
         {月曜日|げつようび}の 7{時|じ}10{分|ぷん}に {駅|えき}に {着|つ}きました。
         つぎに {来|く}る、みなみ{駅|えき}に とまる {電車|でんしゃ}は {何時|なんじ}ですか。
       answer: "7:20"
       wrong:
-        - "7:12"
-        - "7:05"
-        - "7:33"
-        - "7:45"
+        - option: "7:12"
+          why: "7:12 has a ●: it is a かいそく, which does not stop at みなみ駅."
+        - option: "7:05"
+          why: "7:05 has already gone. It is 7:10."
+        - option: "7:33"
+          why: "7:33 stops there, but 7:20 comes first."
+        - option: "7:45"
+          why: "7:45 has a ●, and 7:20 comes first anyway."
       difficulty: 3
-      note: "After 7:10 on a weekday come 7:12●, 7:20, 7:33… The ● train is a かいそく, which does not stop at みなみ{駅|えき}, so the next one that does is 7:20."
+      note: "This asks for the next train after 7:10 on a Monday that stops at みなみ駅. The key under the timetable says ● trains are かいそく, which do not stop there. After 7:10 come 7:12● and then 7:20, so 7:20."
     - question: |-
         {月曜日|げつようび}です。
         {東京|とうきょう}に 8{時|じ}50{分|ぷん}までに {着|つ}きたいです。
         いちばん おそい {電車|でんしゃ}は どれですか。
       options:
-        - "7:52"
-        - "8:00"
+        - option: "7:52"
+          why: "7:52 + 40分 is 8:32, in time, but later trains are in time too."
+        - option: "8:00"
+          why: "8:00 + 40分 is 8:40, in time, but the 8:10 leaves later and is still in time."
         - "8:10"
-        - "8:18"
+        - option: "8:18"
+          why: "8:18 is a ふつう: 40分 later is 8:58, after 8:50."
       answer: 3
       difficulty: 3
-      note: "The 8:10● is a かいそく, 30{分|ぷん} to {東京|とうきょう}: it arrives at 8:40. The 8:18 is a ふつう, 40{分|ぷん}: it arrives at 8:58, too late."
+      note: "This asks for the latest Monday train that reaches 東京 by 8:50. The key gives the ride: ふつう 40{分|ぷん}, かいそく 30{分|ぷん}. The 8:10● is a かいそく and arrives at 8:40."

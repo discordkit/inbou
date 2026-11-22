@@ -6,7 +6,7 @@
 
 - id: n5-d5-0001
   type: mid
-  status: reviewed
+  status: draft
   intro: "これは ケンさんが {書|か}いた さくぶんです。"
   text: |-
     {私|わたし}は {先月|せんげつ}から、{毎週|まいしゅう} {土曜日|どようび}に {料理|りょうり}{教室|きょうしつ}へ {行|い}って います。{教室|きょうしつ}は {駅|えき}の {近|ちか}くの ビルの 3がいに あります。
@@ -22,23 +22,28 @@
         - "{先生|せんせい}の {家|いえ}"
         - "{駅|えき}の {中|なか}"
       difficulty: 1
-      note: "{教室|きょうしつ}は {駅|えき}の {近|ちか}くの ビルの 3がいに あります: the third floor of a building near the station."
+      note: "This asks where the cooking class is: {駅|えき}の {近|ちか}くの ビルの 3がい."
     - question: "{先週|せんしゅう}の てんぷらは どうでしたか。"
       answer: "むずかしかったですが、おいしかったです。"
       wrong:
-        - "かんたんで、おいしかったです。"
-        - "むずかしくて、おいしく なかったです。"
-        - "かんたんでしたが、おいしく なかったです。"
+        - option: "かんたんで、おいしかったです。"
+          why: "Tempura was hard, not easy: むずかしかったです."
+        - option: "むずかしくて、おいしく なかったです。"
+          why: "It was hard, but it came out well: おいしく できました."
+        - option: "かんたんでしたが、おいしく なかったです。"
+          why: "Both halves are the wrong way round: it was hard, and it came out well."
       difficulty: 2
-      note: "むずかしかったですが、おいしく できました: hard to make, but it came out well. Both halves have to match."
+      points: ["conjunction-ga-but"]
+      note: "This asks how last week's tempura turned out. Both halves matter: むずかしかったですが、おいしく できました."
     - question: "ケンさんは {作|つく}った てんぷらを どう しましたか。"
       answer: "{友|とも}だちに あげました。"
       wrong:
         - "{先生|せんせい}に あげました。"
         - "{教室|きょうしつ}の みんなで {食|た}べました。"
-        - "ぜんぶ {自分|じぶん}で {食|た}べました。"
+        - option: "ぜんぶ {自分|じぶん}で {食|た}べました。"
+          why: "The friend ate it all, not Ken: {友|とも}だちは … ぜんぶ {食|た}べました."
       difficulty: 1
-      note: "Ken gave it to a friend in the same building: {同|おな}じ アパートの {友|とも}だちに てんぷらを あげました. The friend ate it all, not Ken."
+      note: "This asks what Ken did with the tempura: {同|おな}じ アパートの {友|とも}だちに てんぷらを あげました."
     - question: "ケンさんは すしの {写真|しゃしん}を だれに {送|おく}りたいですか。"
       answer: "お{母|かあ}さん"
       wrong:
@@ -46,11 +51,11 @@
         - "アパートの {友|とも}だち"
         - "お{父|とう}さん"
       difficulty: 1
-      note: "{国|くに}の {母|はは}に {送|おく}りたいです: to Ken's mother back home. {母|はは} is how you speak of your own mother; お{母|かあ}さん is the polite word."
+      note: "This asks who Ken wants to send the photo to: {国|くに}の {母|はは}. {母|はは} is how you speak of your own mother; お{母|かあ}さん is the polite word."
 
 - id: n5-d5-0002
   type: mid
-  status: reviewed
+  status: draft
   intro: "これは リーさんが {書|か}いた さくぶんです。"
   text: |-
     {先週|せんしゅう}の {金曜日|きんようび}、{私|わたし}は かさを なくしました。{青|あお}くて {大|おお}きい かさです。{学校|がっこう}の {帰|かえ}りに {電車|でんしゃ}の {中|なか}に わすれたと {思|おも}いました。
@@ -66,31 +71,38 @@
         - "{黒|くろ}くて {大|おお}きい"
         - "{白|しろ}くて {小|ちい}さい"
       difficulty: 1
-      note: "{青|あお}くて {大|おお}きい かさです: big and blue."
+      note: "This asks what Lee's umbrella looks like: {青|あお}くて {大|おお}きい かさです."
     - question: "リーさんは {土曜日|どようび}に {何|なに}を しましたか。"
       answer: "{駅|えき}の {人|ひと}に かさの ことを {聞|き}きました。"
       wrong:
-        - "{学校|がっこう}で かさを さがしました。"
-        - "あたらしい かさを {買|か}いました。"
-        - "{電車|でんしゃ}の {中|なか}で かさを さがしました。"
+        - option: "{学校|がっこう}で かさを さがしました。"
+          why: "Lee went back to school on Monday, not Saturday."
+        - option: "あたらしい かさを {買|か}いました。"
+          why: "The essay mentions no new umbrella."
+        - option: "{電車|でんしゃ}の {中|なか}で かさを さがしました。"
+          why: "Lee asked at the station. There is no search on a train."
       difficulty: 2
-      note: "Lee lost it on Friday, and つぎの {日|ひ}, the next day, is Saturday: Lee asked the station staff, and went back to school on Monday."
+      note: "This asks what Lee did on Saturday. The umbrella was lost on Friday, and つぎの {日|ひ}, the next day, is Saturday: Lee went to the station and asked the staff."
     - question: "かさは どこに ありましたか。"
       answer: "{教室|きょうしつ}の うしろ"
       wrong:
-        - "{電車|でんしゃ}の {中|なか}"
+        - option: "{電車|でんしゃ}の {中|なか}"
+          why: "Lee only thought so: {電車|でんしゃ}の {中|なか}に わすれたと {思|おも}いました."
         - "{駅|えき}の {人|ひと}の ところ"
         - "{学校|がっこう}の {入口|いりぐち}"
       difficulty: 1
-      note: "{教室|きょうしつ}の うしろに {私|わたし}の かさが ありました: at the back of the classroom. Lee only thought it was left on the train."
+      note: "This asks where the umbrella really was: {教室|きょうしつ}の うしろに {私|わたし}の かさが ありました."
     - question: "リーさんは どうして かさを わすれましたか。"
       answer: "{午後|ごご}は {雨|あめ}が ふって いなかったから"
       wrong:
-        - "{朝|あさ}は {雨|あめ}が ふって いなかったから"
-        - "{電車|でんしゃ}が こんで いたから"
-        - "いそいで {帰|かえ}ったから"
+        - option: "{朝|あさ}は {雨|あめ}が ふって いなかったから"
+          why: "The other way round: {朝|あさ} {雨|あめ}が ふって いました, and the afternoon was sunny."
+        - option: "{電車|でんしゃ}が こんで いたから"
+          why: "The essay never mentions a crowded train, and the umbrella was left in the classroom."
+        - option: "いそいで {帰|かえ}ったから"
+          why: "The essay never says Lee hurried. The reason is the weather."
       difficulty: 3
-      note: 'It rained in the morning, but the afternoon was sunny (はれて いました), so Lee went home without needing it. それで, "so", links the weather to the forgetting.'
+      note: "This asks why Lee forgot the umbrella. It rained in the morning, but the afternoon was sunny, so Lee needed no umbrella going home. それで, “so”, links the weather to the forgetting."
 
 - id: n5-d5-0003
   type: mid
@@ -107,17 +119,22 @@
       wrong:
         - "{毎週|まいしゅう} {土曜日|どようび}に あります。"
         - "{家|いえ}から {遠|とお}い {店|みせ}で します。"
-        - "{朝|あさ} 7{時|じ}に {始|はじ}まります。"
+        - option: "{朝|あさ} 7{時|じ}に {始|はじ}まります。"
+          why: "It starts at six: {朝|あさ} 6{時|じ}から."
       difficulty: 1
-      note: "{朝|あさ} 6{時|じ}から 12{時|じ}までです: the shift ends at noon. It is on Sundays, at a shop near Han's home, and it starts at six."
+      note: "This asks which sentence is true of Han's job. The hours are {朝|あさ} 6{時|じ}から 12{時|じ}まで, so it ends at noon."
     - question: "ハンさんは どうして はじめ たいへんでしたか。"
       answer: "{朝|あさ} {早|はや}く {起|お}きるから"
       wrong:
-        - "{仕事|しごと}が {多|おお}いから"
-        - "{店|みせ}の {人|ひと}が こわいから"
-        - "{店|みせ}が {家|いえ}から {遠|とお}いから"
+        - option: "{仕事|しごと}が {多|おお}いから"
+          why: "The essay gives one reason, the early start, not the amount of work."
+        - option: "{店|みせ}の {人|ひと}が こわいから"
+          why: "The opposite: {店|みせ}の {人|ひと}は みんな やさしいです."
+        - option: "{店|みせ}が {家|いえ}から {遠|とお}いから"
+          why: "The shop is near Han's home: {家|いえ}の {近|ちか}くの パンや."
       difficulty: 2
-      note: "{朝|あさ}が {早|はや}いので、はじめは とても たいへんでした: the early start was hard. The staff are kind, and the shop is near Han's home."
+      points: ["conjunction-node"]
+      note: "This asks why the job was hard at first: {朝|あさ}が {早|はや}いので、はじめは とても たいへんでした. An early start means getting up early."
     - question: "{店長|てんちょう}は {仕事|しごと}の {後|あと}で {何|なに}を しますか。"
       answer: "ハンさんに パンを あげます。"
       wrong:
@@ -125,15 +142,18 @@
         - "ハンさんと ひるごはんを {食|た}べます。"
         - "ハンさんに おかねを あげます。"
       difficulty: 1
-      note: "{店長|てんちょう}が いつも {売|う}れなかった パンを くれます: the manager gives Han the bread that did not sell."
+      note: "This asks what the manager does after work: {売|う}れなかった パンを くれます, gives Han the bread that did not sell."
     - question: "ハンさんは {先週|せんしゅう} どうして こまりましたか。"
       answer: "パンの {名前|なまえ}が わからなかったから"
       wrong:
-        - "パンが {売|う}れなかったから"
-        - "おきゃくさんが {多|おお}かったから"
-        - "{店長|てんちょう}が {休|やす}みだったから"
+        - option: "パンが {売|う}れなかったから"
+          why: "Unsold bread is what the manager gives Han each week. It is not last week's problem."
+        - option: "おきゃくさんが {多|おお}かったから"
+          why: "One customer asked one question. The essay says nothing about many customers."
+        - option: "{店長|てんちょう}が {休|やす}みだったから"
+          why: "The essay never says the manager was away."
       difficulty: 2
-      note: "A customer asked a bread's name, and Han could not answer: {答|こた}える ことが できませんでした. That is why Han learned the names afterwards."
+      note: "This asks why last week was a problem. A customer asked a bread's name, and Han could not answer: {答|こた}える ことが できませんでした."
 
 - id: n5-d5-0004
   type: mid
@@ -149,35 +169,44 @@
     - question: "{前|まえ}の アパートは どんな アパートでしたか。"
       answer: "{駅|えき}から {近|ちか}かったですが、へやが せまかったです。"
       wrong:
-        - "{駅|えき}から {遠|とお}くて、へやが せまかったです。"
-        - "{駅|えき}から {近|ちか}くて、へやが {広|ひろ}かったです。"
-        - "{駅|えき}から {遠|とお}かったですが、へやが {明|あか}るかったです。"
+        - option: "{駅|えき}から {遠|とお}くて、へやが せまかったです。"
+          why: "The old place was near the station. The new one is far."
+        - option: "{駅|えき}から {近|ちか}くて、へやが {広|ひろ}かったです。"
+          why: "The old room was small and dark. The new room is big."
+        - option: "{駅|えき}から {遠|とお}かったですが、へやが {明|あか}るかったです。"
+          why: "This describes the new apartment, not the old one."
       difficulty: 2
-      note: "{駅|えき}から {近|ちか}くて べんりでしたが、へやが せまくて {暗|くら}かった: near the station, but small and dark. Both halves have to match."
+      points: ["conjunction-ga-but", "form-te-link"]
+      note: "This asks what the old apartment was like. Both halves matter: {駅|えき}から {近|ちか}くて べんりでしたが、へやが せまくて {暗|くら}かった."
     - question: "あたらしい アパートの いい ところは どれですか。"
       answer: "へやが {明|あか}るい"
       wrong:
         - "へやが あたたかい"
-        - "まどが {小|ちい}さい"
+        - option: "まどが {小|ちい}さい"
+          why: "The window is big: {大|おお}きい まどが あります."
         - "{近|ちか}くに {店|みせ}が {多|おお}い"
       difficulty: 1
-      note: "{朝|あさ}は {日|ひ}が よく {入|はい}って、とても {明|あか}るいです: the room is bright. The window is big, not small, and the essay says nothing about warmth or shops."
+      note: "This asks what is good about the new apartment: {朝|あさ}は {日|ひ}が よく {入|はい}って、とても {明|あか}るいです."
     - question: "ジョンさんは {雨|あめ}の {日|ひ}、{何|なに}で {駅|えき}へ {行|い}きますか。"
       answer: "バス"
       wrong:
-        - "{自転車|じてんしゃ}"
+        - option: "{自転車|じてんしゃ}"
+          why: "The bicycle is for the other mornings. Rain means the bus."
         - "タクシー"
         - "{友|とも}だちの {車|くるま}"
       difficulty: 1
-      note: "{雨|あめ}の {日|ひ}は バスに {乗|の}ります: the bus when it rains. The bicycle is for every other morning."
+      note: "This asks how John gets to the station on rainy days: {雨|あめ}の {日|ひ}は バスに {乗|の}ります."
     - question: "ジョンさんに ついて {正|ただ}しい ものは どれですか。"
       answer: "となりの {人|ひと}に {野菜|やさい}を もらいます。"
       wrong:
-        - "となりの {人|ひと}に {野菜|やさい}を あげます。"
-        - "{前|まえ}の アパートの ほうが {好|す}きです。"
-        - "{毎朝|まいあさ} {駅|えき}まで {歩|ある}きます。"
+        - option: "となりの {人|ひと}に {野菜|やさい}を あげます。"
+          why: "The other way round: the neighbour gives to John (くれます)."
+        - option: "{前|まえ}の アパートの ほうが {好|す}きです。"
+          why: "John likes the new one: この アパートが とても {好|す}きです."
+        - option: "{毎朝|まいあさ} {駅|えき}まで {歩|ある}きます。"
+          why: "John rides the new bicycle to the station each morning."
       difficulty: 2
-      note: "The neighbour gives the vegetables: ときどき {野菜|やさい}を くれます. John likes the new apartment, and rides a bicycle to the station."
+      note: "This asks which sentence is true of John. The neighbour gives the vegetables: ときどき {野菜|やさい}を くれます. くれます means John receives them."
 
 - id: n5-d5-0005
   type: mid
@@ -201,31 +230,40 @@
         - "2か{月|げつ}"
       answer: 1
       difficulty: 1
-      note: "{夏休|なつやす}みの 2{週間|しゅうかん}、ほんとうに ありがとう: Julia stayed for two weeks."
+      note: "This asks how long Julia stayed: {夏休|なつやす}みの 2{週間|しゅうかん}, two weeks."
     - question: "ジュリアさんが いちばん {好|す}きだった {料理|りょうり}は {何|なん}ですか。"
       answer: "お{母|かあ}さんの カレー"
       wrong:
-        - "お{父|とう}さんの カレー"
+        - option: "お{父|とう}さんの カレー"
+          why: "The curry was the host mother's. The father took Julia to the sea."
         - "{海|うみ}で {食|た}べた {魚|さかな}"
         - "お{母|かあ}さんの すし"
       difficulty: 1
-      note: "お{母|かあ}さんの カレーが いちばん {好|す}きでした: the host mother's curry. The father took Julia to the sea; he did not cook."
+      note: "This asks which dish Julia liked best: お{母|かあ}さんの カレーが いちばん {好|す}きでした."
     - question: "ジュリアさんは どうして {海|うみ}で およぎませんでしたか。"
       answer: "{水|みず}が つめたかったから"
       wrong:
-        - "{海|うみ}が きれいでは なかったから"
-        - "お{父|とう}さんが だめだと {言|い}ったから"
-        - "{雨|あめ}が ふって いたから"
+        - option: "{海|うみ}が きれいでは なかったから"
+          why: "The opposite: {海|うみ}は とても きれいでした."
+        - option: "お{父|とう}さんが だめだと {言|い}ったから"
+          why: "The letter never says the father stopped Julia."
+        - option: "{雨|あめ}が ふって いたから"
+          why: "The letter mentions no rain. The water was cold."
       difficulty: 2
-      note: "{水|みず}が つめたくて、{私|わたし}は およぎませんでした: the water was too cold. The sea itself was very beautiful."
+      points: ["form-te-link"]
+      note: "This asks why Julia did not swim: {水|みず}が つめたくて、{私|わたし}は およぎませんでした."
     - question: "{手紙|てがみ}に あう ものは どれですか。"
       answer: "ジュリアさんは もう {国|くに}に {帰|かえ}りました。"
       wrong:
-        - "ジュリアさんは {来月|らいげつ} また {日本|にほん}へ {来|き}ます。"
-        - "ジュリアさんは {今|いま}も {田中|たなか}さんの {家|いえ}に います。"
-        - "ジュリアさんは {日本語|にほんご}の {勉強|べんきょう}を やめました。"
+        - option: "ジュリアさんは {来月|らいげつ} また {日本|にほん}へ {来|き}ます。"
+          why: "The next visit is {来年|らいねん}の {夏|なつ}, next summer, not next month."
+        - option: "ジュリアさんは {今|いま}も {田中|たなか}さんの {家|いえ}に います。"
+          why: "Julia is writing from home: {国|くに}に {帰|かえ}って から."
+        - option: "ジュリアさんは {日本語|にほんご}の {勉強|べんきょう}を やめました。"
+          why: "The opposite: {毎日|まいにち} {日本語|にほんご}を {勉強|べんきょう}して います."
       difficulty: 2
-      note: "{国|くに}に {帰|かえ}って から … {勉強|べんきょう}して います: Julia has gone home and studies every day. The next visit is next summer, not next month."
+      points: ["form-te-kara"]
+      note: "This asks which sentence agrees with the letter: {国|くに}に {帰|かえ}って から … {勉強|べんきょう}して います, so Julia has already gone home."
 
 - id: n5-d5-0006
   type: mid
@@ -245,7 +283,7 @@
         - "{古|ふる}くて にぎやか"
         - "{大|おお}きくて {古|ふる}い"
       difficulty: 1
-      note: "{店|みせ}は {古|ふる}いですが、とても しずかです: old but quiet, and small."
+      note: "This asks what kind of shop the café is: {店|みせ}は {古|ふる}いですが、とても しずかです."
     - question: "ケイトさんは {毎週|まいしゅう} {土曜日|どようび}、きっさてんで {何|なに}を しますか。"
       answer: "コーヒーを {飲|の}んで、{本|ほん}を {読|よ}みます。"
       wrong:
@@ -253,23 +291,29 @@
         - "{友|とも}だちと コーヒーを {飲|の}みます。"
         - "きっさてんで アルバイトを します。"
       difficulty: 1
-      note: "コーヒーを {飲|の}んで、{本|ほん}を {読|よ}みます: coffee and a book. The essay mentions no friend and no studying there."
+      note: "This asks what Kate does there every Saturday: コーヒーを {飲|の}んで、{本|ほん}を {読|よ}みます."
     - question: "{店|みせ}の おじいさんは どうして {英語|えいご}が {上手|じょうず}ですか。"
       answer: "{前|まえ}に アメリカで {仕事|しごと}を して いたから"
       wrong:
-        - "{英語|えいご}の {先生|せんせい}だったから"
-        - "アメリカ{人|じん}だから"
-        - "{毎日|まいにち} {英語|えいご}の {本|ほん}を {読|よ}むから"
+        - option: "{英語|えいご}の {先生|せんせい}だったから"
+          why: "The essay says the owner worked in America, not that the owner taught English."
+        - option: "アメリカ{人|じん}だから"
+          why: "The owner only worked in America when young. The essay does not say the owner is American."
+        - option: "{毎日|まいにち} {英語|えいご}の {本|ほん}を {読|よ}むから"
+          why: "Reading books is what Kate does at the café, not the owner."
       difficulty: 2
-      note: "わかい とき、アメリカで {働|はたら}いて いたからです: the owner worked in America when young. {仕事|しごと}を して いた says the same as {働|はたら}いて いた."
+      note: "This asks why the owner speaks good English: わかい とき、アメリカで {働|はたら}いて いたからです. {仕事|しごと}を して いた says the same as {働|はたら}いて いた."
     - question: "おじいさんは どうして __{日本語|にほんご}が {上手|じょうず}に なりましたね__ と {言|い}いましたか。"
       answer: "ケイトさんが {今|いま}は {日本語|にほんご}で {話|はな}すから"
       wrong:
-        - "ケイトさんが {英語|えいご}で {話|はな}したから"
-        - "ケイトさんが {日本語|にほんご}の {本|ほん}を {読|よ}んで いたから"
-        - "ケイトさんが {日本語|にほんご}で メニューを {書|か}いたから"
+        - option: "ケイトさんが {英語|えいご}で {話|はな}したから"
+          why: "English was the first visit. Now they talk in Japanese."
+        - option: "ケイトさんが {日本語|にほんご}の {本|ほん}を {読|よ}んで いたから"
+          why: "The essay never says what language Kate's books are in. The owner's words follow their talks."
+        - option: "ケイトさんが {日本語|にほんご}で メニューを {書|か}いたから"
+          why: "The owner explained the menu in English. Kate wrote nothing."
       difficulty: 3
-      note: "At first Kate understood little, but {今|いま}は、おじいさんと {日本語|にほんご}で {話|はな}します. Talking in Japanese is what shows the owner Kate has improved."
+      note: "This asks why the owner said 「{日本語|にほんご}が {上手|じょうず}に なりましたね」. The essay sets then against now: at first Kate understood little, but {今|いま}は、おじいさんと {日本語|にほんご}で {話|はな}します."
 
 - id: n5-d5-0007
   type: mid
@@ -285,11 +329,12 @@
     - question: "マリさんは だれに ゆかたを {借|か}りましたか。"
       answer: "あやさん"
       wrong:
-        - "あやさんの お{母|かあ}さん"
+        - option: "あやさんの お{母|かあ}さん"
+          why: "The yukata was Aya's own: あやさんの ゆかた."
         - "{店|みせ}の {人|ひと}"
         - "{国|くに}の {家族|かぞく}"
       difficulty: 1
-      note: "あやさんの ゆかたを {借|か}りて {着|き}ました: Mari borrowed Aya's yukata."
+      note: "This asks who lent Mari the yukata: あやさんの ゆかたを {借|か}りて {着|き}ました."
     - question: "マリさんたちは まつりで {何|なに}を {食|た}べましたか。"
       answer: "やきそば"
       wrong:
@@ -297,15 +342,19 @@
         - "ラーメン"
         - "カレー"
       difficulty: 1
-      note: "やきそばを {食|た}べて、ゲームを しました: yakisoba, then games."
+      note: "This asks what they ate at the festival: やきそばを {食|た}べて."
     - question: "マリさんたちは どうして {山|やま}に のぼりましたか。"
       answer: "{人|ひと}が {多|おお}くて、{花火|はなび}が よく {見|み}えなかったから"
       wrong:
-        - "{山|やま}の {上|うえ}で やきそばを {食|た}べたかったから"
-        - "{山|やま}の {上|うえ}で ゲームが あったから"
-        - "あやさんの {家|いえ}が {山|やま}の {上|うえ}に あるから"
+        - option: "{山|やま}の {上|うえ}で やきそばを {食|た}べたかったから"
+          why: "They ate yakisoba at the festival, before the fireworks."
+        - option: "{山|やま}の {上|うえ}で ゲームが あったから"
+          why: "The games were at the festival, not on the hill."
+        - option: "あやさんの {家|いえ}が {山|やま}の {上|うえ}に あるから"
+          why: "The essay never says where Aya lives."
       difficulty: 2
-      note: "{人|ひと}が {多|おお}くて、よく {見|み}えませんでした。それで … {山|やま}に のぼって {見|み}ました: the crowd blocked the view, so they climbed the hill. それで links the two."
+      points: ["form-te-link"]
+      note: "This asks why they climbed the hill. The crowd blocked the fireworks: {人|ひと}が {多|おお}くて、よく {見|み}えませんでした。それで … {山|やま}に のぼって {見|み}ました. それで, “so”, links the two."
     - question: "マリさんは {来年|らいねん} どう したいですか。"
       answer: "{家族|かぞく}と いっしょに まつりに {来|き}たいです。"
       wrong:
@@ -313,7 +362,7 @@
         - "{国|くに}で まつりを したいです。"
         - "まつりで ゲームの {店|みせ}を やりたいです。"
       difficulty: 1
-      note: "{来年|らいねん}は {国|くに}の {家族|かぞく}を つれて、また {来|き}たいです: Mari wants to bring the family from home to this festival."
+      note: "This asks what Mari wants to do next year: {国|くに}の {家族|かぞく}を つれて、また {来|き}たい, to come back with the family from home."
 
 - id: n5-d5-0008
   type: mid
@@ -329,11 +378,15 @@
     - question: "アリさんは かぜを ひいた はじめの {日|ひ}、どう でしたか。"
       answer: "ねつが {高|たか}くて、{何|なに}も {食|た}べませんでした。"
       wrong:
-        - "ねつは ありませんでしたが、{何|なに}も {食|た}べませんでした。"
-        - "ねつが {高|たか}かったですが、くだものを {食|た}べました。"
-        - "{学校|がっこう}へ {行|い}きましたが、すぐ {帰|かえ}りました。"
+        - option: "ねつは ありませんでしたが、{何|なに}も {食|た}べませんでした。"
+          why: "Ali did have a fever, and a high one: ねつが {高|たか}くて."
+        - option: "ねつが {高|たか}かったですが、くだものを {食|た}べました。"
+          why: "Ali ate nothing that day. The fruit came later, with Daniel."
+        - option: "{学校|がっこう}へ {行|い}きましたが、すぐ {帰|かえ}りました。"
+          why: "Ali stayed home for three days: {3日|みっか} {学校|がっこう}を {休|やす}みました."
       difficulty: 2
-      note: "ねつが {高|たか}くて、{何|なに}も {食|た}べる ことが できませんでした: a high fever, and nothing to eat. Both halves have to match."
+      points: ["form-te-link"]
+      note: "This asks how Ali was on the first day of the cold. Both halves matter: ねつが {高|たか}くて、{何|なに}も {食|た}べる ことが できませんでした."
     - question: "ダニエルさんは いつ アリさんの アパートへ {来|き}ましたか。"
       answer: "{学校|がっこう}の {帰|かえ}りに"
       wrong:
@@ -341,23 +394,28 @@
         - "{月曜日|げつようび}の {朝|あさ}に"
         - "{日曜日|にちようび}の {夜|よる}に"
       difficulty: 1
-      note: "{学校|がっこう}の {帰|かえ}りに {私|わたし}の アパートへ {来|き}ました: on the way home from school."
+      note: "This asks when Daniel came: {学校|がっこう}の {帰|かえ}りに, on the way home from school."
     - question: "アリさんは どうして {月曜日|げつようび}の じゅぎょうが よく わかりましたか。"
       answer: "ダニエルさんに もらった ノートの コピーが あったから"
       wrong:
-        - "{先生|せんせい}が アパートに {来|き}たから"
-        - "{休|やす}みの {間|あいだ}、{一人|ひとり}で {勉強|べんきょう}したから"
-        - "ダニエルさんが {学校|がっこう}で {教|おし}えたから"
+        - option: "{先生|せんせい}が アパートに {来|き}たから"
+          why: "The visitor was Daniel, a classmate, not the teacher."
+        - option: "{休|やす}みの {間|あいだ}、{一人|ひとり}で {勉強|べんきょう}したから"
+          why: "The essay never says Ali studied while ill. The notes helped."
+        - option: "ダニエルさんが {学校|がっこう}で {教|おし}えたから"
+          why: "Daniel gave copies of the notes. The essay never says Daniel taught Ali."
       difficulty: 2
-      note: "ノートの コピーが あったので、じゅぎょうが よく わかりました. The copies came from Daniel: ノートの コピーも くれました."
+      points: ["conjunction-node"]
+      note: "This asks why Monday's lessons made sense: ノートの コピーが あったので. The copies came from Daniel: ノートの コピーも くれました."
     - question: "アリさんは ダニエルさんに {何|なに}を したいですか。"
       answer: "たんじょうびに おかしを あげたいです。"
       wrong:
-        - "くだものを {持|も}って {行|い}きたいです。"
+        - option: "くだものを {持|も}って {行|い}きたいです。"
+          why: "The fruit is what Daniel brought Ali."
         - "{国|くに}の {料理|りょうり}を {作|つく}りたいです。"
         - "いっしょに {国|くに}へ {行|い}きたいです。"
       difficulty: 1
-      note: "おれいに、{私|わたし}の {国|くに}の おかしを あげたい: sweets from Ali's country, for Daniel's birthday. The fruit was what Daniel brought."
+      note: "This asks what Ali wants to do for Daniel: おれいに、{私|わたし}の {国|くに}の おかしを あげたい, for Daniel's birthday."
 
 - id: n5-d5-0009
   type: mid
@@ -377,31 +435,39 @@
         - "{東京|とうきょう}の ホテル"
         - "{友|とも}だちの {家|いえ}"
       difficulty: 1
-      note: "{一週間|いっしゅうかん}、{私|わたし}の アパートに とまりました: a week at Pedro's apartment."
+      note: "This asks where the brother stayed: {私|わたし}の アパートに とまりました. {私|わたし} is Pedro, who wrote the essay."
     - question: "__こんな {建物|たてもの}__ とは {何|なん}ですか。"
       answer: "{京都|きょうと}の {古|ふる}い おてら"
       wrong:
-        - "{東京|とうきょう}の ゲームの {店|みせ}"
-        - "ペドロさんの アパート"
-        - "ブラジルの {古|ふる}い おてら"
+        - option: "{東京|とうきょう}の ゲームの {店|みせ}"
+          why: "The games came on Thursday. The brother said this in Kyoto, on Tuesday."
+        - option: "ペドロさんの アパート"
+          why: "The words were said at the temples in Kyoto, about them."
+        - option: "ブラジルの {古|ふる}い おてら"
+          why: "Brazil is where there are none: ブラジルには … ない."
       difficulty: 2
-      note: "こんな points back to what they had just seen: {京都|きょうと}へ {行|い}って、{古|ふる}い おてらを {見|み}ました. Brazil is where there are none."
+      note: "This asks what こんな {建物|たてもの}, “buildings like this”, points to. こんな points back to what they had just seen: {京都|きょうと}の {古|ふる}い おてら."
     - question: "ペドロさんは {木曜日|もくようび}、どうして つかれましたか。"
       answer: "{弟|おとうと}さんが {長|なが}い {時間|じかん} ゲームを {見|み}て いたから"
       wrong:
-        - "{京都|きょうと}で たくさん {歩|ある}いたから"
-        - "{一人|ひとり}で かいものを したから"
-        - "{弟|おとうと}さんと 3{時間|じかん} ゲームを したから"
+        - option: "{京都|きょうと}で たくさん {歩|ある}いたから"
+          why: "Kyoto was Tuesday. The tiredness was on Thursday, in Tokyo."
+        - option: "{一人|ひとり}で かいものを したから"
+          why: "Pedro shopped with the brother, not alone."
+        - option: "{弟|おとうと}さんと 3{時間|じかん} ゲームを したから"
+          why: "They looked at games for three hours ({見|み}て いました). They did not play."
       difficulty: 2
-      note: "{店|みせ}で 3{時間|じかん}も ゲームを {見|み}て いました: three hours of looking at games in a shop, which tired Pedro out. They looked; they did not play."
+      points: ["form-te-iru"]
+      note: "This asks why Pedro got tired on Thursday: {店|みせ}で 3{時間|じかん}も ゲームを {見|み}て いました."
     - question: "{弟|おとうと}さんに ついて {正|ただ}しい ものは どれですか。"
       answer: "ラーメンが いちばん {好|す}きでした。"
       wrong:
-        - "{日本|にほん}で 2{週間|しゅうかん} あそびました。"
+        - option: "{日本|にほん}で 2{週間|しゅうかん} あそびました。"
+          why: "The stay was {一週間|いっしゅうかん}, one week."
         - "{日本|にほん}の ゲームが あまり {好|す}きでは ありません。"
         - "{毎日|まいにち} すしを {食|た}べました。"
       difficulty: 1
-      note: "いちばん {好|す}きだった {日本|にほん}の {食|た}べ{物|もの}は ラーメンです. The stay was one week, and the brother loves Japanese games."
+      note: "This asks which sentence is true of the brother: いちばん {好|す}きだった {日本|にほん}の {食|た}べ{物|もの}は ラーメンです."
 
 - id: n5-d5-0010
   type: mid
@@ -420,31 +486,42 @@
         - "{花|はな}は {高|たか}いから"
         - "みかさんの へやが {暗|くら}いから"
       difficulty: 1
-      note: "みかさんの へやは せまくて、{花|はな}を おく ところが ありません: Mika's room is too small to hold flowers."
+      note: "This asks why Yun gives no flowers: みかさんの へやは せまくて、{花|はな}を おく ところが ありません."
     - question: "ユンさんは どうして {本|ほん}を あげませんか。"
       answer: "みかさんは {本|ほん}を たくさん {持|も}って いるから"
       wrong:
-        - "みかさんは {本|ほん}を {読|よ}まないから"
-        - "{本|ほん}は {重|おも}いから"
-        - "{本|ほん}の {店|みせ}が {遠|とお}いから"
+        - option: "みかさんは {本|ほん}を {読|よ}まないから"
+          why: "Mika has lots of books. The essay never says Mika does not read."
+        - option: "{本|ほん}は {重|おも}いから"
+          why: "The essay says nothing about weight."
+        - option: "{本|ほん}の {店|みせ}が {遠|とお}いから"
+          why: "The essay never mentions a bookshop."
       difficulty: 2
-      note: "みかさんは {本|ほん}を たくさん {持|も}って います: Mika already has lots of books."
+      note: "This asks why Yun gives no book: みかさんは {本|ほん}を たくさん {持|も}って います."
     - question: "みかさんは {何|なに}を {見|み}て「かわいいね」と {言|い}いましたか。"
       answer: "{花|はな}の えが ある {白|しろ}い カップ"
       wrong:
-        - "{白|しろ}い {花|はな}"
-        - "{花|はな}の えが ある {白|しろ}い {本|ほん}"
-        - "きっさてんの {花|はな}"
+        - option: "{白|しろ}い {花|はな}"
+          why: "The flowers are only a picture on the cup. Mika looked at the cup."
+        - option: "{花|はな}の えが ある {白|しろ}い {本|ほん}"
+          why: "The white thing with flowers on it is a cup, not a book."
+        - option: "きっさてんの {花|はな}"
+          why: "Mika looked at a cup in the café, not at flowers."
       difficulty: 2
-      note: "{白|しろ}い カップを {見|み}て … {小|ちい}さい {花|はな}の えが ある カップでした: a white cup with little flowers painted on it. The flowers are only a picture on the cup."
+      points: ["clause-noun-modifier"]
+      note: "This asks what Mika called cute: a {白|しろ}い カップ with {小|ちい}さい {花|はな}の え on it."
     - question: "ユンさんは いつ プレゼントを {買|か}いましたか。"
       answer: "きのう みかさんと わかれた {後|あと}"
       wrong:
-        - "きのう みかさんと いっしょに いた とき"
-        - "{来週|らいしゅう}の {金曜日|きんようび}"
-        - "{先週|せんしゅう} {一人|ひとり}で {店|みせ}へ {行|い}った とき"
+        - option: "きのう みかさんと いっしょに いた とき"
+          why: "Yun went back alone after they parted: わかれた {後|あと}で."
+        - option: "{来週|らいしゅう}の {金曜日|きんようび}"
+          why: "Friday is the birthday. The cup is already bought."
+        - option: "{先週|せんしゅう} {一人|ひとり}で {店|みせ}へ {行|い}った とき"
+          why: "Yun found the cup only yesterday, at the café with Mika."
       difficulty: 3
-      note: "みかさんと わかれた {後|あと}で、その {店|みせ}に もどって … {買|か}いました: Yun went back alone after they parted, so Mika would not see. Friday is the birthday, not the shopping day."
+      points: ["form-ta-ato-de"]
+      note: "This asks when Yun bought the present: みかさんと わかれた {後|あと}で、その {店|みせ}に もどって … {買|か}いました, after they parted, so Mika would not see."
 
 - id: n5-d5-0011
   type: mid
@@ -462,27 +539,35 @@
     - question: "{学生|がくせい}は {金曜日|きんようび}の {朝|あさ}、どこに {集|あつ}まりますか。"
       answer: "{学校|がっこう}の {前|まえ}"
       wrong:
-        - "のうじょうの {前|まえ}"
+        - option: "のうじょうの {前|まえ}"
+          why: "The farm is where the bus goes. Students meet at school first."
         - "{駅|えき}の {前|まえ}"
         - "のうじょうの {食堂|しょくどう}"
       difficulty: 1
-      note: "{朝|あさ} 9{時|じ}に {学校|がっこう}の {前|まえ}に {集|あつ}まって ください: the school gate. The bus then takes them to the farm."
+      note: "This asks where students meet on Friday morning: {学校|がっこう}の {前|まえ}に {集|あつ}まって ください."
     - question: "いちごに ついて {正|ただ}しい ものは どれですか。"
       answer: "{持|も}って {帰|かえ}る ことが できるのは 1パックです。"
       wrong:
-        - "{食|た}べる ことが できるのは 1パックだけです。"
-        - "{持|も}って {帰|かえ}る ことは できません。"
-        - "{一人|ひとり} 2パック {持|も}って {帰|かえ}る ことが できます。"
+        - option: "{食|た}べる ことが できるのは 1パックだけです。"
+          why: "The limit is on taking strawberries home. Eating has none."
+        - option: "{持|も}って {帰|かえ}る ことは できません。"
+          why: "Each student may take one pack home."
+        - option: "{一人|ひとり} 2パック {持|も}って {帰|かえ}る ことが できます。"
+          why: "The limit is one pack each: 1パックだけ."
       difficulty: 3
-      note: "Eating has no limit: いくつ {食|た}べても いいです. The limit is on taking home: {持|も}って {帰|かえ}る いちごは {一人|ひとり} 1パックだけです."
+      points: ["form-te-mo-ii", "particle-dake-only"]
+      note: "This asks what the rules on strawberries are. Eating has no limit: いくつ {食|た}べても いいです. The limit is on taking them home: {持|も}って {帰|かえ}る いちごは {一人|ひとり} 1パックだけです."
     - question: "ひるごはんは どう しますか。"
       answer: "のうじょうの {食堂|しょくどう}で {食|た}べます。"
       wrong:
-        - "おべんとうを {持|も}って {行|い}きます。"
-        - "{学校|がっこう}に {帰|かえ}って {食|た}べます。"
-        - "{自分|じぶん}で おかねを はらって {食|た}べます。"
+        - option: "おべんとうを {持|も}って {行|い}きます。"
+          why: "Lunch is at the farm's cafeteria, so nobody brings a packed lunch."
+        - option: "{学校|がっこう}に {帰|かえ}って {食|た}べます。"
+          why: "Lunch is at the farm, in its cafeteria."
+        - option: "{自分|じぶん}で おかねを はらって {食|た}べます。"
+          why: "The school pays: おかねは {学校|がっこう}が はらいますから、いりません."
       difficulty: 2
-      note: "ひるごはんは のうじょうの {食堂|しょくどう}で {食|た}べます, and the school pays, so nobody needs money: おかねは … いりません."
+      note: "This asks about lunch: のうじょうの {食堂|しょくどう}で {食|た}べます, and the school pays."
     - question: "{雨|あめ}の {日|ひ}は どう なりますか。"
       answer: "かさを {持|も}って、いちごを とりに {行|い}きます。"
       wrong:
@@ -490,4 +575,4 @@
         - "{学校|がっこう}で じゅぎょうを します。"
         - "バスの {中|なか}で ひるごはんを {食|た}べます。"
       difficulty: 1
-      note: "{雨|あめ}の {日|ひ}も {行|い}きます。かさを {持|も}って きて ください: the trip goes ahead with umbrellas."
+      note: "This asks what happens if it rains: {雨|あめ}の {日|ひ}も {行|い}きます。かさを {持|も}って きて ください."

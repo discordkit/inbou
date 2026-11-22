@@ -13,10 +13,12 @@ import {
   materialMarkup,
   parse,
   plain,
+  reviewLinksOf,
   type ComposeItem,
   type FormItem,
   type InfoItem,
   type Material,
+  type Option,
   type PassageItem,
   type Sheet,
   type ShortItem
@@ -431,7 +433,11 @@ describe(`reading items`, () => {
       {
         question: `{何時|なんじ}の バスに {乗|の}りますか。`,
         answer: `8:10`,
-        wrong: [`7:40`, `8:40`, `9:10`],
+        wrong: [
+          { option: `7:40`, why: `too early` },
+          { option: `8:40`, why: `too late` },
+          { option: `9:10`, why: `much too late` }
+        ],
         difficulty: 2,
         note: `n`
       }
@@ -457,7 +463,7 @@ describe(`reading items`, () => {
 
   const asked = (
     answer: string,
-    wrong: string[]
+    wrong: Option[]
   ): ShortItem[`questions`][number] => ({
     question: `どう しますか。`,
     answer,
@@ -524,6 +530,114 @@ describe(`reading items`, () => {
         POINTS
       )
     ).toEqual([`n5-d4-0001 question 1: two options are the same`]);
+  });
+
+  it(`asks a medium or hard question to say why each wrong option is wrong`, () => {
+    // WHY: reading is comprehension, not a grammar point. A student who chose a wrong option at medium or hard needs to see what in the text rules it out; an easy question's note, which says what was asked, is enough.
+    const explained = (difficulty: 1 | 2 | 3): ShortItem =>
+      short({
+        questions: [
+          {
+            ...asked(`バスで`, [
+              { option: `{電車|でんしゃ}で`, why: `no train` },
+              `あるいて`,
+              { option: `タクシーで`, why: `no taxi` }
+            ]),
+            difficulty
+          }
+        ]
+      });
+    expect(itemProblems(explained(1), POINTS)).toEqual([]);
+    for (const difficulty of [2, 3] as const) {
+      expect(itemProblems(explained(difficulty), POINTS)).toEqual([
+        `n5-d4-0001 question 1: a medium or hard question says why each wrong option is wrong; "あるいて" has no why`
+      ]);
+    }
+  });
+
+  it(`asks for the whys of an ordered question's wrong options, never its answer's`, () => {
+    // WHY: an ordered question keeps all four options in one list, so the answer sits among them. A why on the answer would tell the student the right option is wrong.
+    const ordered = (options: Option[]): ShortItem =>
+      short({
+        questions: [
+          {
+            question: `{何時|なんじ}に {帰|かえ}りますか。`,
+            options,
+            answer: 2,
+            difficulty: 2,
+            note: `n`
+          }
+        ]
+      });
+    expect(
+      itemProblems(
+        ordered([
+          { option: `5{時|じ}`, why: `early` },
+          `6{時|じ}`,
+          { option: `7{時|じ}`, why: `late` },
+          { option: `8{時|じ}`, why: `later` }
+        ]),
+        POINTS
+      )
+    ).toEqual([]);
+    expect(
+      itemProblems(
+        ordered([
+          { option: `5{時|じ}`, why: `early` },
+          { option: `6{時|じ}`, why: `right` },
+          `7{時|じ}`,
+          { option: `8{時|じ}`, why: `later` }
+        ]),
+        POINTS
+      )
+    ).toEqual([
+      `n5-d4-0001 question 1: the answer has a why, as if it were wrong`,
+      `n5-d4-0001 question 1: a medium or hard question says why each wrong option is wrong; "7{時|じ}" has no why`
+    ]);
+  });
+
+  it(`catches a reading question's grammar point that is not in the list`, () => {
+    // WHY: the reveal links a point's review page by its id. An id that is not in the list links nothing, and the student loses the one pointer to what decided the question.
+    expect(
+      itemProblems(
+        short({
+          questions: [
+            {
+              ...asked(`バスで`, [
+                `あるいて`,
+                `{電車|でんしゃ}で`,
+                `タクシーで`
+              ]),
+              points: [`particle-made-ni`]
+            }
+          ]
+        }),
+        POINTS
+      )
+    ).toEqual([
+      `n5-d4-0001 question 1: grammar point "particle-made-ni" is not in the list`
+    ]);
+  });
+
+  it(`links the review page of a point a reading question names`, () => {
+    // WHY: corpus.json carries only the links of points in use. A reading question's point left out of that count would reach the reveal with no page to link.
+    const point = {
+      id: `particle-de-means`,
+      pattern: `で`,
+      meaning: `by`,
+      tofugu: `particle-de`
+    };
+    const item = short({
+      questions: [
+        {
+          ...asked(`バスで`, [`あるいて`, `{電車|でんしゃ}で`, `タクシーで`]),
+          points: [`particle-de-means`]
+        }
+      ]
+    });
+    expect(Object.keys(reviewLinksOf([point], [item]))).toEqual([
+      `particle-de-means`
+    ]);
   });
 
   it(`catches a table row that does not fill its head`, () => {
