@@ -358,7 +358,7 @@
 
 - id: n5-g3-0026
   type: context
-  status: draft
+  status: reviewed
   sentence: "まいあさ はを （　）。"
   en: "I brush my teeth every morning."
   answer: みがきます
@@ -368,7 +368,7 @@
 
 - id: n5-g3-0027
   type: context
-  status: draft
+  status: reviewed
   sentence: "（　）に のって、かいしゃへ いきます。"
   en: "I take the train to work."
   answer: でんしゃ
@@ -378,7 +378,7 @@
 
 - id: n5-g3-0028
   type: context
-  status: draft
+  status: reviewed
   sentence: "（　）を ひいて、きのうから ねて います。"
   en: "I caught a cold and have been in bed since yesterday."
   answer: かぜ
@@ -394,7 +394,7 @@
 
 - id: n5-g3-0029
   type: context
-  status: draft
+  status: reviewed
   sentence: "レストランの （　）には カレーと ラーメンが あります。"
   en: "The restaurant's menu has curry and ramen."
   answer: メニュー
@@ -404,7 +404,7 @@
 
 - id: n5-g3-0030
   type: context
-  status: draft
+  status: reviewed
   sentence: "（　）で まちがえた じを けしました。"
   en: "I rubbed out the wrong letters with an eraser."
   answer: けしゴム
@@ -414,7 +414,7 @@
 
 - id: n5-g3-0031
   type: context
-  status: draft
+  status: reviewed
   sentence: "パーティーで みんなで うたを （　）。"
   en: "We all sang songs at the party."
   answer: うたいました
@@ -424,7 +424,7 @@
 
 - id: n5-g3-0032
   type: context
-  status: draft
+  status: reviewed
   sentence: "デパートで あたらしい くつを （　）。"
   en: "I bought new shoes at the department store."
   answer: かいました
@@ -434,7 +434,7 @@
 
 - id: n5-g3-0033
   type: context
-  status: draft
+  status: reviewed
   sentence: "わたしは まいあさ コーヒーに さとうを （　）。"
   en: "I put sugar in my coffee every morning."
   answer: いれます
@@ -450,7 +450,7 @@
 
 - id: n5-g3-0034
   type: context
-  status: draft
+  status: reviewed
   sentence: "わたしは ともだちから じしょを （　）。"
   en: "I borrowed a dictionary from a friend."
   answer: かりました
@@ -466,7 +466,7 @@
 
 - id: n5-g3-0035
   type: context
-  status: draft
+  status: reviewed
   sentence: "この みずは （　）ですから、のまないで ください。"
   en: "This water is dirty, so please don't drink it."
   answer: きたない
@@ -482,7 +482,7 @@
 
 - id: n5-g3-0036
   type: context
-  status: draft
+  status: reviewed
   sentence: "この へやは まどが なくて、（　）です。"
   en: "This room has no windows, so it is dark."
   answer: くらい
@@ -498,7 +498,7 @@
 
 - id: n5-g3-0037
   type: context
-  status: draft
+  status: reviewed
   sentence: "にちようびは がっこうが （　）です。"
   en: "There is no school on Sundays."
   answer: やすみ
@@ -514,7 +514,7 @@
 
 - id: n5-g3-0038
   type: context
-  status: draft
+  status: reviewed
   sentence: "でんしゃに のる まえに、えきで （　）を かいます。"
   en: "Before getting on the train, I buy a ticket at the station."
   answer: きっぷ
@@ -530,7 +530,7 @@
 
 - id: n5-g3-0039
   type: context
-  status: draft
+  status: reviewed
   sentence: "バスが きませんでしたから、えきまで （　）。"
   en: "The bus didn't come, so I walked to the station."
   answer: あるきました
@@ -546,7 +546,7 @@
 
 - id: n5-g3-0040
   type: context
-  status: draft
+  status: reviewed
   sentence: "この カメラは 5まんえんでした。（　）ですね。"
   en: "This camera was 50,000 yen. That's expensive."
   answer: たかい
@@ -562,7 +562,7 @@
 
 - id: n5-g3-0041
   type: context
-  status: draft
+  status: reviewed
   sentence: "わたしは まいにち 7じかん （　）。"
   en: "I sleep seven hours every day."
   answer: ねます
@@ -578,7 +578,7 @@
 
 - id: n5-g3-0042
   type: context
-  status: draft
+  status: reviewed
   sentence: "（　）、わたしは にほんへ きました。いま にほんに 1ねん います。"
   en: "I came to Japan last year. I have been in Japan for a year now."
   answer: きょねん
@@ -594,7 +594,7 @@
 
 - id: n5-g3-0043
   type: context
-  status: draft
+  status: reviewed
   sentence: "この ほんは むずかしいですから、（　） よみましょう。"
   en: "This book is difficult, so let's read it slowly."
   answer: ゆっくり

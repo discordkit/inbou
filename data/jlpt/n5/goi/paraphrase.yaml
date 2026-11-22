@@ -247,7 +247,7 @@
 
 - id: n5-g4-0017
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "この みせは にちようびが やすみです。"
   en: "This shop is closed on Sundays."
   answer: "この みせは にちようびに あいて いません。"
@@ -260,7 +260,7 @@
 
 - id: n5-g4-0018
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしは まいにち あるいて がっこうへ いきます。"
   en: "I walk to school every day."
   answer: "わたしは まいにち がっこうまで あるきます。"
@@ -273,7 +273,7 @@
 
 - id: n5-g4-0019
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしは けさ 7じに うちを でました。"
   en: "I left home at seven this morning."
   answer: "わたしは けさ 7じに でかけました。"
@@ -286,7 +286,7 @@
 
 - id: n5-g4-0020
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "あねは りょうりが へたです。"
   en: "My older sister is bad at cooking."
   answer: "あねは りょうりが じょうずじゃ ありません。"
@@ -302,7 +302,7 @@
 
 - id: n5-g4-0021
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "この まちは ひとが すくないです。"
   en: "Few people live in this town."
   answer: "この まちには ひとが あまり いません。"
@@ -318,7 +318,7 @@
 
 - id: n5-g4-0022
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "やまださんは わたしに じしょを かしました。"
   en: "Yamada lent me a dictionary."
   answer: "わたしは やまださんに じしょを かりました。"
@@ -334,7 +334,7 @@
 
 - id: n5-g4-0023
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "あしたは しごとが ありません。"
   en: "I have no work tomorrow."
   answer: "あしたは やすみです。"
@@ -350,7 +350,7 @@
 
 - id: n5-g4-0024
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしは あにに ほんを もらいました。"
   en: "I got a book from my older brother."
   answer: "あには わたしに ほんを くれました。"
@@ -366,7 +366,7 @@
 
 - id: n5-g4-0025
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "やまださんは わたしより としが うえです。"
   en: "Yamada is older than me."
   answer: "わたしは やまださんより わかいです。"
@@ -382,7 +382,7 @@
 
 - id: n5-g4-0026
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしは まいばん 10じに ねて、まいあさ 6じに おきます。"
   en: "I go to bed at ten every night and get up at six every morning."
   answer: "わたしは まいにち 8じかん ねます。"

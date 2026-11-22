@@ -368,7 +368,7 @@
 
 - id: n5-g1-0025
   type: kanji
-  status: draft
+  status: reviewed
   word: 手
   sentence: "さむいですから、__手__が つめたいです。"
   en: "It's cold, so my hands are cold."
@@ -379,7 +379,7 @@
 
 - id: n5-g1-0026
   type: kanji
-  status: draft
+  status: reviewed
   word: 冬
   sentence: "__冬__は ゆきが たくさん ふります。"
   en: "In winter it snows a lot."
@@ -390,7 +390,7 @@
 
 - id: n5-g1-0027
   type: kanji
-  status: draft
+  status: reviewed
   word: 鳥
   sentence: "きの うえに __鳥__が いますよ。"
   en: "There's a bird up in the tree."
@@ -401,7 +401,7 @@
 
 - id: n5-g1-0028
   type: kanji
-  status: draft
+  status: reviewed
   word: 昼
   sentence: "__昼__は がっこうの しょくどうで たべます。"
   en: "At midday I eat in the school cafeteria."
@@ -412,7 +412,7 @@
 
 - id: n5-g1-0029
   type: kanji
-  status: draft
+  status: reviewed
   word: 長い
   sentence: "この えんぴつは __長い__ですね。"
   en: "This pencil is long, isn't it?"
@@ -423,7 +423,7 @@
 
 - id: n5-g1-0030
   type: kanji
-  status: draft
+  status: reviewed
   word: 女の子
   sentence: "あの __女の子__は わたしの いもうとです。"
   en: "That girl is my younger sister."
@@ -434,7 +434,7 @@
 
 - id: n5-g1-0031
   type: kanji
-  status: draft
+  status: reviewed
   word: 写真
   sentence: "こうえんで __写真__を とりました。"
   en: "I took photos in the park."
@@ -451,7 +451,7 @@
 
 - id: n5-g1-0032
   type: kanji
-  status: draft
+  status: reviewed
   word: 漢字
   sentence: "__漢字__を まいにち れんしゅうします。"
   en: "I practise kanji every day."
@@ -468,7 +468,7 @@
 
 - id: n5-g1-0033
   type: kanji
-  status: draft
+  status: reviewed
   word: 時間
   sentence: "えきまで __時間__が かかります。"
   en: "It takes time to get to the station."
@@ -485,7 +485,7 @@
 
 - id: n5-g1-0034
   type: kanji
-  status: draft
+  status: reviewed
   word: 大学
   sentence: "あには __大学__の せんせいです。"
   en: "My older brother is a university teacher."
@@ -502,7 +502,7 @@
 
 - id: n5-g1-0035
   type: kanji
-  status: draft
+  status: reviewed
   word: 電話
   sentence: "あとで __電話__を ください。"
   en: "Please call me later."
@@ -519,7 +519,7 @@
 
 - id: n5-g1-0036
   type: kanji
-  status: draft
+  status: reviewed
   word: 夕方
   sentence: "__夕方__ こうえんを さんぽします。"
   en: "I take a walk in the park in the early evening."
@@ -536,7 +536,7 @@
 
 - id: n5-g1-0037
   type: kanji
-  status: draft
+  status: reviewed
   word: 自分
   sentence: "__自分__の へやを そうじします。"
   en: "I clean my own room."
@@ -553,7 +553,7 @@
 
 - id: n5-g1-0038
   type: kanji
-  status: draft
+  status: reviewed
   word: 今年
   sentence: "__今年__の なつは とても あついです。"
   en: "This summer is very hot."
@@ -570,7 +570,7 @@
 
 - id: n5-g1-0039
   type: kanji
-  status: draft
+  status: reviewed
   word: 明日
   sentence: "__明日__は がっこうが やすみです。"
   en: "There's no school tomorrow."
@@ -587,7 +587,7 @@
 
 - id: n5-g1-0040
   type: kanji
-  status: draft
+  status: reviewed
   word: 七日
   sentence: "らいげつの __七日__は にちようびです。"
   en: "The 7th of next month is a Sunday."
@@ -604,7 +604,7 @@
 
 - id: n5-g1-0041
   type: kanji
-  status: draft
+  status: reviewed
   word: 下手
   sentence: "わたしは うたが __下手__です。"
   en: "I am bad at singing."
@@ -621,7 +621,7 @@
 
 - id: n5-g1-0042
   type: kanji
-  status: draft
+  status: reviewed
   word: 今日
   sentence: "__今日__は なにを しますか。"
   en: "What are you doing today?"

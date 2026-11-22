@@ -301,7 +301,7 @@
 
 - id: n5-g2-0020
   type: spelling
-  status: draft
+  status: reviewed
   word: お金
   sentence: "さいふに __おかね__が ありません。"
   en: "There's no money in my wallet."
@@ -312,7 +312,7 @@
 
 - id: n5-g2-0021
   type: spelling
-  status: draft
+  status: reviewed
   word: 風
   sentence: "きょうは __かぜ__が つよいですね。"
   en: "The wind is strong today, isn't it?"
@@ -323,7 +323,7 @@
 
 - id: n5-g2-0022
   type: spelling
-  status: draft
+  status: reviewed
   word: 前
   sentence: "えきの __まえ__で まって います。"
   en: "I'm waiting in front of the station."
@@ -334,7 +334,7 @@
 
 - id: n5-g2-0023
   type: spelling
-  status: draft
+  status: reviewed
   word: 家
   sentence: "あたらしい __いえ__に すんで います。"
   en: "I live in a new house."
@@ -345,7 +345,7 @@
 
 - id: n5-g2-0024
   type: spelling
-  status: draft
+  status: reviewed
   word: 道
   sentence: "この __みち__を まっすぐ いって ください。"
   en: "Please go straight along this road."
@@ -362,7 +362,7 @@
 
 - id: n5-g2-0025
   type: spelling
-  status: draft
+  status: reviewed
   word: 秋
   sentence: "__あき__に きょうとへ いきました。"
   en: "I went to Kyoto in the autumn."
@@ -379,7 +379,7 @@
 
 - id: n5-g2-0026
   type: spelling
-  status: draft
+  status: reviewed
   word: 新聞
   sentence: "ちちは まいあさ __しんぶん__を よみます。"
   en: "My father reads the newspaper every morning."
@@ -396,7 +396,7 @@
 
 - id: n5-g2-0027
   type: spelling
-  status: draft
+  status: reviewed
   word: 映画
   sentence: "にちようびに __えいが__を みました。"
   en: "I saw a film on Sunday."
@@ -413,7 +413,7 @@
 
 - id: n5-g2-0028
   type: spelling
-  status: draft
+  status: reviewed
   word: 歩く
   sentence: "えきまで __あるきます__。"
   en: "I'll walk to the station."
@@ -430,7 +430,7 @@
 
 - id: n5-g2-0029
   type: spelling
-  status: draft
+  status: reviewed
   word: 電気
   sentence: "へやの __でんき__を けして ください。"
   en: "Please turn off the light in the room."
@@ -447,7 +447,7 @@
 
 - id: n5-g2-0030
   type: spelling
-  status: draft
+  status: reviewed
   word: 病院
   sentence: "__びょういん__は えきの まえに あります。"
   en: "The hospital is in front of the station."
@@ -464,7 +464,7 @@
 
 - id: n5-g2-0031
   type: spelling
-  status: draft
+  status: reviewed
   word: 勉強
   sentence: "まいばん にほんごを __べんきょう__します。"
   en: "I study Japanese every evening."
@@ -481,7 +481,7 @@
 
 - id: n5-g2-0032
   type: spelling
-  status: draft
+  status: reviewed
   word: 起きる
   sentence: "まいあさ 6じに __おきます__。"
   en: "I get up at six every morning."
