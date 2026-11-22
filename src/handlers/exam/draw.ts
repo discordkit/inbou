@@ -524,7 +524,9 @@ export const readingQuestions = (
   /** 0-based, in the order the text answers them. */
   asked: readonly number[],
   firstNumber: number,
-  random: Random
+  random: Random,
+  /** 問題6: the hosted picture's URL, when there is one. */
+  image?: string
 ): ExamQuestion[] => {
   const mondai = MONDAI_OF[item.type];
   const text = item.type === `info` ? `` : item.text;
@@ -551,6 +553,7 @@ export const readingQuestions = (
       ...(intro === undefined ? {} : { intro }),
       question: question.question,
       ...(material === undefined ? {} : { material }),
+      ...(material === undefined || image === undefined ? {} : { image }),
       options,
       whys,
       correct,
@@ -666,7 +669,9 @@ export const drawTest = (
   test: TestId,
   items: readonly Item[],
   links: Readonly<Record<string, ReviewLink>>,
-  random: Random
+  random: Random,
+  /** Each hosted 問題6 picture's URL, by item id. */
+  pictures: Readonly<Record<string, string>> = {}
 ): ExamQuestion[] => {
   const questions: ExamQuestion[] = [];
   const plans = BLUEPRINTS[test];
@@ -715,7 +720,13 @@ export const drawTest = (
       )) {
         if (item.type === `short` || item.type === `info`) {
           questions.push(
-            ...readingQuestions(item, [index], questions.length + 1, random)
+            ...readingQuestions(
+              item,
+              [index],
+              questions.length + 1,
+              random,
+              pictures[item.id]
+            )
           );
         }
       }

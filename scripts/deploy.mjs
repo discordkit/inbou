@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* oxlint-disable no-console */
 /**
- * Deploy both Workers, and put production back if any step fails.
+ * Deploy all three Workers (the pictures, the handlers and the bot), and put production back if any step fails.
  *
  * Run by `bumpy publish` when a version PR merges, and runnable by hand.
  *
@@ -99,6 +99,7 @@ const rollback = (worker, versionId) => {
 // version, which reads as null and means "nothing to go back to" — correct for
 // a first deploy, where a failure leaves a Worker that was never live.
 const previous = {
+  "inbou-assets": null,
   "inbou-handlers": null,
   inbou: null
 };
@@ -118,6 +119,10 @@ try {
   // report `dev` as the build for every report filed against production.
   run(`Build both Workers`, bin(`vite-plus`, `bin/vp`), [`build`]);
 
+  // After the build, which owns dist/, and before anything ships: a stale
+  // corpus or a picture that does not fit stops the deploy here.
+  run(`Draw the 問題6 pictures`, `scripts/draw-exam.mjs`, []);
+
   // Before anything is deployed, so a failure here has shipped nothing.
   // Additive by rule, so the previous code still works against the result.
   run(`Apply D1 migrations`, WRANGLER, [
@@ -135,6 +140,15 @@ try {
   // yet fails outright. Cloudflare documents this: the target Worker must be
   // deployed before the one that binds it.
   //
+  // The pictures go before the handlers that link them, so no card can link a
+  // picture that is not hosted yet. Assets only, so it never touches the bot.
+  run(`Deploy the pictures`, WRANGLER, [
+    `deploy`,
+    `--config`,
+    `wrangler.assets.jsonc`
+  ]);
+  deployed.push(`inbou-assets`);
+
   // The generated configs are used rather than the source ones, because those
   // are what carry Vite's build output.
   run(`Deploy handlers Worker`, WRANGLER, [

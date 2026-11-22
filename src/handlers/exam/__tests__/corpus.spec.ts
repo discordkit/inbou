@@ -2,6 +2,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import * as v from "valibot";
 import { describe, expect, it } from "vite-plus/test";
 import { parse } from "yaml";
+import { pictureName, versionsOf } from "../../../../scripts/lib/pictures.mjs";
 import { BLUEPRINTS } from "../blueprint.js";
 import corpus from "../corpus.json" with { type: "json" };
 import {
@@ -12,7 +13,9 @@ import {
   reviewOf,
   type ExamQuestion
 } from "../draw.js";
+import { materialHtml, materialWidth } from "../material/index.js";
 import {
+  bare,
   chunksOf,
   corpusProblems,
   display,
@@ -24,6 +27,7 @@ import {
   optionText,
   reviewLinksOf,
   WINDOW_SIZE,
+  type InfoItem,
   type Item,
   type Slot
 } from "../items.js";
@@ -351,6 +355,29 @@ describe(`the mock-test corpus`, () => {
     expect(corpus.drafts).toBe(false);
     expect(corpus.items).toEqual(
       items.filter((item) => item.status === `reviewed`)
+    );
+  });
+
+  it(`names every reviewed picture as its template draws it today`, () => {
+    // WHY: a card links its picture by the name in corpus.json, and the draw writes the file under the name the template gives now. A template, font or material changed without a rebuild would link a picture nobody drew: a broken image in the middle of a test.
+    const versions = versionsOf(process.cwd());
+    expect(corpus.pictures).toEqual(
+      Object.fromEntries(
+        items
+          .filter(
+            (item): item is InfoItem =>
+              item.type === `info` && item.status === `reviewed`
+          )
+          .map((item) => [
+            item.id,
+            pictureName(
+              item.id,
+              materialHtml(item.material, bare),
+              materialWidth(item.material),
+              versions
+            )
+          ])
+      )
     );
   });
 

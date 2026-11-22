@@ -677,6 +677,31 @@ describe(`a reading test`, () => {
     }
   });
 
+  it(`links each 問題6 question to its own hosted picture`, () => {
+    // WHY: the card shows a picture only when its question carries the URL. Another page's URL would show the wrong document under the question; no URL, when one is hosted, would show text where the student expects a picture.
+    const hosted = Object.fromEntries(
+      corpus
+        .filter((entry) => entry.type === `info`)
+        .map((entry) => [entry.id, `https://assets.example/${entry.id}.webp`])
+    );
+    for (let seed = 1; seed <= 10; seed += 1) {
+      const page = drawTest(
+        `dokkai`,
+        corpus,
+        {},
+        seeded(seed * 1_000_003),
+        hosted
+      ).find((q) => q.mondai === 6);
+      expect(page?.image).toBe(
+        `https://assets.example/${page?.itemId ?? ``}.webp`
+      );
+    }
+    const unhosted = drawTest(`dokkai`, corpus, {}, seeded(3)).find(
+      (q) => q.mondai === 6
+    );
+    expect(unhosted?.image).toBeUndefined();
+  });
+
   it(`counts a text once per card, and gives a picture a minute on top`, () => {
     // WHY: two questions on one text should not make the student "read" it twice; and a picture may need opening at full size before it can be read (the user's condition for tall pictures).
     const [first, second] = readingQuestions(

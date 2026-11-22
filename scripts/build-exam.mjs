@@ -17,12 +17,18 @@
  *  - **The checks are the app's own.** `items.ts` imports only valibot so this
  *    script can load it, and `blueprint.ts` only a type, so the coverage report
  *    reads the same blueprint the draw does.
+ *  - **Each 問題6 picture is named here, and drawn by `exam:draw`.** The name
+ *    is a hash of what the picture draws (see `lib/pictures.mjs`), so the
+ *    handlers can link a picture's URL before it is drawn, and a changed
+ *    picture gets a new URL.
  *
  * Usage: `vp run exam:build`, or `vp run exam:build -- --drafts` to preview.
  */
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import * as v from "valibot";
 import { parse } from "yaml";
+// Before the templates load: it lets their "./kit.js" imports reach the .ts files.
+import "./lib/ts-hooks.mjs";
 import { BLUEPRINTS, READING_MIX } from "../src/handlers/exam/blueprint.ts";
 import {
   corpusProblems,
@@ -33,6 +39,13 @@ import {
   pointsOf,
   reviewLinksOf
 } from "../src/handlers/exam/items.ts";
+import { pictureName, versionsOf } from "./lib/pictures.mjs";
+
+// Dynamic, so the hook above is in place: the templates import "./kit.js".
+const { materialHtml, materialWidth } = await import(
+  `../src/handlers/exam/material/index.ts`
+);
+const { bare } = await import(`../src/handlers/exam/items.ts`);
 
 const ROOT = `data/jlpt/n5`;
 const OUT = `src/handlers/exam/corpus.json`;
@@ -94,9 +107,23 @@ for (const hint of hints) console.log(`hint: ${hint}`);
 
 const shipped = items.filter((item) => DRAFTS || item.status === `reviewed`);
 const review = reviewLinksOf(points, shipped);
+const versions = versionsOf(process.cwd());
+const pictures = Object.fromEntries(
+  shipped
+    .filter((item) => item.type === `info`)
+    .map((item) => [
+      item.id,
+      pictureName(
+        item.id,
+        materialHtml(item.material, bare),
+        materialWidth(item.material),
+        versions
+      )
+    ])
+);
 writeFileSync(
   OUT,
-  `${JSON.stringify({ level: `N5`, drafts: DRAFTS, items: shipped, review }, null, 2)}\n`
+  `${JSON.stringify({ level: `N5`, drafts: DRAFTS, items: shipped, review, pictures }, null, 2)}\n`
 );
 
 console.log(

@@ -145,6 +145,7 @@ const setup = (
     session: memorySession(),
     items: options.items ?? [item(1), item(2), item(3)],
     review: options.review ?? {},
+    pictures: {},
     // Seeded, not a constant: a constant would give every question the same
     // token, and the stale-press check would have nothing to tell apart.
     random: seeded(42),

@@ -62,6 +62,8 @@ export interface ExamDeps {
   items: readonly Item[];
   /** Where to read about each grammar point, by point id. */
   review: Readonly<Record<string, ReviewLink>>;
+  /** Each hosted 問題6 picture's URL, by item id. Empty when no host is set. */
+  pictures: Readonly<Record<string, string>>;
   /** Injected so tests can pin the draw. */
   random: Random;
   /** Injected so tests can pin times. */
@@ -146,7 +148,13 @@ export const startTest = async (
     return;
   }
 
-  const questions = drawTest(test, deps.items, deps.review, deps.random);
+  const questions = drawTest(
+    test,
+    deps.items,
+    deps.review,
+    deps.random,
+    deps.pictures
+  );
   if (questions.length === 0) {
     await refuse(`No questions are ready for this test yet.`);
     return;

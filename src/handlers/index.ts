@@ -56,6 +56,12 @@ export interface Env {
   /** One mock test per channel, keyed by channel id. */
   EXAM: DurableObjectNamespace<ExamSession>;
   /**
+   * Where the 問題6 pictures are hosted, ending in `/`.
+   *
+   * Optional: without it, a 問題6 card shows its picture's text instead, which still lets the test run.
+   */
+  ASSET_BASE?: string;
+  /**
    * Cross-session scores.
    *
    * Optional because the quiz does not need it: a deployment without the
@@ -117,6 +123,17 @@ const commandDepsFor = (env: Env, channelId: string): CommandDeps => ({
 const items = examCorpus.items as Item[];
 const review: Readonly<Record<string, ReviewLink>> = examCorpus.review;
 
+/** Each 問題6 picture's URL, by item id: corpus.json's names under ASSET_BASE. */
+const picturesAt = (base: string | undefined): Record<string, string> =>
+  base === undefined
+    ? {}
+    : Object.fromEntries(
+        Object.entries(examCorpus.pictures).map(([id, path]) => [
+          id,
+          `${base}${path}`
+        ])
+      );
+
 const examDepsFor = (env: Env, channelId: string): ExamDeps => ({
   discord: discordEffects,
   cards: v2Effects,
@@ -124,6 +141,7 @@ const examDepsFor = (env: Env, channelId: string): ExamDeps => ({
   session: examFor(env, channelId),
   items,
   review,
+  pictures: picturesAt(env.ASSET_BASE),
   random: Math.random,
   now: Date.now,
   quizRunning: async () => running(sessionFor(env, channelId))

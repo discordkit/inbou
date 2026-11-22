@@ -26,6 +26,7 @@ const recordingDeps = () => {
     session,
     items: [],
     review: {},
+    pictures: {},
     random: Math.random,
     now: Date.now,
     quizRunning: async () => false
