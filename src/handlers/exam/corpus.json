@@ -4406,6 +4406,496 @@
           "note": "と marks the words someone said: 「…」と {言|い}いました."
         }
       ]
+    },
+    {
+      "id": "n5-d6-0001",
+      "type": "info",
+      "status": "reviewed",
+      "material": {
+        "title": "さくら しょくどう",
+        "blocks": [
+          {
+            "lists": [
+              {
+                "head": "{食|た}べもの",
+                "rows": [
+                  ["カレー", "600{円|えん}"],
+                  ["ラーメン", "550{円|えん}"],
+                  ["うどん", "450{円|えん}"],
+                  ["おにぎり", "200{円|えん}"]
+                ]
+              },
+              {
+                "head": "{飲|の}みもの",
+                "rows": [
+                  ["コーヒー", "250{円|えん}"],
+                  ["こうちゃ", "250{円|えん}"],
+                  ["ジュース", "200{円|えん}"],
+                  ["ミルク", "150{円|えん}"]
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "en": "Sakura Diner. Food: curry 600 yen, ramen 550 yen, udon 450 yen, rice ball 200 yen. Drinks: coffee 250 yen, black tea 250 yen, juice 200 yen, milk 150 yen.",
+      "questions": [
+        {
+          "question": "マリアさんは お{金|かね}が 700{円|えん} あります。\n{食|た}べものを {一|ひと}つと {飲|の}みものを {一|ひと}つ たのみたいです。\nどれを たのむ ことが できますか。",
+          "answer": "うどんと ジュース",
+          "wrong": [
+            "カレーと ミルク",
+            "ラーメンと ジュース",
+            "ラーメンと コーヒー",
+            "カレーと こうちゃ"
+          ],
+          "difficulty": 2,
+          "note": "うどん 450{円|えん} + ジュース 200{円|えん} = 650{円|えん}. Every other pair costs 750{円|えん} or more."
+        },
+        {
+          "question": "いちばん {安|やす}い {食|た}べものと、いちばん {安|やす}い {飲|の}みものを たのみます。\nぜんぶで いくらですか。",
+          "options": [
+            "250{円|えん}",
+            "300{円|えん}",
+            "350{円|えん}",
+            "400{円|えん}"
+          ],
+          "answer": 3,
+          "difficulty": 2,
+          "note": "The cheapest food is おにぎり (200{円|えん}) and the cheapest drink is ミルク (150{円|えん}): 350{円|えん}."
+        },
+        {
+          "question": "{田中|たなか}さんは 1000{円|えん} {持|も}って います。\nラーメンと こうちゃを たのみました。\nおつりは いくらですか。",
+          "options": [
+            "150{円|えん}",
+            "200{円|えん}",
+            "250{円|えん}",
+            "300{円|えん}"
+          ],
+          "answer": 2,
+          "difficulty": 3,
+          "note": "ラーメン 550{円|えん} + こうちゃ 250{円|えん} = 800{円|えん}. おつり, the change, is 1000 − 800 = 200{円|えん}."
+        }
+      ]
+    },
+    {
+      "id": "n5-d6-0002",
+      "type": "info",
+      "status": "reviewed",
+      "material": {
+        "title": "みどり {図書館|としょかん}",
+        "blocks": [
+          {
+            "table": {
+              "head": ["", "あいて いる {時間|じかん}"],
+              "rows": [
+                ["{月|げつ}", "やすみ"],
+                ["{火|か}〜{金|きん}", "9:00〜19:00"],
+                ["{土|ど}", "9:00〜17:00"],
+                ["{日|にち}", "10:00〜17:00"]
+              ]
+            }
+          },
+          {
+            "text": [
+              "{本|ほん}は 5さつまで、2{週間|しゅうかん} {借|か}りる ことが できます。"
+            ]
+          }
+        ]
+      },
+      "en": "Midori Library. Opening hours: Monday closed; Tuesday to Friday 9:00–19:00; Saturday 9:00–17:00; Sunday 10:00–17:00. You can borrow up to five books for two weeks.",
+      "questions": [
+        {
+          "question": "{図書館|としょかん}が やすみの {日|ひ}は いつですか。",
+          "options": [
+            "{月曜日|げつようび}",
+            "{水曜日|すいようび}",
+            "{土曜日|どようび}",
+            "{日曜日|にちようび}"
+          ],
+          "answer": 1,
+          "difficulty": 1,
+          "note": "The Monday row says やすみ: closed."
+        },
+        {
+          "question": "{土曜日|どようび}、{図書館|としょかん}は {何時|なんじ}に しまりますか。",
+          "options": [
+            "{午後|ごご}5{時|じ}",
+            "{午後|ごご}6{時|じ}",
+            "{午後|ごご}7{時|じ}",
+            "{午後|ごご}9{時|じ}"
+          ],
+          "answer": 1,
+          "difficulty": 2,
+          "note": "On Saturday it is open 9:00〜17:00, and 17:00 is {午後|ごご}5{時|じ}. 19:00, {午後|ごご}7{時|じ}, is the closing time on weekdays."
+        },
+        {
+          "question": "{今日|きょう}は {火曜日|かようび}です。\n{本|ほん}を 3さつ {借|か}ります。\nいつまでに かえしますか。",
+          "options": [
+            "{来週|らいしゅう}の {火曜日|かようび}",
+            "{来週|らいしゅう}の {金曜日|きんようび}",
+            "さらいしゅうの {火曜日|かようび}",
+            "さらいしゅうの {土曜日|どようび}"
+          ],
+          "answer": 3,
+          "difficulty": 3,
+          "note": "Books are lent for two weeks, 2{週間|しゅうかん}. Two weeks from a Tuesday is the Tuesday after next: さらいしゅうの {火曜日|かようび}."
+        }
+      ]
+    },
+    {
+      "id": "n5-d6-0003",
+      "type": "info",
+      "status": "reviewed",
+      "material": {
+        "title": "バス　{駅前|えきまえ} → {大学|だいがく}",
+        "blocks": [
+          {
+            "table": {
+              "head": ["{駅前|えきまえ}", "{大学|だいがく}"],
+              "rows": [
+                ["7:40", "8:05"],
+                ["8:10", "8:35"],
+                ["8:40", "9:05"],
+                ["9:10", "9:35"]
+              ]
+            }
+          },
+          {
+            "text": [
+              "{土曜日|どようび}と {日曜日|にちようび}は バスが ありません。"
+            ]
+          }
+        ]
+      },
+      "en": "Bus from Ekimae (in front of the station) to the university. Leaves Ekimae 7:40, 8:10, 8:40, 9:10; arrives at the university 8:05, 8:35, 9:05, 9:35. There are no buses on Saturdays and Sundays.",
+      "questions": [
+        {
+          "question": "{大学|だいがく}に 9{時|じ}までに {着|つ}きたいです。\nでも、{朝|あさ}は ゆっくり したいです。\n{何時|なんじ}の バスに {乗|の}りますか。",
+          "options": ["7:40", "8:10", "8:40", "9:10"],
+          "answer": 2,
+          "difficulty": 2,
+          "note": "The 8:10 bus arrives at 8:35, before nine. The 8:40 bus arrives at 9:05, too late. The 7:40 bus is in time too, but the question wants the latest one that is."
+        },
+        {
+          "question": "8{時|じ}40{分|ぷん}の バスに {乗|の}りました。\n{大学|だいがく}に {何時|なんじ}に {着|つ}きますか。",
+          "options": ["8:35", "8:40", "9:05", "9:35"],
+          "answer": 3,
+          "difficulty": 1,
+          "note": "Read across the 8:40 row: it arrives at 9:05."
+        },
+        {
+          "question": "バスは {駅前|えきまえ}から {大学|だいがく}まで {何分|なんぷん} かかりますか。",
+          "options": [
+            "15{分|ふん}",
+            "20{分|ぷん}",
+            "25{分|ふん}",
+            "30{分|ぷん}"
+          ],
+          "answer": 3,
+          "difficulty": 2,
+          "note": "Every bus takes the same time: 7:40 to 8:05 is 25{分|ふん}."
+        }
+      ]
+    },
+    {
+      "id": "n5-d5-0001",
+      "type": "mid",
+      "status": "reviewed",
+      "intro": "これは ケンさんが {書|か}いた さくぶんです。",
+      "text": "{私|わたし}は {先月|せんげつ}から、{毎週|まいしゅう} {土曜日|どようび}に {料理|りょうり}{教室|きょうしつ}へ {行|い}って います。{教室|きょうしつ}は {駅|えき}の {近|ちか}くの ビルの 3がいに あります。\n{先生|せんせい}は {日本人|にほんじん}の おばあさんで、とても やさしいです。{先週|せんしゅう}は てんぷらを {作|つく}りました。てんぷらは むずかしかったですが、おいしく できました。\n{家|いえ}に {帰|かえ}って、{同|おな}じ アパートの {友|とも}だちに てんぷらを あげました。{友|とも}だちは「おいしい」と {言|い}って、ぜんぶ {食|た}べました。とても うれしかったです。\n{来週|らいしゅう}は すしを {作|つく}ります。すしの {写真|しゃしん}を とって、{国|くに}の {母|はは}に {送|おく}りたいです。",
+      "en": "Since last month I have been going to a cooking class every Saturday. The class is on the third floor of a building near the station. The teacher is a Japanese grandmother, and she is very kind. Last week we made tempura. Tempura was difficult, but it turned out delicious. When I got home, I gave the tempura to a friend who lives in the same apartment building. My friend said \"delicious\" and ate it all. I was very happy. Next week we will make sushi. I want to take a photo of the sushi and send it to my mother back home.",
+      "questions": [
+        {
+          "question": "{料理|りょうり}{教室|きょうしつ}は どこに ありますか。",
+          "answer": "{駅|えき}の {近|ちか}くの ビル",
+          "wrong": [
+            "ケンさんの アパート",
+            "{先生|せんせい}の {家|いえ}",
+            "{駅|えき}の {中|なか}"
+          ],
+          "difficulty": 1,
+          "note": "{教室|きょうしつ}は {駅|えき}の {近|ちか}くの ビルの 3がいに あります: the third floor of a building near the station."
+        },
+        {
+          "question": "{先週|せんしゅう}の てんぷらは どうでしたか。",
+          "answer": "むずかしかったですが、おいしかったです。",
+          "wrong": [
+            "かんたんで、おいしかったです。",
+            "むずかしくて、おいしく なかったです。",
+            "かんたんでしたが、おいしく なかったです。"
+          ],
+          "difficulty": 2,
+          "note": "むずかしかったですが、おいしく できました: hard to make, but it came out well. Both halves have to match."
+        },
+        {
+          "question": "ケンさんは {作|つく}った てんぷらを どう しましたか。",
+          "answer": "{友|とも}だちに あげました。",
+          "wrong": [
+            "{先生|せんせい}に あげました。",
+            "{教室|きょうしつ}の みんなで {食|た}べました。",
+            "ぜんぶ {自分|じぶん}で {食|た}べました。"
+          ],
+          "difficulty": 1,
+          "note": "Ken gave it to a friend in the same building: {同|おな}じ アパートの {友|とも}だちに てんぷらを あげました. The friend ate it all, not Ken."
+        },
+        {
+          "question": "ケンさんは すしの {写真|しゃしん}を だれに {送|おく}りたいですか。",
+          "answer": "お{母|かあ}さん",
+          "wrong": [
+            "{料理|りょうり}の {先生|せんせい}",
+            "アパートの {友|とも}だち",
+            "お{父|とう}さん"
+          ],
+          "difficulty": 1,
+          "note": "{国|くに}の {母|はは}に {送|おく}りたいです: to Ken's mother back home. {母|はは} is how you speak of your own mother; お{母|かあ}さん is the polite word."
+        }
+      ]
+    },
+    {
+      "id": "n5-d5-0002",
+      "type": "mid",
+      "status": "reviewed",
+      "intro": "これは リーさんが {書|か}いた さくぶんです。",
+      "text": "{先週|せんしゅう}の {金曜日|きんようび}、{私|わたし}は かさを なくしました。{青|あお}くて {大|おお}きい かさです。{学校|がっこう}の {帰|かえ}りに {電車|でんしゃ}の {中|なか}に わすれたと {思|おも}いました。\nつぎの {日|ひ}、{駅|えき}へ {行|い}って、{駅|えき}の {人|ひと}に {聞|き}きました。でも、かさは ありませんでした。\n{月曜日|げつようび}に {学校|がっこう}へ {行|い}きました。{教室|きょうしつ}の うしろに {私|わたし}の かさが ありました。{金曜日|きんようび}は {朝|あさ} {雨|あめ}が ふって いましたが、{午後|ごご}は はれて いました。それで、{教室|きょうしつ}に わすれて いました。\nこれからは {気|き}を つけます。",
+      "en": "Last Friday I lost my umbrella. It is a big blue umbrella. I thought I had left it on the train on my way home from school. The next day I went to the station and asked the station staff, but the umbrella was not there. On Monday I went to school. My umbrella was at the back of the classroom. On Friday it had rained in the morning, but in the afternoon it was sunny. That is why I left it in the classroom. From now on I will be careful.",
+      "questions": [
+        {
+          "question": "リーさんの かさは どんな かさですか。",
+          "answer": "{青|あお}くて {大|おお}きい",
+          "wrong": [
+            "{青|あお}くて {小|ちい}さい",
+            "{黒|くろ}くて {大|おお}きい",
+            "{白|しろ}くて {小|ちい}さい"
+          ],
+          "difficulty": 1,
+          "note": "{青|あお}くて {大|おお}きい かさです: big and blue."
+        },
+        {
+          "question": "リーさんは {土曜日|どようび}に {何|なに}を しましたか。",
+          "answer": "{駅|えき}の {人|ひと}に かさの ことを {聞|き}きました。",
+          "wrong": [
+            "{学校|がっこう}で かさを さがしました。",
+            "あたらしい かさを {買|か}いました。",
+            "{電車|でんしゃ}の {中|なか}で かさを さがしました。"
+          ],
+          "difficulty": 2,
+          "note": "Lee lost it on Friday, and つぎの {日|ひ}, the next day, is Saturday: Lee asked the station staff, and went back to school on Monday."
+        },
+        {
+          "question": "かさは どこに ありましたか。",
+          "answer": "{教室|きょうしつ}の うしろ",
+          "wrong": [
+            "{電車|でんしゃ}の {中|なか}",
+            "{駅|えき}の {人|ひと}の ところ",
+            "{学校|がっこう}の {入口|いりぐち}"
+          ],
+          "difficulty": 1,
+          "note": "{教室|きょうしつ}の うしろに {私|わたし}の かさが ありました: at the back of the classroom. Lee only thought it was left on the train."
+        },
+        {
+          "question": "リーさんは どうして かさを わすれましたか。",
+          "answer": "{午後|ごご}は {雨|あめ}が ふって いなかったから",
+          "wrong": [
+            "{朝|あさ}は {雨|あめ}が ふって いなかったから",
+            "{電車|でんしゃ}が こんで いたから",
+            "いそいで {帰|かえ}ったから"
+          ],
+          "difficulty": 3,
+          "note": "It rained in the morning, but the afternoon was sunny (はれて いました), so Lee went home without needing it. それで, \"so\", links the weather to the forgetting."
+        }
+      ]
+    },
+    {
+      "id": "n5-d4-0001",
+      "type": "short",
+      "status": "reviewed",
+      "intro": "これは お{母|かあ}さんが ゆいさんに {書|か}いた メモです。",
+      "text": "ゆいへ\n{今日|きょう}、お{母|かあ}さんは {仕事|しごと}で {帰|かえ}りが おそく なります。ばんごはんは テーブルの {上|うえ}に あります。6{時|じ}までに {犬|いぬ}の さんぽに {行|い}って ください。\n{母|はは}より",
+      "en": "Yui — I have work today, so I'll be home late. Your dinner is on the table. Please take the dog for a walk by six. Mum",
+      "questions": [
+        {
+          "question": "ゆいさんは 6{時|じ}までに {何|なに}を しますか。",
+          "answer": "{犬|いぬ}の さんぽに {行|い}きます。",
+          "wrong": [
+            "ばんごはんを つくります。",
+            "お{母|かあ}さんと ばんごはんを {食|た}べます。",
+            "お{母|かあ}さんの {会社|かいしゃ}へ {行|い}きます。"
+          ],
+          "difficulty": 1,
+          "note": "The memo asks for one thing by six: 6{時|じ}までに {犬|いぬ}の さんぽに {行|い}って ください. Dinner is already made, and Yui's mother will be home late, so they do not eat together."
+        },
+        {
+          "question": "メモに あう ものは どれですか。",
+          "answer": "お{母|かあ}さんは {今日|きょう} おそく {帰|かえ}ります。",
+          "wrong": [
+            "お{母|かあ}さんは {今日|きょう} {仕事|しごと}が {休|やす}みです。",
+            "ゆいさんが ばんごはんを つくります。",
+            "お{母|かあ}さんが {犬|いぬ}の さんぽに {行|い}きます。"
+          ],
+          "difficulty": 2,
+          "note": "{帰|かえ}りが おそく なります means Yui's mother comes home late. She is at work, the dinner is ready, and Yui walks the dog."
+        }
+      ]
+    },
+    {
+      "id": "n5-d4-0002",
+      "type": "short",
+      "status": "reviewed",
+      "intro": "（{学校|がっこう}で）\n{学生|がくせい}が この {紙|かみ}を {見|み}ました。",
+      "text": "{学生|がくせい}の みなさんへ\nあしたは {午後|ごご}1{時|じ}から {図書館|としょかん}が しまります。{本|ほん}を かえす {人|ひと}は、{午前中|ごぜんちゅう}に {来|き}て ください。{午後|ごご}は {図書館|としょかん}の {入口|いりぐち}に ある はこに {本|ほん}を {入|い}れて ください。",
+      "en": "To all students: tomorrow the library closes from 1 p.m. If you are returning books, please come in the morning. In the afternoon, please put books in the box at the library entrance.",
+      "questions": [
+        {
+          "question": "あしたの {午後|ごご}、{本|ほん}を かえしたい {人|ひと}は どう しますか。",
+          "answer": "{入口|いりぐち}の はこに {入|い}れます。",
+          "wrong": [
+            "{図書館|としょかん}の {人|ひと}に わたします。",
+            "{先生|せんせい}に わたします。",
+            "つぎの {日|ひ}に かえします。"
+          ],
+          "difficulty": 2,
+          "note": "In the afternoon the library is closed, so books go in the box: {午後|ごご}は {入口|いりぐち}に ある はこに {入|い}れて ください. Handing them to the staff works only in the morning."
+        },
+        {
+          "question": "{図書館|としょかん}は あした {何時|なんじ}に しまりますか。",
+          "options": ["12{時|じ}", "1{時|じ}", "2{時|じ}", "5{時|じ}"],
+          "answer": 2,
+          "difficulty": 1,
+          "note": "{午後|ごご}1{時|じ}から しまります: it closes at one in the afternoon."
+        }
+      ]
+    },
+    {
+      "id": "n5-d4-0003",
+      "type": "short",
+      "status": "reviewed",
+      "intro": "これは マリアさんが {友|とも}だちの ゆきさんに {書|か}いた メールです。",
+      "text": "ゆきさん\n{今週|こんしゅう}の {土曜日|どようび}、いっしょに {映画|えいが}を {見|み}ませんか。{映画|えいが}は 2{時|じ}からです。その {前|まえ}に、{駅|えき}の {前|まえ}の きっさてんで ひるごはんを {食|た}べましょう。12{時|じ}に きっさてんで {会|あ}いませんか。\nマリア",
+      "en": "Yuki — would you like to see a film together this Saturday? It starts at two. Before that, let's have lunch at the café in front of the station. Shall we meet at the café at twelve? Maria",
+      "questions": [
+        {
+          "question": "ふたりは {土曜日|どようび}、はじめに {何|なに}を しますか。",
+          "answer": "きっさてんで ひるごはんを {食|た}べます。",
+          "wrong": [
+            "{映画|えいが}を {見|み}ます。",
+            "{駅|えき}で {電車|でんしゃ}に {乗|の}ります。",
+            "{映画|えいが}の きっぷを {買|か}います。"
+          ],
+          "difficulty": 1,
+          "note": "The film is at two, and lunch comes before it: その {前|まえ}に … ひるごはんを {食|た}べましょう."
+        },
+        {
+          "question": "ふたりは {何時|なんじ}に どこで {会|あ}いますか。",
+          "answer": "12{時|じ}に きっさてんで",
+          "wrong": [
+            "2{時|じ}に {映画館|えいがかん}で",
+            "12{時|じ}に {駅|えき}の {中|なか}で",
+            "2{時|じ}に きっさてんで"
+          ],
+          "difficulty": 2,
+          "note": "12{時|じ}に きっさてんで {会|あ}いませんか: twelve, at the café. Two o'clock is when the film starts."
+        }
+      ]
+    },
+    {
+      "id": "n5-d4-0004",
+      "type": "short",
+      "status": "reviewed",
+      "intro": "これは リンさんが {書|か}いた にっきです。",
+      "text": "11{月|がつ}{3日|みっか}（{日|にち}）\n{今日|きょう}は {兄|あに}と {山|やま}に のぼりました。{昼|ひる}から {雨|あめ}が ふったので、おべんとうは {山|やま}の {下|した}の {店|みせ}で {食|た}べました。とても つかれました。",
+      "en": "Sunday 3 November. Today I climbed a mountain with my older brother. It rained from midday, so we ate our packed lunches in a shop at the foot of the mountain. I was very tired.",
+      "questions": [
+        {
+          "question": "リンさんは どこで おべんとうを {食|た}べましたか。",
+          "answer": "{山|やま}の {下|した}の {店|みせ}",
+          "wrong": [
+            "{山|やま}の {上|うえ}",
+            "{兄|あに}の {家|いえ}",
+            "{駅|えき}の {近|ちか}くの {店|みせ}"
+          ],
+          "difficulty": 1,
+          "note": "It rained, so they ate in a shop at the foot of the mountain: {山|やま}の {下|した}の {店|みせ}で {食|た}べました."
+        },
+        {
+          "question": "{昼|ひる}から {天気|てんき}は どう なりましたか。",
+          "answer": "{雨|あめ}が ふりました。",
+          "wrong": [
+            "はれました。",
+            "ゆきが ふりました。",
+            "{風|かぜ}が つよく なりました。"
+          ],
+          "difficulty": 1,
+          "note": "{昼|ひる}から {雨|あめ}が ふった: it rained from midday."
+        }
+      ]
+    },
+    {
+      "id": "n5-d4-0005",
+      "type": "short",
+      "status": "reviewed",
+      "intro": "（アパートの {入口|いりぐち}で）\nアパートの {人|ひと}が この {紙|かみ}を {見|み}ました。",
+      "text": "アパートの みなさんへ\nごみは {月曜日|げつようび}と {木曜日|もくようび}の {朝|あさ}に {出|だ}して ください。びんと かんは {水曜日|すいようび}の {朝|あさ}です。{夜|よる}に ごみを {出|だ}さないで ください。",
+      "en": "To everyone in the building: please put rubbish out on Monday and Thursday mornings. Bottles and cans go out on Wednesday morning. Please do not put rubbish out at night.",
+      "questions": [
+        {
+          "question": "びんは いつ {出|だ}しますか。",
+          "options": [
+            "{月曜日|げつようび}の {朝|あさ}",
+            "{水曜日|すいようび}の {朝|あさ}",
+            "{木曜日|もくようび}の {朝|あさ}",
+            "{水曜日|すいようび}の {夜|よる}"
+          ],
+          "answer": 2,
+          "difficulty": 1,
+          "note": "びんと かんは {水曜日|すいようび}の {朝|あさ}です: bottles and cans go out on Wednesday morning."
+        },
+        {
+          "question": "びんや かんでは ない ごみは いつ {出|だ}しますか。",
+          "options": [
+            "{月曜日|げつようび}と {水曜日|すいようび}の {朝|あさ}",
+            "{月曜日|げつようび}と {木曜日|もくようび}の {朝|あさ}",
+            "{月曜日|げつようび}と {木曜日|もくようび}の {夜|よる}",
+            "{水曜日|すいようび}と {木曜日|もくようび}の {朝|あさ}"
+          ],
+          "answer": 2,
+          "difficulty": 2,
+          "note": "Other rubbish goes out on Monday and Thursday mornings. Wednesday is only for bottles and cans, and nothing goes out at night."
+        }
+      ]
+    },
+    {
+      "id": "n5-d4-0006",
+      "type": "short",
+      "status": "reviewed",
+      "intro": "（{教室|きょうしつ}で）\n{学生|がくせい}が この {紙|かみ}を {読|よ}みました。",
+      "text": "{来週|らいしゅう}の {水曜日|すいようび}に テストが あります。テストは 9{時|じ}からです。8{時|じ}50{分|ぷん}までに {教室|きょうしつ}に {来|き}て ください。えんぴつと けしゴムを {持|も}って きて ください。じしょは いりません。",
+      "en": "There is a test next Wednesday. It starts at nine. Please come to the classroom by 8:50. Bring a pencil and an eraser. You do not need a dictionary.",
+      "questions": [
+        {
+          "question": "{学生|がくせい}は {何時|なんじ}までに {教室|きょうしつ}に {来|き}ますか。",
+          "options": [
+            "8{時|じ}{半|はん}",
+            "8{時|じ}50{分|ぷん}",
+            "9{時|じ}",
+            "9{時|じ}10{分|ぷん}"
+          ],
+          "answer": 2,
+          "difficulty": 1,
+          "note": "The test starts at nine, but students come earlier: 8{時|じ}50{分|ぷん}までに {来|き}て ください."
+        },
+        {
+          "question": "{学生|がくせい}は {何|なに}を {持|も}って {行|い}きますか。",
+          "answer": "えんぴつと けしゴム",
+          "wrong": [
+            "えんぴつと じしょ",
+            "けしゴムと じしょ",
+            "じしょと ノート"
+          ],
+          "difficulty": 2,
+          "note": "えんぴつと けしゴムを {持|も}って きて ください. The dictionary is not needed: じしょは いりません."
+        }
+      ]
     }
   ],
   "review": {

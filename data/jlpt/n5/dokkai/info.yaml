@@ -8,7 +8,7 @@
 
 - id: n5-d6-0001
   type: info
-  status: draft
+  status: reviewed
   material:
     title: "さくら しょくどう"
     blocks:
@@ -65,7 +65,7 @@
 
 - id: n5-d6-0002
   type: info
-  status: draft
+  status: reviewed
   material:
     title: "みどり {図書館|としょかん}"
     blocks:
@@ -113,7 +113,7 @@
 
 - id: n5-d6-0003
   type: info
-  status: draft
+  status: reviewed
   material:
     title: "バス　{駅前|えきまえ} → {大学|だいがく}"
     blocks:

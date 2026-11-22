@@ -8,7 +8,7 @@
 
 - id: n5-d4-0001
   type: short
-  status: draft
+  status: reviewed
   intro: "これは お{母|かあ}さんが ゆいさんに {書|か}いた メモです。"
   text: |-
     ゆいへ
@@ -35,7 +35,7 @@
 
 - id: n5-d4-0002
   type: short
-  status: draft
+  status: reviewed
   intro: |-
     （{学校|がっこう}で）
     {学生|がくせい}が この {紙|かみ}を {見|み}ました。
@@ -64,7 +64,7 @@
 
 - id: n5-d4-0003
   type: short
-  status: draft
+  status: reviewed
   intro: "これは マリアさんが {友|とも}だちの ゆきさんに {書|か}いた メールです。"
   text: |-
     ゆきさん
@@ -91,7 +91,7 @@
 
 - id: n5-d4-0004
   type: short
-  status: draft
+  status: reviewed
   intro: "これは リンさんが {書|か}いた にっきです。"
   text: |-
     11{月|がつ}{3日|みっか}（{日|にち}）
@@ -117,7 +117,7 @@
 
 - id: n5-d4-0005
   type: short
-  status: draft
+  status: reviewed
   intro: |-
     （アパートの {入口|いりぐち}で）
     アパートの {人|ひと}が この {紙|かみ}を {見|み}ました。
@@ -147,7 +147,7 @@
 
 - id: n5-d4-0006
   type: short
-  status: draft
+  status: reviewed
   intro: |-
     （{教室|きょうしつ}で）
     {学生|がくせい}が この {紙|かみ}を {読|よ}みました。
