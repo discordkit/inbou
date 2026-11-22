@@ -8,7 +8,7 @@
 
 - id: n5-g2-0001
   type: spelling
-  status: draft
+  status: reviewed
   word: 水
   sentence: "すみません、__みず__を ください。"
   en: "Excuse me, may I have some water?"
@@ -19,7 +19,7 @@
 
 - id: n5-g2-0002
   type: spelling
-  status: draft
+  status: reviewed
   word: 右
   sentence: "__みぎ__の ドアから でて ください。"
   en: "Please go out through the door on the right."
@@ -36,7 +36,7 @@
 
 - id: n5-g2-0003
   type: spelling
-  status: draft
+  status: reviewed
   word: ボールペン
   sentence: "この __ぼーるぺん__で かいて ください。"
   en: "Please write with this ballpoint pen."
@@ -53,7 +53,7 @@
 
 - id: n5-g2-0004
   type: spelling
-  status: draft
+  status: reviewed
   word: 名前
   sentence: "ここに __なまえ__を かいて ください。"
   en: "Please write your name here."
@@ -70,7 +70,7 @@
 
 - id: n5-g2-0005
   type: spelling
-  status: draft
+  status: reviewed
   word: 電車
   sentence: "まいあさ __でんしゃ__で かいしゃへ いきます。"
   en: "I go to work by train every morning."
@@ -87,7 +87,7 @@
 
 - id: n5-g2-0006
   type: spelling
-  status: draft
+  status: reviewed
   word: 新しい
   sentence: "きのう __あたらしい__ くつを かいました。"
   en: "I bought new shoes yesterday."

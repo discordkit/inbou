@@ -6,7 +6,7 @@
 
 - id: n5-g3-0001
   type: context
-  status: draft
+  status: reviewed
   sentence: "ちちは まいあさ しんぶんを （　）。"
   en: "My father reads the newspaper every morning."
   answer: よみます
@@ -16,7 +16,7 @@
 
 - id: n5-g3-0002
   type: context
-  status: draft
+  status: reviewed
   sentence: "にほんでは （　）で ごはんを たべます。"
   en: "In Japan, people eat rice with chopsticks."
   answer: はし
@@ -26,7 +26,7 @@
 
 - id: n5-g3-0003
   type: context
-  status: draft
+  status: reviewed
   sentence: "へやが くらいですから、でんきを （　） ください。"
   en: "The room is dark, so please turn on the light."
   answer: つけて
@@ -42,7 +42,7 @@
 
 - id: n5-g3-0004
   type: context
-  status: draft
+  status: reviewed
   sentence: "この にもつは （　）ですから、ふたりで もちましょう。"
   en: "This luggage is heavy, so let's carry it together."
   answer: おもい
@@ -58,7 +58,7 @@
 
 - id: n5-g3-0005
   type: context
-  status: draft
+  status: reviewed
   sentence: "さむいですから、（　）を きます。"
   en: "It is cold, so I will put on a sweater."
   answer: セーター
@@ -74,7 +74,7 @@
 
 - id: n5-g3-0006
   type: context
-  status: draft
+  status: reviewed
   sentence: "えんぴつを 2（　） かいました。"
   en: "I bought two pencils."
   answer: ほん
@@ -90,7 +90,7 @@
 
 - id: n5-g3-0007
   type: context
-  status: draft
+  status: reviewed
   sentence: "（　）は あさから あめでしたが、きょうは いい てんきです。"
   en: "It rained from the morning yesterday, but today the weather is fine."
   answer: きのう

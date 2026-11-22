@@ -11093,6 +11093,559 @@
           "note": "This asks which sentence agrees with the card: {国|くに}でも {日本語|にほんご}の {勉強|べんきょう}を つづけます, Lee keeps studying at home."
         }
       ]
+    },
+    {
+      "id": "n5-g3-0001",
+      "status": "reviewed",
+      "en": "My father reads the newspaper every morning.",
+      "answer": "よみます",
+      "wrong": ["ききます", "のみます", "はきます"],
+      "difficulty": 1,
+      "note": "This asks what you do with a しんぶん, a newspaper: よみます, read it.",
+      "type": "context",
+      "sentence": "ちちは まいあさ しんぶんを （　）。"
+    },
+    {
+      "id": "n5-g3-0002",
+      "status": "reviewed",
+      "en": "In Japan, people eat rice with chopsticks.",
+      "answer": "はし",
+      "wrong": ["はさみ", "かさ", "かぎ"],
+      "difficulty": 1,
+      "note": "This asks what you eat rice with: はし, chopsticks. はさみ are scissors, かさ an umbrella and かぎ a key.",
+      "type": "context",
+      "sentence": "にほんでは （　）で ごはんを たべます。"
+    },
+    {
+      "id": "n5-g3-0003",
+      "status": "reviewed",
+      "en": "The room is dark, so please turn on the light.",
+      "answer": "つけて",
+      "wrong": [
+        {
+          "option": "けして",
+          "why": "けして turns the light off. The room is dark, so you want it on."
+        },
+        {
+          "option": "しめて",
+          "why": "しめて closes a door or a window, not a light."
+        },
+        {
+          "option": "あけて",
+          "why": "あけて opens a door or a window. A light is turned on with つけて."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks what you do to a light in a dark room: つけて, turn it on.",
+      "type": "context",
+      "sentence": "へやが くらいですから、でんきを （　） ください。"
+    },
+    {
+      "id": "n5-g3-0004",
+      "status": "reviewed",
+      "en": "This luggage is heavy, so let's carry it together.",
+      "answer": "おもい",
+      "wrong": [
+        {
+          "option": "かるい",
+          "why": "かるい is light. A light bag does not need two people."
+        },
+        {
+          "option": "やすい",
+          "why": "やすい is cheap. The price is no reason for two people to carry it."
+        },
+        {
+          "option": "あたらしい",
+          "why": "あたらしい is new. Being new is no reason for two people to carry it."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks why it takes two people to carry: the luggage is おもい, heavy.",
+      "type": "context",
+      "sentence": "この にもつは （　）ですから、ふたりで もちましょう。"
+    },
+    {
+      "id": "n5-g3-0005",
+      "status": "reviewed",
+      "en": "It is cold, so I will put on a sweater.",
+      "answer": "セーター",
+      "wrong": [
+        {
+          "option": "くつ",
+          "why": "くつ (shoes) go on with はきます, not きます."
+        },
+        {
+          "option": "めがね",
+          "why": "めがね (glasses) go on with かけます, not きます."
+        },
+        {
+          "option": "ぼうし",
+          "why": "ぼうし (a hat) goes on with かぶります, not きます."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks what you put on with きます: clothes for the body, such as a セーター. Shoes, glasses and hats each take their own verb.",
+      "type": "context",
+      "sentence": "さむいですから、（　）を きます。"
+    },
+    {
+      "id": "n5-g3-0006",
+      "status": "reviewed",
+      "en": "I bought two pencils.",
+      "answer": "ほん",
+      "wrong": [
+        {
+          "option": "まい",
+          "why": "まい counts flat things: paper, shirts, tickets."
+        },
+        {
+          "option": "だい",
+          "why": "だい counts machines: cars, computers."
+        },
+        {
+          "option": "ひき",
+          "why": "ひき counts small animals: cats, dogs, fish."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks the counter for long, thin things such as pencils: ほん. 2ほん is read にほん.",
+      "type": "context",
+      "sentence": "えんぴつを 2（　） かいました。"
+    },
+    {
+      "id": "n5-g3-0007",
+      "status": "reviewed",
+      "en": "It rained from the morning yesterday, but today the weather is fine.",
+      "answer": "きのう",
+      "wrong": [
+        {
+          "option": "あした",
+          "why": "あした is tomorrow, but でした says it has already happened."
+        },
+        {
+          "option": "あさって",
+          "why": "あさって is the day after tomorrow, still to come. でした is past."
+        },
+        {
+          "option": "らいしゅう",
+          "why": "らいしゅう is next week, still to come. でした is past."
+        }
+      ],
+      "difficulty": 3,
+      "note": "This asks which day was rainy. でした puts it in the past, and きょう is fine, so it was きのう.",
+      "type": "context",
+      "sentence": "（　）は あさから あめでしたが、きょうは いい てんきです。"
+    },
+    {
+      "id": "n5-g1-0001",
+      "status": "reviewed",
+      "en": "There is a white notebook on the desk.",
+      "answer": "しろい",
+      "wrong": ["くろい", "あかい", "あおい"],
+      "difficulty": 1,
+      "note": "This asks the reading of 白い, white. くろい is 黒い (black), あかい 赤い (red) and あおい 青い (blue).",
+      "type": "kanji",
+      "word": "白い",
+      "sentence": "つくえの うえに __白い__ ノートが あります。"
+    },
+    {
+      "id": "n5-g1-0002",
+      "status": "reviewed",
+      "en": "There is a park to the north of the station.",
+      "answer": "きた",
+      "wrong": ["みなみ", "ひがし", "にし"],
+      "difficulty": 1,
+      "note": "This asks the reading of 北, north. みなみ is 南 (south), ひがし 東 (east) and にし 西 (west).",
+      "type": "kanji",
+      "word": "北",
+      "sentence": "えきの __北__に こうえんが あります。"
+    },
+    {
+      "id": "n5-g1-0003",
+      "status": "reviewed",
+      "en": "I am busy with work this week.",
+      "answer": "こんしゅう",
+      "wrong": [
+        {
+          "option": "こんしゅ",
+          "why": "週 has a long vowel: しゅう. こんしゅ drops the う."
+        },
+        {
+          "option": "こんじゅう",
+          "why": "週 is しゅう, with no dakuten. じゅう is how 十 sounds."
+        },
+        {
+          "option": "いましゅう",
+          "why": "今 is いま on its own, but こん in words like 今週 and 今月."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks the reading of 今週, this week. 今 is こん here, and 週 is a long しゅう.",
+      "type": "kanji",
+      "word": "今週",
+      "sentence": "__今週__は しごとが いそがしいです。"
+    },
+    {
+      "id": "n5-g1-0004",
+      "status": "reviewed",
+      "en": "I came to Japan last month.",
+      "answer": "せんげつ",
+      "wrong": [
+        {
+          "option": "せんがつ",
+          "why": "月 is がつ only in the names of the months, like 四がつ. In 先月, 今月 and 来月 it is げつ."
+        },
+        {
+          "option": "せんつき",
+          "why": "つき is 月 on its own: the moon. In 先月 it is げつ."
+        },
+        {
+          "option": "さきげつ",
+          "why": "先 is さき on its own (ahead), but せん in 先月 and 先週."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks the reading of 先月, last month. In month words like this, 月 is げつ.",
+      "type": "kanji",
+      "word": "先月",
+      "sentence": "__先月__ にほんへ きました。"
+    },
+    {
+      "id": "n5-g1-0005",
+      "status": "reviewed",
+      "en": "I got this watch from my father.",
+      "answer": "とけい",
+      "wrong": [
+        {
+          "option": "どけい",
+          "why": "On its own, 時計 is とけい. It becomes どけい only after another word, as in うでどけい (a wristwatch)."
+        },
+        {
+          "option": "じけい",
+          "why": "時 is じ in 時間 and 三時, but 時計 has a reading of its own: とけい."
+        },
+        {
+          "option": "ときけい",
+          "why": "時 is とき on its own (time), but 時計 is read とけい."
+        }
+      ],
+      "difficulty": 3,
+      "note": "This asks the reading of 時計, a clock or watch. The word has its own reading, とけい, which its kanji do not suggest.",
+      "type": "kanji",
+      "word": "時計",
+      "sentence": "この __時計__は ちちに もらいました。"
+    },
+    {
+      "id": "n5-g1-0006",
+      "status": "reviewed",
+      "en": "A friend is coming on the 20th of next month.",
+      "answer": "はつか",
+      "wrong": [
+        {
+          "option": "ふつか",
+          "why": "ふつか is 二日, the 2nd. 二十日, the 20th, is はつか."
+        },
+        {
+          "option": "はっか",
+          "why": "はつか has a full つ. With a small っ, はっか is a different word (mint)."
+        },
+        {
+          "option": "にじゅっか",
+          "why": "There is no にじゅっか. The 20th has its own reading, はつか, like ついたち for the 1st."
+        }
+      ],
+      "difficulty": 3,
+      "note": "This asks the reading of 二十日, the 20th of the month. Like ついたち and ふつか, it has its own reading: はつか.",
+      "type": "kanji",
+      "word": "二十日",
+      "sentence": "らいげつの __二十日__に ともだちが きます。"
+    },
+    {
+      "id": "n5-g4-0001",
+      "status": "reviewed",
+      "en": "This room is small.",
+      "answer": "この へやは ひろくないです。",
+      "wrong": [
+        "この へやは ひろいです。",
+        "この へやは あかるくないです。",
+        "この へやは しずかです。"
+      ],
+      "difficulty": 1,
+      "note": "This asks for another way to say せまい, small (of a space): ひろくない, not spacious.",
+      "type": "paraphrase",
+      "sentence": "この へやは せまいです。"
+    },
+    {
+      "id": "n5-g4-0002",
+      "status": "reviewed",
+      "en": "I drink coffee every morning.",
+      "answer": "わたしは あさは いつも コーヒーを のみます。",
+      "wrong": [
+        "わたしは あさは ときどき コーヒーを のみます。",
+        "わたしは よるは いつも コーヒーを のみます。",
+        "わたしは あさは あまり コーヒーを のみません。"
+      ],
+      "difficulty": 1,
+      "note": "This asks for another way to say まいあさ, every morning: あさは いつも.",
+      "type": "paraphrase",
+      "sentence": "わたしは まいあさ コーヒーを のみます。"
+    },
+    {
+      "id": "n5-g4-0003",
+      "status": "reviewed",
+      "en": "This film was boring.",
+      "answer": "この えいがは おもしろくなかったです。",
+      "wrong": [
+        {
+          "option": "この えいがは おもしろかったです。",
+          "why": "おもしろかった is the opposite: the film was fun."
+        },
+        {
+          "option": "この えいがは みじかかったです。",
+          "why": "みじかい is short. つまらない is about being dull, not about length."
+        },
+        {
+          "option": "この えいがは ながかったです。",
+          "why": "ながい is long. A long film is not always a dull one."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks for another way to say つまらない, boring: おもしろくない, not interesting.",
+      "type": "paraphrase",
+      "sentence": "この えいがは つまらなかったです。"
+    },
+    {
+      "id": "n5-g4-0004",
+      "status": "reviewed",
+      "en": "This is the kitchen.",
+      "answer": "ここで りょうりを します。",
+      "wrong": [
+        {
+          "option": "ここで ねます。",
+          "why": "You sleep in a bedroom. A だいどころ is for cooking."
+        },
+        {
+          "option": "ここで おふろに はいります。",
+          "why": "That is the bathroom. A だいどころ is for cooking."
+        },
+        {
+          "option": "ここで べんきょうを します。",
+          "why": "A だいどころ is a kitchen, for cooking, not for studying."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks what a だいどころ is: the room where you cook, りょうりを する ところ.",
+      "type": "paraphrase",
+      "sentence": "ここは だいどころです。"
+    },
+    {
+      "id": "n5-g4-0005",
+      "status": "reviewed",
+      "en": "I went to the hospital the day before yesterday.",
+      "answer": "わたしは ふつかまえに びょういんへ いきました。",
+      "wrong": [
+        {
+          "option": "わたしは きのう びょういんへ いきました。",
+          "why": "きのう is one day ago. おととい is two."
+        },
+        {
+          "option": "わたしは みっかまえに びょういんへ いきました。",
+          "why": "みっかまえ is three days ago. おととい is two."
+        },
+        {
+          "option": "わたしは けさ びょういんへ いきました。",
+          "why": "けさ is this morning. おととい is two days ago."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks for another way to say おととい, the day before yesterday: ふつかまえ, two days ago.",
+      "type": "paraphrase",
+      "sentence": "わたしは おととい びょういんへ いきました。"
+    },
+    {
+      "id": "n5-g4-0006",
+      "status": "reviewed",
+      "en": "I am going to Tokyo the day after tomorrow.",
+      "answer": "わたしは あしたの つぎの ひに とうきょうへ いきます。",
+      "wrong": [
+        {
+          "option": "わたしは きのうの つぎの ひに とうきょうへ いきます。",
+          "why": "The day after yesterday is today, not あさって."
+        },
+        {
+          "option": "わたしは あしたの まえの ひに とうきょうへ いきます。",
+          "why": "The day before tomorrow is today, not あさって."
+        },
+        {
+          "option": "わたしは おとといの つぎの ひに とうきょうへ いきます。",
+          "why": "The day after おととい is きのう, yesterday."
+        }
+      ],
+      "difficulty": 3,
+      "note": "This asks which day あさって is: the day after tomorrow, あしたの つぎの ひ. Each wrong option counts from another day and lands somewhere else.",
+      "type": "paraphrase",
+      "sentence": "わたしは あさって とうきょうへ いきます。"
+    },
+    {
+      "id": "n5-g4-0007",
+      "status": "reviewed",
+      "en": "My older brother is taller than me.",
+      "answer": "わたしは あにより せが ひくいです。",
+      "wrong": [
+        {
+          "option": "わたしは あにより せが たかいです。",
+          "why": "This turns it round: here I am the taller one."
+        },
+        {
+          "option": "あには わたしより せが ひくいです。",
+          "why": "This says my brother is shorter, the opposite."
+        },
+        {
+          "option": "わたしと あには せが おなじぐらいです。",
+          "why": "おなじぐらい is about the same height, but the sentence says he is taller."
+        }
+      ],
+      "difficulty": 3,
+      "note": "This asks for the same comparison from the other side: if my brother is taller than me, I am shorter than him, あにより ひくい.",
+      "type": "paraphrase",
+      "sentence": "あには わたしより せが たかいです。"
+    },
+    {
+      "id": "n5-g2-0001",
+      "status": "reviewed",
+      "en": "Excuse me, may I have some water?",
+      "answer": "水",
+      "wrong": ["氷", "木", "火"],
+      "difficulty": 1,
+      "note": "This asks how みず is written: 水. 氷 is こおり (ice), 木 is き (a tree) and 火 is ひ (fire).",
+      "type": "spelling",
+      "word": "水",
+      "sentence": "すみません、__みず__を ください。"
+    },
+    {
+      "id": "n5-g2-0002",
+      "status": "reviewed",
+      "en": "Please go out through the door on the right.",
+      "answer": "右",
+      "wrong": [
+        {
+          "option": "左",
+          "why": "左 is ひだり, the other side. 右 has 口 at the bottom; 左 has 工."
+        },
+        {
+          "option": "石",
+          "why": "石 is いし, a stone."
+        },
+        {
+          "option": "名",
+          "why": "名 is the な of なまえ (a name)."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks how みぎ is written: 右. Its partner 左 (ひだり) differs only at the bottom.",
+      "type": "spelling",
+      "word": "右",
+      "sentence": "__みぎ__の ドアから でて ください。"
+    },
+    {
+      "id": "n5-g2-0003",
+      "status": "reviewed",
+      "en": "Please write with this ballpoint pen.",
+      "answer": "ボールペン",
+      "wrong": [
+        {
+          "option": "ボールペソ",
+          "why": "The last letter is ン (n). ソ (so) looks like it, but its long stroke goes down from the top."
+        },
+        {
+          "option": "ポールペン",
+          "why": "ぼ has a dakuten, so it is ボ. ポ, with the small circle, is ぽ."
+        },
+        {
+          "option": "ボーレペン",
+          "why": "る is ル. レ is れ."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks how ぼーるぺん is written: ボールペン. Words from other languages are written in katakana.",
+      "type": "spelling",
+      "word": "ボールペン",
+      "sentence": "この __ぼーるぺん__で かいて ください。"
+    },
+    {
+      "id": "n5-g2-0004",
+      "status": "reviewed",
+      "en": "Please write your name here.",
+      "answer": "名前",
+      "wrong": [
+        {
+          "option": "各前",
+          "why": "The first kanji is 名 (な). 各 (かく, each) has a different top."
+        },
+        {
+          "option": "名部",
+          "why": "The second kanji is 前 (まえ). 部 is ぶ, a part or a club."
+        },
+        {
+          "option": "各部",
+          "why": "Neither kanji is right: なまえ is 名 and 前."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks how なまえ is written: 名前, the な of 名 and the まえ of 前.",
+      "type": "spelling",
+      "word": "名前",
+      "sentence": "ここに __なまえ__を かいて ください。"
+    },
+    {
+      "id": "n5-g2-0005",
+      "status": "reviewed",
+      "en": "I go to work by train every morning.",
+      "answer": "電車",
+      "wrong": [
+        {
+          "option": "雷車",
+          "why": "雷 is かみなり, thunder: 田 under the rain. 電 has 申 under the rain, with a long tail."
+        },
+        {
+          "option": "電東",
+          "why": "The second kanji is 車 (くるま). 東 is ひがし, east."
+        },
+        {
+          "option": "雷東",
+          "why": "Both kanji are look-alikes. でんしゃ is 電, with 申 under the rain, and 車."
+        }
+      ],
+      "difficulty": 3,
+      "note": "This asks how でんしゃ is written: 電車. 電 is electricity, and 車 a vehicle.",
+      "type": "spelling",
+      "word": "電車",
+      "sentence": "まいあさ __でんしゃ__で かいしゃへ いきます。"
+    },
+    {
+      "id": "n5-g2-0006",
+      "status": "reviewed",
+      "en": "I bought new shoes yesterday.",
+      "answer": "新しい",
+      "wrong": [
+        {
+          "option": "親しい",
+          "why": "親しい is したしい, close (as friends are). 親 has 見 on the right; 新 has 斤."
+        },
+        {
+          "option": "新い",
+          "why": "The kanji is right, but あたらしい keeps しい after it: 新しい."
+        },
+        {
+          "option": "薪しい",
+          "why": "薪 is たきぎ, firewood: 新 with grass on top. There is no such word."
+        }
+      ],
+      "difficulty": 3,
+      "note": "This asks how あたらしい is written: 新しい, with しい after the kanji.",
+      "type": "spelling",
+      "word": "新しい",
+      "sentence": "きのう __あたらしい__ くつを かいました。"
     }
   ],
   "review": {

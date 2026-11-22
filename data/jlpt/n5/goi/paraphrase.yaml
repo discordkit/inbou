@@ -6,7 +6,7 @@
 
 - id: n5-g4-0001
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "この へやは せまいです。"
   en: "This room is small."
   answer: "この へやは ひろくないです。"
@@ -19,7 +19,7 @@
 
 - id: n5-g4-0002
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしは まいあさ コーヒーを のみます。"
   en: "I drink coffee every morning."
   answer: "わたしは あさは いつも コーヒーを のみます。"
@@ -32,7 +32,7 @@
 
 - id: n5-g4-0003
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "この えいがは つまらなかったです。"
   en: "This film was boring."
   answer: "この えいがは おもしろくなかったです。"
@@ -48,7 +48,7 @@
 
 - id: n5-g4-0004
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "ここは だいどころです。"
   en: "This is the kitchen."
   answer: "ここで りょうりを します。"
@@ -64,7 +64,7 @@
 
 - id: n5-g4-0005
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしは おととい びょういんへ いきました。"
   en: "I went to the hospital the day before yesterday."
   answer: "わたしは ふつかまえに びょういんへ いきました。"
@@ -80,7 +80,7 @@
 
 - id: n5-g4-0006
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしは あさって とうきょうへ いきます。"
   en: "I am going to Tokyo the day after tomorrow."
   answer: "わたしは あしたの つぎの ひに とうきょうへ いきます。"
@@ -96,7 +96,7 @@
 
 - id: n5-g4-0007
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "あには わたしより せが たかいです。"
   en: "My older brother is taller than me."
   answer: "わたしは あにより せが ひくいです。"

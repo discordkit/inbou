@@ -8,7 +8,7 @@
 
 - id: n5-g1-0001
   type: kanji
-  status: draft
+  status: reviewed
   word: 白い
   sentence: "つくえの うえに __白い__ ノートが あります。"
   en: "There is a white notebook on the desk."
@@ -19,7 +19,7 @@
 
 - id: n5-g1-0002
   type: kanji
-  status: draft
+  status: reviewed
   word: 北
   sentence: "えきの __北__に こうえんが あります。"
   en: "There is a park to the north of the station."
@@ -30,7 +30,7 @@
 
 - id: n5-g1-0003
   type: kanji
-  status: draft
+  status: reviewed
   word: 今週
   sentence: "__今週__は しごとが いそがしいです。"
   en: "I am busy with work this week."
@@ -47,7 +47,7 @@
 
 - id: n5-g1-0004
   type: kanji
-  status: draft
+  status: reviewed
   word: 先月
   sentence: "__先月__ にほんへ きました。"
   en: "I came to Japan last month."
@@ -64,7 +64,7 @@
 
 - id: n5-g1-0005
   type: kanji
-  status: draft
+  status: reviewed
   word: 時計
   sentence: "この __時計__は ちちに もらいました。"
   en: "I got this watch from my father."
@@ -81,7 +81,7 @@
 
 - id: n5-g1-0006
   type: kanji
-  status: draft
+  status: reviewed
   word: 二十日
   sentence: "らいげつの __二十日__に ともだちが きます。"
   en: "A friend is coming on the 20th of next month."
