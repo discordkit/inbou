@@ -109,3 +109,138 @@
       why: "おなじぐらい is about the same height, but the sentence says he is taller."
   difficulty: 3
   note: "This asks for the same comparison from the other side: if my brother is taller than me, I am shorter than him, あにより ひくい."
+
+- id: n5-g4-0008
+  type: paraphrase
+  status: draft
+  sentence: "わたしは すしが だいすきです。"
+  en: "I love sushi."
+  answer: "わたしは すしが とても すきです。"
+  wrong:
+    - "わたしは すしが あまり すきじゃ ありません。"
+    - "わたしは すしが すこし すきです。"
+    - "わたしは すしが きらいです。"
+  difficulty: 1
+  note: "This asks for another way to say だいすき, to love: とても すき."
+
+- id: n5-g4-0009
+  type: paraphrase
+  status: draft
+  sentence: "きょうは いい てんきです。"
+  en: "The weather is nice today."
+  answer: "きょうは はれて います。"
+  wrong:
+    - "きょうは あめが ふって います。"
+    - "きょうは くもって います。"
+    - "きょうは さむいです。"
+  difficulty: 1
+  note: "This asks what いい てんき means: fine weather, a sunny day, はれ."
+
+- id: n5-g4-0010
+  type: paraphrase
+  status: draft
+  sentence: "ちちは いま でかけて います。"
+  en: "My father is out right now."
+  answer: "ちちは いま うちに いません。"
+  wrong:
+    - "ちちは いま うちに います。"
+    - "ちちは いま ねて います。"
+    - "ちちは いま しごとを して います。"
+  difficulty: 1
+  note: "This asks what でかけて いる means: someone has gone out, so they are not at home, うちに いない."
+
+- id: n5-g4-0011
+  type: paraphrase
+  status: draft
+  sentence: "わたしは ことし はたちです。"
+  en: "I am twenty this year."
+  answer: "わたしは ことし にじゅっさいです。"
+  wrong:
+    - option: "わたしは ことし じゅっさいです。"
+      why: "じゅっさい is ten years old. はたち is twenty."
+    - option: "わたしは ことし にさいです。"
+      why: "にさい is two years old. はたち is twenty."
+    - option: "わたしは ことし にじゅうにさいです。"
+      why: "にじゅうにさい is twenty-two. はたち is twenty."
+  difficulty: 2
+  note: "This asks what はたち means: twenty years old, にじゅっさい. The age twenty has a word of its own."
+
+- id: n5-g4-0012
+  type: paraphrase
+  status: draft
+  sentence: "この こうえんは にぎやかです。"
+  en: "This park is lively."
+  answer: "この こうえんには ひとが おおぜい います。"
+  wrong:
+    - option: "この こうえんは しずかです。"
+      why: "しずか is quiet, the opposite of にぎやか."
+    - option: "この こうえんには ひとが あまり いません。"
+      why: "Few people make a park quiet, not にぎやか."
+    - option: "この こうえんは きれいです。"
+      why: "きれい is pretty or clean. にぎやか is about people and noise."
+  difficulty: 2
+  note: "This asks what にぎやか means: lively, with many people about, ひとが おおぜい."
+
+- id: n5-g4-0013
+  type: paraphrase
+  status: draft
+  sentence: "わたしは あさごはんを たべませんでした。"
+  en: "I didn't have breakfast."
+  answer: "わたしは けさ なにも たべませんでした。"
+  wrong:
+    - option: "わたしは けさ たくさん たべました。"
+      why: "This is the opposite: it says you ate a lot."
+    - option: "わたしは ゆうべ なにも たべませんでした。"
+      why: "ゆうべ is last night. The sentence is about the morning."
+    - option: "わたしは ひるごはんを たべませんでした。"
+      why: "ひるごはん is lunch. あさごはん is breakfast."
+  difficulty: 2
+  note: "This asks for another way to say you had no breakfast: けさ なにも たべませんでした, you ate nothing this morning."
+
+- id: n5-g4-0014
+  type: paraphrase
+  status: draft
+  sentence: "この みせは よる 9じに しまります。"
+  en: "This shop closes at nine at night."
+  answer: "この みせは よる 9じまで あいて います。"
+  wrong:
+    - option: "この みせは よる 9じから あいて います。"
+      why: "から is from: this shop would open at nine at night."
+    - option: "この みせは あさ 9じに しまります。"
+      why: "あさ is the morning. The shop closes at night."
+    - option: "この みせは よる 9じに あきます。"
+      why: "あく is to open. しまる is to close."
+  difficulty: 3
+  note: "This asks for another way to say the shop closes at nine at night: it is open until then, 9じまで あいて います."
+
+- id: n5-g4-0015
+  type: paraphrase
+  status: draft
+  sentence: "ははの おとうとは いしゃです。"
+  en: "My mother's younger brother is a doctor."
+  answer: "わたしの おじさんは いしゃです。"
+  wrong:
+    - option: "わたしの おじいさんは いしゃです。"
+      why: "おじいさん, with a long い, is a grandfather. Your mother's brother is おじさん."
+    - option: "わたしの おばさんは いしゃです。"
+      why: "おばさん is an aunt, a woman. ははの おとうと is a man."
+    - option: "わたしの おとうとは いしゃです。"
+      why: "おとうと is your own younger brother. Your mother's younger brother is your uncle."
+  difficulty: 3
+  note: "This asks who your mother's younger brother is: your uncle, おじさん."
+
+- id: n5-g4-0016
+  type: paraphrase
+  status: draft
+  sentence: "わたしは きのう がっこうを やすみました。"
+  en: "I stayed home from school yesterday."
+  answer: "わたしは きのう がっこうへ いきませんでした。"
+  wrong:
+    - option: "わたしは きのう がっこうへ いきました。"
+      why: "This is the opposite: it says you went to school."
+    - option: "わたしは きのう がっこうで やすみました。"
+      why: "がっこうで やすみました is resting at school, so you were there. がっこうを やすむ is staying away."
+    - option: "わたしは きのう がっこうに おそく つきました。"
+      why: "This says you were late, but you still went."
+  difficulty: 3
+  note: "This asks what がっこうを やすむ means: to stay away from school, がっこうへ いかない."

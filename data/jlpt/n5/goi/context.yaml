@@ -103,3 +103,255 @@
       why: "らいしゅう is next week, still to come. でした is past."
   difficulty: 3
   note: "This asks which day was rainy. でした puts it in the past, and きょう is fine, so it was きのう."
+
+- id: n5-g3-0008
+  type: context
+  status: draft
+  sentence: "あたまが いたいですから、（　）を のみました。"
+  en: "I had a headache, so I took some medicine."
+  answer: くすり
+  wrong: [パン, ほん, くつ]
+  difficulty: 1
+  note: "This asks what you take for a headache: くすり, medicine. のむ is the verb for medicine, as for drinks."
+
+- id: n5-g3-0009
+  type: context
+  status: draft
+  sentence: "この みせの ケーキは とても （　）です。"
+  en: "The cakes at this shop are very good."
+  answer: おいしい
+  wrong: [ひろい, わかい, せまい]
+  difficulty: 1
+  note: "This asks what a cake can be: おいしい, tasty. ひろい and せまい are for rooms and places, and わかい for people."
+
+- id: n5-g3-0010
+  type: context
+  status: draft
+  sentence: "えきの まえで ともだちを （　）。"
+  en: "I waited for my friend in front of the station."
+  answer: まちました
+  wrong: [のみました, よみました, かきました]
+  difficulty: 1
+  note: "This asks what you do for a friend in front of the station: まちました, waited."
+
+- id: n5-g3-0011
+  type: context
+  status: draft
+  sentence: "（　）が ふって いますから、かさを もって いきます。"
+  en: "It is raining, so I will take an umbrella."
+  answer: あめ
+  wrong: [かぜ, くも, そら]
+  difficulty: 1
+  note: "This asks what falls, so that you need an umbrella: あめ, rain. ふる is used for rain and snow."
+
+- id: n5-g3-0012
+  type: context
+  status: draft
+  sentence: "あついですね。つめたい （　）を のみませんか。"
+  en: "It's hot, isn't it? Shall we have a cold juice?"
+  answer: ジュース
+  wrong: [パン, スプーン, ノート]
+  difficulty: 1
+  note: "This asks what you can drink cold: ジュース."
+
+- id: n5-g3-0013
+  type: context
+  status: draft
+  sentence: "にわに ねこが 2（　） います。"
+  en: "There are two cats in the garden."
+  answer: ひき
+  wrong: [まい, ほん, だい]
+  difficulty: 1
+  note: "This asks the counter for small animals: ひき. 2ひき is read にひき."
+
+- id: n5-g3-0014
+  type: context
+  status: draft
+  sentence: "この カレーは とても （　）ですから、こどもは たべません。"
+  en: "This curry is very hot, so the children won't eat it."
+  answer: からい
+  wrong:
+    - option: あまい
+      why: "あまい is sweet. Children like sweet food, so it would not stop them."
+    - option: やすい
+      why: "やすい is cheap. A low price is no reason for children not to eat it."
+    - option: あたらしい
+      why: "あたらしい is new. Being new is no reason for children not to eat it."
+  difficulty: 2
+  note: "This asks why the children will not eat the curry: it is からい, hot and spicy."
+
+- id: n5-g3-0015
+  type: context
+  status: draft
+  sentence: "（　）で きってを かいました。"
+  en: "I bought stamps at the post office."
+  answer: ゆうびんきょく
+  wrong:
+    - option: ぎんこう
+      why: "ぎんこう is a bank, for money. Stamps are sold at the post office."
+    - option: としょかん
+      why: "としょかん is a library: it lends books and sells nothing."
+    - option: びょういん
+      why: "びょういん is a hospital, where you go when you are ill."
+  difficulty: 2
+  note: "This asks where you buy stamps, きって: at the ゆうびんきょく, the post office."
+
+- id: n5-g3-0016
+  type: context
+  status: draft
+  sentence: "ねる まえに シャワーを （　）。"
+  en: "I take a shower before I go to bed."
+  answer: あびます
+  wrong:
+    - option: はいります
+      why: "はいる goes with a bath: おふろに はいります. A shower takes あびる."
+    - option: あらいます
+      why: "あらう washes something, such as your hands or your hair. A shower itself takes あびる."
+    - option: のります
+      why: "のる is for getting on a bus or a train."
+  difficulty: 2
+  note: "This asks the verb for taking a shower: シャワーを あびる."
+
+- id: n5-g3-0017
+  type: context
+  status: draft
+  sentence: "ちちの おかあさんは わたしの （　）です。"
+  en: "My father's mother is my grandmother."
+  answer: おばあさん
+  wrong:
+    - option: おじいさん
+      why: "おじいさん is a grandfather, a man."
+    - option: おばさん
+      why: "おばさん, with a short ば, is an aunt. A grandmother is おばあさん."
+    - option: おねえさん
+      why: "おねえさん is an older sister."
+  difficulty: 2
+  note: "This asks who your father's mother is: your grandmother, おばあさん, with a long あ."
+
+- id: n5-g3-0018
+  type: context
+  status: draft
+  sentence: "この もんだいは （　）ですから、すぐ こたえが わかりました。"
+  en: "This question was easy, so I knew the answer at once."
+  answer: やさしい
+  wrong:
+    - option: むずかしい
+      why: "むずかしい is difficult. A difficult question is not answered at once."
+    - option: ながい
+      why: "ながい is long. A long question takes longer, not less time."
+    - option: おもい
+      why: "おもい is heavy. A question has no weight."
+  difficulty: 2
+  note: "This asks why the answer came at once: the question was やさしい, easy."
+
+- id: n5-g3-0019
+  type: context
+  status: draft
+  sentence: "ここは としょかんですから、（　） はなして ください。"
+  en: "This is a library, so please talk quietly."
+  answer: しずかに
+  wrong:
+    - option: にぎやかに
+      why: "にぎやか is lively and noisy: the opposite of what a library wants."
+    - option: げんきに
+      why: "げんきに is cheerfully. It says nothing about keeping your voice down."
+    - option: じょうずに
+      why: "じょうずに is skilfully. A library asks for quiet, not skill."
+  difficulty: 2
+  note: "This asks how to talk in a library: しずかに, quietly."
+
+- id: n5-g3-0020
+  type: context
+  status: draft
+  sentence: "この かみを 3（　） ください。"
+  en: "Three sheets of this paper, please."
+  answer: まい
+  wrong:
+    - option: ほん
+      why: "ほん counts long, thin things: pencils, bottles."
+    - option: こ
+      why: "こ counts small round things: apples, eggs."
+    - option: さつ
+      why: "さつ counts books and notebooks."
+  difficulty: 2
+  note: "This asks the counter for flat things such as paper: まい. 3まい is read さんまい."
+
+- id: n5-g3-0021
+  type: context
+  status: draft
+  sentence: "あには わたしより 3さい （　）です。"
+  en: "My older brother is three years older than me."
+  answer: うえ
+  wrong:
+    - option: した
+      why: "した would make him younger. An older brother, あに, is older: うえ."
+    - option: まえ
+      why: "まえ is in front, or before. Ages are compared with うえ and した."
+    - option: あと
+      why: "あと is after, for time. Ages are compared with うえ and した."
+  difficulty: 3
+  note: "This asks how ages compare. An older brother, あに, is older than you: 3さい うえ."
+
+- id: n5-g3-0022
+  type: context
+  status: draft
+  sentence: "わたしの へやは 2かいです。（　）を あがって、みぎの へやです。"
+  en: "My room is on the second floor. Go up the stairs; it's the room on the right."
+  answer: かいだん
+  wrong:
+    - option: ろうか
+      why: "ろうか is a corridor. It is flat: you walk along it, not up it."
+    - option: げんかん
+      why: "げんかん is the entrance hall, at the bottom, where you take off your shoes."
+    - option: だいどころ
+      why: "だいどころ is the kitchen: a room, not a way up."
+  difficulty: 3
+  note: "This asks how you go up to the second floor: you climb the かいだん, the stairs."
+
+- id: n5-g3-0023
+  type: context
+  status: draft
+  sentence: "えきまで あるいて 1じかん かかります。とても （　）ですね。"
+  en: "It takes an hour to walk to the station. That's a long way, isn't it?"
+  answer: とおい
+  wrong:
+    - option: ちかい
+      why: "ちかい is near. An hour on foot is far."
+    - option: はやい
+      why: "はやい is fast or early. Distance is とおい or ちかい."
+    - option: おそい
+      why: "おそい is slow or late. Distance is とおい or ちかい."
+  difficulty: 3
+  note: "This asks what an hour's walk to the station means: the station is とおい, far."
+
+- id: n5-g3-0024
+  type: context
+  status: draft
+  sentence: "A「ひるごはんは たべましたか。」\nB「いいえ、（　） たべて いません。」"
+  en: "A: Have you had lunch? B: No, not yet."
+  answer: まだ
+  wrong:
+    - option: もう
+      why: "もう goes with something already done: もう たべました. After いいえ and たべて いません, it is まだ."
+    - option: すぐ
+      why: "すぐ is right away. It does not go with たべて いません."
+    - option: ちょうど
+      why: "ちょうど is just or exactly. It does not go with a 'not yet' answer."
+  difficulty: 3
+  note: "This asks what fits 'No, not yet': まだ. まだ 〜て いません is something that has not happened yet."
+
+- id: n5-g3-0025
+  type: context
+  status: draft
+  sentence: "この くすりは ごはんを たべた （　）に のんで ください。"
+  en: "Please take this medicine after you eat."
+  answer: あと
+  wrong:
+    - option: まえ
+      why: "まえ takes the plain form: たべる まえに. たべた, the past, goes with あと."
+    - option: よこ
+      why: "よこ is beside: a place, not a time."
+    - option: なか
+      why: "なか is inside: a place, not a time."
+  difficulty: 3
+  note: "This asks when to take the medicine: after eating, たべた あとに."

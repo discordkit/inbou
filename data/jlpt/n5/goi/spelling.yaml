@@ -101,3 +101,200 @@
       why: "薪 is たきぎ, firewood: 新 with grass on top. There is no such word."
   difficulty: 3
   note: "This asks how あたらしい is written: 新しい, with しい after the kanji."
+
+- id: n5-g2-0007
+  type: spelling
+  status: draft
+  word: 山
+  sentence: "たかい __やま__に のぼりました。"
+  en: "I climbed a high mountain."
+  answer: 山
+  wrong: [川, 木, 森]
+  difficulty: 1
+  note: "This asks how やま, a mountain, is written: 山. 川 is a river, 木 a tree and 森 a forest."
+
+- id: n5-g2-0008
+  type: spelling
+  status: draft
+  word: 花
+  sentence: "こうえんに きれいな __はな__が さいて います。"
+  en: "Pretty flowers are blooming in the park."
+  answer: 花
+  wrong: [茶, 英, 化]
+  difficulty: 1
+  note: "This asks how はな, a flower, is written: 花. 茶 is tea, 英 is the えい of えいご, and 化 means to change."
+
+- id: n5-g2-0009
+  type: spelling
+  status: draft
+  word: 口
+  sentence: "__くち__を おおきく あけて ください。"
+  en: "Please open your mouth wide."
+  answer: 口
+  wrong: [日, 田, 回]
+  difficulty: 1
+  note: "This asks how くち, a mouth, is written: 口. 日 is the sun or a day, 田 a rice field, and 回 a time, as in いっかい."
+
+- id: n5-g2-0010
+  type: spelling
+  status: draft
+  word: 兄
+  sentence: "わたしの __あに__は いしゃです。"
+  en: "My older brother is a doctor."
+  answer: 兄
+  wrong: [弟, 姉, 妹]
+  difficulty: 1
+  note: "This asks how あに, my older brother, is written: 兄. 弟 is a younger brother, 姉 an older sister and 妹 a younger sister."
+
+- id: n5-g2-0011
+  type: spelling
+  status: draft
+  word: 目
+  sentence: "__め__が あかいですね。"
+  en: "Your eyes are red."
+  answer: 目
+  wrong:
+    - option: 自
+      why: "自 is the じ of じぶん (yourself): 目 with a short stroke on top."
+    - option: 日
+      why: "日 is the sun or a day: one line inside, not two."
+    - option: 月
+      why: "月 is the moon or a month: its left side is a long curve."
+  difficulty: 2
+  note: "This asks how め, an eye, is written: 目, a box with two lines inside."
+
+- id: n5-g2-0012
+  type: spelling
+  status: draft
+  word: 人
+  sentence: "あそこに いる __ひと__は だれですか。"
+  en: "Who is the person over there?"
+  answer: 人
+  wrong:
+    - option: 入
+      why: "入 means to enter. It mirrors 人: in 入 the stroke on the right is the long one."
+    - option: 八
+      why: "八 is eight: two strokes that do not touch."
+    - option: 大
+      why: "大 means big: 人 with a line across it."
+  difficulty: 2
+  note: "This asks how ひと, a person, is written: 人."
+
+- id: n5-g2-0013
+  type: spelling
+  status: draft
+  word: テレビ
+  sentence: "まいばん __てれび__で ニュースを みます。"
+  en: "I watch the news on TV every evening."
+  answer: テレビ
+  wrong:
+    - option: テレピ
+      why: "び has a dakuten, so it is ビ. ピ, with the small circle, is ぴ."
+    - option: デレビ
+      why: "て has no dakuten: テ. デ is で."
+    - option: テレヒ
+      why: "び has a dakuten: ビ. ヒ is ひ."
+  difficulty: 2
+  note: "This asks how てれび is written. Words from other languages are written in katakana: テレビ."
+
+- id: n5-g2-0014
+  type: spelling
+  status: draft
+  word: 休む
+  sentence: "あたまが いたいですから、がっこうを __やすみます__。"
+  en: "I have a headache, so I will stay home from school."
+  answer: 休みます
+  wrong:
+    - option: 体みます
+      why: "体 is the body. 休 has a person beside a tree."
+    - option: 林みます
+      why: "林 is a wood: two trees and no person."
+    - option: 木みます
+      why: "木 is a tree. やすむ adds a person beside it: 休."
+  difficulty: 2
+  note: "This asks how やすみます is written: 休みます, a person resting by a tree."
+
+- id: n5-g2-0015
+  type: spelling
+  status: draft
+  word: 本
+  sentence: "としょかんで __ほん__を 3さつ かりました。"
+  en: "I borrowed three books from the library."
+  answer: 本
+  wrong:
+    - option: 木
+      why: "木 is a tree. 本 is a tree with a short line near its foot."
+    - option: 末
+      why: "末 is the end: a tree with a long line on top. 本 has its short line near the bottom."
+    - option: 未
+      why: "未 is not yet: a tree with a short line on top. 本 has its short line near the bottom."
+  difficulty: 2
+  note: "This asks how ほん, a book, is written: 本, a tree with a short line near its foot."
+
+- id: n5-g2-0016
+  type: spelling
+  status: draft
+  word: 耳
+  sentence: "ねこの __みみ__は おおきいですね。"
+  en: "The cat has big ears."
+  answer: 耳
+  wrong:
+    - option: 取
+      why: "取 means to take: 耳 with a hand beside it."
+    - option: 早
+      why: "早 means early: the sun over a cross."
+    - option: 自
+      why: "自 is the じ of じぶん. 耳 has a long stroke out to the right at the bottom."
+  difficulty: 2
+  note: "This asks how みみ, an ear, is written: 耳."
+
+- id: n5-g2-0017
+  type: spelling
+  status: draft
+  word: 午後
+  sentence: "__ごご__ さんじに えきで あいましょう。"
+  en: "Let's meet at the station at three in the afternoon."
+  answer: 午後
+  wrong:
+    - option: 牛後
+      why: "牛 is a cow: its middle line goes through the top. In 午 it does not."
+    - option: 午役
+      why: "役 is a role, read やく. 後 has 幺 and 夂 on the right."
+    - option: 牛役
+      why: "Neither kanji is right: ごご is 午, with no line through the top, and 後."
+  difficulty: 3
+  note: "This asks how ごご, the afternoon, is written: 午後. 午 is noon, and 後 after."
+
+- id: n5-g2-0018
+  type: spelling
+  status: draft
+  word: 話す
+  sentence: "ともだちと にほんごで __はなします__。"
+  en: "I talk with my friends in Japanese."
+  answer: 話します
+  wrong:
+    - option: 語します
+      why: "語 is the ご of にほんご, a language. 話 has 舌, the tongue, on the right."
+    - option: 詰します
+      why: "詰 means to pack. 話 has 舌 on the right, not 吉."
+    - option: 話なします
+      why: "話 already says はな, so only します follows: 話します."
+  difficulty: 3
+  note: "This asks how はなします is written: 話します, with 舌, the tongue, on the right."
+
+- id: n5-g2-0019
+  type: spelling
+  status: draft
+  word: 図書館
+  sentence: "__としょかん__は なんじまで あいて いますか。"
+  en: "Until what time is the library open?"
+  answer: 図書館
+  wrong:
+    - option: 図書官
+      why: "官 is an official, with no 食 on the left. A building such as a library is 館."
+    - option: 区書館
+      why: "区 is a ward of a city. と is 図."
+    - option: 図昼館
+      why: "昼 is noon. しょ is 書, writing."
+  difficulty: 3
+  note: "This asks how としょかん, a library, is written: 図書館, a building (館) of books (図書)."
