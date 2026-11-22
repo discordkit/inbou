@@ -365,3 +365,273 @@
       why: "うえ and て are each kanji's sound on its own, but 上手 is read as one word: じょうず."
   difficulty: 3
   note: "This asks the reading of 上手, good at something. It is read as one word: じょうず."
+
+- id: n5-g1-0025
+  type: kanji
+  status: draft
+  word: 手
+  sentence: "さむいですから、__手__が つめたいです。"
+  en: "It's cold, so my hands are cold."
+  answer: て
+  wrong: [かお, あし, くち]
+  difficulty: 1
+  note: "This asks the reading of 手, a hand. かお is the face, あし a foot and くち a mouth."
+
+- id: n5-g1-0026
+  type: kanji
+  status: draft
+  word: 冬
+  sentence: "__冬__は ゆきが たくさん ふります。"
+  en: "In winter it snows a lot."
+  answer: ふゆ
+  wrong: [なつ, はる, あき]
+  difficulty: 1
+  note: "This asks the reading of 冬, winter. なつ is summer, はる spring and あき autumn."
+
+- id: n5-g1-0027
+  type: kanji
+  status: draft
+  word: 鳥
+  sentence: "きの うえに __鳥__が いますよ。"
+  en: "There's a bird up in the tree."
+  answer: とり
+  wrong: [ねこ, いぬ, むし]
+  difficulty: 1
+  note: "This asks the reading of 鳥, a bird. ねこ is a cat, いぬ a dog and むし an insect."
+
+- id: n5-g1-0028
+  type: kanji
+  status: draft
+  word: 昼
+  sentence: "__昼__は がっこうの しょくどうで たべます。"
+  en: "At midday I eat in the school cafeteria."
+  answer: ひる
+  wrong: [あさ, よる, ばん]
+  difficulty: 1
+  note: "This asks the reading of 昼, midday. あさ is morning, よる night and ばん evening."
+
+- id: n5-g1-0029
+  type: kanji
+  status: draft
+  word: 長い
+  sentence: "この えんぴつは __長い__ですね。"
+  en: "This pencil is long, isn't it?"
+  answer: ながい
+  wrong: [みじかい, ふとい, まるい]
+  difficulty: 1
+  note: "This asks the reading of 長い, long. みじかい is short, ふとい thick and まるい round."
+
+- id: n5-g1-0030
+  type: kanji
+  status: draft
+  word: 女の子
+  sentence: "あの __女の子__は わたしの いもうとです。"
+  en: "That girl is my younger sister."
+  answer: おんなのこ
+  wrong: [おとこのこ, おんなのひと, こども]
+  difficulty: 1
+  note: "This asks the reading of 女の子, a girl. おとこのこ is a boy, おんなのひと a woman and こども a child."
+
+- id: n5-g1-0031
+  type: kanji
+  status: draft
+  word: 写真
+  sentence: "こうえんで __写真__を とりました。"
+  en: "I took photos in the park."
+  answer: しゃしん
+  wrong:
+    - option: しゃじん
+      why: "真 is しん here, with no dakuten."
+    - option: しゃっしん
+      why: "しゃしん has no small っ."
+    - option: さしん
+      why: "写 is しゃ, with a small ゃ."
+  difficulty: 2
+  note: "This asks the reading of 写真, a photo: しゃ and しん."
+
+- id: n5-g1-0032
+  type: kanji
+  status: draft
+  word: 漢字
+  sentence: "__漢字__を まいにち れんしゅうします。"
+  en: "I practise kanji every day."
+  answer: かんじ
+  wrong:
+    - option: かんし
+      why: "字 has a dakuten: じ."
+    - option: がんじ
+      why: "漢 has no dakuten: かん."
+    - option: かじ
+      why: "漢 is かん, ending in ん."
+  difficulty: 2
+  note: "This asks the reading of 漢字, kanji: かん and じ."
+
+- id: n5-g1-0033
+  type: kanji
+  status: draft
+  word: 時間
+  sentence: "えきまで __時間__が かかります。"
+  en: "It takes time to get to the station."
+  answer: じかん
+  wrong:
+    - option: じがん
+      why: "間 is かん here, with no dakuten."
+    - option: ときかん
+      why: "時 is とき on its own, but じ in this word."
+    - option: じっかん
+      why: "じかん has no small っ."
+  difficulty: 2
+  note: "This asks the reading of 時間, time: じ and かん."
+
+- id: n5-g1-0034
+  type: kanji
+  status: draft
+  word: 大学
+  sentence: "あには __大学__の せんせいです。"
+  en: "My older brother is a university teacher."
+  answer: だいがく
+  wrong:
+    - option: たいがく
+      why: "大 has a dakuten here: だい."
+    - option: だいかく
+      why: "学 has a dakuten: がく."
+    - option: おおがく
+      why: "おお is 大 in words like おおきい, but だい in this word."
+  difficulty: 2
+  note: "This asks the reading of 大学, a university: だい and がく."
+
+- id: n5-g1-0035
+  type: kanji
+  status: draft
+  word: 電話
+  sentence: "あとで __電話__を ください。"
+  en: "Please call me later."
+  answer: でんわ
+  wrong:
+    - option: てんわ
+      why: "電 has a dakuten: でん."
+    - option: でんは
+      why: "The sound わ is written わ here, not は."
+    - option: でんか
+      why: "話 is わ in this word. でんか is a different word."
+  difficulty: 2
+  note: "This asks the reading of 電話, a telephone: でん and わ."
+
+- id: n5-g1-0036
+  type: kanji
+  status: draft
+  word: 夕方
+  sentence: "__夕方__ こうえんを さんぽします。"
+  en: "I take a walk in the park in the early evening."
+  answer: ゆうがた
+  wrong:
+    - option: ゆうかた
+      why: "方 has a dakuten here: がた."
+    - option: ゆがた
+      why: "夕 is a long ゆう."
+    - option: ゆうほう
+      why: "方 is ほう in some words, but がた in this one."
+  difficulty: 2
+  note: "This asks the reading of 夕方, the early evening: a long ゆう, then がた."
+
+- id: n5-g1-0037
+  type: kanji
+  status: draft
+  word: 自分
+  sentence: "__自分__の へやを そうじします。"
+  en: "I clean my own room."
+  answer: じぶん
+  wrong:
+    - option: じふん
+      why: "分 is ぶん here, with a dakuten."
+    - option: じぷん
+      why: "分 has a dakuten, ぶ, not the small circle."
+    - option: しぶん
+      why: "自 has a dakuten: じ."
+  difficulty: 2
+  note: "This asks the reading of 自分, yourself: じ and ぶん."
+
+- id: n5-g1-0038
+  type: kanji
+  status: draft
+  word: 今年
+  sentence: "__今年__の なつは とても あついです。"
+  en: "This summer is very hot."
+  answer: ことし
+  wrong:
+    - option: いまとし
+      why: "いま and とし are each kanji's sound on its own, but this word is read as one: ことし."
+    - option: きょねん
+      why: "きょねん is last year. This year is ことし."
+    - option: こどし
+      why: "ことし has no dakuten."
+  difficulty: 3
+  note: "This asks the reading of 今年, this year. It is read as one word: ことし."
+
+- id: n5-g1-0039
+  type: kanji
+  status: draft
+  word: 明日
+  sentence: "__明日__は がっこうが やすみです。"
+  en: "There's no school tomorrow."
+  answer: あした
+  wrong:
+    - option: あさって
+      why: "あさって is the day after tomorrow. This word is tomorrow: あした."
+    - option: めいにち
+      why: "This word is read as one, not one kanji at a time: あした."
+    - option: あしだ
+      why: "あした has no dakuten."
+  difficulty: 3
+  note: "This asks the reading of 明日, tomorrow. It is read as one word: あした."
+
+- id: n5-g1-0040
+  type: kanji
+  status: draft
+  word: 七日
+  sentence: "らいげつの __七日__は にちようびです。"
+  en: "The 7th of next month is a Sunday."
+  answer: なのか
+  wrong:
+    - option: ななか
+      why: "七 is なな when you count, but the 7th of the month is なのか."
+    - option: しちか
+      why: "しち is a counting sound too, but the 7th of the month is なのか."
+    - option: なのにち
+      why: "The 7th has its own reading, なのか, ending in か."
+  difficulty: 3
+  note: "This asks the reading of 七日, the 7th of the month: なのか."
+
+- id: n5-g1-0041
+  type: kanji
+  status: draft
+  word: 下手
+  sentence: "わたしは うたが __下手__です。"
+  en: "I am bad at singing."
+  answer: へた
+  wrong:
+    - option: へだ
+      why: "へた has no dakuten."
+    - option: げて
+      why: "げ and て are sounds of these kanji in other words, but this word is read as one: へた."
+    - option: じょうず
+      why: "じょうず is the opposite: good at something."
+  difficulty: 3
+  note: "This asks the reading of 下手, bad at something. It is read as one word: へた."
+
+- id: n5-g1-0042
+  type: kanji
+  status: draft
+  word: 今日
+  sentence: "__今日__は なにを しますか。"
+  en: "What are you doing today?"
+  answer: きょう
+  wrong:
+    - option: いまひ
+      why: "いま and ひ are each kanji's sound on its own, but this word is read as one: きょう."
+    - option: きょお
+      why: "The long お in きょう is written with う."
+    - option: こんび
+      why: "This word is read as one, not one kanji at a time: きょう."
+  difficulty: 3
+  note: "This asks the reading of 今日, today. It is read as one word: きょう."

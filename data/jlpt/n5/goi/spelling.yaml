@@ -298,3 +298,200 @@
       why: "昼 is noon. しょ is 書, writing."
   difficulty: 3
   note: "This asks how としょかん, a library, is written: 図書館, a building (館) of books (図書)."
+
+- id: n5-g2-0020
+  type: spelling
+  status: draft
+  word: お金
+  sentence: "さいふに __おかね__が ありません。"
+  en: "There's no money in my wallet."
+  answer: お金
+  wrong: [お茶, お米, お酒]
+  difficulty: 1
+  note: "This asks how おかね, money, is written: お金. お茶 is tea, お米 rice and お酒 sake."
+
+- id: n5-g2-0021
+  type: spelling
+  status: draft
+  word: 風
+  sentence: "きょうは __かぜ__が つよいですね。"
+  en: "The wind is strong today, isn't it?"
+  answer: 風
+  wrong: [雨, 雪, 雲]
+  difficulty: 1
+  note: "This asks how かぜ, the wind, is written: 風. 雨 is rain, 雪 snow and 雲 a cloud."
+
+- id: n5-g2-0022
+  type: spelling
+  status: draft
+  word: 前
+  sentence: "えきの __まえ__で まって います。"
+  en: "I'm waiting in front of the station."
+  answer: 前
+  wrong: [後, 上, 中]
+  difficulty: 1
+  note: "This asks how まえ, in front, is written: 前. 後 is behind or after, 上 above and 中 inside."
+
+- id: n5-g2-0023
+  type: spelling
+  status: draft
+  word: 家
+  sentence: "あたらしい __いえ__に すんで います。"
+  en: "I live in a new house."
+  answer: 家
+  wrong: [店, 駅, 寺]
+  difficulty: 1
+  note: "This asks how いえ, a house, is written: 家. 店 is a shop, 駅 a station and 寺 a temple."
+
+- id: n5-g2-0024
+  type: spelling
+  status: draft
+  word: 道
+  sentence: "この __みち__を まっすぐ いって ください。"
+  en: "Please go straight along this road."
+  answer: 道
+  wrong:
+    - option: 首
+      why: "首 is the neck. 道 has 首 inside, with a long stroke running under it."
+    - option: 通
+      why: "通 means to pass through. Its inside is different: not 首."
+    - option: 近
+      why: "近 means near: 斤 inside, not 首."
+  difficulty: 2
+  note: "This asks how みち, a road, is written: 道, 首 with a long stroke under it."
+
+- id: n5-g2-0025
+  type: spelling
+  status: draft
+  word: 秋
+  sentence: "__あき__に きょうとへ いきました。"
+  en: "I went to Kyoto in the autumn."
+  answer: 秋
+  wrong:
+    - option: 科
+      why: "科 is a subject of study. 秋 has 火, fire, on the right."
+    - option: 私
+      why: "私 is わたし: 禾 with ム on the right."
+    - option: 和
+      why: "和 means Japanese style: 禾 with 口 on the right."
+  difficulty: 2
+  note: "This asks how あき, autumn, is written: 秋, 禾 with 火 on the right."
+
+- id: n5-g2-0026
+  type: spelling
+  status: draft
+  word: 新聞
+  sentence: "ちちは まいあさ __しんぶん__を よみます。"
+  en: "My father reads the newspaper every morning."
+  answer: 新聞
+  wrong:
+    - option: 新間
+      why: "間 means between: 門 with 日 inside. 聞 has 耳, an ear, inside."
+    - option: 親聞
+      why: "親 is a parent. しん here is 新, new."
+    - option: 新問
+      why: "問 is a question: 門 with 口 inside. 聞 has 耳 inside."
+  difficulty: 2
+  note: "This asks how しんぶん is written: 新聞, new (新) things heard (聞)."
+
+- id: n5-g2-0027
+  type: spelling
+  status: draft
+  word: 映画
+  sentence: "にちようびに __えいが__を みました。"
+  en: "I saw a film on Sunday."
+  answer: 映画
+  wrong:
+    - option: 英画
+      why: "英 is the えい of えいご. In えいが it is 映, with 日 on the left."
+    - option: 映面
+      why: "面 is a face or a surface. が is 画, a picture."
+    - option: 央画
+      why: "央 is the middle. 映 adds 日 on its left."
+  difficulty: 2
+  note: "This asks how えいが, a film, is written: 映画, a picture (画) that is shown (映)."
+
+- id: n5-g2-0028
+  type: spelling
+  status: draft
+  word: 歩く
+  sentence: "えきまで __あるきます__。"
+  en: "I'll walk to the station."
+  answer: 歩きます
+  wrong:
+    - option: 走きます
+      why: "走 is to run, はしる. あるく is 歩."
+    - option: 少きます
+      why: "少 is a little, すこし. 歩 has 止 on top."
+    - option: 止きます
+      why: "止 is to stop, とまる. 歩 adds a part under it."
+  difficulty: 2
+  note: "This asks how あるきます is written: 歩きます."
+
+- id: n5-g2-0029
+  type: spelling
+  status: draft
+  word: 電気
+  sentence: "へやの __でんき__を けして ください。"
+  en: "Please turn off the light in the room."
+  answer: 電気
+  wrong:
+    - option: 電汽
+      why: "汽 is steam: 気 with water on the left. き here is 気."
+    - option: 雷気
+      why: "雷 is thunder: 田 under the rain. 電 has 申 under the rain."
+    - option: 雷汽
+      why: "Neither kanji is right: でんき is 電 and 気."
+  difficulty: 2
+  note: "This asks how でんき, electricity or a light, is written: 電気."
+
+- id: n5-g2-0030
+  type: spelling
+  status: draft
+  word: 病院
+  sentence: "__びょういん__は えきの まえに あります。"
+  en: "The hospital is in front of the station."
+  answer: 病院
+  wrong:
+    - option: 病完
+      why: "完 means complete. いん here is 院, a building, with ⻖ on the left."
+    - option: 疲院
+      why: "疲 means tired. びょう is 病, with 丙 inside the frame."
+    - option: 疲完
+      why: "Neither kanji is right: びょういん is 病 and 院."
+  difficulty: 3
+  note: "This asks how びょういん, a hospital, is written: 病院, a building (院) for illness (病)."
+
+- id: n5-g2-0031
+  type: spelling
+  status: draft
+  word: 勉強
+  sentence: "まいばん にほんごを __べんきょう__します。"
+  en: "I study Japanese every evening."
+  answer: 勉強
+  wrong:
+    - option: 免強
+      why: "免 means to excuse. 勉 adds 力, strength, on the right."
+    - option: 勉弱
+      why: "弱 is weak, the opposite of 強."
+    - option: 勤強
+      why: "勤 is to work at a job. べん is 勉."
+  difficulty: 3
+  note: "This asks how べんきょう, study, is written: 勉強."
+
+- id: n5-g2-0032
+  type: spelling
+  status: draft
+  word: 起きる
+  sentence: "まいあさ 6じに __おきます__。"
+  en: "I get up at six every morning."
+  answer: 起きます
+  wrong:
+    - option: 記きます
+      why: "記 means to write down, with 言 on the left. 起 has 走 on the left."
+    - option: 走きます
+      why: "走 is to run. 起 has 走 on the left with 己 beside it."
+    - option: 起ます
+      why: "おきます keeps き after the kanji: 起きます."
+  difficulty: 3
+  note: "This asks how おきます is written: 起きます."

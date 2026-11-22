@@ -355,3 +355,255 @@
       why: "なか is inside: a place, not a time."
   difficulty: 3
   note: "This asks when to take the medicine: after eating, たべた あとに."
+
+- id: n5-g3-0026
+  type: context
+  status: draft
+  sentence: "まいあさ はを （　）。"
+  en: "I brush my teeth every morning."
+  answer: みがきます
+  wrong: [たべます, きります, かぶります]
+  difficulty: 1
+  note: "This asks what you do to your teeth every morning: みがきます, brush them."
+
+- id: n5-g3-0027
+  type: context
+  status: draft
+  sentence: "（　）に のって、かいしゃへ いきます。"
+  en: "I take the train to work."
+  answer: でんしゃ
+  wrong: [いけ, にわ, へや]
+  difficulty: 1
+  note: "This asks what you ride to work: でんしゃ, a train. のる is for getting on things that carry you."
+
+- id: n5-g3-0028
+  type: context
+  status: draft
+  sentence: "（　）を ひいて、きのうから ねて います。"
+  en: "I caught a cold and have been in bed since yesterday."
+  answer: かぜ
+  wrong:
+    - option: せき
+      why: "せき is a cough. A cough comes with が でる, not ひく."
+    - option: みみ
+      why: "みみ is an ear. You cannot ひく an ear."
+    - option: こえ
+      why: "こえ is a voice. You cannot ひく a voice."
+  difficulty: 2
+  note: "This asks what you catch and stay in bed with: a cold, かぜを ひく."
+
+- id: n5-g3-0029
+  type: context
+  status: draft
+  sentence: "レストランの （　）には カレーと ラーメンが あります。"
+  en: "The restaurant's menu has curry and ramen."
+  answer: メニュー
+  wrong: [カレンダー, ポスト, ラジオ]
+  difficulty: 1
+  note: "This asks where a restaurant lists its food: the メニュー, the menu."
+
+- id: n5-g3-0030
+  type: context
+  status: draft
+  sentence: "（　）で まちがえた じを けしました。"
+  en: "I rubbed out the wrong letters with an eraser."
+  answer: けしゴム
+  wrong: [えんぴつ, はさみ, ノート]
+  difficulty: 1
+  note: "This asks what you rub out letters with: a けしゴム, an eraser."
+
+- id: n5-g3-0031
+  type: context
+  status: draft
+  sentence: "パーティーで みんなで うたを （　）。"
+  en: "We all sang songs at the party."
+  answer: うたいました
+  wrong: [のりました, しめました, ふきました]
+  difficulty: 1
+  note: "This asks what you do with a song: うたう, sing it."
+
+- id: n5-g3-0032
+  type: context
+  status: draft
+  sentence: "デパートで あたらしい くつを （　）。"
+  en: "I bought new shoes at the department store."
+  answer: かいました
+  wrong: [ききました, あるきました, およぎました]
+  difficulty: 1
+  note: "This asks what you do with shoes at a department store: かいました, bought them."
+
+- id: n5-g3-0033
+  type: context
+  status: draft
+  sentence: "わたしは まいあさ コーヒーに さとうを （　）。"
+  en: "I put sugar in my coffee every morning."
+  answer: いれます
+  wrong:
+    - option: だします
+      why: "だす takes something out. Sugar goes in: いれる."
+    - option: あけます
+      why: "あける opens something, such as a door or a box."
+    - option: きります
+      why: "きる cuts, with a knife or scissors."
+  difficulty: 2
+  note: "This asks what you do with sugar and coffee: you put it in, コーヒーに いれる."
+
+- id: n5-g3-0034
+  type: context
+  status: draft
+  sentence: "わたしは ともだちから じしょを （　）。"
+  en: "I borrowed a dictionary from a friend."
+  answer: かりました
+  wrong:
+    - option: かしました
+      why: "かす is to lend. ともだちから says the dictionary came to you: かりる, borrow."
+    - option: あげました
+      why: "あげる is to give something away. ともだちから says it came to you."
+    - option: おしえました
+      why: "おしえる is to teach. You cannot teach a dictionary."
+  difficulty: 2
+  note: "This asks which way the dictionary went: from your friend to you, so you borrowed it, かりました."
+
+- id: n5-g3-0035
+  type: context
+  status: draft
+  sentence: "この みずは （　）ですから、のまないで ください。"
+  en: "This water is dirty, so please don't drink it."
+  answer: きたない
+  wrong:
+    - option: きれい
+      why: "きれい is clean. Clean water is no reason not to drink."
+    - option: つめたい
+      why: "つめたい is cold. Cold water is fine to drink."
+    - option: あたたかい
+      why: "あたたかい is warm. Warm water is fine to drink."
+  difficulty: 2
+  note: "This asks why you should not drink the water: it is きたない, dirty."
+
+- id: n5-g3-0036
+  type: context
+  status: draft
+  sentence: "この へやは まどが なくて、（　）です。"
+  en: "This room has no windows, so it is dark."
+  answer: くらい
+  wrong:
+    - option: あかるい
+      why: "あかるい is bright. A room with no windows is dark."
+    - option: あたらしい
+      why: "あたらしい is new. Windows do not make a room new or old."
+    - option: ひろい
+      why: "ひろい is spacious. Windows do not make a room big or small."
+  difficulty: 2
+  note: "This asks what a room without windows is like: くらい, dark."
+
+- id: n5-g3-0037
+  type: context
+  status: draft
+  sentence: "にちようびは がっこうが （　）です。"
+  en: "There is no school on Sundays."
+  answer: やすみ
+  wrong:
+    - option: しごと
+      why: "しごと is work. A school on Sunday is closed: やすみ."
+    - option: じゅぎょう
+      why: "じゅぎょう is a lesson. A school is not a lesson."
+    - option: しゅくだい
+      why: "しゅくだい is homework. A school is not homework."
+  difficulty: 2
+  note: "This asks what a school is on Sunday: やすみ, closed."
+
+- id: n5-g3-0038
+  type: context
+  status: draft
+  sentence: "でんしゃに のる まえに、えきで （　）を かいます。"
+  en: "Before getting on the train, I buy a ticket at the station."
+  answer: きっぷ
+  wrong:
+    - option: きって
+      why: "きって is a stamp, for a letter. A train needs a きっぷ."
+    - option: ちず
+      why: "ちず is a map. You do not need one to get on a train."
+    - option: かさ
+      why: "かさ is an umbrella. It has nothing to do with getting on a train."
+  difficulty: 2
+  note: "This asks what you buy at the station to ride a train: a きっぷ, a ticket. きって, with one letter different, is a stamp."
+
+- id: n5-g3-0039
+  type: context
+  status: draft
+  sentence: "バスが きませんでしたから、えきまで （　）。"
+  en: "The bus didn't come, so I walked to the station."
+  answer: あるきました
+  wrong:
+    - option: のりました
+      why: "There was no bus to get on. Without one, you go on foot."
+    - option: まちました
+      why: "まつ is to wait. えきまで says you went to the station."
+    - option: かえりました
+      why: "かえる is to go home, not to the station."
+  difficulty: 3
+  note: "This asks how you got to the station when the bus did not come: on foot, あるきました."
+
+- id: n5-g3-0040
+  type: context
+  status: draft
+  sentence: "この カメラは 5まんえんでした。（　）ですね。"
+  en: "This camera was 50,000 yen. That's expensive."
+  answer: たかい
+  wrong:
+    - option: やすい
+      why: "やすい is cheap. 50,000 yen is a lot for a camera."
+    - option: ひくい
+      why: "ひくい is low, for height. A price is たかい or やすい."
+    - option: ながい
+      why: "ながい is long. The sentence is about the price."
+  difficulty: 3
+  note: "This asks what 50,000 yen for a camera is: たかい, expensive. たかい is used for prices as well as height."
+
+- id: n5-g3-0041
+  type: context
+  status: draft
+  sentence: "わたしは まいにち 7じかん （　）。"
+  en: "I sleep seven hours every day."
+  answer: ねます
+  wrong:
+    - option: おきます
+      why: "おきる is to get up, which takes a moment, not seven hours."
+    - option: あいます
+      why: "あう is to meet someone, and needs a person: ともだちに あう."
+    - option: つきます
+      why: "つく is to arrive, which takes a moment, not seven hours."
+  difficulty: 3
+  note: "This asks what you do for seven hours every day: ねます, sleep."
+
+- id: n5-g3-0042
+  type: context
+  status: draft
+  sentence: "（　）、わたしは にほんへ きました。いま にほんに 1ねん います。"
+  en: "I came to Japan last year. I have been in Japan for a year now."
+  answer: きょねん
+  wrong:
+    - option: らいねん
+      why: "らいねん is next year, still to come. きました is past."
+    - option: あした
+      why: "あした is tomorrow, still to come. きました is past."
+    - option: らいしゅう
+      why: "らいしゅう is next week, still to come. きました is past."
+  difficulty: 3
+  note: "This asks when you came to Japan. きました is past, and you have been here a year, so it was きょねん, last year."
+
+- id: n5-g3-0043
+  type: context
+  status: draft
+  sentence: "この ほんは むずかしいですから、（　） よみましょう。"
+  en: "This book is difficult, so let's read it slowly."
+  answer: ゆっくり
+  wrong:
+    - option: はやく
+      why: "はやく is quickly. A hard book is read slowly."
+    - option: まっすぐ
+      why: "まっすぐ is straight, for going along a road."
+    - option: きれいに
+      why: "きれいに is neatly or prettily, for writing or tidying, not reading."
+  difficulty: 3
+  note: "This asks how to read a difficult book: ゆっくり, slowly."

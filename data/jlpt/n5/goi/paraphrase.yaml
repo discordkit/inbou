@@ -244,3 +244,154 @@
       why: "This says you were late, but you still went."
   difficulty: 3
   note: "This asks what がっこうを やすむ means: to stay away from school, がっこうへ いかない."
+
+- id: n5-g4-0017
+  type: paraphrase
+  status: draft
+  sentence: "この みせは にちようびが やすみです。"
+  en: "This shop is closed on Sundays."
+  answer: "この みせは にちようびに あいて いません。"
+  wrong:
+    - "この みせは にちようびに あいて います。"
+    - "この みせは どようびが やすみです。"
+    - "この みせは にちようびが いそがしいです。"
+  difficulty: 1
+  note: "This asks what やすみ means for a shop: it is closed, あいて いない."
+
+- id: n5-g4-0018
+  type: paraphrase
+  status: draft
+  sentence: "わたしは まいにち あるいて がっこうへ いきます。"
+  en: "I walk to school every day."
+  answer: "わたしは まいにち がっこうまで あるきます。"
+  wrong:
+    - "わたしは まいにち バスで がっこうへ いきます。"
+    - "わたしは まいにち はしって がっこうへ いきます。"
+    - "わたしは まいにち がっこうから あるいて かえります。"
+  difficulty: 1
+  note: "This asks for another way to say you go to school on foot: がっこうまで あるく."
+
+- id: n5-g4-0019
+  type: paraphrase
+  status: draft
+  sentence: "わたしは けさ 7じに うちを でました。"
+  en: "I left home at seven this morning."
+  answer: "わたしは けさ 7じに でかけました。"
+  wrong:
+    - "わたしは けさ 7じに かえりました。"
+    - "わたしは けさ 7じに おきました。"
+    - "わたしは けさ 7じに うちに いました。"
+  difficulty: 1
+  note: "This asks for another way to say you left home: でかけました, went out."
+
+- id: n5-g4-0020
+  type: paraphrase
+  status: draft
+  sentence: "あねは りょうりが へたです。"
+  en: "My older sister is bad at cooking."
+  answer: "あねは りょうりが じょうずじゃ ありません。"
+  wrong:
+    - option: "あねは りょうりが じょうずです。"
+      why: "じょうず is good at it, the opposite of へた."
+    - option: "あねは りょうりが きらいです。"
+      why: "きらい is to dislike. へた is about skill, not liking."
+    - option: "あねは りょうりを しません。"
+      why: "This says she never cooks. へた says she cooks badly."
+  difficulty: 2
+  note: "This asks what へた means: bad at something, じょうずじゃ ない."
+
+- id: n5-g4-0021
+  type: paraphrase
+  status: draft
+  sentence: "この まちは ひとが すくないです。"
+  en: "Few people live in this town."
+  answer: "この まちには ひとが あまり いません。"
+  wrong:
+    - option: "この まちには ひとが おおぜい います。"
+      why: "おおぜい is many people, the opposite of すくない."
+    - option: "この まちには ひとが ぜんぜん いません。"
+      why: "ぜんぜん いません is nobody at all. すくない is a few."
+    - option: "この まちは ひとが おおいです。"
+      why: "おおい is many, the opposite of すくない."
+  difficulty: 2
+  note: "This asks what すくない means here: there are not many people, ひとが あまり いない."
+
+- id: n5-g4-0022
+  type: paraphrase
+  status: draft
+  sentence: "やまださんは わたしに じしょを かしました。"
+  en: "Yamada lent me a dictionary."
+  answer: "わたしは やまださんに じしょを かりました。"
+  wrong:
+    - option: "わたしは やまださんに じしょを かしました。"
+      why: "This turns it round: here you lent the dictionary to やまださん."
+    - option: "やまださんは わたしに じしょを かりました。"
+      why: "This says やまださん borrowed it from you, the other way round."
+    - option: "わたしは やまださんに じしょを あげました。"
+      why: "あげる is to give something away for good, and here it goes the other way."
+  difficulty: 2
+  note: "This asks for the same lending from the other side: if やまださん lent it to you, you borrowed it, かりました."
+
+- id: n5-g4-0023
+  type: paraphrase
+  status: draft
+  sentence: "あしたは しごとが ありません。"
+  en: "I have no work tomorrow."
+  answer: "あしたは やすみです。"
+  wrong:
+    - option: "あしたは しごとが たくさん あります。"
+      why: "This is the opposite: a busy day at work."
+    - option: "あしたは しごとが はやく おわります。"
+      why: "This says you work, but finish early."
+    - option: "あしたは しごとに おそく いきます。"
+      why: "This says you go to work, only late."
+  difficulty: 2
+  note: "This asks for another way to say you have no work: やすみ, a day off."
+
+- id: n5-g4-0024
+  type: paraphrase
+  status: draft
+  sentence: "わたしは あにに ほんを もらいました。"
+  en: "I got a book from my older brother."
+  answer: "あには わたしに ほんを くれました。"
+  wrong:
+    - option: "わたしは あにに ほんを あげました。"
+      why: "This turns it round: here you gave the book to your brother."
+    - option: "あには わたしに ほんを もらいました。"
+      why: "This says your brother got the book from you, the other way round."
+    - option: "あには わたしに ほんを かしました。"
+      why: "かす is to lend: you would give the book back. もらう is to keep it."
+  difficulty: 3
+  note: "This asks for the same gift from the giver's side: you got it from your brother, so he gave it to you, くれました."
+
+- id: n5-g4-0025
+  type: paraphrase
+  status: draft
+  sentence: "やまださんは わたしより としが うえです。"
+  en: "Yamada is older than me."
+  answer: "わたしは やまださんより わかいです。"
+  wrong:
+    - option: "やまださんは わたしより わかいです。"
+      why: "This turns it round: やまださん would be the younger one."
+    - option: "わたしは やまださんより としが うえです。"
+      why: "This says you are the older one."
+    - option: "わたしと やまださんは おなじ としです。"
+      why: "おなじ とし is the same age, but やまださん is older."
+  difficulty: 3
+  note: "This asks for the same comparison from the other side: if やまださん is older than you, you are younger, わかい."
+
+- id: n5-g4-0026
+  type: paraphrase
+  status: draft
+  sentence: "わたしは まいばん 10じに ねて、まいあさ 6じに おきます。"
+  en: "I go to bed at ten every night and get up at six every morning."
+  answer: "わたしは まいにち 8じかん ねます。"
+  wrong:
+    - option: "わたしは まいにち 6じかん ねます。"
+      why: "From ten at night to six in the morning is eight hours, not six."
+    - option: "わたしは まいにち 4じかん ねます。"
+      why: "Ten minus six is four, but sleep runs on past midnight: from ten to six is eight hours."
+    - option: "わたしは まいにち 10じかん ねます。"
+      why: "Ten is the time you go to bed, not how long you sleep."
+  difficulty: 3
+  note: "This asks how long you sleep: from ten at night to six in the morning, 8じかん."
