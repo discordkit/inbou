@@ -398,7 +398,7 @@
 
 - id: n5-g4-0027
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "この へやは さむいです。"
   en: "This room is cold."
   answer: "この へやは あたたかくないです。"
@@ -411,7 +411,7 @@
 
 - id: n5-g4-0028
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "この ケーキは あまり おいしくないです。"
   en: "This cake is not very good."
   answer: "この ケーキは まずいです。"
@@ -424,7 +424,7 @@
 
 - id: n5-g4-0029
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしの いえは がっこうの となりです。"
   en: "My house is next to the school."
   answer: "わたしの いえは がっこうの すぐ よこです。"
@@ -437,7 +437,7 @@
 
 - id: n5-g4-0030
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしは にほんごを ならって います。"
   en: "I am learning Japanese."
   answer: "わたしは にほんごを べんきょうして います。"
@@ -453,7 +453,7 @@
 
 - id: n5-g4-0031
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "あしたは あめが ふるでしょう。"
   en: "It will probably rain tomorrow."
   answer: "あしたは たぶん あめです。"
@@ -469,7 +469,7 @@
 
 - id: n5-g4-0032
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしの ちちは ぎんこういんです。"
   en: "My father is a bank clerk."
   answer: "わたしの ちちは ぎんこうで はたらいて います。"
@@ -485,7 +485,7 @@
 
 - id: n5-g4-0033
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "この みせは かようびから にちようびまで あいて います。"
   en: "This shop is open from Tuesday to Sunday."
   answer: "この みせは げつようびが やすみです。"
@@ -501,7 +501,7 @@
 
 - id: n5-g4-0034
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "この ペンは 100えんで、あの ペンは 150えんです。"
   en: "This pen is 100 yen, and that pen is 150 yen."
   answer: "あの ペンは この ペンより 50えん たかいです。"
@@ -517,7 +517,7 @@
 
 - id: n5-g4-0035
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "じゅぎょうは 9じに はじまって、12じに おわりました。"
   en: "The class began at nine and ended at twelve."
   answer: "じゅぎょうは 3じかん でした。"

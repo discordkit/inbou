@@ -638,7 +638,7 @@
 
 - id: n5-g1-0043
   type: kanji
-  status: draft
+  status: reviewed
   word: 春
   sentence: "__春__は さくらが きれいです。"
   en: "In spring the cherry blossoms are beautiful."
@@ -649,7 +649,7 @@
 
 - id: n5-g1-0044
   type: kanji
-  status: draft
+  status: reviewed
   word: 野菜
   sentence: "まいにち __野菜__を たべましょう。"
   en: "Let's eat vegetables every day."
@@ -660,7 +660,7 @@
 
 - id: n5-g1-0045
   type: kanji
-  status: draft
+  status: reviewed
   word: 頭
   sentence: "かぜで __頭__が いたいです。"
   en: "I have a cold, and my head hurts."
@@ -671,7 +671,7 @@
 
 - id: n5-g1-0046
   type: kanji
-  status: draft
+  status: reviewed
   word: 子ども
   sentence: "こうえんで __子ども__が あそんで います。"
   en: "Children are playing in the park."
@@ -682,7 +682,7 @@
 
 - id: n5-g1-0047
   type: kanji
-  status: draft
+  status: reviewed
   word: 町
   sentence: "この __町__は とても しずかです。"
   en: "This town is very quiet."
@@ -693,7 +693,7 @@
 
 - id: n5-g1-0048
   type: kanji
-  status: draft
+  status: reviewed
   word: 色
   sentence: "すきな __色__は なんですか。"
   en: "What is your favourite colour?"
@@ -704,7 +704,7 @@
 
 - id: n5-g1-0049
   type: kanji
-  status: draft
+  status: reviewed
   word: 銀行
   sentence: "えきの まえに __銀行__が あります。"
   en: "There is a bank in front of the station."
@@ -721,7 +721,7 @@
 
 - id: n5-g1-0050
   type: kanji
-  status: draft
+  status: reviewed
   word: 食堂
   sentence: "__食堂__で ひるごはんを たべます。"
   en: "I eat lunch in the cafeteria."
@@ -738,7 +738,7 @@
 
 - id: n5-g1-0051
   type: kanji
-  status: draft
+  status: reviewed
   word: 有名
   sentence: "この おてらは とても __有名__です。"
   en: "This temple is very famous."
@@ -755,7 +755,7 @@
 
 - id: n5-g1-0052
   type: kanji
-  status: draft
+  status: reviewed
   word: 料理
   sentence: "ちちの __料理__は おいしいです。"
   en: "My father's cooking is good."
@@ -772,7 +772,7 @@
 
 - id: n5-g1-0053
   type: kanji
-  status: draft
+  status: reviewed
   word: 旅行
   sentence: "なつやすみに かぞくで __旅行__します。"
   en: "I'm going on a trip with my family in the summer holidays."
@@ -789,7 +789,7 @@
 
 - id: n5-g1-0054
   type: kanji
-  status: draft
+  status: reviewed
   word: 音楽
   sentence: "よる へやで __音楽__を ききます。"
   en: "I listen to music in my room at night."
@@ -806,7 +806,7 @@
 
 - id: n5-g1-0055
   type: kanji
-  status: draft
+  status: reviewed
   word: 動物
   sentence: "わたしは __動物__が すきです。"
   en: "I like animals."
@@ -823,7 +823,7 @@
 
 - id: n5-g1-0056
   type: kanji
-  status: draft
+  status: reviewed
   word: 九日
   sentence: "こんげつの __九日__は どようびです。"
   en: "The 9th of this month is a Saturday."
@@ -840,7 +840,7 @@
 
 - id: n5-g1-0057
   type: kanji
-  status: draft
+  status: reviewed
   word: 大人
   sentence: "えいがは __大人__ 1000えん、こども 500えんです。"
   en: "The film is 1,000 yen for adults and 500 yen for children."
@@ -857,7 +857,7 @@
 
 - id: n5-g1-0058
   type: kanji
-  status: draft
+  status: reviewed
   word: 二人
   sentence: "__二人__で レストランへ いきました。"
   en: "The two of us went to a restaurant."
@@ -874,7 +874,7 @@
 
 - id: n5-g1-0059
   type: kanji
-  status: draft
+  status: reviewed
   word: 上着
   sentence: "さむいですから、__上着__を きて ください。"
   en: "It's cold, so please put on a jacket."
@@ -891,7 +891,7 @@
 
 - id: n5-g1-0060
   type: kanji
-  status: draft
+  status: reviewed
   word: 明後日
   sentence: "__明後日__は にちようびです。"
   en: "The day after tomorrow is Sunday."

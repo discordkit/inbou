@@ -610,7 +610,7 @@
 
 - id: n5-g3-0044
   type: context
-  status: draft
+  status: reviewed
   sentence: "この スープは （　）ですから、ゆっくり のんで ください。"
   en: "This soup is hot, so please drink it slowly."
   answer: あつい
@@ -620,7 +620,7 @@
 
 - id: n5-g3-0045
   type: context
-  status: draft
+  status: reviewed
   sentence: "（　）が すきましたから、ごはんを たべましょう。"
   en: "I'm hungry, so let's eat."
   answer: おなか
@@ -630,7 +630,7 @@
 
 - id: n5-g3-0046
   type: context
-  status: draft
+  status: reviewed
   sentence: "わたしの すきな （　）は りんごです。"
   en: "My favourite fruit is the apple."
   answer: くだもの
@@ -640,7 +640,7 @@
 
 - id: n5-g3-0047
   type: context
-  status: draft
+  status: reviewed
   sentence: "この みちは くるまが おおいですから、（　）です。"
   en: "This road has a lot of cars, so it is dangerous."
   answer: あぶない
@@ -650,7 +650,7 @@
 
 - id: n5-g3-0048
   type: context
-  status: draft
+  status: reviewed
   sentence: "パンに バターを （　） たべます。"
   en: "I spread butter on my bread and eat it."
   answer: ぬって
@@ -660,7 +660,7 @@
 
 - id: n5-g3-0049
   type: context
-  status: draft
+  status: reviewed
   sentence: "つかれましたから、すこし （　）。"
   en: "I'm tired, so let's rest a little."
   answer: やすみましょう
@@ -670,7 +670,7 @@
 
 - id: n5-g3-0050
   type: context
-  status: draft
+  status: reviewed
   sentence: "この えいがは とても （　）ですから、もう いちど みたいです。"
   en: "This film is really interesting, so I want to see it again."
   answer: おもしろい
@@ -686,7 +686,7 @@
 
 - id: n5-g3-0051
   type: context
-  status: draft
+  status: reviewed
   sentence: "にもつが おもいですから、タクシーを （　）。"
   en: "The luggage is heavy, so let's call a taxi."
   answer: よびましょう
@@ -702,7 +702,7 @@
 
 - id: n5-g3-0052
   type: context
-  status: draft
+  status: reviewed
   sentence: "せんせい、この ことばの （　）を おしえて ください。"
   en: "Teacher, please tell me what this word means."
   answer: いみ
@@ -718,7 +718,7 @@
 
 - id: n5-g3-0053
   type: context
-  status: draft
+  status: reviewed
   sentence: "この ペンは インクが ありません。（　） ペンを かして ください。"
   en: "This pen has no ink. Please lend me another pen."
   answer: ほかの
@@ -734,7 +734,7 @@
 
 - id: n5-g3-0054
   type: context
-  status: draft
+  status: reviewed
   sentence: "A「ここから えきまで （　） かかりますか。」\nB「バスで 10ぷんです。」"
   en: "A: How long does it take from here to the station? B: Ten minutes by bus."
   answer: どのぐらい
@@ -750,7 +750,7 @@
 
 - id: n5-g3-0055
   type: context
-  status: draft
+  status: reviewed
   sentence: "この くつは ちいさいですから、もっと （　） くつを ください。"
   en: "These shoes are small, so please give me bigger ones."
   answer: おおきい
@@ -766,7 +766,7 @@
 
 - id: n5-g3-0056
   type: context
-  status: draft
+  status: reviewed
   sentence: "わたしは コーヒーが すきですが、こうちゃは （　） すきじゃ ありません。"
   en: "I like coffee, but I don't like tea very much."
   answer: あまり
@@ -782,7 +782,7 @@
 
 - id: n5-g3-0057
   type: context
-  status: draft
+  status: reviewed
   sentence: "A「（　） にほんへ きましたか。」\nB「きょねんの 4がつです。」"
   en: "A: When did you come to Japan? B: In April last year."
   answer: いつ
@@ -798,7 +798,7 @@
 
 - id: n5-g3-0058
   type: context
-  status: draft
+  status: reviewed
   sentence: "ちちは たばこを すいません。からだに （　）ですから。"
   en: "My father doesn't smoke, because it's bad for your health."
   answer: わるい
@@ -814,7 +814,7 @@
 
 - id: n5-g3-0059
   type: context
-  status: draft
+  status: reviewed
   sentence: "こどもが ねて いますから、（　） こえで はなして ください。"
   en: "The children are asleep, so please talk in a quiet voice."
   answer: ちいさい
@@ -830,7 +830,7 @@
 
 - id: n5-g3-0060
   type: context
-  status: draft
+  status: reviewed
   sentence: "100えんの ノートを 3さつ かいました。ぜんぶで （　）でした。"
   en: "I bought three 100-yen notebooks. That was 300 yen in all."
   answer: さんびゃくえん

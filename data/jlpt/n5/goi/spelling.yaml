@@ -498,7 +498,7 @@
 
 - id: n5-g2-0033
   type: spelling
-  status: draft
+  status: reviewed
   word: 外
   sentence: "__そと__は さむいですよ。"
   en: "It's cold outside."
@@ -509,7 +509,7 @@
 
 - id: n5-g2-0034
   type: spelling
-  status: draft
+  status: reviewed
   word: 夜
   sentence: "__よる__ おそく ねました。"
   en: "I went to bed late at night."
@@ -520,7 +520,7 @@
 
 - id: n5-g2-0035
   type: spelling
-  status: draft
+  status: reviewed
   word: 金曜日
   sentence: "__きんようび__に あいましょう。"
   en: "Let's meet on Friday."
@@ -531,7 +531,7 @@
 
 - id: n5-g2-0036
   type: spelling
-  status: draft
+  status: reviewed
   word: 女
   sentence: "あの __おんな__の ひとは だれですか。"
   en: "Who is that woman?"
@@ -542,7 +542,7 @@
 
 - id: n5-g2-0037
   type: spelling
-  status: draft
+  status: reviewed
   word: 少し
   sentence: "__すこし__ まって ください。"
   en: "Please wait a moment."
@@ -559,7 +559,7 @@
 
 - id: n5-g2-0038
   type: spelling
-  status: draft
+  status: reviewed
   word: ご飯
   sentence: "いっしょに __ごはん__を たべませんか。"
   en: "Shall we eat together?"
@@ -576,7 +576,7 @@
 
 - id: n5-g2-0039
   type: spelling
-  status: draft
+  status: reviewed
   word: 安い
   sentence: "この みせの パンは __やすい__です。"
   en: "The bread at this shop is cheap."
@@ -593,7 +593,7 @@
 
 - id: n5-g2-0040
   type: spelling
-  status: draft
+  status: reviewed
   word: 会う
   sentence: "えきで ともだちに __あいます__。"
   en: "I'm meeting a friend at the station."
@@ -610,7 +610,7 @@
 
 - id: n5-g2-0041
   type: spelling
-  status: draft
+  status: reviewed
   word: 寒い
   sentence: "きょうは とても __さむい__です。"
   en: "It is very cold today."
@@ -627,7 +627,7 @@
 
 - id: n5-g2-0042
   type: spelling
-  status: draft
+  status: reviewed
   word: 飲む
   sentence: "まいあさ コーヒーを __のみます__。"
   en: "I drink coffee every morning."
@@ -644,7 +644,7 @@
 
 - id: n5-g2-0043
   type: spelling
-  status: draft
+  status: reviewed
   word: 質問
   sentence: "せんせいに __しつもん__を しました。"
   en: "I asked the teacher a question."
@@ -661,7 +661,7 @@
 
 - id: n5-g2-0044
   type: spelling
-  status: draft
+  status: reviewed
   word: 洗う
   sentence: "ごはんの まえに てを __あらいます__。"
   en: "I wash my hands before eating."
@@ -678,7 +678,7 @@
 
 - id: n5-g2-0045
   type: spelling
-  status: draft
+  status: reviewed
   word: 好き
   sentence: "わたしは ねこが __すき__です。"
   en: "I like cats."
