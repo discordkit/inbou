@@ -5,6 +5,14 @@
 
 
 
+
+## 1.3.0
+<sub>2026-11-22</sub>
+
+- [#19](https://github.com/discordkit/inbou/pull/19)  *(minor)* Thanks [@Saeris](https://github.com/Saeris)!
+  Add `/dokkai start`, a JLPT N5 reading mock test: two short texts, a longer text with two questions, and a picture of a real Japanese document to search. Students who choose a wrong option are told privately why, and the grammar and reading tests together run to the real paper's 40 minutes. The privacy policy now notes the short-lived reply tokens a reading test holds for this
+- [#18](https://github.com/discordkit/inbou/pull/18)  *(patch)* Thanks [@Saeris](https://github.com/Saeris)! - Make the handlers Worker private. It no longer answers on a public address, so only the bot can send it events.
+
 ## 1.2.1
 <sub>2026-11-21</sub>
 
