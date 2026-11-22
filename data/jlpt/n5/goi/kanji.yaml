@@ -1389,3 +1389,257 @@
       why: "おおきな has a long お: おお."
   difficulty: 3
   note: "This asks the reading of 大きな, big, which comes before a noun: おおきな."
+
+- id: n5-g1-0093
+  type: kanji
+  status: draft
+  word: 駅
+  sentence: "まいあさ __駅__まで あるきます。"
+  en: "I walk to the station every morning."
+  answer: えき
+  wrong: [えぎ, いき, えっき]
+  difficulty: 1
+  note: "This asks the reading of 駅, a station: えき."
+
+- id: n5-g1-0094
+  type: kanji
+  status: draft
+  word: 会社
+  sentence: "あねは __会社__で はたらいて います。"
+  en: "My older sister works at a company."
+  answer: かいしゃ
+  wrong:
+    - option: がいしゃ
+      why: "会 is かい here, with no dakuten."
+    - option: かいしゅ
+      why: "社 is しゃ, with a small ゃ."
+    - option: かいじゃ
+      why: "In 会社, 社 is しゃ, with no dakuten."
+  difficulty: 2
+  note: "This asks the reading of 会社, a company: かいしゃ."
+
+- id: n5-g1-0095
+  type: kanji
+  status: draft
+  word: 医者
+  sentence: "あたまが いたいので、__医者__に いきます。"
+  en: "I have a headache, so I'm going to the doctor."
+  answer: いしゃ
+  wrong:
+    - option: いしや
+      why: "いしゃ has a small ゃ."
+    - option: いじゃ
+      why: "者 is しゃ here, with no dakuten."
+    - option: えしゃ
+      why: "医 is い, not え."
+  difficulty: 2
+  note: "This asks the reading of 医者, a doctor: いしゃ."
+
+- id: n5-g1-0096
+  type: kanji
+  status: draft
+  word: 教室
+  sentence: "__教室__に がくせいが さんにん います。"
+  en: "There are three students in the classroom."
+  answer: きょうしつ
+  wrong:
+    - option: きょしつ
+      why: "きょうしつ has a long う after きょ."
+    - option: きょうしち
+      why: "室 is しつ, ending in つ."
+    - option: きょうじつ
+      why: "室 is しつ, with no dakuten."
+  difficulty: 3
+  note: "This asks the reading of 教室, a classroom: きょうしつ."
+
+- id: n5-g1-0097
+  type: kanji
+  status: draft
+  word: 車
+  sentence: "ちちの __車__で こうえんへ いきました。"
+  en: "We went to the park in my father's car."
+  answer: くるま
+  wrong: [くろま, ぐるま, くるも]
+  difficulty: 1
+  note: "This asks the reading of 車, a car: くるま."
+
+- id: n5-g1-0098
+  type: kanji
+  status: draft
+  word: 後ろ
+  sentence: "わたしの __後ろ__に だれが いますか。"
+  en: "Who is behind me?"
+  answer: うしろ
+  wrong:
+    - option: うじろ
+      why: "うしろ has no dakuten."
+    - option: うちろ
+      why: "後ろ is うしろ, with し."
+    - option: あとろ
+      why: "On its own, 後 can be あと, after. But 後ろ is うしろ."
+  difficulty: 2
+  note: "This asks the reading of 後ろ, behind: うしろ."
+
+- id: n5-g1-0099
+  type: kanji
+  status: draft
+  word: 左
+  sentence: "あの かどを __左__に まがって ください。"
+  en: "Please turn left at that corner."
+  answer: ひだり
+  wrong:
+    - option: ひたり
+      why: "ひだり has a dakuten: だ."
+    - option: ひどり
+      why: "ひだり has だ, not ど."
+    - option: ひだい
+      why: "左 is ひだり, ending in り."
+  difficulty: 2
+  note: "This asks the reading of 左, left: ひだり."
+
+- id: n5-g1-0100
+  type: kanji
+  status: draft
+  word: 来週
+  sentence: "__来週__ ともだちが あそびに きます。"
+  en: "A friend is coming to visit next week."
+  answer: らいしゅう
+  wrong:
+    - option: らいしゅ
+      why: "らいしゅう has a long う."
+    - option: らいしょう
+      why: "週 is しゅう, with a small ゅ."
+    - option: きしゅう
+      why: "来 is らい in this word."
+  difficulty: 3
+  note: "This asks the reading of 来週, next week: らいしゅう."
+
+- id: n5-g1-0101
+  type: kanji
+  status: draft
+  word: 毎年
+  sentence: "__毎年__ ふゆに やまへ いきます。"
+  en: "I go to the mountains every winter."
+  answer: まいとし
+  wrong:
+    - option: まいどし
+      why: "まいとし has no dakuten."
+    - option: まいとき
+      why: "年 is とし, a year. とき is a time."
+    - option: まえとし
+      why: "毎 is まい, every."
+  difficulty: 2
+  note: "This asks the reading of 毎年, every year: まいとし. まいねん is also right, so it is not among the options."
+
+- id: n5-g1-0102
+  type: kanji
+  status: draft
+  word: 書く
+  sentence: "ここに なまえを __書いて__ ください。"
+  en: "Please write your name here."
+  answer: かいて
+  wrong:
+    - option: かきて
+      why: "書く becomes かいて before て."
+    - option: がいて
+      why: "かいて has no dakuten."
+    - option: かいで
+      why: "かいて ends in て, not で."
+  difficulty: 2
+  note: "This asks the reading of 書いて, the て-form of 書く, to write: かいて."
+
+- id: n5-g1-0103
+  type: kanji
+  status: draft
+  word: 作文
+  sentence: "せんせいに __作文__を だしました。"
+  en: "I handed my essay in to the teacher."
+  answer: さくぶん
+  wrong:
+    - option: つくぶん
+      why: "作 is さく in this word. On its own, as in つくる, it is つく."
+    - option: さぶん
+      why: "さくぶん has く after さ."
+    - option: さくふん
+      why: "ぶん has a dakuten: ぶ."
+  difficulty: 3
+  note: "This asks the reading of 作文, an essay: さくぶん."
+
+- id: n5-g1-0104
+  type: kanji
+  status: draft
+  word: 店
+  sentence: "あの __店__で パンを かいました。"
+  en: "I bought bread at that shop."
+  answer: みせ
+  wrong: [みぜ, みし, いせ]
+  difficulty: 1
+  note: "This asks the reading of 店, a shop: みせ."
+
+- id: n5-g1-0105
+  type: kanji
+  status: draft
+  word: 出口
+  sentence: "__出口__は あちらです。"
+  en: "The exit is over there."
+  answer: でぐち
+  wrong:
+    - option: でくち
+      why: "口 becomes ぐち here, with a dakuten."
+    - option: だぐち
+      why: "出 is で in this word."
+    - option: いりぐち
+      why: "いりぐち is the way in. 出 means out: でぐち."
+  difficulty: 2
+  note: "This asks the reading of 出口, an exit: でぐち."
+
+- id: n5-g1-0106
+  type: kanji
+  status: draft
+  word: 近く
+  sentence: "わたしの いえの __近く__に こうえんが あります。"
+  en: "There's a park near my house."
+  answer: ちかく
+  wrong:
+    - option: ちがく
+      why: "ちかく has no dakuten."
+    - option: ちかぐ
+      why: "ちかく ends in く, with no dakuten."
+    - option: きんく
+      why: "近 can be きん in other words, but 近く is ちかく."
+  difficulty: 2
+  note: "This asks the reading of 近く, near: ちかく."
+
+- id: n5-g1-0107
+  type: kanji
+  status: draft
+  word: 月曜日
+  sentence: "__月曜日__に テストが あります。"
+  en: "There's a test on Monday."
+  answer: げつようび
+  wrong:
+    - option: がつようび
+      why: "月 is げつ in the names of days. がつ is for months."
+    - option: げつようひ
+      why: "日 is び here, with a dakuten."
+    - option: かようび
+      why: "かようび is Tuesday. 月, the moon, is in Monday."
+  difficulty: 3
+  note: "This asks the reading of 月曜日, Monday: げつようび."
+
+- id: n5-g1-0108
+  type: kanji
+  status: draft
+  word: 夏休み
+  sentence: "__夏休み__に かぞくで うみへ いきます。"
+  en: "I'm going to the sea with my family in the summer holidays."
+  answer: なつやすみ
+  wrong:
+    - option: なつやずみ
+      why: "なつやすみ has no dakuten on す."
+    - option: かやすみ
+      why: "夏 is なつ in this word."
+    - option: なつきゅうみ
+      why: "休 is やす in this word."
+  difficulty: 2
+  note: "This asks the reading of 夏休み, the summer holidays: なつやすみ."

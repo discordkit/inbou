@@ -845,3 +845,167 @@
       why: "This says where she lives, not where she studies."
   difficulty: 3
   note: "This asks what おなじ がっこう means: you both study at that school, わたしも あねも."
+
+- id: n5-g4-0057
+  type: paraphrase
+  status: draft
+  sentence: "けいかんに みちを ききました。"
+  en: "I asked a police officer the way."
+  answer: "おまわりさんに みちを ききました。"
+  wrong:
+    - option: "がくせいに みちを ききました。"
+      why: "がくせい is a student. けいかん is a police officer, おまわりさん."
+    - option: "せんせいに みちを ききました。"
+      why: "せんせい is a teacher. けいかん is a police officer, おまわりさん."
+    - option: "えきの ひとに みちを ききました。"
+      why: "えきの ひと works at the station. けいかん is a police officer."
+  difficulty: 2
+  note: "This asks another word for けいかん, a police officer: おまわりさん."
+
+- id: n5-g4-0058
+  type: paraphrase
+  status: draft
+  sentence: "マリアさんは にほんの だいがくの りゅうがくせいです。"
+  en: "Maria is an international student at a Japanese university."
+  answer: "マリアさんは ほかの くにから きて、にほんの だいがくで べんきょうして います。"
+  wrong:
+    - option: "マリアさんは ほかの くにから きて、にほんの だいがくで おしえて います。"
+      why: "おしえる is to teach. A りゅうがくせい studies."
+    - option: "マリアさんは ほかの くにから きて、にほんの だいがくで はたらいて います。"
+      why: "はたらく is to work. A りゅうがくせい studies."
+    - option: "マリアさんは にほんから ほかの くにへ いって、だいがくで べんきょうして います。"
+      why: "This is the other way round. The sentence says にほんの だいがく."
+  difficulty: 3
+  note: "This asks what りゅうがくせい means: a student from another country, ほかの くにから きて べんきょうして いる ひと."
+
+- id: n5-g4-0059
+  type: paraphrase
+  status: draft
+  sentence: "こうえんに ひとが おおぜい います。"
+  en: "There are lots of people in the park."
+  answer: "こうえんに ひとが たくさん います。"
+  wrong: ["こうえんに ひとが すこし います。", "こうえんに ひとが ふたり います。", "こうえんに ひとが ひとりも いません。"]
+  difficulty: 1
+  note: "This asks what おおぜい means: many people, たくさん."
+
+- id: n5-g4-0060
+  type: paraphrase
+  status: draft
+  sentence: "やまださんの おくさんは せんせいです。"
+  en: "Mr Yamada's wife is a teacher."
+  answer: "やまださんと けっこんして いる ひとは せんせいです。"
+  wrong:
+    - option: "やまださんの おかあさんは せんせいです。"
+      why: "おかあさん is his mother. おくさん is his wife."
+    - option: "やまださんの いもうとさんは せんせいです。"
+      why: "いもうとさん is his younger sister. おくさん is his wife."
+    - option: "やまださんの おねえさんは せんせいです。"
+      why: "おねえさん is his older sister. おくさん is his wife."
+  difficulty: 2
+  note: "This asks what おくさん means: someone's wife, the person married to him, けっこんして いる ひと."
+
+- id: n5-g4-0061
+  type: paraphrase
+  status: draft
+  sentence: "わたしは さかなが きらいです。"
+  en: "I don't like fish."
+  answer: "わたしは さかなが すきでは ありません。"
+  wrong: ["わたしは さかなが だいすきです。", "わたしは さかなを よく たべます。", "わたしは さかなが ほしいです。"]
+  difficulty: 1
+  note: "This asks what きらい means: not liking something, すきでは ない."
+
+- id: n5-g4-0062
+  type: paraphrase
+  status: draft
+  sentence: "ばんごはんの あとで、しゅくだいを します。"
+  en: "I do my homework after dinner."
+  answer: "よるの ごはんを たべてから、しゅくだいを します。"
+  wrong:
+    - option: "あさの ごはんを たべてから、しゅくだいを します。"
+      why: "あさの ごはん is breakfast. ばんごはん is the evening meal."
+    - option: "ひるの ごはんを たべてから、しゅくだいを します。"
+      why: "ひるの ごはん is lunch. ばんごはん is the evening meal."
+    - option: "よるの ごはんを たべる まえに、しゅくだいを します。"
+      why: "まえに is before. あとで is after."
+  difficulty: 2
+  note: "This asks what ばんごはんの あとで means: after the evening meal, よるの ごはんを たべてから."
+
+- id: n5-g4-0063
+  type: paraphrase
+  status: draft
+  sentence: "きょうは せんたくを しました。"
+  en: "I did the laundry today."
+  answer: "きょうは ふくを あらいました。"
+  wrong:
+    - option: "きょうは へやを きれいに しました。"
+      why: "This is cleaning a room. せんたく is washing clothes."
+    - option: "きょうは ふくを かいました。"
+      why: "かう is to buy. せんたく is washing clothes."
+    - option: "きょうは おさらを あらいました。"
+      why: "せんたく is washing clothes, not dishes."
+  difficulty: 2
+  note: "This asks what せんたく means: washing clothes, ふくを あらう."
+
+- id: n5-g4-0064
+  type: paraphrase
+  status: draft
+  sentence: "あには ゆうびんきょくに つとめて います。"
+  en: "My older brother works at the post office."
+  answer: "あには ゆうびんきょくで はたらいて います。"
+  wrong:
+    - option: "あには ゆうびんきょくへ てがみを だしに いきました。"
+      why: "This says he went there once, to post a letter."
+    - option: "あには ゆうびんきょくの まえに すんで います。"
+      why: "This says where he lives."
+    - option: "あには まいにち ゆうびんきょくの まえを とおります。"
+      why: "This says he walks past it every day."
+  difficulty: 2
+  note: "This asks what つとめて いる means: works there, はたらいて いる."
+
+- id: n5-g4-0065
+  type: paraphrase
+  status: draft
+  sentence: "ともだちが げんかんで まって います。"
+  en: "My friend is waiting at the front door."
+  answer: "ともだちが いえの いりぐちで まって います。"
+  wrong:
+    - option: "ともだちが いえの まどの そばで まって います。"
+      why: "まど is a window. げんかん is the way into a house."
+    - option: "ともだちが いえの にわで まって います。"
+      why: "にわ is a garden. げんかん is the way into a house."
+    - option: "ともだちが いえの だいどころで まって います。"
+      why: "だいどころ is the kitchen. げんかん is the way into a house."
+  difficulty: 2
+  note: "This asks what げんかん is: the way into a house, いえの いりぐち."
+
+- id: n5-g4-0066
+  type: paraphrase
+  status: draft
+  sentence: "この おちゃは ぬるいです。"
+  en: "This tea is lukewarm."
+  answer: "この おちゃは あまり あつく ありません。"
+  wrong:
+    - option: "この おちゃは とても あついです。"
+      why: "This is the opposite. ぬるい tea is not hot enough."
+    - option: "この おちゃは あまいです。"
+      why: "あまい is sweet. ぬるい is about how hot it is."
+    - option: "この おちゃは たかく ありません。"
+      why: "This says it is cheap. ぬるい is about how hot it is."
+  difficulty: 3
+  note: "This asks what ぬるい means: not as hot as it should be, あまり あつく ない."
+
+- id: n5-g4-0067
+  type: paraphrase
+  status: draft
+  sentence: "おとうとさんは いくつですか。"
+  en: "How old is your younger brother?"
+  answer: "おとうとさんは なんさいですか。"
+  wrong:
+    - option: "おとうとさんは どこに いますか。"
+      why: "どこ asks where. いくつ, about a person, asks their age."
+    - option: "おとうとさんは なにが すきですか。"
+      why: "This asks what he likes. いくつ, about a person, asks their age."
+    - option: "おとうとさんは なんにん いますか。"
+      why: "This asks how many brothers. いくつ, about a person, asks their age."
+  difficulty: 2
+  note: "This asks what いくつ means about a person: their age, なんさい."

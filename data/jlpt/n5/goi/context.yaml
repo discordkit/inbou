@@ -1331,3 +1331,251 @@
       why: "どれ asks which one. Asking whose takes だれの."
   difficulty: 3
   note: "This asks which question word asks whose: だれの."
+
+- id: n5-g3-0096
+  type: context
+  status: draft
+  sentence: "あめが ふって いますから、（　）を もって いきましょう。"
+  en: "It's raining, so let's take an umbrella."
+  answer: かさ
+  wrong: [めがね, えんぴつ, くつした]
+  difficulty: 1
+  note: "This asks what you take when it rains: かさ, an umbrella."
+
+- id: n5-g3-0097
+  type: context
+  status: draft
+  sentence: "ねる まえに、でんきを （　） ください。"
+  en: "Please turn off the light before you go to bed."
+  answer: けして
+  wrong:
+    - option: しめて
+      why: "しめる is to close a door or a window. A light is turned off: けす."
+    - option: あけて
+      why: "あける is to open a door or a window."
+    - option: とって
+      why: "とる is to take. A light is turned off: けす."
+  difficulty: 2
+  note: "This asks the verb for turning off a light: でんきを けす."
+
+- id: n5-g3-0098
+  type: context
+  status: draft
+  sentence: "あついですね。うわぎを （　）も いいですか。"
+  en: "It's hot, isn't it? May I take off my jacket?"
+  answer: ぬいで
+  wrong:
+    - option: きて
+      why: "きる is to put on. In the heat, you take a jacket off: ぬぐ."
+    - option: しめて
+      why: "しめる is to close a door or a window."
+    - option: はいて
+      why: "はく is for shoes, socks and trousers. A jacket comes off: ぬぐ."
+  difficulty: 2
+  note: "This asks the verb for taking off clothes: ぬぐ, here ぬいでも いいですか."
+
+- id: n5-g3-0099
+  type: context
+  status: draft
+  sentence: "さいふを いえに わすれて、とても （　） います。"
+  en: "I left my wallet at home, and I'm in real trouble."
+  answer: こまって
+  wrong:
+    - option: ねて
+      why: "ねる is to sleep. With no wallet, you are in trouble: こまる."
+    - option: あそんで
+      why: "あそぶ is to play."
+    - option: はしって
+      why: "はしる is to run. とても does not go with it."
+  difficulty: 2
+  note: "This asks how you feel with no wallet: こまる, to be in trouble."
+
+- id: n5-g3-0100
+  type: context
+  status: draft
+  sentence: "ともだちの でんわばんごうを （　）ので、でんわが できません。"
+  en: "I've forgotten my friend's phone number, so I can't call."
+  answer: わすれた
+  wrong:
+    - option: おしえた
+      why: "おしえる is to teach or tell. Telling someone a number does not stop you calling."
+    - option: きいた
+      why: "きく is to ask or hear. If you had asked, you could call."
+    - option: みた
+      why: "みる is to see. If you had seen the number, you could call."
+  difficulty: 3
+  note: "This asks why you can't call: you forgot the number, わすれた."
+
+- id: n5-g3-0101
+  type: context
+  status: draft
+  sentence: "きょうは たくさん あるいたので、（　）。"
+  en: "I walked a lot today, so I'm tired."
+  answer: つかれました
+  wrong: [はれました, ふりました, きえました]
+  difficulty: 1
+  note: "This asks how you feel after a long walk: つかれました, tired."
+
+- id: n5-g3-0102
+  type: context
+  status: draft
+  sentence: "あさは はれて いましたが、ごごから そらが （　）。"
+  en: "It was sunny in the morning, but the sky clouded over in the afternoon."
+  answer: くもりました
+  wrong:
+    - option: ふりました
+      why: "Rain and snow fall, ふる. The sky does not."
+    - option: ふきました
+      why: "Wind blows, ふく. The sky does not."
+    - option: はれました
+      why: "It was sunny already. が, but, tells you the weather changed."
+  difficulty: 3
+  note: "This asks what the sky does when it turns grey: くもる, to cloud over."
+
+- id: n5-g3-0103
+  type: context
+  status: draft
+  sentence: "この おかしは さとうが たくさん はいって いて、とても （　）です。"
+  en: "These sweets have lots of sugar in them, so they're very sweet."
+  answer: あまい
+  wrong: [かるい, せまい, ひろい]
+  difficulty: 1
+  note: "This asks how sugar tastes: あまい, sweet."
+
+- id: n5-g3-0104
+  type: context
+  status: draft
+  sentence: "あの せんせいは まだ にじゅうさいで、とても （　）です。"
+  en: "That teacher is only twenty, and very young."
+  answer: わかい
+  wrong:
+    - option: あたらしい
+      why: "あたらしい is new, for things. A young person is わかい."
+    - option: ひろい
+      why: "ひろい is wide, for rooms and places."
+    - option: みじかい
+      why: "みじかい is short, for length or time."
+  difficulty: 2
+  note: "This asks the word for a young person: わかい."
+
+- id: n5-g3-0105
+  type: context
+  status: draft
+  sentence: "ひるは あついですが、よるは （　）です。"
+  en: "It's hot in the daytime, but cool at night."
+  answer: すずしい
+  wrong: [ほそい, ひくい, まるい]
+  difficulty: 1
+  note: "This asks the word for weather that is not hot: すずしい, cool."
+
+- id: n5-g3-0106
+  type: context
+  status: draft
+  sentence: "えきの そばに すんで いるので、とても （　）です。"
+  en: "I live near the station, so it's very convenient."
+  answer: べんり
+  wrong:
+    - option: りっぱ
+      why: "りっぱ is fine or grand. Living near a station is handy: べんり."
+    - option: きらい
+      why: "きらい is to dislike. Living near a station is handy: べんり."
+    - option: ひま
+      why: "ひま is free, with time to spare."
+  difficulty: 2
+  note: "This asks why living near a station is good: べんり, convenient."
+
+- id: n5-g3-0107
+  type: context
+  status: draft
+  sentence: "この くつは とても （　）です。ごねん はいて いますが、まだ きれいです。"
+  en: "These shoes are very sturdy. I've worn them for five years, and they're still in good shape."
+  answer: じょうぶ
+  wrong:
+    - option: しずか
+      why: "しずか is quiet. Shoes that last five years are strong: じょうぶ."
+    - option: ひま
+      why: "ひま is free, with time to spare."
+    - option: たいへん
+      why: "たいへん is hard or terrible. Lasting five years shows they are strong."
+  difficulty: 2
+  note: "This asks the word for something that lasts: じょうぶ, strong."
+
+- id: n5-g3-0108
+  type: context
+  status: draft
+  sentence: "この みちを （　） いくと、えきが あります。"
+  en: "Go straight along this road and you'll find the station."
+  answer: まっすぐ
+  wrong:
+    - option: だんだん
+      why: "だんだん is little by little, for things that change."
+    - option: いっしょに
+      why: "いっしょに is together, with someone. Directions take まっすぐ."
+    - option: とても
+      why: "とても is very, before an adjective."
+  difficulty: 2
+  note: "This asks how to give a direction: まっすぐ いく, go straight."
+
+- id: n5-g3-0109
+  type: context
+  status: draft
+  sentence: "いま （　） じゅうにじです。ひるごはんを たべましょう。"
+  en: "It's exactly twelve o'clock now. Let's have lunch."
+  answer: ちょうど
+  wrong:
+    - option: とても
+      why: "とても is very, before an adjective. A time takes ちょうど."
+    - option: たくさん
+      why: "たくさん is a lot, for amounts."
+    - option: もっと
+      why: "もっと is more, for comparing."
+  difficulty: 3
+  note: "This asks the word for an exact time: ちょうど."
+
+- id: n5-g3-0110
+  type: context
+  status: draft
+  sentence: "すみません、この りんごは ひとつ （　）ですか。"
+  en: "Excuse me, how much is one of these apples?"
+  answer: いくら
+  wrong:
+    - option: いくつ
+      why: "いくつ asks how many. A price takes いくら."
+    - option: どこ
+      why: "どこ asks where."
+    - option: どなた
+      why: "どなた asks who, politely."
+  difficulty: 2
+  note: "This asks the question word for a price: いくら."
+
+- id: n5-g3-0111
+  type: context
+  status: draft
+  sentence: "A「きのうは （　） がっこうを やすみましたか。」\nB「かぜを ひいたからです。」"
+  en: "A: Why were you off school yesterday? B: Because I caught a cold."
+  answer: どうして
+  wrong:
+    - option: なんじに
+      why: "なんじに asks what time. B gives a reason, から, so A asked why."
+    - option: どこで
+      why: "どこで asks where. B gives a reason, から."
+    - option: だれと
+      why: "だれと asks with whom. B gives a reason, から."
+  difficulty: 3
+  note: "This asks the question word that a から answer replies to: どうして, why."
+
+- id: n5-g3-0112
+  type: context
+  status: draft
+  sentence: "まいにち いちじかん、ピアノの （　）を します。"
+  en: "I practise the piano for an hour every day."
+  answer: れんしゅう
+  wrong:
+    - option: そうじ
+      why: "そうじ is cleaning. An hour of piano a day is practice."
+    - option: せんたく
+      why: "せんたく is doing the laundry."
+    - option: けっこん
+      why: "けっこん is marriage."
+  difficulty: 2
+  note: "This asks what you do with the piano every day: れんしゅう, practice."
