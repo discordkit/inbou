@@ -14,7 +14,7 @@
 
 - id: n5-d6-0001
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: machine
     variant: tickets
@@ -86,7 +86,7 @@
 
 - id: n5-d6-0002
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: calendar
     title: "みどり {図書館|としょかん}　3{月|がつ}"
@@ -165,7 +165,7 @@
 
 - id: n5-d6-0003
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: stop-timetable
     mode: bus
@@ -228,7 +228,7 @@
 
 - id: n5-d6-0004
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: signboard
     tone: green
@@ -304,7 +304,7 @@
 
 - id: n5-d6-0005
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: calendar
     title: "2{月|がつ}の ごみの {日|ひ}"
@@ -396,7 +396,7 @@
 
 - id: n5-d6-0006
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: directory
     title: "さくら デパート"
@@ -460,7 +460,7 @@
 
 - id: n5-d6-0007
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: whiteboard
     title: "{今週|こんしゅう}の よてい"
@@ -519,7 +519,7 @@
 
 - id: n5-d6-0008
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: signboard
     tone: blue
@@ -584,7 +584,7 @@
 
 - id: n5-d6-0009
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: route-search
     from: "さくら{駅|えき}"
@@ -667,7 +667,7 @@
 
 - id: n5-d6-0010
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: poster
     tone: orange
@@ -724,7 +724,7 @@
 
 - id: n5-d6-0011
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: flyer
     title: "スーパー まるや　セール"
@@ -790,7 +790,7 @@
 
 - id: n5-d6-0012
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: timetable
     icon: school
@@ -849,7 +849,7 @@
 
 - id: n5-d6-0013
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: board
     title: "{大学|だいがく}の クラブ"
@@ -916,7 +916,7 @@
 
 - id: n5-d6-0014
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: weather
     title: "{来週|らいしゅう}の {天気|てんき}"
@@ -1020,7 +1020,7 @@
 
 - id: n5-d6-0015
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: notice
     head: ["5{月|がつ}10{日|か}"]
@@ -1084,7 +1084,7 @@
 
 - id: n5-d6-0016
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: receipt
     store: "ハッピーマート さくら{駅前|えきまえ}{店|てん}"
@@ -1140,7 +1140,7 @@
 
 - id: n5-d6-0017
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: departure-board
     head: ["しゅべつ", "じこく", "{行|い}き{先|さき}", "{乗|の}り{場|ば}"]
@@ -1213,7 +1213,7 @@
 
 - id: n5-d6-0018
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: fare-chart
     title: "きっぷの ねだん（{大人|おとな}）"
@@ -1270,7 +1270,7 @@
 
 - id: n5-d6-0019
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: medicine-bag
     clinic: "さくら {薬|やっ}きょく"
@@ -1330,7 +1330,7 @@
 
 - id: n5-d6-0020
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: form
     variant: delivery
@@ -1400,7 +1400,7 @@
 
 - id: n5-d6-0021
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: form
     variant: application
@@ -1463,7 +1463,7 @@
 
 - id: n5-d6-0022
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: machine
     variant: drinks
@@ -1526,7 +1526,7 @@
 
 - id: n5-d6-0023
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: chat
     room: "{日本語|にほんご}クラス (4)"
@@ -1601,7 +1601,7 @@
 
 - id: n5-d6-0024
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: station-signs
     signs:
@@ -1655,7 +1655,7 @@
 
 - id: n5-d6-0025
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: chalkboard
     head: ["ランチ　11:00〜14:00"]
@@ -1721,7 +1721,7 @@
 
 - id: n5-d6-0026
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: ticket
     venue: "さくら シネマ"
@@ -1775,7 +1775,7 @@
 
 - id: n5-d6-0027
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: sign
     tone: red
@@ -1831,7 +1831,7 @@
 
 - id: n5-d6-0028
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: stamp-card
     shop: "カフェ まめ"
@@ -1886,7 +1886,7 @@
 
 - id: n5-d6-0029
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: notice
     head: ["9{月|がつ}2{日|か}"]
@@ -1946,7 +1946,7 @@
 
 - id: n5-d6-0030
   type: info
-  status: draft
+  status: reviewed
   material:
     kind: stop-timetable
     mode: train

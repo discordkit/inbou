@@ -10,7 +10,7 @@
 
 - id: n5-d4-0001
   type: short
-  status: draft
+  status: reviewed
   intro: "これは お{母|かあ}さんが ゆいさんに {書|か}いた メモです。"
   text: |-
     ゆいへ
@@ -41,7 +41,7 @@
 
 - id: n5-d4-0002
   type: short
-  status: draft
+  status: reviewed
   intro: |-
     （{学校|がっこう}で）
     {学生|がくせい}が この {紙|かみ}を {見|み}ました。
@@ -74,7 +74,7 @@
 
 - id: n5-d4-0003
   type: short
-  status: draft
+  status: reviewed
   intro: "これは マリアさんが {友|とも}だちの ゆきさんに {書|か}いた メールです。"
   text: |-
     ゆきさん
@@ -104,7 +104,7 @@
 
 - id: n5-d4-0004
   type: short
-  status: draft
+  status: reviewed
   intro: "これは リンさんが {書|か}いた にっきです。"
   text: |-
     11{月|がつ}{3日|みっか}（{日|にち}）
@@ -130,7 +130,7 @@
 
 - id: n5-d4-0005
   type: short
-  status: draft
+  status: reviewed
   intro: |-
     （アパートの {入口|いりぐち}で）
     アパートの {人|ひと}が この {紙|かみ}を {見|み}ました。
@@ -165,7 +165,7 @@
 
 - id: n5-d4-0006
   type: short
-  status: draft
+  status: reviewed
   intro: |-
     （{教室|きょうしつ}で）
     {学生|がくせい}が この {紙|かみ}を {読|よ}みました。
@@ -197,7 +197,7 @@
 
 - id: n5-d4-0007
   type: short
-  status: draft
+  status: reviewed
   intro: |-
     （{会社|かいしゃ}で）
     キムさんの つくえの {上|うえ}に この メモが あります。
@@ -231,7 +231,7 @@
 
 - id: n5-d4-0008
   type: short
-  status: draft
+  status: reviewed
   intro: "これは {森|もり}{先生|せんせい}が クラスの {学生|がくせい}に {送|おく}った メールです。"
   text: |-
     みなさん
@@ -263,7 +263,7 @@
 
 - id: n5-d4-0009
   type: short
-  status: draft
+  status: reviewed
   intro: |-
     （パンやの {前|まえ}で）
     {店|みせ}の ドアに この {紙|かみ}が あります。
@@ -299,7 +299,7 @@
 
 - id: n5-d4-0010
   type: short
-  status: draft
+  status: reviewed
   intro: "これは アンナさんが {書|か}いた にっきです。"
   text: |-
     6{月|がつ}{10日|とおか}（{土|ど}）
@@ -333,7 +333,7 @@
 
 - id: n5-d4-0011
   type: short
-  status: draft
+  status: reviewed
   intro: "これは はるとさんが {友|とも}だちの リサさんに {送|おく}った メッセージです。"
   text: |-
     リサさん、ごめんなさい。{電車|でんしゃ}が おくれて いて、{駅|えき}に {着|つ}くのは 6{時|じ}20{分|ぷん}ごろに なります。さきに レストランに {入|はい}って、{飲|の}み{物|もの}を たのんで いて ください。{料理|りょうり}は いっしょに えらびましょう。
@@ -358,7 +358,7 @@
 
 - id: n5-d4-0012
   type: short
-  status: draft
+  status: reviewed
   intro: "これは ソフィアさんが {先生|せんせい}に {書|か}いた はがきです。"
   text: |-
     {先生|せんせい}、お{元気|げんき}ですか。{私|わたし}は {今|いま}、{友|とも}だちと {北海道|ほっかいどう}に {来|き}て います。とても {寒|さむ}いですが、{魚|さかな}が おいしいです。きのうは {山|やま}で スキーを しました。あしたは {町|まち}で おみやげを {買|か}って、あさって {東京|とうきょう}に {帰|かえ}ります。
@@ -389,7 +389,7 @@
 
 - id: n5-d4-0013
   type: short
-  status: draft
+  status: reviewed
   intro: |-
     （{病院|びょういん}の {入口|いりぐち}で）
     この {紙|かみ}が あります。
@@ -420,7 +420,7 @@
 
 - id: n5-d4-0014
   type: short
-  status: draft
+  status: reviewed
   intro: "これは ホストファミリーの {洋子|ようこ}さんが ニコさんに {書|か}いた メモです。"
   text: |-
     ニコさんへ
@@ -452,7 +452,7 @@
 
 - id: n5-d4-0015
   type: short
-  status: draft
+  status: reviewed
   intro: "これは {学生|がくせい}の トムさんが {先生|せんせい}に {送|おく}った メールです。"
   text: |-
     {森|もり}{先生|せんせい}
@@ -484,7 +484,7 @@
 
 - id: n5-d4-0016
   type: short
-  status: draft
+  status: reviewed
   intro: |-
     （{駅|えき}で）
     {駅|えき}の かべに この {紙|かみ}が あります。
@@ -516,7 +516,7 @@
 
 - id: n5-d4-0017
   type: short
-  status: draft
+  status: reviewed
   intro: "これは マイクさんが {書|か}いた にっきです。"
   text: |-
     4{月|がつ}{8日|ようか}（{火|か}）
@@ -548,7 +548,7 @@
 
 - id: n5-d4-0018
   type: short
-  status: draft
+  status: reviewed
   intro: |-
     （{大学|だいがく}で）
     サッカークラブの {学生|がくせい}が この {紙|かみ}を {見|み}ました。
@@ -580,7 +580,7 @@
 
 - id: n5-d4-0019
   type: short
-  status: draft
+  status: reviewed
   intro: |-
     （{日本語学校|にほんごがっこう}で）
     {学生|がくせい}が この {紙|かみ}を {読|よ}みました。
@@ -612,7 +612,7 @@
 
 - id: n5-d4-0020
   type: short
-  status: draft
+  status: reviewed
   intro: "これは さくらさんが {友|とも}だちの エマさんに {送|おく}った メールです。"
   text: |-
     エマさん
@@ -647,7 +647,7 @@
 
 - id: n5-d4-0021
   type: short
-  status: draft
+  status: reviewed
   intro: |-
     （スーパーで）
     {店|みせ}の {入口|いりぐち}に この {紙|かみ}が あります。
@@ -681,7 +681,7 @@
 
 - id: n5-d4-0022
   type: short
-  status: draft
+  status: reviewed
   intro: "これは リュウさんが クラスで {話|はな}した じこしょうかいです。"
   text: |-
     はじめまして。リュウです。{中国|ちゅうごく}から {来|き}ました。{先月|せんげつ} {日本|にほん}に {来|き}て、{今|いま}は {大学|だいがく}の {近|ちか}くに {住|す}んで います。しゅみは {写真|しゃしん}です。{日本|にほん}の {古|ふる}い {町|まち}の {写真|しゃしん}を たくさん とりたいです。どうぞ よろしく おねがいします。
@@ -709,7 +709,7 @@
 
 - id: n5-d4-0023
   type: short
-  status: draft
+  status: reviewed
   intro: "これは ゆうたさんの お{兄|にい}さんが ゆうたさんに {書|か}いた メモです。"
   text: |-
     ゆうたへ
@@ -741,7 +741,7 @@
 
 - id: n5-d4-0024
   type: short
-  status: draft
+  status: reviewed
   intro: |-
     （りょうで）
     りょうの {学生|がくせい}が この {紙|かみ}を {見|み}ました。
@@ -780,7 +780,7 @@
 
 - id: n5-d4-0025
   type: short
-  status: draft
+  status: reviewed
   intro: "これは ホストファミリーの {山本|やまもと}さんが エミリーさんに {送|おく}った メールです。"
   text: |-
     エミリーさん
@@ -811,7 +811,7 @@
 
 - id: n5-d4-0026
   type: short
-  status: draft
+  status: reviewed
   intro: "これは {先生|せんせい}が クラスの {学生|がくせい}に {書|か}いた パーティーの おしらせです。"
   text: |-
     クリスマスパーティーを します
