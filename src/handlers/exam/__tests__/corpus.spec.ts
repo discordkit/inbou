@@ -19,6 +19,7 @@ import {
   grammarPointsSchema,
   itemProblems,
   itemsSchema,
+  materialMarkup,
   reviewLinksOf,
   WINDOW_SIZE,
   type Item,
@@ -181,6 +182,44 @@ describe(`the mock-test corpus`, () => {
       ...items.flatMap((item) => itemProblems(item, pointIds))
     ];
     expect(problems).toEqual([]);
+  });
+
+  it(`writes every word of every picture into its alt text`, () => {
+    // WHY: the alt text is the picture for a student who cannot see it, and
+    // the readings line under the picture is built from it. A field that a
+    // template draws but the alt text leaves out could hold the answer, and its
+    // kanji would get no reading. Walks the data, so a new kind is covered the
+    // day its first item exists.
+    const notText = new Set([
+      `kind`,
+      `tone`,
+      `icon`,
+      `variant`,
+      `mode`,
+      `sky`,
+      `arrow`
+    ]);
+    const texts = (value: unknown, key = ``): string[] => {
+      if (typeof value === `string`) {
+        return notText.has(key) || value === `` ? [] : [value];
+      }
+      if (Array.isArray(value))
+        return value.flatMap((entry) => texts(entry, key));
+      if (typeof value === `object` && value !== null) {
+        return Object.entries(value).flatMap(([name, entry]) =>
+          texts(entry, name)
+        );
+      }
+      return [];
+    };
+    const missing = items.flatMap((item) => {
+      if (item.type !== `info`) return [];
+      const alt = materialMarkup(item.material);
+      return texts(item.material)
+        .filter((text) => !alt.includes(text))
+        .map((text) => `${item.id}: ${text}`);
+    });
+    expect(missing).toEqual([]);
   });
 
   it(`renders every card inside Discord's limits`, () => {

@@ -242,25 +242,357 @@ const panelsBlockSchema = v.strictObject({
   )
 });
 
+const blockSchema = v.union([
+  textBlockSchema,
+  tableBlockSchema,
+  listsBlockSchema,
+  panelsBlockSchema
+]);
+
+const lines = v.pipe(v.array(text), v.minLength(1));
+const count = v.pipe(v.number(), v.integer(), v.minValue(0));
+
+/** A colour by name. Each template has its own palette, so a picture keeps to colours that look right on it. */
+const toneSchema = v.picklist([
+  `red`,
+  `orange`,
+  `yellow`,
+  `green`,
+  `blue`,
+  `navy`,
+  `purple`,
+  `pink`,
+  `brown`,
+  `gray`
+]);
+
 /**
- * What a 問題6 picture shows. Structured rather than drawn, so a template lays it out and an edit is a reviewable diff.
- *
- * Short on purpose. The picture must read at chat size, about 300 px wide on a phone, so it holds about eight rows of about twenty characters.
+ * Paper, signs and boards: a title over blocks, drawn in the style of the real thing. The kind picks the look: a printed notice with 記 and 以上, a handwritten sign taped to a door, a clinic's signboard, a poster, a cork board, a café's chalkboard, a supermarket flyer, a whiteboard, a store directory, a school timetable.
  */
-const materialSchema = v.strictObject({
+const sheetSchema = v.strictObject({
+  kind: v.picklist([
+    `notice`,
+    `sign`,
+    `signboard`,
+    `poster`,
+    `board`,
+    `chalkboard`,
+    `flyer`,
+    `whiteboard`,
+    `directory`,
+    `timetable`
+  ]),
+  tone: v.optional(toneSchema),
+  icon: v.optional(v.picklist([`clinic`, `pool`, `book`, `school`])),
+  /** Lines above the title: who it is for, the date. */
+  head: v.optional(lines),
   title: text,
-  blocks: v.pipe(
+  blocks: v.pipe(v.array(blockSchema), v.minLength(1)),
+  /** Lines below: who it is from, 以上. */
+  foot: v.optional(lines)
+});
+
+/** The timetable at a bus stop or on a platform: a row for each hour, its minutes beside it, a column for each kind of day. */
+const stopTimetableSchema = v.strictObject({
+  kind: v.literal(`stop-timetable`),
+  mode: v.picklist([`bus`, `train`]),
+  stop: text,
+  /** Where the bus or train goes: 〜ゆき. */
+  bound: text,
+  columns: v.pipe(v.array(text), v.minLength(1), v.maxLength(3)),
+  rows: v.pipe(
     v.array(
-      v.union([
-        textBlockSchema,
-        tableBlockSchema,
-        listsBlockSchema,
-        panelsBlockSchema
-      ])
+      v.strictObject({
+        hour: v.pipe(count, v.maxValue(24)),
+        /** One list per column. A minute may carry a mark the notes explain, such as 「25●」. */
+        minutes: v.array(v.array(text))
+      })
     ),
     v.minLength(1)
+  ),
+  notes: v.optional(lines)
+});
+
+/** The departure board over a platform: kind of train, time, where it goes, which platform. */
+const departureBoardSchema = v.strictObject({
+  kind: v.literal(`departure-board`),
+  head: v.tuple([text, text, text, text]),
+  rows: v.pipe(
+    v.array(
+      v.strictObject({
+        type: text,
+        tone: toneSchema,
+        time: text,
+        dest: text,
+        track: text
+      })
+    ),
+    v.minLength(2)
+  ),
+  /** The line that scrolls along the bottom. */
+  note: v.optional(text)
+});
+
+/** A route-search app's results, as a phone shows them. */
+const routeSearchSchema = v.strictObject({
+  kind: v.literal(`route-search`),
+  from: text,
+  to: text,
+  when: text,
+  routes: v.pipe(
+    v.array(
+      v.strictObject({
+        label: text,
+        depart: text,
+        arrive: text,
+        time: text,
+        fare: text,
+        transfers: text,
+        legs: lines,
+        /** The app's badges: 早, 安, 楽. */
+        tags: v.optional(lines)
+      })
+    ),
+    v.minLength(2)
   )
 });
+
+/** The fare chart above a station's ticket machines. Exactly one station is the one you are at. */
+const fareChartSchema = v.strictObject({
+  kind: v.literal(`fare-chart`),
+  title: text,
+  stations: v.pipe(
+    v.array(
+      v.strictObject({
+        name: text,
+        fare: text,
+        here: v.optional(v.literal(true))
+      })
+    ),
+    v.minLength(3)
+  ),
+  notes: v.optional(lines)
+});
+
+/** Arrows that point the way. One set, shared by the alt text and the picture. */
+export const ARROWS = { left: `←`, right: `→`, up: `↑`, down: `↓` } as const;
+
+/** The signs hanging in a station: exits, transfers, toilets. */
+const stationSignsSchema = v.strictObject({
+  kind: v.literal(`station-signs`),
+  signs: v.pipe(
+    v.array(
+      v.strictObject({
+        tone: toneSchema,
+        arrow: v.picklist([`left`, `right`, `up`, `down`]),
+        lines
+      })
+    ),
+    v.minLength(2)
+  )
+});
+
+const amountSchema = v.strictObject({ label: text, amount: count });
+
+/** A till receipt. The build checks the sums, as a till would. */
+const receiptSchema = v.strictObject({
+  kind: v.literal(`receipt`),
+  store: text,
+  head: v.optional(lines),
+  items: v.pipe(
+    v.array(v.strictObject({ name: text, price: count })),
+    v.minLength(1)
+  ),
+  total: amountSchema,
+  paid: amountSchema,
+  change: amountSchema,
+  foot: v.optional(lines)
+});
+
+/** A meal-ticket machine (食券機) or a drinks machine: groups of buttons, each a name and a price. */
+const machineSchema = v.strictObject({
+  kind: v.literal(`machine`),
+  variant: v.picklist([`tickets`, `drinks`]),
+  title: text,
+  groups: v.pipe(
+    v.array(
+      v.strictObject({
+        head: text,
+        tone: toneSchema,
+        buttons: v.pipe(
+          v.array(
+            v.strictObject({
+              name: text,
+              price: count,
+              /** A lit label on the button, such as 売り切れ. */
+              mark: v.optional(text)
+            })
+          ),
+          v.minLength(1)
+        )
+      })
+    ),
+    v.minLength(1)
+  ),
+  /** Stickers on the machine. */
+  notes: v.optional(lines)
+});
+
+/** A shop's stamp card: slots, the stamps so far, and what a full row earns. */
+const stampCardSchema = v.strictObject({
+  kind: v.literal(`stamp-card`),
+  shop: text,
+  title: text,
+  slots: v.pipe(count, v.minValue(4), v.maxValue(20)),
+  stamped: count,
+  rewards: v.pipe(
+    v.array(v.strictObject({ at: count, label: text })),
+    v.minLength(1)
+  ),
+  notes: v.optional(lines)
+});
+
+/** A ticket with a tear-off stub: a film, a concert. */
+const ticketSchema = v.strictObject({
+  kind: v.literal(`ticket`),
+  venue: text,
+  title: text,
+  fields: v.pipe(
+    v.array(v.strictObject({ label: text, value: text })),
+    v.minLength(2)
+  ),
+  stub: v.optional(lines)
+});
+
+/** A month on a wall: a rubbish calendar, a library's closed days. Marked days are coloured, and the legend says what each colour means. */
+const calendarSchema = v.strictObject({
+  kind: v.literal(`calendar`),
+  title: text,
+  /** The weekday heads, Sunday first. */
+  week: v.pipe(v.array(text), v.length(7)),
+  /** The weekday of the 1st, 0 for Sunday. */
+  first: v.pipe(count, v.maxValue(6)),
+  days: v.pipe(count, v.minValue(28), v.maxValue(31)),
+  legend: v.pipe(
+    v.array(v.strictObject({ tone: toneSchema, short: text, label: text })),
+    v.minLength(1)
+  ),
+  marks: v.array(v.strictObject({ day: count, tone: toneSchema })),
+  notes: v.optional(lines)
+});
+
+/** A forecast, as a weather app or the news shows it. */
+const weatherSchema = v.strictObject({
+  kind: v.literal(`weather`),
+  title: text,
+  /** Row labels: the high, the low, the chance of rain. */
+  labels: v.tuple([text, text, text]),
+  days: v.pipe(
+    v.array(
+      v.strictObject({
+        day: text,
+        sky: v.picklist([
+          `sunny`,
+          `cloudy`,
+          `rain`,
+          `snow`,
+          `sunny-cloudy`,
+          `cloudy-rain`
+        ]),
+        label: text,
+        high: v.number(),
+        low: v.number(),
+        rain: count
+      })
+    ),
+    v.minLength(3),
+    v.maxLength(7)
+  ),
+  notes: v.optional(lines)
+});
+
+/** The paper bag a pharmacy hands medicine over in: when to take it, how much, for how many days. */
+const medicineBagSchema = v.strictObject({
+  kind: v.literal(`medicine-bag`),
+  clinic: text,
+  patient: text,
+  medicine: text,
+  slots: v.pipe(
+    v.array(v.strictObject({ label: text, checked: v.boolean() })),
+    v.minLength(2)
+  ),
+  when: text,
+  amount: text,
+  days: text,
+  notes: v.optional(lines)
+});
+
+/** A printed form, filled in by hand: a missed-delivery slip, an application. */
+const formSchema = v.strictObject({
+  kind: v.literal(`form`),
+  variant: v.picklist([`delivery`, `application`]),
+  title: text,
+  head: v.optional(lines),
+  fields: v.pipe(
+    v.array(
+      v.strictObject({
+        label: text,
+        /** Written by hand. */
+        value: v.optional(text),
+        checks: v.optional(
+          v.pipe(
+            v.array(v.strictObject({ label: text, checked: v.boolean() })),
+            v.minLength(1)
+          )
+        )
+      })
+    ),
+    v.minLength(2)
+  ),
+  foot: v.optional(lines)
+});
+
+/** A group chat on a phone. */
+const chatSchema = v.strictObject({
+  kind: v.literal(`chat`),
+  room: text,
+  day: v.optional(text),
+  messages: v.pipe(
+    v.array(
+      v.strictObject({
+        from: text,
+        text,
+        time: text,
+        /** The reader's own message, on the right. */
+        me: v.optional(v.literal(true))
+      })
+    ),
+    v.minLength(2)
+  )
+});
+
+/**
+ * What a 問題6 picture shows: a kind of document someone living in Japan meets, structured rather than drawn, so a template lays it out and an edit is a reviewable diff.
+ *
+ * The kinds are part of what is tested. A student who knows a bus-stop timetable lists minutes by the hour, or that a receipt's おつり is the change, reads them faster.
+ */
+const materialSchema = v.variant(`kind`, [
+  sheetSchema,
+  stopTimetableSchema,
+  departureBoardSchema,
+  routeSearchSchema,
+  fareChartSchema,
+  stationSignsSchema,
+  receiptSchema,
+  machineSchema,
+  stampCardSchema,
+  ticketSchema,
+  calendarSchema,
+  weatherSchema,
+  medicineBagSchema,
+  formSchema,
+  chatSchema
+]);
 
 /** 問題6: information to search, shown as a picture. A test asks one of its questions. */
 export const infoItemSchema = v.strictObject({
@@ -290,6 +622,9 @@ export type ComposeItem = v.InferOutput<typeof composeItemSchema>;
 export type PassageItem = v.InferOutput<typeof passageItemSchema>;
 export type ReadingQuestion = v.InferOutput<typeof readingQuestionSchema>;
 export type Material = v.InferOutput<typeof materialSchema>;
+export type Block = v.InferOutput<typeof blockSchema>;
+export type Sheet = v.InferOutput<typeof sheetSchema>;
+export type Tone = v.InferOutput<typeof toneSchema>;
 export type ShortItem = v.InferOutput<typeof shortItemSchema>;
 export type MidItem = v.InferOutput<typeof midItemSchema>;
 export type InfoItem = v.InferOutput<typeof infoItemSchema>;
@@ -374,23 +709,196 @@ export const pointsOf = (item: Item): string[] => {
  * The one text form of the picture: its alt text, the readings line under it, and its share of the timer all come from here, so none can drift from what the picture shows.
  */
 export const materialMarkup = (material: Material): string =>
-  [
-    material.title,
-    ...material.blocks.flatMap((block) =>
-      `text` in block
-        ? block.text
-        : `table` in block
-          ? [block.table.head, ...block.table.rows].map((row) =>
-              row.filter((cell) => cell !== ``).join(` `)
-            )
-          : `lists` in block
-            ? block.lists.flatMap((list) => [
-                list.head,
-                ...list.rows.map((row) => row.join(` `))
-              ])
-            : block.panels.flatMap((panel) => [panel.head, ...panel.lines])
-    )
-  ].join(`\n`);
+  materialLines(material).join(`\n`);
+
+const blockLines = (block: Block): string[] =>
+  `text` in block
+    ? block.text
+    : `table` in block
+      ? [block.table.head, ...block.table.rows].map((row) =>
+          row.filter((cell) => cell !== ``).join(` `)
+        )
+      : `lists` in block
+        ? block.lists.flatMap((list) => [
+            list.head,
+            ...list.rows.map((row) => row.join(` `))
+          ])
+        : block.panels.flatMap((panel) => [panel.head, ...panel.lines]);
+
+/** A price as a till prints it: ¥1,200. */
+export const yen = (amount: number): string =>
+  `¥${amount.toLocaleString(`en-US`)}`;
+
+/** How a box on a form reads aloud: ticked or not. */
+export const CHECKS = { on: `☑`, off: `☐` } as const;
+
+const optional = (more: readonly string[] | undefined): readonly string[] =>
+  more ?? [];
+
+const materialLines = (material: Material): string[] => {
+  switch (material.kind) {
+    case `stop-timetable`:
+      return [
+        material.stop,
+        material.bound,
+        material.columns.join(` / `),
+        ...material.rows.map(
+          (row) =>
+            `${String(row.hour)}: ${row.minutes.map((column) => (column.length === 0 ? `－` : column.join(` `))).join(` / `)}`
+        ),
+        ...optional(material.notes)
+      ];
+    case `departure-board`:
+      return [
+        material.head.join(` `),
+        ...material.rows.map(
+          (row) => `${row.type} ${row.time} ${row.dest} ${row.track}`
+        ),
+        ...optional(material.note === undefined ? [] : [material.note])
+      ];
+    case `route-search`:
+      return [
+        `${material.from} → ${material.to}`,
+        material.when,
+        ...material.routes.flatMap((route) => [
+          `${route.label} ${route.depart} → ${route.arrive}`,
+          `${route.time} ${route.fare} ${route.transfers}`,
+          route.legs.join(` → `),
+          ...(route.tags === undefined ? [] : [route.tags.join(` `)])
+        ])
+      ];
+    case `fare-chart`:
+      return [
+        material.title,
+        ...material.stations.map(
+          (station) => `${station.name} ${station.fare}`
+        ),
+        ...optional(material.notes)
+      ];
+    case `station-signs`:
+      return material.signs.map(
+        (sign) => `${ARROWS[sign.arrow]} ${sign.lines.join(` `)}`
+      );
+    case `receipt`:
+      return [
+        material.store,
+        ...optional(material.head),
+        ...material.items.map((item) => `${item.name} ${yen(item.price)}`),
+        ...[material.total, material.paid, material.change].map(
+          (line) => `${line.label} ${yen(line.amount)}`
+        ),
+        ...optional(material.foot)
+      ];
+    case `machine`:
+      return [
+        material.title,
+        ...material.groups.flatMap((group) => [
+          group.head,
+          ...group.buttons.map((button) =>
+            [button.name, `${String(button.price)}{円|えん}`, button.mark]
+              .filter((part) => part !== undefined)
+              .join(` `)
+          )
+        ]),
+        ...optional(material.notes)
+      ];
+    case `stamp-card`:
+      return [
+        material.shop,
+        material.title,
+        `スタンプ ${String(material.stamped)} / ${String(material.slots)}`,
+        ...material.rewards.map(
+          (reward) => `${String(reward.at)}: ${reward.label}`
+        ),
+        ...optional(material.notes)
+      ];
+    case `ticket`:
+      return [
+        material.venue,
+        material.title,
+        ...material.fields.map((field) => `${field.label} ${field.value}`),
+        ...optional(material.stub)
+      ];
+    case `calendar`:
+      return [
+        material.title,
+        `1: ${material.week[material.first] ?? ``}`,
+        ...material.legend.map(
+          (entry) =>
+            `${entry.short} (${entry.label}): ${material.marks
+              .filter((mark) => mark.tone === entry.tone)
+              .map((mark) => String(mark.day))
+              .join(` `)}`
+        ),
+        material.week.join(` `),
+        ...optional(material.notes)
+      ];
+    case `weather`:
+      return [
+        material.title,
+        material.labels.join(` / `),
+        ...material.days.map(
+          (day) =>
+            `${day.day} ${day.label} ${String(day.high)}℃ / ${String(day.low)}℃ / ${String(day.rain)}%`
+        ),
+        ...optional(material.notes)
+      ];
+    case `medicine-bag`:
+      return [
+        material.clinic,
+        material.patient,
+        material.medicine,
+        material.slots
+          .map(
+            (slot) => `${slot.checked ? CHECKS.on : CHECKS.off}${slot.label}`
+          )
+          .join(` `),
+        material.when,
+        material.amount,
+        material.days,
+        ...optional(material.notes)
+      ];
+    case `form`:
+      return [
+        material.title,
+        ...optional(material.head),
+        ...material.fields.flatMap((field) => [
+          field.value === undefined
+            ? field.label
+            : `${field.label} ${field.value}`,
+          ...(field.checks ?? []).map(
+            (check) =>
+              `${check.checked ? CHECKS.on : CHECKS.off} ${check.label}`
+          )
+        ]),
+        ...optional(material.foot)
+      ];
+    case `chat`:
+      return [
+        material.room,
+        ...optional(material.day === undefined ? [] : [material.day]),
+        ...material.messages.map(
+          (message) => `${message.from} ${message.time}: ${message.text}`
+        )
+      ];
+    case `notice`:
+    case `sign`:
+    case `signboard`:
+    case `poster`:
+    case `board`:
+    case `chalkboard`:
+    case `flyer`:
+    case `whiteboard`:
+    case `directory`:
+    case `timetable`:
+      return [
+        ...optional(material.head),
+        material.title,
+        ...material.blocks.flatMap(blockLines),
+        ...optional(material.foot)
+      ];
+  }
+};
 
 /**
  * The review link for every point an item uses, by point id.
@@ -820,41 +1328,146 @@ const readingQuestionProblems = (
   return problems;
 };
 
-const materialProblems = (material: Material, where: string): string[] => [
-  ...readingMarkupProblems(material.title, `${where} title`),
-  ...material.blocks.flatMap((block, index) => {
-    const at = `${where} block ${String(index + 1)}`;
-    if (`text` in block) {
-      return block.text.flatMap((line) => readingMarkupProblems(line, at));
-    }
-    if (`table` in block) {
-      const { head, rows } = block.table;
+/**
+ * Every string in a picture's material, with where it sits.
+ *
+ * Walks the data rather than naming fields, so a field added to a document kind is checked the day it exists. Names such as `tone` hold no kanji, so they pass.
+ */
+const stringsOf = (
+  value: unknown,
+  at: string
+): Array<{ text: string; at: string }> => {
+  if (typeof value === `string`) return [{ text: value, at }];
+  if (Array.isArray(value)) {
+    return value.flatMap((entry, index) =>
+      stringsOf(entry, `${at} ${String(index + 1)}`)
+    );
+  }
+  if (typeof value === `object` && value !== null) {
+    return Object.entries(value).flatMap(([key, entry]) =>
+      stringsOf(entry, `${at} ${key}`)
+    );
+  }
+  return [];
+};
+
+/** What the schema cannot see: sums that must add up, rows that must fill their columns. */
+const structureProblems = (material: Material, where: string): string[] => {
+  switch (material.kind) {
+    case `stop-timetable`:
       return [
-        ...rows.flatMap((row, number) =>
+        ...material.rows.flatMap((row) =>
+          row.minutes.length === material.columns.length
+            ? []
+            : [
+                `${where} hour ${String(row.hour)}: ${String(row.minutes.length)} lists of minutes, but there are ${String(material.columns.length)} columns`
+              ]
+        ),
+        ...(material.rows.every(
+          (row, index) =>
+            index === 0 || row.hour > material.rows[index - 1].hour
+        )
+          ? []
+          : [`${where}: the hours must run in order`])
+      ];
+    case `fare-chart`:
+      return material.stations.filter((station) => station.here).length === 1
+        ? []
+        : [`${where}: mark exactly one station as the one you are at`];
+    case `receipt`: {
+      const sum = material.items.reduce((all, item) => all + item.price, 0);
+      const { total, paid, change } = material;
+      return [
+        ...(sum === total.amount
+          ? []
+          : [
+              `${where}: the items add up to ${yen(sum)}, but the total says ${yen(total.amount)}`
+            ]),
+        ...(paid.amount - total.amount === change.amount
+          ? []
+          : [
+              `${where}: ${yen(paid.amount)} paid for ${yen(total.amount)} leaves ${yen(paid.amount - total.amount)}, but the change says ${yen(change.amount)}`
+            ])
+      ];
+    }
+    case `calendar`: {
+      const tones = material.legend.map((entry) => entry.tone);
+      const days = material.marks.map((mark) => mark.day);
+      return [
+        ...(new Set(tones).size === tones.length
+          ? []
+          : [`${where}: two legend entries share a colour`]),
+        ...material.marks.flatMap((mark) => [
+          ...(tones.includes(mark.tone)
+            ? []
+            : [
+                `${where}: day ${String(mark.day)} is ${mark.tone}, which the legend does not explain`
+              ]),
+          ...(mark.day >= 1 && mark.day <= material.days
+            ? []
+            : [
+                `${where}: day ${String(mark.day)} is not in a ${String(material.days)}-day month`
+              ])
+        ]),
+        ...(new Set(days).size === days.length
+          ? []
+          : [`${where}: a day is marked twice`])
+      ];
+    }
+    case `stamp-card`:
+      return [
+        ...(material.stamped <= material.slots
+          ? []
+          : [
+              `${where}: ${String(material.stamped)} stamps on a card of ${String(material.slots)}`
+            ]),
+        ...material.rewards.flatMap((reward) =>
+          reward.at >= 1 && reward.at <= material.slots
+            ? []
+            : [
+                `${where}: a reward at stamp ${String(reward.at)}, but the card has ${String(material.slots)}`
+              ]
+        )
+      ];
+    case `departure-board`:
+    case `route-search`:
+    case `station-signs`:
+    case `machine`:
+    case `ticket`:
+    case `weather`:
+    case `medicine-bag`:
+    case `form`:
+    case `chat`:
+      return [];
+    case `notice`:
+    case `sign`:
+    case `signboard`:
+    case `poster`:
+    case `board`:
+    case `chalkboard`:
+    case `flyer`:
+    case `whiteboard`:
+    case `directory`:
+    case `timetable`:
+      return material.blocks.flatMap((block, index) => {
+        if (!(`table` in block)) return [];
+        const { head, rows } = block.table;
+        return rows.flatMap((row, number) =>
           row.length === head.length
             ? []
             : [
-                `${at} row ${String(number + 1)}: ${String(row.length)} cells, but the head has ${String(head.length)}`
+                `${where} block ${String(index + 1)} row ${String(number + 1)}: ${String(row.length)} cells, but the head has ${String(head.length)}`
               ]
-        ),
-        ...[head, ...rows]
-          .flat()
-          .flatMap((cell) => readingMarkupProblems(cell, at))
-      ];
-    }
-    if (`lists` in block) {
-      return block.lists.flatMap((list) =>
-        [list.head, ...list.rows.flat()].flatMap((cell) =>
-          readingMarkupProblems(cell, at)
-        )
-      );
-    }
-    return block.panels.flatMap((panel) =>
-      [panel.head, ...panel.lines].flatMap((line) =>
-        readingMarkupProblems(line, at)
-      )
-    );
-  })
+        );
+      });
+  }
+};
+
+const materialProblems = (material: Material, where: string): string[] => [
+  ...stringsOf(material, where).flatMap(({ text: markup, at }) =>
+    readingMarkupProblems(markup, at)
+  ),
+  ...structureProblems(material, where)
 ];
 
 const questionsProblems = (

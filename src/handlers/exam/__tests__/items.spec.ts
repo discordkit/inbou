@@ -16,7 +16,9 @@ import {
   type ComposeItem,
   type FormItem,
   type InfoItem,
+  type Material,
   type PassageItem,
+  type Sheet,
   type ShortItem
 } from "../items.js";
 
@@ -419,11 +421,11 @@ describe(`reading items`, () => {
     ...overrides
   });
 
-  const info = (blocks: InfoItem[`material`][`blocks`]): InfoItem => ({
+  const infoOf = (material: Material): InfoItem => ({
     id: `n5-d6-0001`,
     type: `info`,
     status: `draft`,
-    material: { title: `バスの {時間|じかん}`, blocks },
+    material,
     en: `Bus times.`,
     questions: [
       {
@@ -434,6 +436,23 @@ describe(`reading items`, () => {
         note: `n`
       }
     ]
+  });
+
+  const info = (blocks: Sheet[`blocks`]): InfoItem =>
+    infoOf({ kind: `notice`, title: `バスの {時間|じかん}`, blocks });
+
+  type Receipt = Extract<Material, { kind: `receipt` }>;
+  const till = (overrides: Partial<Receipt> = {}): Receipt => ({
+    kind: `receipt`,
+    store: `コンビニ`,
+    items: [
+      { name: `おにぎり`, price: 150 },
+      { name: `お{茶|ちゃ}`, price: 130 }
+    ],
+    total: { label: `{合計|ごうけい}`, amount: 280 },
+    paid: { label: `おあずかり`, amount: 300 },
+    change: { label: `おつり`, amount: 20 },
+    ...overrides
   });
 
   const asked = (
@@ -535,7 +554,7 @@ describe(`reading items`, () => {
         POINTS
       )
     ).toEqual([
-      `n5-d6-0001 block 1: kanji 郵 is above N4; write the word in kana`
+      `n5-d6-0001 blocks 1 lists 1 rows 1 2: kanji 郵 is above N4; write the word in kana`
     ]);
   });
 
@@ -557,14 +576,101 @@ describe(`reading items`, () => {
         POINTS
       )
     ).toEqual([
-      `n5-d6-0001 block 1: kanji 郵 is above N4; write the word in kana`
+      `n5-d6-0001 blocks 1 panels 2 lines 1: kanji 郵 is above N4; write the word in kana`
     ]);
+  });
+
+  it(`checks the kanji in every field of a document, not only in sheets`, () => {
+    // WHY: a receipt, a timetable or a chat has its own fields, and new kinds will add more. The check walks every string, so a field nobody listed is still read for kanji the student cannot read.
+    expect(
+      itemProblems(
+        infoOf(
+          till({
+            items: [
+              { name: `{郵|ゆう}びん`, price: 150 },
+              { name: `お{茶|ちゃ}`, price: 130 }
+            ]
+          })
+        ),
+        POINTS
+      )
+    ).toEqual([
+      `n5-d6-0001 items 1 name: kanji 郵 is above N4; write the word in kana`
+    ]);
+  });
+
+  it(`catches a receipt whose sums do not add up`, () => {
+    // WHY: a question asks how much was paid or what change came back. A till never prints wrong sums, so a picture that does teaches the student to distrust a right answer.
+    expect(itemProblems(infoOf(till()), POINTS)).toEqual([]);
+    expect(
+      itemProblems(
+        infoOf(
+          till({
+            total: { label: `{合計|ごうけい}`, amount: 300 },
+            change: { label: `おつり`, amount: 50 }
+          })
+        ),
+        POINTS
+      )
+    ).toEqual([
+      `n5-d6-0001: the items add up to ¥280, but the total says ¥300`,
+      `n5-d6-0001: ¥300 paid for ¥300 leaves ¥0, but the change says ¥50`
+    ]);
+  });
+
+  it(`catches a timetable hour that does not fill its columns`, () => {
+    // WHY: the minutes would slide under the wrong kind of day, and a student would take a Saturday bus that only runs on weekdays.
+    expect(
+      itemProblems(
+        infoOf({
+          kind: `stop-timetable`,
+          mode: `bus`,
+          stop: `{駅前|えきまえ}`,
+          bound: `{大学|だいがく}ゆき`,
+          columns: [`{月|げつ}〜{金|きん}`, `{土|ど}・{日|にち}`],
+          rows: [{ hour: 8, minutes: [[`10`, `40`]] }]
+        }),
+        POINTS
+      )
+    ).toEqual([
+      `n5-d6-0001 hour 8: 1 lists of minutes, but there are 2 columns`
+    ]);
+  });
+
+  it(`catches a calendar colour the legend does not explain`, () => {
+    // WHY: the colour is the only thing that says what a marked day is for. Without its legend entry the student would have to guess, and the paper never makes them guess.
+    expect(
+      itemProblems(
+        infoOf({
+          kind: `calendar`,
+          title: `2{月|がつ}`,
+          week: [
+            `{日|にち}`,
+            `{月|げつ}`,
+            `{火|か}`,
+            `{水|すい}`,
+            `{木|もく}`,
+            `{金|きん}`,
+            `{土|ど}`
+          ],
+          first: 0,
+          days: 28,
+          legend: [{ tone: `green`, short: `もえる`, label: `もえる ごみ` }],
+          marks: [
+            { day: 2, tone: `green` },
+            { day: 4, tone: `blue` }
+          ]
+        }),
+        POINTS
+      )
+    ).toEqual([`n5-d6-0001: day 4 is blue, which the legend does not explain`]);
   });
 
   it(`writes out every line of the picture for its alt text`, () => {
     // WHY: a student who cannot see the picture reads this instead, and the line left out could be the one that holds the answer. Empty corner cells add nothing to read.
     expect(
       materialMarkup({
+        kind: `notice`,
         title: `みどり {図書館|としょかん}`,
         blocks: [
           {
