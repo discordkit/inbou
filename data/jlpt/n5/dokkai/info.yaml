@@ -165,7 +165,7 @@
 
 - id: n5-d6-0004
   type: info
-  status: draft
+  status: reviewed
   material:
     title: "やまだ {病院|びょういん}"
     blocks:
@@ -227,7 +227,7 @@
 
 - id: n5-d6-0005
   type: info
-  status: draft
+  status: reviewed
   material:
     title: "2{月|がつ}の ごみの {日|ひ}"
     blocks:
@@ -290,7 +290,7 @@
 
 - id: n5-d6-0006
   type: info
-  status: draft
+  status: reviewed
   material:
     title: "さくら デパート"
     blocks:
@@ -344,7 +344,7 @@
 
 - id: n5-d6-0007
   type: info
-  status: draft
+  status: reviewed
   material:
     title: "{今週|こんしゅう}の よてい"
     blocks:
@@ -394,7 +394,7 @@
 
 - id: n5-d6-0008
   type: info
-  status: draft
+  status: reviewed
   material:
     title: "みなみ プール"
     blocks:
@@ -448,7 +448,7 @@
 
 - id: n5-d6-0009
   type: info
-  status: draft
+  status: reviewed
   material:
     title: "{駅|えき}から さくら {大学|だいがく}まで"
     blocks:
@@ -500,7 +500,7 @@
 
 - id: n5-d6-0010
   type: info
-  status: draft
+  status: reviewed
   material:
     title: "さくら {大学|だいがく}の おまつり"
     blocks:
@@ -549,7 +549,7 @@
 
 - id: n5-d6-0011
   type: info
-  status: draft
+  status: reviewed
   material:
     title: "スーパー まるや　セール"
     blocks:
@@ -604,7 +604,7 @@
 
 - id: n5-d6-0012
   type: info
-  status: draft
+  status: reviewed
   material:
     title: "みどり {日本語|にほんご}{学校|がっこう}"
     blocks:
@@ -654,7 +654,7 @@
 
 - id: n5-d6-0013
   type: info
-  status: draft
+  status: reviewed
   material:
     title: "{大学|だいがく}の クラブ"
     blocks:
@@ -714,7 +714,7 @@
 
 - id: n5-d6-0014
   type: info
-  status: draft
+  status: reviewed
   material:
     title: "{来週|らいしゅう}の {天気|てんき}"
     blocks:
@@ -763,7 +763,7 @@
 
 - id: n5-d6-0015
   type: info
-  status: draft
+  status: reviewed
   material:
     title: "えんそく　5{月|がつ}20{日|か}"
     blocks:
