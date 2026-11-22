@@ -9,8 +9,10 @@ import {
   type TestId
 } from "./blueprint.js";
 import {
+  BLANK,
   chunksOf,
   fill,
+  isVocab,
   joinChunks,
   materialMarkup,
   optionText,
@@ -19,6 +21,7 @@ import {
   plain,
   whyOf,
   WINDOW_SIZE,
+  withTarget,
   type ComposeItem,
   type Difficulty,
   type FormItem,
@@ -26,11 +29,13 @@ import {
   type Item,
   type ItemType,
   type MidItem,
+  type Option,
   type PassageItem,
   type ReadingQuestion,
   type ReviewLink,
   type ShortItem,
-  type Slot
+  type Slot,
+  type VocabItem
 } from "./items.js";
 
 /**
@@ -130,7 +135,13 @@ export const BASE_MS: Readonly<Record<ItemType, number>> = {
   mid: 30_000,
   // A picture may need opening at full size before it can be read: the user's
   // condition for pictures taller than a chat window.
-  info: 60_000
+  info: 60_000,
+  // Vocabulary: about the paper's pace with the reading time added, 20
+  // minutes for 21 questions. The corpus test holds the average to it.
+  kanji: 35_000,
+  spelling: 35_000,
+  context: 35_000,
+  paraphrase: 35_000
 };
 
 /** Reading time per character of text the player has to read. */
@@ -140,6 +151,8 @@ export const PER_CHAR_MS = 500;
  * How much longer than the formula above each 問題 runs.
  *
  * Set against the real paper (the user's choice, 2026-11-22). N5's grammar-and-reading section is 22 questions in 40 minutes, and /bunpou and /dokkai are those 22. /bunpou keeps the formula's pace, about a minute a question, as guides advise for grammar. Reading gets the rest, about 22 minutes: about 3.4 minutes for a 問題4 question, 5.4 for a 問題5 question and 4.5 for 問題6, near the guides' 3 for a short text and 5 to 6 for a longer one. The factors turn the formula's average for each 問題 into those times, and keep longer texts longer. The corpus test holds the pair to the real 40 minutes.
+ *
+ * /goi keeps the formula's pace. Section 1 allows 20 minutes for 21 questions, about what the formula gives its short sentences, and a corpus test holds it there.
  */
 export const PACE: Readonly<Record<ItemType, number>> = {
   form: 1,
@@ -147,7 +160,11 @@ export const PACE: Readonly<Record<ItemType, number>> = {
   passage: 1,
   short: 2,
   mid: 2.5,
-  info: 1.8
+  info: 1.8,
+  kanji: 1,
+  spelling: 1,
+  context: 1,
+  paraphrase: 1
 };
 
 /** How a ★ line shows its four blanks, with the star in one. */
@@ -219,13 +236,15 @@ interface Card {
   index: number;
   difficulty: Difficulty;
   points: readonly string[];
+  /** The word a 漢字読み or 表記 card asks about. */
+  word?: string;
 }
 
 /** A deck whose cards are drawn one by one, by difficulty. */
 type DeckType = MixPlan[`type`] | `short` | `info`;
 
 /**
- * A form's cards are its slots; a compose item's are its windows; a short text's and a picture's are their questions.
+ * A form's cards are its slots; a compose item's are its windows; a short text's and a picture's are their questions; a vocabulary item is one card.
  */
 const cardsOf = (items: readonly Item[], type: DeckType): Card[] =>
   items.flatMap((item): Card[] => {
@@ -238,12 +257,17 @@ const cardsOf = (items: readonly Item[], type: DeckType): Card[] =>
         ? item.slots
         : item.type === `compose`
           ? item.windows
-          : item.questions;
+          : item.type === `short` || item.type === `info`
+            ? item.questions
+            : [item];
+    const word =
+      item.type === `kanji` || item.type === `spelling` ? item.word : undefined;
     return units.map((unit, index) => ({
       item,
       index,
       difficulty: unit.difficulty,
-      points: unit.points ?? []
+      points: unit.points ?? [],
+      ...(word === undefined ? {} : { word })
     }));
   });
 
@@ -252,7 +276,9 @@ const LEVELS: readonly Difficulty[] = [1, 2, 3];
 /**
  * Draw one deck's share, by difficulty.
  *
- * Three preferences, strongest first:
+ * One rule: **never a word in `taken`**, the words this test has already asked. A 表記 card asking あめ after a 漢字読み card revealed 雨 as あめ would give its answer away.
+ *
+ * Then three preferences, strongest first:
  *
  *  1. **One card per item.** Two slots of the same sentence in one test would
  *     show the sentence twice, with the second answer already given away.
@@ -267,9 +293,12 @@ const LEVELS: readonly Difficulty[] = [1, 2, 3];
 export const drawDeck = (
   items: readonly Item[],
   plan: { type: DeckType; mix: Mix },
-  random: Random
+  random: Random,
+  taken: ReadonlySet<string> = new Set()
 ): Array<{ item: Item; index: number }> => {
-  const cards = cardsOf(items, plan.type);
+  const cards = cardsOf(items, plan.type).filter(
+    (card) => card.word === undefined || !taken.has(card.word)
+  );
   const wanted = LEVELS.flatMap((level) =>
     Array.from({ length: plan.mix[level] }, () => level)
   );
@@ -513,22 +542,35 @@ const MONDAI_OF: Readonly<Record<ReadingItem[`type`], 4 | 5 | 6>> = {
 };
 
 /**
+ * The answer and three of its wrong options, shuffled, with each option's why beside it.
+ *
+ * Shuffled as pairs, so a why can never end up under another option.
+ */
+const drawnOptions = (
+  answer: string,
+  wrong: readonly Option[],
+  random: Random
+): { options: string[]; whys: string[]; correct: number } => {
+  const drawn = shuffle(wrong, random).slice(0, OPTION_COUNT - 1);
+  const all = shuffle([answer, ...drawn], random);
+  return {
+    options: all.map(optionText),
+    whys: all.map((option) => whyOf(option) ?? ``),
+    correct: all.indexOf(answer)
+  };
+};
+
+/**
  * A reading question's four options, with each option's why beside it.
  *
- * Drawn options are shuffled as pairs, so a why can never end up under another option. Ordered options keep the order they are written in: the paper prints times and prices in order, and shuffled, 9:30 could come before 9:00.
+ * Drawn options are shuffled as pairs (see {@link drawnOptions}). Ordered options keep the order they are written in: the paper prints times and prices in order, and shuffled, 9:30 could come before 9:00.
  */
 const readingOptions = (
   question: ReadingQuestion,
   random: Random
 ): { options: string[]; whys: string[]; correct: number } => {
   if (`wrong` in question) {
-    const drawn = shuffle(question.wrong, random).slice(0, OPTION_COUNT - 1);
-    const all = shuffle([question.answer, ...drawn], random);
-    return {
-      options: all.map(optionText),
-      whys: all.map((option) => whyOf(option) ?? ``),
-      correct: all.indexOf(question.answer)
-    };
+    return drawnOptions(question.answer, question.wrong, random);
   }
   return {
     options: question.options.map(optionText),
@@ -589,6 +631,91 @@ export const readingQuestions = (
       timeoutMs: timeoutFor(item.type, `${read}${question.question}`, options)
     };
   });
+};
+
+const VOCAB_MONDAI: Readonly<Record<VocabItem[`type`], Mondai>> = {
+  kanji: 1,
+  spelling: 2,
+  context: 3,
+  paraphrase: 4
+};
+
+/**
+ * What a vocabulary card shows, and what its reveal shows.
+ *
+ * - 漢字読み shows the kanji underlined and no reading: the reading is the question. The reveal adds it.
+ * - 表記 shows the word in kana underlined. The reveal shows it written, with its reading when it has kanji.
+ * - 文脈規定 shows its blank. The reveal fills it in.
+ * - 言い換え underlines the whole sentence, as the paper does; the answer is another sentence, named in the reveal.
+ */
+const vocabPrompts = (
+  item: VocabItem
+): { prompt: string; answered: string } => {
+  const target = (show: (word: string) => string): string =>
+    withTarget(item.sentence, show);
+  switch (item.type) {
+    case `kanji`:
+      return {
+        prompt: item.sentence,
+        answered: target((word) => `__{${word}|${item.answer}}__`)
+      };
+    case `spelling`:
+      return {
+        prompt: item.sentence,
+        answered: target((word) =>
+          /\p{Script=Han}/u.test(item.answer)
+            ? `__{${item.answer}|${word}}__`
+            : `__${item.answer}__`
+        )
+      };
+    case `context`:
+      return {
+        prompt: item.sentence,
+        answered: item.sentence.replace(BLANK, `__${item.answer}__`)
+      };
+    case `paraphrase`:
+      return {
+        prompt: `__${item.sentence}__`,
+        answered: `__${item.sentence}__`
+      };
+  }
+};
+
+/**
+ * Section 1: one sentence, one question, on a card of its own.
+ *
+ * Whys are kept only when the item has some: a card's whys are what make the session hold its voters' reply tokens, and a token is a credential, so a card with nothing to explain holds none.
+ */
+export const vocabQuestion = (
+  item: VocabItem,
+  number: number,
+  random: Random
+): ExamQuestion => {
+  const { prompt, answered } = vocabPrompts(item);
+  const { options, whys, correct } = drawnOptions(
+    item.answer,
+    item.wrong,
+    random
+  );
+  return {
+    itemId: item.id,
+    slot: 1,
+    type: item.type,
+    mondai: VOCAB_MONDAI[item.type],
+    number,
+    card: number,
+    prompt,
+    answered,
+    options,
+    ...(whys.some((why) => why !== ``) ? { whys } : {}),
+    correct,
+    difficulty: item.difficulty,
+    points: [],
+    en: item.en,
+    note: item.note,
+    token: tokenFrom(random),
+    timeoutMs: timeoutFor(item.type, prompt, options)
+  };
 };
 
 /** Every way to choose `size` entries of `list`, each in list order. */
@@ -698,6 +825,8 @@ export const drawTest = (
   pictures: Readonly<Record<string, string>> = {}
 ): ExamQuestion[] => {
   const questions: ExamQuestion[] = [];
+  /** The words asked so far, so a later deck cannot give an earlier answer away. */
+  const words = new Set<string>();
   const plans = BLUEPRINTS[test];
   const reading = plans.filter(
     (plan): plan is ReadingPlan => `questions` in plan
@@ -756,12 +885,17 @@ export const drawTest = (
       }
       continue;
     }
-    for (const { item, index } of drawDeck(items, plan, random)) {
+    for (const { item, index } of drawDeck(items, plan, random, words)) {
       const number = questions.length + 1;
       if (item.type === `form`) {
         questions.push(formQuestion(item, index, number, random));
       } else if (item.type === `compose`) {
         questions.push(composeQuestion(item, index, number, random));
+      } else if (isVocab(item)) {
+        questions.push(vocabQuestion(item, number, random));
+        if (item.type === `kanji` || item.type === `spelling`) {
+          words.add(item.word);
+        }
       }
     }
   }

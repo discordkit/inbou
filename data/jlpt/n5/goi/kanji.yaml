@@ -1,0 +1,97 @@
+# 問題1 漢字読み — read the underlined word, written in kanji, and choose its reading in hiragana.
+#
+# The sentence is all kana except the underlined word, `__like this__`, and nothing carries a reading: the reading is the question. `word` is the word's dictionary form as JMdict spells it. The build checks it against the N5 word list, and a test never asks the same word in 問題1 and 問題2. Original sentences only: never copy a published one.
+#
+# Distractors come in two kinds, as on the paper. Near-miss readings, wrong by one sound: a long or short vowel, a dakuten, a small っ, or a kanji's reading from another word. Or other words of the same kind (another colour, another direction). Never use another real reading of the same kanji word: that option would be right somewhere, and the build fails on it.
+#
+# A medium or hard question says why each wrong option is wrong (`- option: … why: …`), because the rule behind a near miss may be new to the student; the build fails without them. Whys are sent privately to the student who chose that option. The note is public at the reveal: what the question asks, and its trap.
+
+- id: n5-g1-0001
+  type: kanji
+  status: draft
+  word: 白い
+  sentence: "つくえの うえに __白い__ ノートが あります。"
+  en: "There is a white notebook on the desk."
+  answer: しろい
+  wrong: [くろい, あかい, あおい]
+  difficulty: 1
+  note: "This asks the reading of 白い, white. くろい is 黒い (black), あかい 赤い (red) and あおい 青い (blue)."
+
+- id: n5-g1-0002
+  type: kanji
+  status: draft
+  word: 北
+  sentence: "えきの __北__に こうえんが あります。"
+  en: "There is a park to the north of the station."
+  answer: きた
+  wrong: [みなみ, ひがし, にし]
+  difficulty: 1
+  note: "This asks the reading of 北, north. みなみ is 南 (south), ひがし 東 (east) and にし 西 (west)."
+
+- id: n5-g1-0003
+  type: kanji
+  status: draft
+  word: 今週
+  sentence: "__今週__は しごとが いそがしいです。"
+  en: "I am busy with work this week."
+  answer: こんしゅう
+  wrong:
+    - option: こんしゅ
+      why: "週 has a long vowel: しゅう. こんしゅ drops the う."
+    - option: こんじゅう
+      why: "週 is しゅう, with no dakuten. じゅう is how 十 sounds."
+    - option: いましゅう
+      why: "今 is いま on its own, but こん in words like 今週 and 今月."
+  difficulty: 2
+  note: "This asks the reading of 今週, this week. 今 is こん here, and 週 is a long しゅう."
+
+- id: n5-g1-0004
+  type: kanji
+  status: draft
+  word: 先月
+  sentence: "__先月__ にほんへ きました。"
+  en: "I came to Japan last month."
+  answer: せんげつ
+  wrong:
+    - option: せんがつ
+      why: "月 is がつ only in the names of the months, like 四がつ. In 先月, 今月 and 来月 it is げつ."
+    - option: せんつき
+      why: "つき is 月 on its own: the moon. In 先月 it is げつ."
+    - option: さきげつ
+      why: "先 is さき on its own (ahead), but せん in 先月 and 先週."
+  difficulty: 2
+  note: "This asks the reading of 先月, last month. In month words like this, 月 is げつ."
+
+- id: n5-g1-0005
+  type: kanji
+  status: draft
+  word: 時計
+  sentence: "この __時計__は ちちに もらいました。"
+  en: "I got this watch from my father."
+  answer: とけい
+  wrong:
+    - option: どけい
+      why: "On its own, 時計 is とけい. It becomes どけい only after another word, as in うでどけい (a wristwatch)."
+    - option: じけい
+      why: "時 is じ in 時間 and 三時, but 時計 has a reading of its own: とけい."
+    - option: ときけい
+      why: "時 is とき on its own (time), but 時計 is read とけい."
+  difficulty: 3
+  note: "This asks the reading of 時計, a clock or watch. The word has its own reading, とけい, which its kanji do not suggest."
+
+- id: n5-g1-0006
+  type: kanji
+  status: draft
+  word: 二十日
+  sentence: "らいげつの __二十日__に ともだちが きます。"
+  en: "A friend is coming on the 20th of next month."
+  answer: はつか
+  wrong:
+    - option: ふつか
+      why: "ふつか is 二日, the 2nd. 二十日, the 20th, is はつか."
+    - option: はっか
+      why: "はつか has a full つ. With a small っ, はっか is a different word (mint)."
+    - option: にじゅっか
+      why: "There is no にじゅっか. The 20th has its own reading, はつか, like ついたち for the 1st."
+  difficulty: 3
+  note: "This asks the reading of 二十日, the 20th of the month. Like ついたち and ふつか, it has its own reading: はつか."

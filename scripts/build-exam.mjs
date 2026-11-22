@@ -75,8 +75,8 @@ if (pointIds.size !== points.length) {
   process.exit(1);
 }
 
-/** Grammar, then reading: one folder of YAML each. */
-const DECKS = [`bunpou`, `dokkai`];
+/** Grammar, reading and vocabulary: one folder of YAML each. */
+const DECKS = [`bunpou`, `dokkai`, `goi`];
 
 const items = DECKS.flatMap((deck) =>
   readdirSync(`${ROOT}/${deck}`)
@@ -144,7 +144,8 @@ console.log(
 
 // Coverage: how many cards each deck holds, beside what one test draws. A
 // deck is playable when it holds at least twice that, so two tests in a row
-// differ. 問題1's cards are slots, 問題2's windows, and 問題3's whole passages.
+// differ. A form's cards are its slots, a compose item's its windows, a
+// passage deck's its whole passages, and a vocabulary item is one card.
 const unitsOf = (type) =>
   shipped
     .filter((item) => item.type === type)
@@ -153,7 +154,7 @@ const unitsOf = (type) =>
         ? item.slots
         : item.type === `compose`
           ? item.windows
-          : []
+          : [item]
     );
 const report = (label, have, draw) =>
   console.log(
@@ -191,6 +192,27 @@ for (const [type, label] of Object.entries(READING)) {
   }
 }
 
+// Vocabulary: items per type, drafts included, as for reading. A vocabulary item is one question.
+const VOCAB = {
+  kanji: `問題1 漢字読み`,
+  spelling: `問題2 表記`,
+  context: `問題3 文脈規定`,
+  paraphrase: `問題4 言い換え類義`
+};
+for (const [type, label] of Object.entries(VOCAB)) {
+  const of = items.filter((item) => item.type === type);
+  const reviewed = of.filter((item) => item.status === `reviewed`).length;
+  const levels = [1, 2, 3]
+    .map(
+      (level) =>
+        `d${String(level)} ${String(of.filter((item) => item.difficulty === level).length)}`
+    )
+    .join(`, `);
+  console.log(
+    `goi ${label}: ${String(of.length)} items (${String(reviewed)} reviewed; ${levels})`
+  );
+}
+
 for (const [test, plans] of Object.entries(BLUEPRINTS)) {
   for (const plan of plans) {
     if (`questions` in plan) {
@@ -205,7 +227,7 @@ for (const [test, plans] of Object.entries(BLUEPRINTS)) {
           Math.min(plan.questions, READING_MIX[level])
         );
       }
-    } else if (plan.mondai === 3) {
+    } else if (plan.type === `passage`) {
       const passages = shipped.filter(
         (item) => item.type === `passage` && item.blanks.length >= plan.blanks
       ).length;

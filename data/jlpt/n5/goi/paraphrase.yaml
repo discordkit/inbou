@@ -1,0 +1,111 @@
+# 問題4 言い換え類義 — choose the sentence that means about the same as the underlined one.
+#
+# The sentence and the options are all kana, as on the paper, and the card underlines the whole sentence. The options are whole sentences that differ from each other in one word or phrase, so the student compares meanings, not sentences. Exactly one means the same: each wrong option must change the meaning, never only the tone. Original sentences only: never copy a published one.
+#
+# A medium or hard question says why each wrong option is wrong (`- option: … why: …`): what the changed word means, and how that changes the sentence. The build fails without them. The note is public at the reveal: the word or phrase that is paraphrased, and what it means.
+
+- id: n5-g4-0001
+  type: paraphrase
+  status: draft
+  sentence: "この へやは せまいです。"
+  en: "This room is small."
+  answer: "この へやは ひろくないです。"
+  wrong:
+    - "この へやは ひろいです。"
+    - "この へやは あかるくないです。"
+    - "この へやは しずかです。"
+  difficulty: 1
+  note: "This asks for another way to say せまい, small (of a space): ひろくない, not spacious."
+
+- id: n5-g4-0002
+  type: paraphrase
+  status: draft
+  sentence: "わたしは まいあさ コーヒーを のみます。"
+  en: "I drink coffee every morning."
+  answer: "わたしは あさは いつも コーヒーを のみます。"
+  wrong:
+    - "わたしは あさは ときどき コーヒーを のみます。"
+    - "わたしは よるは いつも コーヒーを のみます。"
+    - "わたしは あさは あまり コーヒーを のみません。"
+  difficulty: 1
+  note: "This asks for another way to say まいあさ, every morning: あさは いつも."
+
+- id: n5-g4-0003
+  type: paraphrase
+  status: draft
+  sentence: "この えいがは つまらなかったです。"
+  en: "This film was boring."
+  answer: "この えいがは おもしろくなかったです。"
+  wrong:
+    - option: "この えいがは おもしろかったです。"
+      why: "おもしろかった is the opposite: the film was fun."
+    - option: "この えいがは みじかかったです。"
+      why: "みじかい is short. つまらない is about being dull, not about length."
+    - option: "この えいがは ながかったです。"
+      why: "ながい is long. A long film is not always a dull one."
+  difficulty: 2
+  note: "This asks for another way to say つまらない, boring: おもしろくない, not interesting."
+
+- id: n5-g4-0004
+  type: paraphrase
+  status: draft
+  sentence: "ここは だいどころです。"
+  en: "This is the kitchen."
+  answer: "ここで りょうりを します。"
+  wrong:
+    - option: "ここで ねます。"
+      why: "You sleep in a bedroom. A だいどころ is for cooking."
+    - option: "ここで おふろに はいります。"
+      why: "That is the bathroom. A だいどころ is for cooking."
+    - option: "ここで べんきょうを します。"
+      why: "A だいどころ is a kitchen, for cooking, not for studying."
+  difficulty: 2
+  note: "This asks what a だいどころ is: the room where you cook, りょうりを する ところ."
+
+- id: n5-g4-0005
+  type: paraphrase
+  status: draft
+  sentence: "わたしは おととい びょういんへ いきました。"
+  en: "I went to the hospital the day before yesterday."
+  answer: "わたしは ふつかまえに びょういんへ いきました。"
+  wrong:
+    - option: "わたしは きのう びょういんへ いきました。"
+      why: "きのう is one day ago. おととい is two."
+    - option: "わたしは みっかまえに びょういんへ いきました。"
+      why: "みっかまえ is three days ago. おととい is two."
+    - option: "わたしは けさ びょういんへ いきました。"
+      why: "けさ is this morning. おととい is two days ago."
+  difficulty: 2
+  note: "This asks for another way to say おととい, the day before yesterday: ふつかまえ, two days ago."
+
+- id: n5-g4-0006
+  type: paraphrase
+  status: draft
+  sentence: "わたしは あさって とうきょうへ いきます。"
+  en: "I am going to Tokyo the day after tomorrow."
+  answer: "わたしは あしたの つぎの ひに とうきょうへ いきます。"
+  wrong:
+    - option: "わたしは きのうの つぎの ひに とうきょうへ いきます。"
+      why: "The day after yesterday is today, not あさって."
+    - option: "わたしは あしたの まえの ひに とうきょうへ いきます。"
+      why: "The day before tomorrow is today, not あさって."
+    - option: "わたしは おとといの つぎの ひに とうきょうへ いきます。"
+      why: "The day after おととい is きのう, yesterday."
+  difficulty: 3
+  note: "This asks which day あさって is: the day after tomorrow, あしたの つぎの ひ. Each wrong option counts from another day and lands somewhere else."
+
+- id: n5-g4-0007
+  type: paraphrase
+  status: draft
+  sentence: "あには わたしより せが たかいです。"
+  en: "My older brother is taller than me."
+  answer: "わたしは あにより せが ひくいです。"
+  wrong:
+    - option: "わたしは あにより せが たかいです。"
+      why: "This turns it round: here I am the taller one."
+    - option: "あには わたしより せが ひくいです。"
+      why: "This says my brother is shorter, the opposite."
+    - option: "わたしと あには せが おなじぐらいです。"
+      why: "おなじぐらい is about the same height, but the sentence says he is taller."
+  difficulty: 3
+  note: "This asks for the same comparison from the other side: if my brother is taller than me, I am shorter than him, あにより ひくい."

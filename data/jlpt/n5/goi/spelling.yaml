@@ -1,0 +1,103 @@
+# 問題2 表記 — the underlined word is in kana; choose how it is written, in kanji or katakana.
+#
+# The sentence is all kana, and the underlined word, `__like this__`, is the word to spell. `word` is the word's dictionary form as JMdict spells it. The build checks it against the N5 word list, and a test never asks the same word in 問題1 and 問題2. Original sentences only: never copy a published one.
+#
+# Distractors are look-alikes, as on the paper: a kanji with a similar shape (休 and 体, 名 and 各), the wrong okurigana, or katakana that differ by a stroke or a dakuten (ン and ソ, ボ and ポ). They need not be N5 kanji, because the student only has to reject them. Never use a real word with the same reading (はし: 橋 and 箸): that option would be right somewhere, and the build fails on it.
+#
+# A medium or hard question says why each wrong option is wrong (`- option: … why: …`): what the look-alike really is, so the student can tell the two apart next time. The build fails without them. The note is public at the reveal.
+
+- id: n5-g2-0001
+  type: spelling
+  status: draft
+  word: 水
+  sentence: "すみません、__みず__を ください。"
+  en: "Excuse me, may I have some water?"
+  answer: 水
+  wrong: [氷, 木, 火]
+  difficulty: 1
+  note: "This asks how みず is written: 水. 氷 is こおり (ice), 木 is き (a tree) and 火 is ひ (fire)."
+
+- id: n5-g2-0002
+  type: spelling
+  status: draft
+  word: 右
+  sentence: "__みぎ__の ドアから でて ください。"
+  en: "Please go out through the door on the right."
+  answer: 右
+  wrong:
+    - option: 左
+      why: "左 is ひだり, the other side. 右 has 口 at the bottom; 左 has 工."
+    - option: 石
+      why: "石 is いし, a stone."
+    - option: 名
+      why: "名 is the な of なまえ (a name)."
+  difficulty: 2
+  note: "This asks how みぎ is written: 右. Its partner 左 (ひだり) differs only at the bottom."
+
+- id: n5-g2-0003
+  type: spelling
+  status: draft
+  word: ボールペン
+  sentence: "この __ぼーるぺん__で かいて ください。"
+  en: "Please write with this ballpoint pen."
+  answer: ボールペン
+  wrong:
+    - option: ボールペソ
+      why: "The last letter is ン (n). ソ (so) looks like it, but its long stroke goes down from the top."
+    - option: ポールペン
+      why: "ぼ has a dakuten, so it is ボ. ポ, with the small circle, is ぽ."
+    - option: ボーレペン
+      why: "る is ル. レ is れ."
+  difficulty: 2
+  note: "This asks how ぼーるぺん is written: ボールペン. Words from other languages are written in katakana."
+
+- id: n5-g2-0004
+  type: spelling
+  status: draft
+  word: 名前
+  sentence: "ここに __なまえ__を かいて ください。"
+  en: "Please write your name here."
+  answer: 名前
+  wrong:
+    - option: 各前
+      why: "The first kanji is 名 (な). 各 (かく, each) has a different top."
+    - option: 名部
+      why: "The second kanji is 前 (まえ). 部 is ぶ, a part or a club."
+    - option: 各部
+      why: "Neither kanji is right: なまえ is 名 and 前."
+  difficulty: 2
+  note: "This asks how なまえ is written: 名前, the な of 名 and the まえ of 前."
+
+- id: n5-g2-0005
+  type: spelling
+  status: draft
+  word: 電車
+  sentence: "まいあさ __でんしゃ__で かいしゃへ いきます。"
+  en: "I go to work by train every morning."
+  answer: 電車
+  wrong:
+    - option: 雷車
+      why: "雷 is かみなり, thunder: 田 under the rain. 電 has 申 under the rain, with a long tail."
+    - option: 電東
+      why: "The second kanji is 車 (くるま). 東 is ひがし, east."
+    - option: 雷東
+      why: "Both kanji are look-alikes. でんしゃ is 電, with 申 under the rain, and 車."
+  difficulty: 3
+  note: "This asks how でんしゃ is written: 電車. 電 is electricity, and 車 a vehicle."
+
+- id: n5-g2-0006
+  type: spelling
+  status: draft
+  word: 新しい
+  sentence: "きのう __あたらしい__ くつを かいました。"
+  en: "I bought new shoes yesterday."
+  answer: 新しい
+  wrong:
+    - option: 親しい
+      why: "親しい is したしい, close (as friends are). 親 has 見 on the right; 新 has 斤."
+    - option: 新い
+      why: "The kanji is right, but あたらしい keeps しい after it: 新しい."
+    - option: 薪しい
+      why: "薪 is たきぎ, firewood: 新 with grass on top. There is no such word."
+  difficulty: 3
+  note: "This asks how あたらしい is written: 新しい, with しい after the kanji."

@@ -15,7 +15,7 @@ import type { Difficulty } from "./items.js";
 export type Mondai = 1 | 2 | 3 | 4 | 5 | 6;
 
 /** The tests a channel can start. */
-export type TestId = `bunpou` | `dokkai`;
+export type TestId = `bunpou` | `dokkai` | `goi`;
 
 /** How many questions of each difficulty. */
 export type Mix = Readonly<Record<Difficulty, number>>;
@@ -29,7 +29,12 @@ export type Mix = Readonly<Record<Difficulty, number>>;
  */
 export type MixPlan =
   | { mondai: 1; type: `form`; mix: Mix }
-  | { mondai: 2; type: `compose`; mix: Mix };
+  | { mondai: 2; type: `compose`; mix: Mix }
+  // Section 1, numbered from 1 again. Each card is a whole item: one sentence, one question.
+  | { mondai: 1; type: `kanji`; mix: Mix }
+  | { mondai: 2; type: `spelling`; mix: Mix }
+  | { mondai: 3; type: `context`; mix: Mix }
+  | { mondai: 4; type: `paraphrase`; mix: Mix };
 
 /**
  * 問題3's share: one passage, and how many of its blanks to ask.
@@ -62,7 +67,7 @@ export type DeckPlan = MixPlan | PassagePlan | ReadingPlan;
 /**
  * What each test draws.
  *
- * Grammar is the real N5 paper's 9 + 4 + 4; the mixes are a first guess, open in the spec (section 10). Reading is its 2 + 2 + 1.
+ * Grammar is the real N5 paper's 9 + 4 + 4; the mixes are a first guess, open in the spec (section 10). Reading is its 2 + 2 + 1. Vocabulary is Section 1's 7 + 5 + 6 + 3, with first-guess mixes too.
  */
 export const BLUEPRINTS: Readonly<Record<TestId, readonly DeckPlan[]>> = {
   bunpou: [
@@ -74,6 +79,13 @@ export const BLUEPRINTS: Readonly<Record<TestId, readonly DeckPlan[]>> = {
     { mondai: 4, type: `short`, questions: 2, together: false },
     { mondai: 5, type: `mid`, questions: 2, together: true },
     { mondai: 6, type: `info`, questions: 1, together: false }
+  ],
+  // 漢字読み comes before 表記, and the draw keeps their words apart: the 表記 deck never asks a word the 漢字読み deck showed.
+  goi: [
+    { mondai: 1, type: `kanji`, mix: { 1: 2, 2: 3, 3: 2 } },
+    { mondai: 2, type: `spelling`, mix: { 1: 2, 2: 2, 3: 1 } },
+    { mondai: 3, type: `context`, mix: { 1: 2, 2: 3, 3: 1 } },
+    { mondai: 4, type: `paraphrase`, mix: { 1: 1, 2: 1, 3: 1 } }
   ]
 };
 

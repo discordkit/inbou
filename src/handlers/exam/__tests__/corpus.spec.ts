@@ -3,7 +3,7 @@ import * as v from "valibot";
 import { describe, expect, it } from "vite-plus/test";
 import { parse } from "yaml";
 import { pictureName, versionsOf } from "../../../../scripts/lib/pictures.mjs";
-import { BLUEPRINTS } from "../blueprint.js";
+import { BLUEPRINTS, type MixPlan, type PassagePlan } from "../blueprint.js";
 import corpus from "../corpus.json" with { type: "json" };
 import {
   composeQuestion,
@@ -12,6 +12,7 @@ import {
   passageQuestions,
   readingQuestions,
   reviewOf,
+  vocabQuestion,
   type ExamQuestion
 } from "../draw.js";
 import { materialHtml, materialWidth } from "../material/index.js";
@@ -22,20 +23,24 @@ import {
   display,
   fill,
   grammarPointsSchema,
+  isVocab,
   itemProblems,
   itemsSchema,
   materialMarkup,
   optionText,
   reviewLinksOf,
+  whyOf,
   WINDOW_SIZE,
   type InfoItem,
   type Item,
-  type Slot
+  type Slot,
+  type VocabItem
 } from "../items.js";
 import {
   CONTENT_MAX,
   followUpText,
   LABEL_MAX,
+  myResultsText,
   questionMessage,
   revealMessage
 } from "../render.js";
@@ -57,7 +62,7 @@ const points = v.parse(
   read(`${ROOT}/grammar-points.yaml`)
 );
 const pointIds = new Set(points.map((point) => point.id));
-const items = [`bunpou`, `dokkai`].flatMap((deck) =>
+const items = [`bunpou`, `dokkai`, `goi`].flatMap((deck) =>
   readdirSync(`${ROOT}/${deck}`)
     .filter((file) => file.endsWith(`.yaml`))
     .sort()
@@ -96,7 +101,9 @@ const longestPool = (slot: Slot): Slot => ({
 const zero = (): number => 0;
 
 /** How many blanks a test asks of its passage. */
-const ASKED = BLUEPRINTS.bunpou.find((plan) => plan.mondai === 3)?.blanks ?? 4;
+const ASKED =
+  BLUEPRINTS.bunpou.find((plan): plan is PassagePlan => plan.type === `passage`)
+    ?.blanks ?? 4;
 
 /** Every way to choose `size` entries of `list`, each in list order. */
 const choices = <T>(list: readonly T[], size: number): T[][] =>
@@ -181,8 +188,27 @@ const longestCards = (item: Item): ExamQuestion[][] => {
         )
       );
     }
+    case `kanji`:
+    case `spelling`:
+    case `context`:
+    case `paraphrase`:
+      return [[vocabQuestion(longestVocab(item), 99, zero)]];
   }
 };
+
+/** A vocabulary item whose pool holds only its three longest wrong options, whys included. */
+const longestVocab = (item: VocabItem): VocabItem => ({
+  ...item,
+  wrong: [...item.wrong]
+    .sort(
+      (a, b) =>
+        optionText(b).length +
+        (whyOf(b) ?? ``).length -
+        optionText(a).length -
+        (whyOf(a) ?? ``).length
+    )
+    .slice(0, 3)
+});
 
 /** Every option an item can offer, whatever the draw. */
 const optionsOf = (item: Item): string[] => {
@@ -199,11 +225,16 @@ const optionsOf = (item: Item): string[] => {
           .map((chunk) => chunk.text)
       );
     }
-    // Reading options sit in the card, not on the buttons, which show only the number.
+    // Reading options sit in the card, not on the buttons, which show only the number; so do 言い換え's sentences.
     case `short`:
     case `mid`:
     case `info`:
+    case `paraphrase`:
       return [];
+    case `kanji`:
+    case `spelling`:
+    case `context`:
+      return [item.answer, ...item.wrong.map(optionText)];
   }
 };
 
@@ -296,12 +327,12 @@ describe(`the mock-test corpus`, () => {
     expect(over).toEqual([]);
   });
 
-  it(`closes every reading card while its voters' reply tokens still work`, () => {
+  it(`closes every card that explains while its voters' reply tokens still work`, () => {
     // WHY: a student's private why is sent on the token of their vote, and a token works for 15 minutes. A card open longer would reach its reveal with dead tokens, and the whys would silently go nowhere. One minute is kept back for the reveal itself.
     const TOKEN_LIFE_MS = 15 * 60_000;
     const long = items.flatMap((item) =>
       longestCards(item)
-        .filter((card) => card.some((question) => question.mondai >= 4))
+        .filter((card) => card.some((question) => question.whys !== undefined))
         .map((card) => ({
           id: item.id,
           ms: card.reduce((sum, question) => sum + question.timeoutMs, 0)
@@ -336,6 +367,81 @@ describe(`the mock-test corpus`, () => {
     );
     expect(minutes).toBeGreaterThan(38);
     expect(minutes).toBeLessThan(42);
+  });
+
+  it(`gives vocabulary the real paper's 20 minutes`, () => {
+    // WHY: /goi is the real Section 1, 21 questions in 20 minutes, and students practise to finish inside it, as for Section 2. Measured over many draws, so a batch of longer sentences that shifts it shows here. Drafts included while the deck is new: once it ships, this reads only what students get.
+    const pool = items.filter(isVocab);
+    let state = 7;
+    const random = (): number => {
+      state = (state * 1_664_525 + 1_013_904_223) % 4_294_967_296;
+      return state / 4_294_967_296;
+    };
+    const RUNS = 300;
+    const perQuestion =
+      Array.from({ length: RUNS }, () => {
+        const test = drawTest(`goi`, pool, {}, random);
+        return (
+          test.reduce((total, question) => total + question.timeoutMs, 0) /
+          test.length
+        );
+      }).reduce((total, ms) => total + ms, 0) / RUNS;
+    // The paper's 21 questions at the drawn pace, so a deck still too small to fill a test is measured fairly.
+    const minutes = (perQuestion * 21) / 60_000;
+    expect(minutes).toBeGreaterThan(19);
+    expect(minutes).toBeLessThan(21);
+  });
+
+  it(`fits My results for /goi however much a student misses`, () => {
+    // WHY: My results keeps every missed question's why, because a private follow-up vanishes when Discord reloads; only links are dropped to fit. /goi asks 21 questions, so a student who missed most of a test with long whys could pass Discord's 2,000 characters and get no reply at all. Measured at the worst any draw could do: each deck's longest misses, through the real renderer.
+    const plans = BLUEPRINTS.goi.filter(
+      (plan): plan is MixPlan => `mix` in plan
+    );
+    const misses = plans.flatMap((plan) => {
+      const asked = plan.mix[1] + plan.mix[2] + plan.mix[3];
+      return items
+        .filter((item) => item.type === plan.type)
+        .filter(isVocab)
+        .map((item) => {
+          const question = vocabQuestion(longestVocab(item), 1, zero);
+          // The wrong option with the longest why, or any wrong one when none has a why.
+          const [worst] = question.options
+            .map((option, index) => ({
+              index,
+              size: option.length + (question.whys?.at(index)?.length ?? 0)
+            }))
+            .filter(({ index }) => index !== question.correct)
+            .sort((a, b) => b.size - a.size);
+          const chose = worst?.index ?? 0;
+          const size =
+            (worst?.size ?? 0) +
+            (question.options.at(question.correct)?.length ?? 0);
+          return { question, chose, size };
+        })
+        .sort((a, b) => b.size - a.size)
+        .slice(0, asked);
+    });
+    const questions = misses.map(({ question }, index) => ({
+      ...question,
+      number: index + 1
+    }));
+    const text = myResultsText(
+      questions,
+      misses.map(({ chose }, index) => ({
+        number: index + 1,
+        chose,
+        correct: false,
+        points: 0
+      })),
+      {
+        userId: `ann`,
+        points: 0,
+        max: 99,
+        correct: 0,
+        asked: questions.length
+      }
+    );
+    expect(text.length).toBeLessThanOrEqual(CONTENT_MAX);
   });
 
   it(`fits every private follow-up in one message`, () => {

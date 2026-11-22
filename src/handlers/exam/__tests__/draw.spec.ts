@@ -11,19 +11,26 @@ import {
   readingQuestions,
   reviewOf,
   timeoutFor,
+  vocabQuestion,
   type Random
 } from "../draw.js";
 import {
+  BLANK,
   materialMarkup,
   plain,
+  readingsOf,
   type ComposeItem,
+  type ContextItem,
   type Difficulty,
   type FormItem,
   type InfoItem,
   type Item,
+  type KanjiItem,
   type MidItem,
+  type ParaphraseItem,
   type PassageItem,
-  type ShortItem
+  type ShortItem,
+  type SpellingItem
 } from "../items.js";
 
 /**
@@ -725,5 +732,172 @@ describe(`a reading test`, () => {
     expect(page?.timeoutMs).toBeGreaterThanOrEqual(
       60_000 + plain(material).length * PER_CHAR_MS
     );
+  });
+});
+
+describe(`a vocabulary test`, () => {
+  const pad = (n: number): string => String(n).padStart(4, `0`);
+  const kanji = (
+    n: number,
+    word: string,
+    difficulty: Difficulty = 1
+  ): KanjiItem => ({
+    id: `n5-g1-${pad(n)}`,
+    type: `kanji`,
+    status: `reviewed`,
+    word,
+    sentence: `きのう __${word}__を みました。`,
+    en: `e`,
+    answer: `よみ`,
+    wrong: [`よみい`, `よーみ`, `よっみ`],
+    difficulty,
+    note: `n`
+  });
+  const spelling = (
+    n: number,
+    word: string,
+    difficulty: Difficulty = 1
+  ): SpellingItem => ({
+    id: `n5-g2-${pad(n)}`,
+    type: `spelling`,
+    status: `reviewed`,
+    word,
+    sentence: `きのう __よみ__を みました。`,
+    en: `e`,
+    answer: word,
+    wrong: [`甲`, `乙`, `丙`],
+    difficulty,
+    note: `n`
+  });
+  const context = (n: number, difficulty: Difficulty = 1): ContextItem => ({
+    id: `n5-g3-${pad(n)}`,
+    type: `context`,
+    status: `reviewed`,
+    sentence: `まどを ${BLANK} ください。`,
+    en: `e`,
+    answer: `しめて`,
+    wrong: [`あけて`, `つけて`, `きって`],
+    difficulty,
+    note: `n`
+  });
+  const paraphrase = (
+    n: number,
+    difficulty: Difficulty = 1
+  ): ParaphraseItem => ({
+    id: `n5-g4-${pad(n)}`,
+    type: `paraphrase`,
+    status: `reviewed`,
+    sentence: `あには きょうしです。`,
+    en: `e`,
+    answer: `あには おしえて います。`,
+    wrong: [
+      `あには ならって います。`,
+      `あには がくせいです。`,
+      `あには ねて います。`
+    ],
+    difficulty,
+    note: `n`
+  });
+  const levels: Difficulty[] = [1, 2, 3];
+  const WORDS = [
+    `山`,
+    `川`,
+    `雨`,
+    `空`,
+    `花`,
+    `目`,
+    `口`,
+    `手`,
+    `足`,
+    `耳`,
+    `車`,
+    `本`
+  ];
+  const corpus: Item[] = [
+    ...WORDS.map((word, i) => kanji(i + 1, word, levels[i % 3])),
+    ...WORDS.map((word, i) => spelling(i + 1, word, levels[i % 3])),
+    ...Array.from({ length: 9 }, (_, i) => context(i + 1, levels[i % 3])),
+    ...Array.from({ length: 6 }, (_, i) => paraphrase(i + 1, levels[i % 3]))
+  ];
+
+  it(`draws 7 + 5 + 6 + 3, numbered 1 to 21, in the paper's order`, () => {
+    // WHY: /goi is the real Section 1, with its own もんだい1–4, so students meet the paper's shape and count.
+    const test = drawTest(`goi`, corpus, {}, seeded(1));
+    expect(test.map((q) => q.number)).toEqual(
+      Array.from({ length: 21 }, (_, i) => i + 1)
+    );
+    expect(test.map((q) => `${String(q.mondai)} ${q.type}`)).toEqual([
+      ...Array.from({ length: 7 }, () => `1 kanji`),
+      ...Array.from({ length: 5 }, () => `2 spelling`),
+      ...Array.from({ length: 6 }, () => `3 context`),
+      ...Array.from({ length: 3 }, () => `4 paraphrase`)
+    ]);
+  });
+
+  it(`never asks 表記 for a word 漢字読み showed in the same test`, () => {
+    // WHY: 漢字読み's reveal shows 雨 as あめ, so a 表記 card asking あめ minutes later has had its answer given away. Every word here is in both decks, so only the rule keeps them apart.
+    for (let seed = 1; seed <= 40; seed += 1) {
+      const test = drawTest(`goi`, corpus, {}, seeded(seed * 1_000_003));
+      const read = new Set(
+        test.filter((q) => q.type === `kanji`).map((q) => q.prompt)
+      );
+      const spelled = test
+        .filter((q) => q.type === `spelling`)
+        .map((q) => corpus.find((entry) => entry.id === q.itemId))
+        .map((entry) => (entry?.type === `spelling` ? entry.word : ``));
+      expect(spelled).toHaveLength(5);
+      for (const word of spelled) {
+        expect(read).not.toContain(`きのう __${word}__を みました。`);
+      }
+    }
+  });
+
+  it(`shows a 漢字読み word without its reading until the reveal`, () => {
+    // WHY: the reading is the question. On the card it would be the answer.
+    const q = vocabQuestion(kanji(1, `雨`), 1, seeded(1));
+    expect(q.prompt).toBe(`きのう __雨__を みました。`);
+    expect(readingsOf(q.prompt)).toEqual([]);
+    expect(q.answered).toBe(`きのう __{雨|よみ}__を みました。`);
+  });
+
+  it(`reveals each type's answer in its sentence`, () => {
+    // WHY: the reveal is where a student checks themselves, so it shows the sentence as it should read: the word written, the blank filled, the meaning matched.
+    expect(vocabQuestion(spelling(1, `雨`), 1, seeded(1)).answered).toBe(
+      `きのう __{雨|よみ}__を みました。`
+    );
+    expect(
+      vocabQuestion(
+        { ...spelling(2, `シャツ`), answer: `シャツ` },
+        1,
+        seeded(1)
+      ).answered
+    ).toBe(`きのう __シャツ__を みました。`);
+    expect(vocabQuestion(context(1), 1, seeded(1)).answered).toBe(
+      `まどを __しめて__ ください。`
+    );
+    const p = vocabQuestion(paraphrase(1), 1, seeded(1));
+    expect(p.prompt).toBe(`__あには きょうしです。__`);
+  });
+
+  it(`keeps each why beside its option, and holds none when nothing is explained`, () => {
+    // WHY: a why that drifted would explain someone else's mistake. And whys are what make the session keep voters' reply tokens, which are credentials: a card with nothing to explain should keep none.
+    const explained: KanjiItem = {
+      ...kanji(1, `雨`, 2),
+      wrong: [
+        { option: `よみい`, why: `why よみい` },
+        { option: `よーみ`, why: `why よーみ` },
+        { option: `よっみ`, why: `why よっみ` },
+        { option: `よみみ`, why: `why よみみ` }
+      ]
+    };
+    for (let seed = 1; seed <= 30; seed += 1) {
+      const q = vocabQuestion(explained, 1, seeded(seed));
+      q.options.forEach((option, index) => {
+        expect(q.whys?.at(index)).toBe(
+          option === `よみ` ? `` : `why ${option}`
+        );
+      });
+    }
+    expect(vocabQuestion(kanji(1, `雨`), 1, seeded(1)).whys).toBeUndefined();
   });
 });

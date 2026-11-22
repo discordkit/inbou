@@ -1,0 +1,105 @@
+# 問題3 文脈規定 — choose the word that fits the blank, （　）.
+#
+# The sentence and the options are all kana, as on the paper. The options are one word class in one form: four て-forms, four counters, four い-adjectives. Exactly one fits: something in the sentence must rule out each of the others, never general knowledge alone. Original sentences only: never copy a published one.
+#
+# A medium or hard question says why each wrong option is wrong (`- option: … why: …`): what the word means, and what in the sentence rules it out. The build fails without them. The note is public at the reveal: what the blank needs.
+
+- id: n5-g3-0001
+  type: context
+  status: draft
+  sentence: "ちちは まいあさ しんぶんを （　）。"
+  en: "My father reads the newspaper every morning."
+  answer: よみます
+  wrong: [ききます, のみます, はきます]
+  difficulty: 1
+  note: "This asks what you do with a しんぶん, a newspaper: よみます, read it."
+
+- id: n5-g3-0002
+  type: context
+  status: draft
+  sentence: "にほんでは （　）で ごはんを たべます。"
+  en: "In Japan, people eat rice with chopsticks."
+  answer: はし
+  wrong: [はさみ, かさ, かぎ]
+  difficulty: 1
+  note: "This asks what you eat rice with: はし, chopsticks. はさみ are scissors, かさ an umbrella and かぎ a key."
+
+- id: n5-g3-0003
+  type: context
+  status: draft
+  sentence: "へやが くらいですから、でんきを （　） ください。"
+  en: "The room is dark, so please turn on the light."
+  answer: つけて
+  wrong:
+    - option: けして
+      why: "けして turns the light off. The room is dark, so you want it on."
+    - option: しめて
+      why: "しめて closes a door or a window, not a light."
+    - option: あけて
+      why: "あけて opens a door or a window. A light is turned on with つけて."
+  difficulty: 2
+  note: "This asks what you do to a light in a dark room: つけて, turn it on."
+
+- id: n5-g3-0004
+  type: context
+  status: draft
+  sentence: "この にもつは （　）ですから、ふたりで もちましょう。"
+  en: "This luggage is heavy, so let's carry it together."
+  answer: おもい
+  wrong:
+    - option: かるい
+      why: "かるい is light. A light bag does not need two people."
+    - option: やすい
+      why: "やすい is cheap. The price is no reason for two people to carry it."
+    - option: あたらしい
+      why: "あたらしい is new. Being new is no reason for two people to carry it."
+  difficulty: 2
+  note: "This asks why it takes two people to carry: the luggage is おもい, heavy."
+
+- id: n5-g3-0005
+  type: context
+  status: draft
+  sentence: "さむいですから、（　）を きます。"
+  en: "It is cold, so I will put on a sweater."
+  answer: セーター
+  wrong:
+    - option: くつ
+      why: "くつ (shoes) go on with はきます, not きます."
+    - option: めがね
+      why: "めがね (glasses) go on with かけます, not きます."
+    - option: ぼうし
+      why: "ぼうし (a hat) goes on with かぶります, not きます."
+  difficulty: 2
+  note: "This asks what you put on with きます: clothes for the body, such as a セーター. Shoes, glasses and hats each take their own verb."
+
+- id: n5-g3-0006
+  type: context
+  status: draft
+  sentence: "えんぴつを 2（　） かいました。"
+  en: "I bought two pencils."
+  answer: ほん
+  wrong:
+    - option: まい
+      why: "まい counts flat things: paper, shirts, tickets."
+    - option: だい
+      why: "だい counts machines: cars, computers."
+    - option: ひき
+      why: "ひき counts small animals: cats, dogs, fish."
+  difficulty: 2
+  note: "This asks the counter for long, thin things such as pencils: ほん. 2ほん is read にほん."
+
+- id: n5-g3-0007
+  type: context
+  status: draft
+  sentence: "（　）は あさから あめでしたが、きょうは いい てんきです。"
+  en: "It rained from the morning yesterday, but today the weather is fine."
+  answer: きのう
+  wrong:
+    - option: あした
+      why: "あした is tomorrow, but でした says it has already happened."
+    - option: あさって
+      why: "あさって is the day after tomorrow, still to come. でした is past."
+    - option: らいしゅう
+      why: "らいしゅう is next week, still to come. でした is past."
+  difficulty: 3
+  note: "This asks which day was rainy. でした puts it in the past, and きょう is fine, so it was きのう."
