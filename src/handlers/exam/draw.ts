@@ -19,6 +19,7 @@ import {
   parse,
   partsOf,
   plain,
+  targetsOf,
   whyOf,
   WINDOW_SIZE,
   withTarget,
@@ -236,9 +237,49 @@ interface Card {
   index: number;
   difficulty: Difficulty;
   points: readonly string[];
-  /** The word a 漢字読み or 表記 card asks about. */
-  word?: string;
 }
+
+/** What a vocabulary card asks for, and everything it shows a student: the two halves of a give-away. */
+interface Spoils {
+  /** Written forms it asks about: the kanji a 漢字読み card reads, a 表記 answer. Given away wherever another card shows them. */
+  written: string[];
+  /** Words it asks for: a 文脈規定 or 言い換え answer. Given away when another card offers it as an option, and explains it. */
+  words: string[];
+  /** Every text the card shows: its sentence, options, note and whys. */
+  shown: string;
+  options: string[];
+}
+
+const spoilsOf = (item: VocabItem): Spoils => {
+  const options = [item.answer, ...item.wrong.map(optionText)];
+  const shown = [
+    item.sentence,
+    item.note,
+    ...options,
+    ...item.wrong.flatMap((option) => whyOf(option) ?? [])
+  ].join(`\n`);
+  return item.type === `kanji`
+    ? { written: targetsOf(item.sentence), words: [], shown, options }
+    : item.type === `spelling`
+      ? { written: [item.answer], words: [], shown, options }
+      : { written: [], words: [item.answer], shown, options };
+};
+
+const spoils = (asks: Spoils, shows: Spoils): boolean =>
+  asks.written.some((form) => shows.shown.includes(form)) ||
+  asks.words.some((word) => shows.options.includes(word));
+
+/**
+ * Would two cards in one test give each other's answer away?
+ *
+ * A 漢字読み card reveals 雨 as あめ, so a 表記 card asking あめ minutes later is answered. A counter card explains まい as its wrong option, so a card asking for the counter for paper is too. Either way round counts: within a deck the order is shuffled, and a student sees every reveal before the next card.
+ */
+const giveAway = (a: Item, b: Item): boolean => {
+  if (!isVocab(a) || !isVocab(b)) return false;
+  const x = spoilsOf(a);
+  const y = spoilsOf(b);
+  return spoils(x, y) || spoils(y, x);
+};
 
 /** A deck whose cards are drawn one by one, by difficulty. */
 type DeckType = MixPlan[`type`] | `short` | `info`;
@@ -260,14 +301,11 @@ const cardsOf = (items: readonly Item[], type: DeckType): Card[] =>
           : item.type === `short` || item.type === `info`
             ? item.questions
             : [item];
-    const word =
-      item.type === `kanji` || item.type === `spelling` ? item.word : undefined;
     return units.map((unit, index) => ({
       item,
       index,
       difficulty: unit.difficulty,
-      points: unit.points ?? [],
-      ...(word === undefined ? {} : { word })
+      points: unit.points ?? []
     }));
   });
 
@@ -276,7 +314,7 @@ const LEVELS: readonly Difficulty[] = [1, 2, 3];
 /**
  * Draw one deck's share, by difficulty.
  *
- * One rule: **never a word in `taken`**, the words this test has already asked. A 表記 card asking あめ after a 漢字読み card revealed 雨 as あめ would give its answer away.
+ * One rule: **never a card that gives an answer away**, to or from a card this test already holds (`asked`) or this deck has drawn. See {@link giveAway}.
  *
  * Then three preferences, strongest first:
  *
@@ -294,11 +332,9 @@ export const drawDeck = (
   items: readonly Item[],
   plan: { type: DeckType; mix: Mix },
   random: Random,
-  taken: ReadonlySet<string> = new Set()
+  asked: readonly Item[] = []
 ): Array<{ item: Item; index: number }> => {
-  const cards = cardsOf(items, plan.type).filter(
-    (card) => card.word === undefined || !taken.has(card.word)
-  );
+  const cards = cardsOf(items, plan.type);
   const wanted = LEVELS.flatMap((level) =>
     Array.from({ length: plan.mix[level] }, () => level)
   );
@@ -308,7 +344,12 @@ export const drawDeck = (
   const usedPoints = new Set<string>();
 
   for (const want of wanted) {
-    const open = cards.filter((card) => !usedItems.has(card.item.id));
+    const held = [...asked, ...chosen.map((card) => card.item)];
+    const open = cards.filter(
+      (card) =>
+        !usedItems.has(card.item.id) &&
+        !held.some((other) => giveAway(card.item, other))
+    );
     if (open.length === 0) break;
 
     const nearest = Math.min(
@@ -825,8 +866,8 @@ export const drawTest = (
   pictures: Readonly<Record<string, string>> = {}
 ): ExamQuestion[] => {
   const questions: ExamQuestion[] = [];
-  /** The words asked so far, so a later deck cannot give an earlier answer away. */
-  const words = new Set<string>();
+  /** The vocabulary asked so far, so a later deck cannot give an earlier answer away, nor have its own given away. */
+  const asked: Item[] = [];
   const plans = BLUEPRINTS[test];
   const reading = plans.filter(
     (plan): plan is ReadingPlan => `questions` in plan
@@ -885,7 +926,7 @@ export const drawTest = (
       }
       continue;
     }
-    for (const { item, index } of drawDeck(items, plan, random, words)) {
+    for (const { item, index } of drawDeck(items, plan, random, asked)) {
       const number = questions.length + 1;
       if (item.type === `form`) {
         questions.push(formQuestion(item, index, number, random));
@@ -893,9 +934,7 @@ export const drawTest = (
         questions.push(composeQuestion(item, index, number, random));
       } else if (isVocab(item)) {
         questions.push(vocabQuestion(item, number, random));
-        if (item.type === `kanji` || item.type === `spelling`) {
-          words.add(item.word);
-        }
+        asked.push(item);
       }
     }
   }

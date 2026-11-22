@@ -404,6 +404,21 @@ describe(`the mock-test corpus`, () => {
     expect(minutes).toBeLessThan(21);
   });
 
+  it(`fills every /goi test to the paper's 21 questions, give-away rule and all`, () => {
+    // WHY: the draw leaves out any card whose options or notes would give another's answer away. Every look-alike, counter and note that names another item's answer narrows what can share a test, and enough of them would leave a deck short: students would sit fewer questions than the paper without anything looking wrong.
+    const shipped = items.filter((item) => item.status === `reviewed`);
+    let state = 3;
+    const random = (): number => {
+      state = (state * 1_664_525 + 1_013_904_223) % 4_294_967_296;
+      return state / 4_294_967_296;
+    };
+    const short = Array.from(
+      { length: 300 },
+      () => drawTest(`goi`, shipped, {}, random).length
+    ).filter((length) => length < 21);
+    expect(short).toEqual([]);
+  });
+
   it(`sends My results for /goi in messages that each fit, however much a student misses`, () => {
     // WHY: My results keeps every missed question's why, because a private follow-up vanishes when Discord reloads; only links are dropped to fit. /goi asks 21 questions, and a student who missed most of a test can have more whys than one message holds: the first batch of /goi content came to 2,393 characters. Every message must fit, or Discord rejects it and the student sees nothing, and every why must arrive. Measured at the worst any draw could do: each deck's longest misses, through the real renderer.
     const plans = BLUEPRINTS.goi.filter(

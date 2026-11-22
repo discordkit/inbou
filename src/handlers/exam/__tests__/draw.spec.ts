@@ -775,8 +775,9 @@ describe(`a vocabulary test`, () => {
     status: `reviewed`,
     sentence: `まどを ${BLANK} ください。`,
     en: `e`,
-    answer: `しめて`,
-    wrong: [`あけて`, `つけて`, `きって`],
+    // Numbered, so no item offers another's answer as an option: that would be a give-away.
+    answer: `しめて${String(n)}`,
+    wrong: [`あけて${String(n)}`, `つけて${String(n)}`, `きって${String(n)}`],
     difficulty,
     note: `n`
   });
@@ -789,11 +790,11 @@ describe(`a vocabulary test`, () => {
     status: `reviewed`,
     sentence: `あには きょうしです。`,
     en: `e`,
-    answer: `あには おしえて います。`,
+    answer: `あには おしえて います。${String(n)}`,
     wrong: [
-      `あには ならって います。`,
-      `あには がくせいです。`,
-      `あには ねて います。`
+      `あには ならって います。${String(n)}`,
+      `あには がくせいです。${String(n)}`,
+      `あには ねて います。${String(n)}`
     ],
     difficulty,
     note: `n`
@@ -873,10 +874,37 @@ describe(`a vocabulary test`, () => {
       ).answered
     ).toBe(`きのう __シャツ__を みました。`);
     expect(vocabQuestion(context(1), 1, seeded(1)).answered).toBe(
-      `まどを __しめて__ ください。`
+      `まどを __しめて1__ ください。`
     );
     const p = vocabQuestion(paraphrase(1), 1, seeded(1));
     expect(p.prompt).toBe(`__あには きょうしです。__`);
+  });
+
+  it(`never puts two cards in a test when one's options or notes give the other's answer away`, () => {
+    // WHY: a counter card explains まい as a wrong option ("まい counts flat things"), so a card asking for the counter for paper is answered before it is asked. The same for a 表記 card offering 目 as a look-alike beside one asking め. Found while drafting the second batch.
+    const counters: ContextItem[] = [
+      { ...context(1), answer: `ひき`, wrong: [`まい`, `ほん`, `だい`] },
+      { ...context(2), answer: `まい`, wrong: [`こ`, `さつ`, `ほん`] }
+    ];
+    const ear: SpellingItem = {
+      ...spelling(20, `耳`),
+      wrong: [`取`, `目`, `自`]
+    };
+    const eye = spelling(21, `目`);
+    const deck: Item[] = [
+      ...corpus.filter((entry) => entry.type !== `context`),
+      ...counters,
+      ...Array.from({ length: 8 }, (_, i) => context(i + 3, levels[i % 3])),
+      ear,
+      eye
+    ];
+    for (let seed = 1; seed <= 60; seed += 1) {
+      const ids = new Set(
+        drawTest(`goi`, deck, {}, seeded(seed * 1_000_003)).map((q) => q.itemId)
+      );
+      expect(ids.has(counters[0].id) && ids.has(counters[1].id)).toBe(false);
+      expect(ids.has(ear.id) && ids.has(eye.id)).toBe(false);
+    }
   });
 
   it(`keeps each why beside its option, and holds none when nothing is explained`, () => {
