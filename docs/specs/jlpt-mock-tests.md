@@ -2,7 +2,7 @@
 
 Practice tests in the shape of the real JLPT, played in a Discord channel. The bot asks one question at a time with numbered buttons, everyone answers privately, and everyone who is right scores. Students repeat the tests until they can hold a steady score before the real exam.
 
-Status: **draft 2**, 2026-11-21. Decisions here are settled unless marked open; section 10 lists what is not. Phases 1 to 3 of section 9 are built: `/bunpou` ships with 230 reviewed items. Reading (`/dokkai`) and full-section tests (`/moshi`) come next.
+Status: **draft 3**, 2026-11-22. Decisions here are settled unless marked open; section 10 lists what is not. Phases 1 to 3 of section 9 are built, and so is the reading half of phase 5: `/bunpou` ships with 230 reviewed items, and `/dokkai` with 94 reading items (258 questions). Results history and full-section tests (`/moshi`) come next.
 
 ## Why a poll and not a race
 
@@ -63,7 +63,8 @@ One test belongs to one channel. The bot posts a question, players press a numbe
 - **The vote counter shows a count, never a distribution.** "3 picked 2" would leak the answer and make players follow the crowd. The counter is debounced (edited at 1, 2, 4, 8 … votes), because Discord limits message edits per channel.
 - **A press on an old question does nothing** except a private "that question has closed". Each question carries a short random token in its buttons, and the session rejects any other token.
 - **The answer is never in a button's `customId`.** A client can read those. The correct position lives only in the session.
-- **Timers depend on how much there is to read.** Each type has a base time, plus time per character of text the player must read. A passage counts in full for its first blank and not again. The constants are tuned in live play.
+- **Timers depend on how much there is to read.** Each type has a base time, plus time per character of text the player must read. A passage or reading text counts in full for its first question and not again.
+- **Together, the two tests take the real paper's 40 minutes.** `/bunpou` and `/dokkai` are the 22 questions of the real grammar-and-reading section, and students practise to finish inside its limit. Grammar runs at about a minute a question, as guides advise. Reading gets the rest, about 22 minutes, through a pace factor per 問題 (`PACE` in `draw.ts`): about 3.4 minutes for a 問題4 question, 5.4 for a 問題5 question and 4.5 for 問題6. A corpus test keeps the pair between 38 and 42 minutes, so a batch of longer texts that shifts it fails.
 - **Players can join at any question.** Nothing depends on being there at the start.
 
 ### Results
@@ -82,6 +83,16 @@ A student who misses a question should know where to read about it. Each grammar
 
 The card also shows a guide line: the real N5 needs 38 of 120 (32%) in its first scoring section. The JLPT scales its scores, so we show this as a guide, not as an equivalent.
 
+### Private explanations (reading)
+
+Reading is comprehension, not a grammar point, so a student who missed a question needs to be led back into the text. Each reading option can carry a **why**: what in the text rules it out.
+
+- **The why goes only to the student who chose that option**, privately, just after the public reveal. A vote is a button press, and a press's token lets the bot reply privately for fifteen minutes. The session keeps each voter's latest token for the open card, and the reveal uses it. Tokens are credentials, so they are kept only on cards that explain something, and dropped when the next card opens.
+- **The channel sees the answer, the vote bars, a short note and the English.** The note says what the question asked and where the text answers it, so a student who did not vote still learns something. The whys stay out of the channel, which keeps it short.
+- **My results lists each missed question's why.** A private message vanishes when Discord reloads, and My results is where a student can read it again.
+- **One reveal sends at most 40 private messages.** Each is a call to Discord, and the free plan allows 50 per invocation. A student past the cap still has My results. `FOLLOW_UPS_CAPPED` is reported when it happens.
+- **Grammar keeps its public notes for now**, until the private follow-ups have been seen in play.
+
 ## 3. Commands
 
 The commands follow the skill split of the Shin Kanzen Master series, which we use as the model for higher levels. N5 has no Shin Kanzen Master book, so N5 follows the official samples.
@@ -89,7 +100,8 @@ The commands follow the skill split of the Shin Kanzen Master series, which we u
 ```
 /bunpou start            — grammar: 問題1–3, 17 questions
 /bunpou end              — end the test in this channel and show the results
-/dokkai start            — reading: 問題4–6, 5 questions (planned)
+/dokkai start            — reading: 問題4–6, 5 questions
+/dokkai end              — end the test in this channel and show the results
 /moshi start section:2   — the whole of Section 2, grammar then reading (planned)
 /moshi history           — your recent results and average, private (planned)
 ```
@@ -169,6 +181,36 @@ The card's timer is the sum of its questions' times, with the passage counted on
 
 The passage shows as a block quote at reading size, with its readings in a small line below. The card is revealed as one: the completed passage with every answer underlined, then each blank's answer, result and note, then the English for the whole passage. Scoring, results and My results still count each blank as its own question.
 
+### Reading items (問題4–6)
+
+Reading items live in `data/jlpt/n5/dokkai/`: `short.yaml` (問題4), `mid.yaml` (問題5) and `info.yaml` (問題6). Each is a text or a picture with **several questions**, and a test asks one of them (two for 問題5, in text order). So a text that comes up again usually asks something new.
+
+```yaml
+- id: n5-d4-0007
+  type: short
+  status: reviewed
+  intro: "（{会社|かいしゃ}で）\nキムさんの つくえの {上|うえ}に この メモが あります。"
+  text: "…あしたの かいぎは 3{時|じ}からでは なくて、4{時|じ}からです。…"
+  en: "…"
+  questions:
+    - question: "あしたの かいぎは {何時|なんじ}からですか。"
+      options:
+        - option: "3{時|じ}"
+          why: "Three was the old time. 3{時|じ}からでは なくて means “not from three”."
+        - "4{時|じ}"
+        - …
+      answer: 2
+      difficulty: 2
+      note: "This asks when the meeting starts now. The time changed: …"
+```
+
+- **Options are drawn or ordered.** `answer` plus three or more `wrong` are drawn and shuffled, as in 問題1. Four `options` with an `answer` index keep their order, for times, prices and days, which the paper prints in order. Ordered answers should land on each position about equally; the build hints when they cluster.
+- **Options sit in the card**, numbered 1–4 under the question as the paper prints them, and the buttons show only the number. Reading options are sentences, too long for a button and too important to trim.
+- **A medium or hard question explains every wrong option** (`- option: … why: …`), and the build fails without them. An easy question's note is usually enough. The note says what the question asks and where the text answers it.
+- **`points` are optional.** A question names a grammar point only where one decides it, such as から〜まで or もう／まだ, and the reveal links its review page.
+- **`__phrase__`** underlines a phrase in the text, for the paper's "what does this refer to" questions.
+- **A 問題6 item's `material` is structured data**, not text: one of about 25 kinds of document (a bus-stop timetable, a receipt, a ticket machine, a medicine bag, a delivery slip, a group chat, notices and signs). Templates in `src/handlers/exam/material/` draw each kind to look like the real thing, so students learn where each kind of document keeps its information. The picture holds only the information, never the options. The build checks each kind's structure: a receipt's sums, a timetable's columns, a calendar's legend.
+
 ### What code checks, and what a person checks
 
 Code checks every item, drafts included, in `vp test`:
@@ -179,6 +221,7 @@ Code checks every item, drafts included, in `vp test`:
 - Every grammar point exists in `grammar-points.yaml`. Every id is unique.
 - Every reviewed item, in every variant, passes through the real renderer and stays inside Discord's limits.
 - The committed corpus matches the source files and holds no drafts.
+- Reading: every medium and hard wrong option has a why, and no ordered answer has one. Every word of a picture is in its alt text. Every picture fits its canvas, measured with the real fonts. Every reading card closes inside its voters' fifteen-minute reply tokens, and every private follow-up fits in one message.
 
 Code cannot check that a wrong option is really wrong. That is the main trap: a distractor that is also grammatical. The official sample asks 家（　）出ます and leaves out から, because から would also be right. So a person reviews every item for these points:
 
@@ -196,6 +239,7 @@ Think of each question type as a deck of cards.
 - **A card appears at most once in a test.**
 - **After the test, every card goes back into its deck.** Nothing is remembered between tests. Repeated exposure is the point; the random choices above keep repeats from being identical.
 - **Each deck is drawn by difficulty.** The blueprint fixes the difficulty mix, for example 3 easy, 4 medium and 2 hard for 問題1. Every test is then about equally hard, and a student's scores can be compared from test to test. If a level runs short, the draw borrows from the nearest level and does not fail.
+- **Reading shares one mix across its decks.** Every `/dokkai` test asks 2 easy, 2 medium and 1 hard question (`READING_MIX`), shuffled across its five questions each time. Tests stay equally hard, and every approved question can come up: a fixed level per deck would never ask 問題6's easy or hard questions, because 問題6 asks only one. 問題5 asks the two questions of its text nearest the levels it was dealt, in text order.
 - **The draw prefers different grammar points within a deck**, because the real paper does not test one point twice.
 - **The whole test is drawn when it starts** and stored in the session. Questions are numbered 1–17 straight through 問題1, 2 and 3, as on the paper.
 
@@ -212,7 +256,7 @@ Think of each question type as a deck of cards.
 - **Underscores mean italics.** The ★ line uses full-width underscores: ＿＿ ＿＿ ★ ＿＿.
 - **Components V2 is all or nothing.** A V2 message cannot have `content` or embeds, so the whole card is built from components. The accent colour shows the state: blue while open, green when revealed.
 - **Limits per message:** 40 components (nested ones count), 4,000 characters of text, 5 buttons per row, 80 characters per button label, 100 per `customId`. A 問題1 card uses about 12 components. An N5 passage is about 250 characters.
-- **No tables in markdown.** This matters for 問題6 (information retrieval), whose material is often a timetable or a flyer. It needs a design spike before reading ships.
+- **No tables in markdown.** So 問題6's material, often a timetable or a flyer, is a **picture**, drawn at build time and shown in a media gallery. The picture has no furigana: its readings follow in a small line below it, like any other text, and its text is the gallery's alt text. A tall picture may need opening at full size, so 問題6's timer allows a minute for that.
 
 ## 8. Where things live
 
@@ -231,27 +275,29 @@ button exam:v:<token>:<n> ─► commands.ts ─► flow ─► private "You cho
 - **`ExamSession` is a new Durable Object class.** It is not a mode of `QuizSession`. The race and the poll have opposite rules (the first answer wins, against everyone scores), and one machine that did both would hide that difference in conditions. `QuizKind` in `quiz/kind.ts` stays the interface for typed-answer quizzes.
 - **The corpus never enters the Durable Object.** The flow draws the test in the handlers Worker and hands the session the resolved questions, a few kilobytes. The conjugation quiz follows the same rule.
 - **Bot text is in English** (acknowledgements, results), as in the rest of inbou. Test content and instructions are in Japanese, as on the paper.
+- **問題6 pictures are drawn at build time and hosted by a third Worker, `inbou-assets`**, which serves only static files. `exam:build` names each picture by a hash of what it draws (its template's HTML, its width, and the pinned renderer and font versions) and records the names in `corpus.json`. `exam:draw` renders them with [takumi](https://github.com/kane50613/takumi) into `dist/assets`, after checking that each fits. The handlers link a picture as `ASSET_BASE` plus its name, so a changed picture gets a new URL and Discord's cache never shows an old one. Publishing a picture never redeploys the bot, whose every deploy restarts its Gateway connection. The deploy ships the pictures before the handlers that link them.
 
 ## 9. Build order
 
 Each phase ends with something we can show.
 
-Phases 1 to 3 are done.
+Phases 1 to 3 are done, and so is `/dokkai` from phase 5.
 
 1. **`/bunpou` end to end, with 問題1 only.** Item schema and build, draw, machine, session, Components V2 cards, vote routing, about 20 reviewed seed items.
 2. **問題2 and 問題3.** The ★ and passage draws and cards. `/bunpou` runs the full 9 + 4 + 4.
 3. **Content.** Complete the grammar point list, then draft batches of about 20 items per category for review. `exam:build` reports how many items each deck holds at each difficulty. A deck is playable when each difficulty level holds at least twice what one test draws. Targets: 150 or more for 問題1 (weighted to particles), 60 ★ sentences, 15 passages.
 4. **Results, history and calibration.** A player's results are stored only if they have not opted out of tracking, and `/privacy forget` erases them. Item statistics hold no user ids. `/moshi history`, `exam:stats`, and an update to `docs/PRIVACY.md`.
-5. **`/dokkai` and `/moshi section:2`.** The reading item types, after the 問題6 design spike.
+5. **`/dokkai` and `/moshi section:2`.** `/dokkai` is built: the reading item types, 問題6 pictures drawn in code and hosted on `inbou-assets`, and private explanations. `/moshi section:2`, grammar then reading in one sitting, is next.
 
 Later: `/goi`, whose 漢字読み and 表記 items can be generated from the JMdict corpus we already build; then N4; then `/choukai`, which needs audio.
 
 ## 10. Still open
 
 - **Word spacing for N5.** If sentences still read poorly with the readings line, add learner word spacing (particles separated) as an authoring step that rewrites the YAML, never at runtime. vscode-jisho's `spacing.ts` skips kana-only text, which is most of N5, so it would need a kana-aware pass or hand review.
-- **Timer constants.** Base time per type and time per character. Tune them in live play.
-- **The difficulty mix per deck.** 3 / 4 / 2 for 問題1 is a first guess.
-- **How to show 問題6 material** without tables: V2 sections, a code block, or an image.
+- **Timer constants.** The pair is set to the real paper's 40 minutes; how that time is spread across 問題 is a first guess, to tune in play.
+- **The difficulty mix.** 3 / 4 / 2 for 問題1 and 2 / 2 / 1 for reading are first guesses. Students' real results (phase 4) should decide them: a test that feels beyond students is a reason to shift the mix, not to rewrite items.
+- **More than 40 wrong voters on one reading card.** Past the cap, follow-ups would need a second invocation; for now those students read their whys in My results.
+- **Writing the 問題6 templates as JSX.** takumi takes React elements, which would give typed styles in place of CSS strings. Worth doing when the templates next change much; proved by comparing every drawn picture before and after.
 
 ## 11. Sources and licensing
 
@@ -259,3 +305,4 @@ Later: `/goi`, whose 漢字読み and 表記 items can be generated from the JMd
 - **Grammar points:** the list starts from Jonathan Waller's N5 grammar list ([tanos.co.uk](https://tanos.co.uk/jlpt/skills/grammar/), reported to be CC BY; to confirm) and is checked against Wikibooks, JLPT Sensei, Bunpro, Genki and Minna no Nihongo. A list of grammar point names is a set of facts. We write our own explanations.
 - **Items:** written for this project. Textbooks, workbooks and Tofugu are copyrighted, and we never copy their sentences.
 - **Kanji list:** the old JLPT levels 4 and 3 in [KANJIDIC2](https://www.edrdg.org/wiki/index.php/KANJIDIC_Project) (EDRDG, CC BY-SA 4.0).
+- **Reading:** practice sites were played for format only (にほんごクイズ, Coto Academy, The Japanese Page, Open Exam Prep, JLPT Books); no item is copied from them. The 問題6 pictures use five fonts under the SIL Open Font License (Noto Sans JP, Noto Serif JP, Zen Maru Gothic, Klee One, DotGothic16, via fontsource), drawn by takumi (MIT or Apache 2.0) at build time only.
