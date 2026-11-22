@@ -14,6 +14,8 @@ import {
   parse,
   plain,
   reviewLinksOf,
+  wordHints,
+  wordProblems,
   type ComposeItem,
   type ContextItem,
   type FormItem,
@@ -25,7 +27,8 @@ import {
   type PassageItem,
   type Sheet,
   type ShortItem,
-  type SpellingItem
+  type SpellingItem,
+  type VocabList
 } from "../items.js";
 
 /**
@@ -1049,6 +1052,104 @@ describe(`vocabulary items`, () => {
       `n5-g1-0001: the answer "せんしゅう" also appears outside the underlined word, which may give it away`
     ]);
     expect(itemHints(kanji())).toEqual([]);
+  });
+});
+
+describe(`the word list`, () => {
+  const LIST: VocabList = {
+    source: `test`,
+    levels: `test`,
+    license: `test`,
+    words: [
+      { level: 5, kanji: [`大人`], kana: [`おとな`] },
+      { level: 5, kanji: [`橋`], kana: [`はし`] },
+      { level: 5, kanji: [`箸`], kana: [`はし`] },
+      { level: 4, kanji: [`港`], kana: [`みなと`] }
+    ],
+    readings: {
+      大人: [`おとな`, `だいにん`, `たいじん`],
+      橋: [`はし`],
+      箸: [`はし`],
+      港: [`みなと`]
+    }
+  };
+  const read = (overrides: Partial<KanjiItem> = {}): KanjiItem => ({
+    id: `n5-g1-0001`,
+    type: `kanji`,
+    status: `draft`,
+    word: `大人`,
+    sentence: `__大人__の きっぷは いくらですか。`,
+    en: `How much is an adult ticket?`,
+    answer: `おとな`,
+    wrong: [`おおと`, `おとうな`, `おどな`],
+    difficulty: 1,
+    note: `n`,
+    ...overrides
+  });
+  const spell = (overrides: Partial<SpellingItem> = {}): SpellingItem => ({
+    id: `n5-g2-0001`,
+    type: `spelling`,
+    status: `draft`,
+    word: `橋`,
+    sentence: `この __はし__を わたります。`,
+    en: `I cross this bridge.`,
+    answer: `橋`,
+    wrong: [`矯`, `槁`, `喬`],
+    difficulty: 1,
+    note: `n`,
+    ...overrides
+  });
+
+  it(`passes words on the list, read and written as JMdict has them`, () => {
+    expect(wordProblems([read(), spell()], LIST)).toEqual([]);
+  });
+
+  it(`catches a 漢字読み option that is another reading of the same kanji`, () => {
+    // WHY: on a fare sign 大人 is read だいにん. An option that is right somewhere is a trap code can see and a reviewer can miss; the paper never uses one.
+    expect(
+      wordProblems([read({ wrong: [`だいにん`, `おとうな`, `おどな`] })], LIST)
+    ).toEqual([
+      `n5-g1-0001: だいにん is also a reading of 大人, so the option is right somewhere`
+    ]);
+  });
+
+  it(`catches a 表記 option that is another word with the same reading`, () => {
+    // WHY: はし is 橋, a bridge, and 箸, chopsticks. Only the sentence tells them apart, so 表記 must not ask the student to choose between them.
+    expect(wordProblems([spell({ wrong: [`箸`, `槁`, `喬`] })], LIST)).toEqual([
+      `n5-g2-0001: 箸 is also an N5 or N4 word read はし, so the option is right somewhere`
+    ]);
+  });
+
+  it(`catches an answer the dictionary does not give, and a word off the list`, () => {
+    // WHY: a typo in an answer key marks every right student wrong. And the paper tests N5 words: a word on neither list is off level, or misspelt.
+    expect(
+      wordProblems(
+        [read({ answer: `おとうな`, wrong: [`おおと`, `おとな`, `おどな`] })],
+        LIST
+      )
+    ).toEqual([
+      `n5-g1-0001: JMdict does not read 大人 as おとうな`,
+      `n5-g1-0001: おとな is also a reading of 大人, so the option is right somewhere`
+    ]);
+    expect(wordProblems([read({ word: `机` })], LIST)).toEqual([
+      `n5-g1-0001: 机 is not an N5 or N4 word on the list; check its spelling, or choose another word`
+    ]);
+  });
+
+  it(`points out an N4 word, which the N5 paper rarely tests`, () => {
+    expect(
+      wordHints(
+        [
+          spell({
+            word: `港`,
+            sentence: `__みなと__へ いきます。`,
+            answer: `港`
+          })
+        ],
+        LIST
+      )
+    ).toEqual([`n5-g2-0001: 港 is an N4 word; the N5 paper tests N5 words`]);
+    expect(wordHints([spell()], LIST)).toEqual([]);
   });
 });
 

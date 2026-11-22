@@ -36,8 +36,12 @@ import {
   itemHints,
   itemProblems,
   itemsSchema,
+  PAPER_KANJI,
   pointsOf,
-  reviewLinksOf
+  reviewLinksOf,
+  vocabListSchema,
+  wordHints,
+  wordProblems
 } from "../src/handlers/exam/items.ts";
 import { pictureName, versionsOf } from "./lib/pictures.mjs";
 
@@ -91,9 +95,17 @@ const items = DECKS.flatMap((deck) =>
     )
 );
 
+// The N5 and N4 words, which the vocabulary items are checked against. Built by `exam:vocab`.
+const vocab = parseOrExit(
+  vocabListSchema,
+  JSON.parse(readFileSync(`data/jlpt/vocab.json`, `utf8`)),
+  `vocab.json`
+);
+
 const problems = [
   ...corpusProblems(items),
-  ...items.flatMap((item) => itemProblems(item, pointIds))
+  ...items.flatMap((item) => itemProblems(item, pointIds)),
+  ...wordProblems(items, vocab)
 ];
 if (problems.length > 0) {
   for (const problem of problems) console.error(problem);
@@ -102,7 +114,7 @@ if (problems.length > 0) {
 }
 
 // Hints never fail the build: they need a reviewer's judgement.
-const hints = items.flatMap(itemHints);
+const hints = [...items.flatMap(itemHints), ...wordHints(items, vocab)];
 for (const hint of hints) console.log(`hint: ${hint}`);
 
 const shipped = items.filter((item) => DRAFTS || item.status === `reviewed`);
@@ -212,6 +224,24 @@ for (const [type, label] of Object.entries(VOCAB)) {
     `goi ${label}: ${String(of.length)} items (${String(reviewed)} reviewed; ${levels})`
   );
 }
+
+// How much of N5 the 漢字読み and 表記 decks reach, drafts included, to steer the next batch toward words not yet asked.
+const asked = new Set(
+  items
+    .filter((item) => item.type === `kanji` || item.type === `spelling`)
+    .map((item) => item.word)
+);
+// Only spellings the paper could print: kanji from N5 and N4 (彼処 for あそこ is JMdict's, not the paper's).
+const printable = (form) =>
+  [...form].every(
+    (char) => !/\p{Script=Han}/u.test(char) || PAPER_KANJI.has(char)
+  ) && /\p{Script=Han}/u.test(form);
+const n5Kanji = vocab.words.filter(
+  (word) => word.level === 5 && word.kanji.some(printable)
+);
+console.log(
+  `goi asks ${String(n5Kanji.filter((word) => word.kanji.some((form) => asked.has(form))).length)} of ${String(n5Kanji.length)} N5 words the paper could write in kanji`
+);
 
 for (const [test, plans] of Object.entries(BLUEPRINTS)) {
   for (const plan of plans) {

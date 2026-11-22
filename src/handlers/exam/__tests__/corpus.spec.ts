@@ -29,8 +29,10 @@ import {
   materialMarkup,
   optionText,
   reviewLinksOf,
+  vocabListSchema,
   whyOf,
   WINDOW_SIZE,
+  wordProblems,
   type InfoItem,
   type Item,
   type Slot,
@@ -252,6 +254,16 @@ describe(`the mock-test corpus`, () => {
       ...items.flatMap((item) => itemProblems(item, pointIds))
     ];
     expect(problems).toEqual([]);
+  });
+
+  it(`checks every 漢字読み and 表記 word against the N5 word list`, () => {
+    // WHY: the trap a reviewer misses most is an option that is wrong here but right somewhere: 大人 read だいにん, はし written 箸. The list, built from JMdict by `exam:vocab`, sees every reading and every N5 and N4 homophone, so a draft is caught before review.
+    const list = v.parse(
+      vocabListSchema,
+      JSON.parse(readFileSync(`data/jlpt/vocab.json`, `utf8`))
+    );
+    expect(list.words.length).toBeGreaterThan(1000);
+    expect(wordProblems(items, list)).toEqual([]);
   });
 
   it(`writes every word of every picture into its alt text`, () => {

@@ -303,6 +303,11 @@ export default defineConfig({
         command: `node scripts/build-exam.mjs`,
         cache: false
       },
+      // Rebuilds the N5/N4 word list the vocabulary items are checked against, from JMdict and the JLPT lists. Downloads like corpus:build, and its output is committed, so CI never needs the network.
+      "exam:vocab": {
+        command: `node scripts/build-vocab.mjs`,
+        cache: false
+      },
       // Fetches every Tofugu page the grammar points link to, and checks each section exists. Needs the network, so it runs on demand, not in CI.
       "exam:links": {
         command: `node scripts/check-review-links.mjs`,

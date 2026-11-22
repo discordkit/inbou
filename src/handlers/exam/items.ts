@@ -1803,6 +1803,112 @@ export const itemProblems = (
   }
 };
 
+/**
+ * `data/jlpt/vocab.json`: the N5 and N4 words, as JMdict writes and reads them, and every reading of their kanji spellings. Built by `exam:vocab`.
+ */
+export const vocabListSchema = v.strictObject({
+  source: text,
+  levels: text,
+  license: text,
+  words: v.array(
+    v.strictObject({
+      level: v.picklist([5, 4]),
+      kanji: v.array(text),
+      kana: v.array(text)
+    })
+  ),
+  /** Every reading JMdict gives a kanji spelling, from every entry that has it. */
+  readings: v.record(v.string(), v.array(text))
+});
+export type VocabList = v.InferOutput<typeof vocabListSchema>;
+
+type ListedWord = VocabList[`words`][number];
+
+/** Every listed word a spelling or reading belongs to. */
+const listedAs = (list: VocabList, form: string): ListedWord[] =>
+  list.words.filter(
+    (word) => word.kanji.includes(form) || word.kana.includes(form)
+  );
+
+/**
+ * What the word list says is wrong with a 漢字読み or 表記 item.
+ *
+ * The trap a reviewer misses most: an option that is wrong here but right somewhere. 大人 is おとな, but JMdict also reads it だいにん, as a fare sign does; はし is 橋 and also 箸. So no 漢字読み option may be another reading of its kanji, and no 表記 option another N5 or N4 word with the same reading. An underlined word that is not the word's own form (書いて for 書く) is checked only for its word.
+ */
+export const wordProblems = (
+  items: readonly Item[],
+  list: VocabList
+): string[] => {
+  const readings = new Map(Object.entries(list.readings));
+  return items.flatMap((item) => {
+    if (item.type !== `kanji` && item.type !== `spelling`) return [];
+    const where = item.id;
+    if (listedAs(list, item.word).length === 0) {
+      return [
+        `${where}: ${item.word} is not an N5 or N4 word on the list; check its spelling, or choose another word`
+      ];
+    }
+    const [target = ``] = targetsOf(item.sentence);
+    const wrongs = item.wrong.map(optionText);
+    const problems: string[] = [];
+
+    if (item.type === `kanji`) {
+      const read = readings.get(target);
+      if (read === undefined) return [];
+      if (!read.includes(item.answer)) {
+        problems.push(
+          `${where}: JMdict does not read ${target} as ${item.answer}`
+        );
+      }
+      for (const wrong of wrongs.filter((option) => read.includes(option))) {
+        problems.push(
+          `${where}: ${wrong} is also a reading of ${target}, so the option is right somewhere`
+        );
+      }
+      return problems;
+    }
+
+    const kana = target.replaceAll(` `, ``);
+    const sameSound = list.words.filter((word) => word.kana.includes(kana));
+    const own = sameSound.filter(
+      (word) => word.kanji.includes(item.word) || word.kana.includes(item.word)
+    );
+    if (
+      own.length > 0 &&
+      !own.some(
+        (word) =>
+          word.kanji.includes(item.answer) || word.kana.includes(item.answer)
+      )
+    ) {
+      problems.push(
+        `${where}: ${item.answer} is not how JMdict writes ${kana}`
+      );
+    }
+    for (const wrong of wrongs) {
+      if (
+        sameSound.some(
+          (word) => word.kanji.includes(wrong) || word.kana.includes(wrong)
+        )
+      ) {
+        problems.push(
+          `${where}: ${wrong} is also an N5 or N4 word read ${kana}, so the option is right somewhere`
+        );
+      }
+    }
+    return problems;
+  });
+};
+
+/** What the word list says a reviewer should look at: a word from N4, which the N5 paper rarely tests. */
+export const wordHints = (items: readonly Item[], list: VocabList): string[] =>
+  items.flatMap((item) =>
+    (item.type === `kanji` || item.type === `spelling`) &&
+    listedAs(list, item.word).length > 0 &&
+    listedAs(list, item.word).every((word) => word.level === 4)
+      ? [`${item.id}: ${item.word} is an N4 word; the N5 paper tests N5 words`]
+      : []
+  );
+
 /** Problems that only show across the whole corpus. */
 export const corpusProblems = (items: readonly Item[]): string[] => {
   const seen = new Set<string>();
