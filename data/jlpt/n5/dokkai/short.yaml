@@ -840,7 +840,7 @@
 
 - id: n5-d4-0027
   type: short
-  status: draft
+  status: reviewed
   intro: |-
     （{電話|でんわ}で）
     リンさんの るすばんでんわに この メッセージが ありました。
@@ -877,7 +877,7 @@
 
 - id: n5-d4-0028
   type: short
-  status: draft
+  status: reviewed
   intro: |-
     （アパートで）
     ルームメイトの ケイさんが れいぞうこに この メモを はりました。
@@ -914,7 +914,7 @@
 
 - id: n5-d4-0029
   type: short
-  status: draft
+  status: reviewed
   intro: "これは {料理|りょうり}の {本|ほん}に ある、たまごの サンドイッチの {作|つく}り{方|かた}です。"
   text: |-
     まず、たまごを 10{分|ぷん} ゆでます。つぎに、たまごを {水|みず}に {入|い}れて、つめたく します。それから、たまごを こまかく {切|き}って、マヨネーズと まぜます。さいごに、それを パンに のせて、もう {一|いち}まいの パンを {上|うえ}に のせます。
@@ -944,7 +944,7 @@
 
 - id: n5-d4-0030
   type: short
-  status: draft
+  status: reviewed
   intro: |-
     （{会社|かいしゃ}で）
     {会社|かいしゃ}の {人|ひと}が この おしらせを {見|み}ました。
@@ -980,7 +980,7 @@
 
 - id: n5-d4-0031
   type: short
-  status: draft
+  status: reviewed
   intro: "これは {医者|いしゃ}が {病院|びょういん}で ハンナさんに わたした {紙|かみ}です。"
   text: |-
     ハンナさんへ
@@ -1014,7 +1014,7 @@
 
 - id: n5-d4-0032
   type: short
-  status: draft
+  status: reviewed
   intro: "これは りょかんの {人|ひと}が {送|おく}った メールです。"
   text: |-
     ホワイトさん
@@ -1048,7 +1048,7 @@
 
 - id: n5-d4-0033
   type: short
-  status: draft
+  status: reviewed
   intro: |-
     （プールで）
     {入口|いりぐち}に この {紙|かみ}が あります。
@@ -1084,7 +1084,7 @@
 
 - id: n5-d4-0034
   type: short
-  status: draft
+  status: reviewed
   intro: "これは ペドロさんが {書|か}いた にっきです。"
   text: |-
     9{月|がつ}{5日|いつか}（{金|きん}）
@@ -1117,7 +1117,7 @@
 
 - id: n5-d4-0035
   type: short
-  status: draft
+  status: reviewed
   intro: "これは {友|とも}だちの ミナさんが {送|おく}った メッセージです。"
   text: |-
     ごめん！あしたの {映画|えいが}、10{時|じ}からと {言|い}いましたが、10{時|じ}の チケットは もう ありませんでした。1{時|じ}の チケットを {買|か}いました。だから、ひるごはんを いっしょに {食|た}べてから {行|い}きましょう。12{時|じ}に {駅|えき}の {前|まえ}で {会|あ}いましょう。
@@ -1150,7 +1150,7 @@
 
 - id: n5-d4-0036
   type: short
-  status: draft
+  status: reviewed
   intro: "これは エマさんが {書|か}いた にっきです。"
   text: |-
     3{月|がつ}{20日|はつか}（{日|にち}）
@@ -1183,7 +1183,7 @@
 
 - id: n5-d4-0037
   type: short
-  status: draft
+  status: reviewed
   intro: |-
     （りょうの {台所|だいどころ}で）
     りょうの {学生|がくせい}が この {紙|かみ}を {見|み}ました。
@@ -1221,7 +1221,7 @@
 
 - id: n5-d4-0038
   type: short
-  status: draft
+  status: reviewed
   intro: "これは {日本人|にほんじん}の {友|とも}だち たくやさんが {送|おく}った メールです。"
   text: |-
     アナさん
@@ -1256,7 +1256,7 @@
 
 - id: n5-d4-0039
   type: short
-  status: draft
+  status: reviewed
   intro: |-
     （{教室|きょうしつ}で）
     {先生|せんせい}が ホワイトボードに この しゅくだいを {書|か}きました。
@@ -1288,7 +1288,7 @@
 
 - id: n5-d4-0040
   type: short
-  status: draft
+  status: reviewed
   intro: |-
     （アパートの {前|まえ}で）
     {車|くるま}に この メモが ありました。
@@ -1324,7 +1324,7 @@
 
 - id: n5-d4-0041
   type: short
-  status: draft
+  status: reviewed
   intro: "これは {自転車|じてんしゃ}やの {人|ひと}が {送|おく}った メールです。"
   text: |-
     ニコラスさん
@@ -1357,7 +1357,7 @@
 
 - id: n5-d4-0042
   type: short
-  status: draft
+  status: reviewed
   intro: |-
     （パンやで）
     あたらしい アルバイトの ソフィさんが この メモを {読|よ}みました。
@@ -1390,7 +1390,7 @@
 
 - id: n5-d4-0043
   type: short
-  status: draft
+  status: reviewed
   intro: "これは ゆいさんが {書|か}いた にっきです。"
   text: |-
     5{月|がつ}{3日|みっか}（{土|ど}）
@@ -1421,7 +1421,7 @@
 
 - id: n5-d4-0044
   type: short
-  status: draft
+  status: reviewed
   intro: "これは リーさんが {日本語|にほんご}の {先生|せんせい}に わたした カードです。"
   text: |-
     {森|もり}{先生|せんせい}
