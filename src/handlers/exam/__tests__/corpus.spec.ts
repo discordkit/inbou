@@ -7,6 +7,7 @@ import { BLUEPRINTS } from "../blueprint.js";
 import corpus from "../corpus.json" with { type: "json" };
 import {
   composeQuestion,
+  drawTest,
   formQuestion,
   passageQuestions,
   readingQuestions,
@@ -309,6 +310,32 @@ describe(`the mock-test corpus`, () => {
         .map(({ id, ms }) => `${id}: ${String(ms / 1000)} s`)
     );
     expect(long).toEqual([]);
+  });
+
+  it(`gives grammar and reading together the real paper's 40 minutes`, () => {
+    // WHY: /bunpou and /dokkai are the 22 questions of the real N5 grammar-and-reading section, which allows 40 minutes. Students practise to finish inside that limit (the user's aim, 2026-11-22): much less, and the test feels beyond them; much more, and they never learn the pace. Measured as the average over many draws, so a batch of longer texts that shifts it shows here.
+    const shipped = items.filter((item) => item.status === `reviewed`);
+    let state = 11;
+    const random = (): number => {
+      state = (state * 1_664_525 + 1_013_904_223) % 4_294_967_296;
+      return state / 4_294_967_296;
+    };
+    const RUNS = 300;
+    const minutes = ([`bunpou`, `dokkai`] as const).reduce(
+      (sum, test) =>
+        sum +
+        Array.from({ length: RUNS }, () =>
+          drawTest(test, shipped, {}, random).reduce(
+            (total, question) => total + question.timeoutMs,
+            0
+          )
+        ).reduce((total, ms) => total + ms, 0) /
+          RUNS /
+          60_000,
+      0
+    );
+    expect(minutes).toBeGreaterThan(38);
+    expect(minutes).toBeLessThan(42);
   });
 
   it(`fits every private follow-up in one message`, () => {

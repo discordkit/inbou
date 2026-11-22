@@ -132,6 +132,20 @@ export const BASE_MS: Readonly<Record<Mondai, number>> = {
 /** Reading time per character of text the player has to read. */
 export const PER_CHAR_MS = 500;
 
+/**
+ * How much longer than the formula above each 問題 runs.
+ *
+ * Set against the real paper (the user's choice, 2026-11-22). N5's grammar-and-reading section is 22 questions in 40 minutes, and /bunpou and /dokkai are those 22. /bunpou keeps the formula's pace, about a minute a question, as guides advise for grammar. Reading gets the rest, about 22 minutes: about 3.4 minutes for a 問題4 question, 5.4 for a 問題5 question and 4.5 for 問題6, near the guides' 3 for a short text and 5 to 6 for a longer one. The factors turn the formula's average for each 問題 into those times, and keep longer texts longer. The corpus test holds the pair to the real 40 minutes.
+ */
+export const PACE: Readonly<Record<Mondai, number>> = {
+  1: 1,
+  2: 1,
+  3: 1,
+  4: 2,
+  5: 2.5,
+  6: 1.8
+};
+
 /** How a ★ line shows its four blanks, with the star in one. */
 const BLANK_LINE = `＿＿`;
 const STAR_BLANK = `＿★＿`;
@@ -160,8 +174,9 @@ const tokenFrom = (random: Random): string =>
  * How long a question stays open.
  *
  * A base per type plus time per character the player must read — the text and
- * all four options — so a long question gets longer. Rounded up to whole
- * seconds, which is all the countdown shows.
+ * all four options — so a long question gets longer, then set to the real
+ * paper's pace by {@link PACE}. Rounded up to whole seconds, which is all the
+ * countdown shows.
  */
 export const timeoutFor = (
   mondai: Mondai,
@@ -171,7 +186,10 @@ export const timeoutFor = (
   const chars =
     plain(text).length +
     options.reduce((sum, option) => sum + plain(option).length, 0);
-  return Math.ceil((BASE_MS[mondai] + chars * PER_CHAR_MS) / 1000) * 1000;
+  return (
+    Math.ceil(((BASE_MS[mondai] + chars * PER_CHAR_MS) * PACE[mondai]) / 1000) *
+    1000
+  );
 };
 
 /** Underline each part of an answer: a pair (は／は) is two parts, two blanks. */
