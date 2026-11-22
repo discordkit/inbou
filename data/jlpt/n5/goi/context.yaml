@@ -607,3 +607,239 @@
       why: "きれいに is neatly or prettily, for writing or tidying, not reading."
   difficulty: 3
   note: "This asks how to read a difficult book: ゆっくり, slowly."
+
+- id: n5-g3-0044
+  type: context
+  status: draft
+  sentence: "この スープは （　）ですから、ゆっくり のんで ください。"
+  en: "This soup is hot, so please drink it slowly."
+  answer: あつい
+  wrong: [さむい, すずしい, ふるい]
+  difficulty: 1
+  note: "This asks why you drink the soup slowly: it is あつい, hot. さむい and すずしい are for the weather."
+
+- id: n5-g3-0045
+  type: context
+  status: draft
+  sentence: "（　）が すきましたから、ごはんを たべましょう。"
+  en: "I'm hungry, so let's eat."
+  answer: おなか
+  wrong: [のど, あたま, せなか]
+  difficulty: 1
+  note: "This asks what is empty when you want to eat: おなかが すく, to be hungry."
+
+- id: n5-g3-0046
+  type: context
+  status: draft
+  sentence: "わたしの すきな （　）は りんごです。"
+  en: "My favourite fruit is the apple."
+  answer: くだもの
+  wrong: [やさい, のみもの, どうぶつ]
+  difficulty: 1
+  note: "This asks what kind of thing an apple is: a くだもの, a fruit."
+
+- id: n5-g3-0047
+  type: context
+  status: draft
+  sentence: "この みちは くるまが おおいですから、（　）です。"
+  en: "This road has a lot of cars, so it is dangerous."
+  answer: あぶない
+  wrong: [あまい, おもしろい, わかい]
+  difficulty: 1
+  note: "This asks what a road with many cars is: あぶない, dangerous."
+
+- id: n5-g3-0048
+  type: context
+  status: draft
+  sentence: "パンに バターを （　） たべます。"
+  en: "I spread butter on my bread and eat it."
+  answer: ぬって
+  wrong: [のって, まがって, はいって]
+  difficulty: 1
+  note: "This asks what you do with butter on bread: ぬる, spread it."
+
+- id: n5-g3-0049
+  type: context
+  status: draft
+  sentence: "つかれましたから、すこし （　）。"
+  en: "I'm tired, so let's rest a little."
+  answer: やすみましょう
+  wrong: [はしりましょう, はたらきましょう, およぎましょう]
+  difficulty: 1
+  note: "This asks what to do when you are tired: やすむ, rest."
+
+- id: n5-g3-0050
+  type: context
+  status: draft
+  sentence: "この えいがは とても （　）ですから、もう いちど みたいです。"
+  en: "This film is really interesting, so I want to see it again."
+  answer: おもしろい
+  wrong:
+    - option: つまらない
+      why: "つまらない is dull. Nobody wants to see a dull film again."
+    - option: ながい
+      why: "ながい is long. Length is no reason to see a film again."
+    - option: うるさい
+      why: "うるさい is noisy. That is no reason to see a film again."
+  difficulty: 2
+  note: "This asks why you want to see the film again: it is おもしろい, interesting."
+
+- id: n5-g3-0051
+  type: context
+  status: draft
+  sentence: "にもつが おもいですから、タクシーを （　）。"
+  en: "The luggage is heavy, so let's call a taxi."
+  answer: よびましょう
+  wrong:
+    - option: かいましょう
+      why: "You do not buy a taxi; you call one: よぶ."
+    - option: のみましょう
+      why: "のむ is to drink."
+    - option: おしえましょう
+      why: "おしえる is to teach."
+  difficulty: 2
+  note: "This asks what you do to get a taxi: よぶ, call one."
+
+- id: n5-g3-0052
+  type: context
+  status: draft
+  sentence: "せんせい、この ことばの （　）を おしえて ください。"
+  en: "Teacher, please tell me what this word means."
+  answer: いみ
+  wrong:
+    - option: こえ
+      why: "こえ is a voice. For a word you don't know, you ask its meaning."
+    - option: なまえ
+      why: "なまえ is a name. For a word you don't know, you ask its meaning."
+    - option: うた
+      why: "うた is a song. A word has a meaning, not a song."
+  difficulty: 2
+  note: "This asks what you ask about a word you don't know: its いみ, its meaning."
+
+- id: n5-g3-0053
+  type: context
+  status: draft
+  sentence: "この ペンは インクが ありません。（　） ペンを かして ください。"
+  en: "This pen has no ink. Please lend me another pen."
+  answer: ほかの
+  wrong:
+    - option: おなじ
+      why: "おなじ is the same. A pen with no ink is no use; you want another one."
+    - option: この
+      why: "この ペン is the one with no ink."
+    - option: どの
+      why: "どの asks which. This is a request, not a question."
+  difficulty: 2
+  note: "This asks which pen you want when yours has no ink: ほかの, another one."
+
+- id: n5-g3-0054
+  type: context
+  status: draft
+  sentence: "A「ここから えきまで （　） かかりますか。」\nB「バスで 10ぷんです。」"
+  en: "A: How long does it take from here to the station? B: Ten minutes by bus."
+  answer: どのぐらい
+  wrong:
+    - option: なんじ
+      why: "なんじ asks the time on a clock. かかりますか asks how long it takes."
+    - option: どこ
+      why: "どこ asks where. The answer, ten minutes, is a length of time."
+    - option: なに
+      why: "なに asks what. かかりますか asks how long."
+  difficulty: 2
+  note: "This asks which question word fits かかりますか, how long does it take: どのぐらい."
+
+- id: n5-g3-0055
+  type: context
+  status: draft
+  sentence: "この くつは ちいさいですから、もっと （　） くつを ください。"
+  en: "These shoes are small, so please give me bigger ones."
+  answer: おおきい
+  wrong:
+    - option: ちいさい
+      why: "ちいさい is small, and these are already too small."
+    - option: やすい
+      why: "やすい is cheap. The problem is the size."
+    - option: ふるい
+      why: "ふるい is old. The problem is the size."
+  difficulty: 2
+  note: "This asks what shoes you want when yours are too small: おおきい, bigger ones."
+
+- id: n5-g3-0056
+  type: context
+  status: draft
+  sentence: "わたしは コーヒーが すきですが、こうちゃは （　） すきじゃ ありません。"
+  en: "I like coffee, but I don't like tea very much."
+  answer: あまり
+  wrong:
+    - option: とても
+      why: "とても goes with a positive: とても すきです. With じゃ ありません, it is あまり."
+    - option: よく
+      why: "よく does not go with すきじゃ ありません."
+    - option: たくさん
+      why: "たくさん is a lot, for amounts. It does not go with すき."
+  difficulty: 3
+  note: "This asks which word goes with a negative: あまり 〜じゃ ありません, not very."
+
+- id: n5-g3-0057
+  type: context
+  status: draft
+  sentence: "A「（　） にほんへ きましたか。」\nB「きょねんの 4がつです。」"
+  en: "A: When did you come to Japan? B: In April last year."
+  answer: いつ
+  wrong:
+    - option: どこ
+      why: "どこ asks where. The answer gives a time: last April."
+    - option: だれ
+      why: "だれ asks who. The answer gives a time."
+    - option: どうして
+      why: "どうして asks why. The answer gives a time."
+  difficulty: 3
+  note: "This asks which question word the answer fits. B gives a time, so A asked いつ, when."
+
+- id: n5-g3-0058
+  type: context
+  status: draft
+  sentence: "ちちは たばこを すいません。からだに （　）ですから。"
+  en: "My father doesn't smoke, because it's bad for your health."
+  answer: わるい
+  wrong:
+    - option: いい
+      why: "If smoking were good for the body, it would be no reason not to smoke."
+    - option: おおきい
+      why: "Size has nothing to do with smoking."
+    - option: じょうぶ
+      why: "じょうぶ is strong or healthy. It does not fit からだに 〜です."
+  difficulty: 3
+  note: "This asks why he does not smoke: it is からだに わるい, bad for your health."
+
+- id: n5-g3-0059
+  type: context
+  status: draft
+  sentence: "こどもが ねて いますから、（　） こえで はなして ください。"
+  en: "The children are asleep, so please talk in a quiet voice."
+  answer: ちいさい
+  wrong:
+    - option: おおきい
+      why: "A loud voice would wake the children."
+    - option: げんきな
+      why: "A lively voice would wake the children."
+    - option: ひろい
+      why: "ひろい is wide, for rooms and roads, not voices."
+  difficulty: 3
+  note: "This asks what voice to use near sleeping children: a ちいさい こえ, a quiet voice."
+
+- id: n5-g3-0060
+  type: context
+  status: draft
+  sentence: "100えんの ノートを 3さつ かいました。ぜんぶで （　）でした。"
+  en: "I bought three 100-yen notebooks. That was 300 yen in all."
+  answer: さんびゃくえん
+  wrong:
+    - option: さんひゃくえん
+      why: "Three hundred is さんびゃく, with a dakuten."
+    - option: ひゃくさんえん
+      why: "ひゃくさんえん is 103 yen."
+    - option: さんぜんえん
+      why: "さんぜんえん is 3,000 yen."
+  difficulty: 3
+  note: "This asks the total: three notebooks at 100 yen is 300 yen, read さんびゃくえん."

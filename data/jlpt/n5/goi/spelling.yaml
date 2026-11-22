@@ -495,3 +495,200 @@
       why: "おきます keeps き after the kanji: 起きます."
   difficulty: 3
   note: "This asks how おきます is written: 起きます."
+
+- id: n5-g2-0033
+  type: spelling
+  status: draft
+  word: 外
+  sentence: "__そと__は さむいですよ。"
+  en: "It's cold outside."
+  answer: 外
+  wrong: [中, 上, 下]
+  difficulty: 1
+  note: "This asks how そと, outside, is written: 外. 中 is inside, 上 above and 下 below."
+
+- id: n5-g2-0034
+  type: spelling
+  status: draft
+  word: 夜
+  sentence: "__よる__ おそく ねました。"
+  en: "I went to bed late at night."
+  answer: 夜
+  wrong: [夕, 晩, 昨]
+  difficulty: 1
+  note: "This asks how よる, night, is written: 夜. 夕 is early evening, 晩 the evening, and 昨 means last, as in last night."
+
+- id: n5-g2-0035
+  type: spelling
+  status: draft
+  word: 金曜日
+  sentence: "__きんようび__に あいましょう。"
+  en: "Let's meet on Friday."
+  answer: 金曜日
+  wrong: [土曜日, 木曜日, 月曜日]
+  difficulty: 1
+  note: "This asks how きんようび, Friday, is written: 金曜日. 土曜日 is Saturday, 木曜日 Thursday and 月曜日 Monday."
+
+- id: n5-g2-0036
+  type: spelling
+  status: draft
+  word: 女
+  sentence: "あの __おんな__の ひとは だれですか。"
+  en: "Who is that woman?"
+  answer: 女
+  wrong: [男, 子, 母]
+  difficulty: 1
+  note: "This asks how おんな, a woman, is written: 女. 男 is a man, 子 a child and 母 a mother."
+
+- id: n5-g2-0037
+  type: spelling
+  status: draft
+  word: 少し
+  sentence: "__すこし__ まって ください。"
+  en: "Please wait a moment."
+  answer: 少し
+  wrong:
+    - option: 小し
+      why: "小 is small, as in ちいさい. 少 has a slanting stroke at the bottom."
+    - option: 多し
+      why: "多 is many, as in おおい: the opposite."
+    - option: 少こし
+      why: "すこし keeps only し after the kanji: 少し."
+  difficulty: 2
+  note: "This asks how すこし, a little, is written: 少し."
+
+- id: n5-g2-0038
+  type: spelling
+  status: draft
+  word: ご飯
+  sentence: "いっしょに __ごはん__を たべませんか。"
+  en: "Shall we eat together?"
+  answer: ご飯
+  wrong:
+    - option: ご飲
+      why: "飲 is to drink, のむ: 欠 on the right. 飯 has 反."
+    - option: ご館
+      why: "館 is a building, as in としょかん: 官 on the right."
+    - option: ご版
+      why: "版 is a printing block: 片 on the left. 飯 has 食 on the left."
+  difficulty: 2
+  note: "This asks how ごはん, a meal or rice, is written: ご飯, with 食, food, on the left."
+
+- id: n5-g2-0039
+  type: spelling
+  status: draft
+  word: 安い
+  sentence: "この みせの パンは __やすい__です。"
+  en: "The bread at this shop is cheap."
+  answer: 安い
+  wrong:
+    - option: 女い
+      why: "女 is a woman. 安 adds a roof on top."
+    - option: 字い
+      why: "字 is a letter: 子 under the roof, not 女."
+    - option: 安すい
+      why: "やすい keeps only い after the kanji: 安い."
+  difficulty: 2
+  note: "This asks how やすい, cheap, is written: 安い, 女 under a roof."
+
+- id: n5-g2-0040
+  type: spelling
+  status: draft
+  word: 会う
+  sentence: "えきで ともだちに __あいます__。"
+  en: "I'm meeting a friend at the station."
+  answer: 会います
+  wrong:
+    - option: 今います
+      why: "今 is いま, now. 会 has 云 under its roof."
+    - option: 公います
+      why: "公 means public. 会 has a roof on top."
+    - option: 会ます
+      why: "あいます keeps い after the kanji: 会います."
+  difficulty: 2
+  note: "This asks how あいます, to meet someone, is written: 会います."
+
+- id: n5-g2-0041
+  type: spelling
+  status: draft
+  word: 寒い
+  sentence: "きょうは とても __さむい__です。"
+  en: "It is very cold today."
+  answer: 寒い
+  wrong:
+    - option: 寒むい
+      why: "さむい keeps only い after the kanji: 寒い."
+    - option: 暑い
+      why: "暑い is あつい, hot: the opposite."
+    - option: 実い
+      why: "実 is a fruit or a seed. Its inside is different from 寒."
+  difficulty: 2
+  note: "This asks how さむい, cold (for weather), is written: 寒い."
+
+- id: n5-g2-0042
+  type: spelling
+  status: draft
+  word: 飲む
+  sentence: "まいあさ コーヒーを __のみます__。"
+  en: "I drink coffee every morning."
+  answer: 飲みます
+  wrong:
+    - option: 飯みます
+      why: "飯 is cooked rice, as in ごはん: 反 on the right, not 欠."
+    - option: 食みます
+      why: "食 is to eat, たべる. のむ is 飲, with 欠 on the right."
+    - option: 飲ます
+      why: "のみます keeps み after the kanji: 飲みます."
+  difficulty: 2
+  note: "This asks how のみます is written: 飲みます, with 欠 on the right."
+
+- id: n5-g2-0043
+  type: spelling
+  status: draft
+  word: 質問
+  sentence: "せんせいに __しつもん__を しました。"
+  en: "I asked the teacher a question."
+  answer: 質問
+  wrong:
+    - option: 質間
+      why: "間 is between: 日 inside the gate. 問 has 口 inside."
+    - option: 貿問
+      why: "貿 is trade. 質 has two 斤 on top."
+    - option: 質門
+      why: "門 is a gate. A question is 問, with 口 inside the gate."
+  difficulty: 3
+  note: "This asks how しつもん, a question, is written: 質問, with 口, a mouth, inside the gate."
+
+- id: n5-g2-0044
+  type: spelling
+  status: draft
+  word: 洗う
+  sentence: "ごはんの まえに てを __あらいます__。"
+  en: "I wash my hands before eating."
+  answer: 洗います
+  wrong:
+    - option: 先います
+      why: "先 is さき, ahead. 洗 adds water on the left."
+    - option: 流います
+      why: "流 means to flow. 洗 has 先 on the right."
+    - option: 洗らいます
+      why: "あらいます keeps only います after the kanji: 洗います."
+  difficulty: 3
+  note: "This asks how あらいます, to wash, is written: 洗います, water beside 先."
+
+- id: n5-g2-0045
+  type: spelling
+  status: draft
+  word: 好き
+  sentence: "わたしは ねこが __すき__です。"
+  en: "I like cats."
+  answer: 好き
+  wrong:
+    - option: 如き
+      why: "如 means like or as: 口 on the right, not 子."
+    - option: 好すき
+      why: "すき keeps only き after the kanji: 好き."
+    - option: 姉き
+      why: "姉 is an older sister: 市 on the right, not 子."
+  difficulty: 3
+  note: "This asks how すき is written: 好き, 女 beside 子."

@@ -395,3 +395,138 @@
       why: "Ten is the time you go to bed, not how long you sleep."
   difficulty: 3
   note: "This asks how long you sleep: from ten at night to six in the morning, 8じかん."
+
+- id: n5-g4-0027
+  type: paraphrase
+  status: draft
+  sentence: "この へやは さむいです。"
+  en: "This room is cold."
+  answer: "この へやは あたたかくないです。"
+  wrong:
+    - "この へやは あたたかいです。"
+    - "この へやは あかるくないです。"
+    - "この へやは しずかじゃ ありません。"
+  difficulty: 1
+  note: "This asks for another way to say さむい, cold: あたたかくない, not warm."
+
+- id: n5-g4-0028
+  type: paraphrase
+  status: draft
+  sentence: "この ケーキは あまり おいしくないです。"
+  en: "This cake is not very good."
+  answer: "この ケーキは まずいです。"
+  wrong:
+    - "この ケーキは おいしいです。"
+    - "この ケーキは たかいです。"
+    - "この ケーキは あまいです。"
+  difficulty: 1
+  note: "This asks for another way to say a food is not good: まずい."
+
+- id: n5-g4-0029
+  type: paraphrase
+  status: draft
+  sentence: "わたしの いえは がっこうの となりです。"
+  en: "My house is next to the school."
+  answer: "わたしの いえは がっこうの すぐ よこです。"
+  wrong:
+    - "わたしの いえは がっこうの まえです。"
+    - "わたしの いえは がっこうから とおいです。"
+    - "わたしの いえは がっこうの うしろです。"
+  difficulty: 1
+  note: "This asks for another way to say となり, next door: すぐ よこ, right beside."
+
+- id: n5-g4-0030
+  type: paraphrase
+  status: draft
+  sentence: "わたしは にほんごを ならって います。"
+  en: "I am learning Japanese."
+  answer: "わたしは にほんごを べんきょうして います。"
+  wrong:
+    - option: "わたしは にほんごを おしえて います。"
+      why: "おしえる is to teach, the other way round."
+    - option: "わたしは にほんごを はなして います。"
+      why: "はなす is to speak. ならう is to learn."
+    - option: "わたしは にほんごが わかりません。"
+      why: "This says you do not understand Japanese. ならう says you are learning it."
+  difficulty: 2
+  note: "This asks for another way to say ならう, to learn: べんきょうする, to study."
+
+- id: n5-g4-0031
+  type: paraphrase
+  status: draft
+  sentence: "あしたは あめが ふるでしょう。"
+  en: "It will probably rain tomorrow."
+  answer: "あしたは たぶん あめです。"
+  wrong:
+    - option: "あしたは あめが ふりません。"
+      why: "This is the opposite: no rain."
+    - option: "きのうは あめが ふりました。"
+      why: "This is about yesterday, and what did happen. でしょう is about what will probably happen."
+    - option: "あしたは ゆきが ふるでしょう。"
+      why: "ゆき is snow, not rain."
+  difficulty: 2
+  note: "This asks for another way to say でしょう, probably: たぶん."
+
+- id: n5-g4-0032
+  type: paraphrase
+  status: draft
+  sentence: "わたしの ちちは ぎんこういんです。"
+  en: "My father is a bank clerk."
+  answer: "わたしの ちちは ぎんこうで はたらいて います。"
+  wrong:
+    - option: "わたしの ちちは ぎんこうで かいものを します。"
+      why: "You shop at a shop, not at a bank. A ぎんこういん works at one."
+    - option: "わたしの ちちは びょういんで はたらいて います。"
+      why: "びょういん is a hospital. A ぎんこういん works at a bank."
+    - option: "わたしの ちちは ぎんこうへ よく いきます。"
+      why: "This says he often goes to the bank, not that he works there."
+  difficulty: 2
+  note: "This asks what a ぎんこういん is: someone who works at a bank, ぎんこうで はたらく ひと."
+
+- id: n5-g4-0033
+  type: paraphrase
+  status: draft
+  sentence: "この みせは かようびから にちようびまで あいて います。"
+  en: "This shop is open from Tuesday to Sunday."
+  answer: "この みせは げつようびが やすみです。"
+  wrong:
+    - option: "この みせは かようびが やすみです。"
+      why: "かようび is the first day it is open. Only げつようび is left out."
+    - option: "この みせは にちようびが やすみです。"
+      why: "にちようび is the last day it is open."
+    - option: "この みせは まいにち あいて います。"
+      why: "げつようび is not among the days, so it is not open every day."
+  difficulty: 3
+  note: "This asks which day is left out. Tuesday to Sunday is six days; the shop is closed on Monday, げつようび."
+
+- id: n5-g4-0034
+  type: paraphrase
+  status: draft
+  sentence: "この ペンは 100えんで、あの ペンは 150えんです。"
+  en: "This pen is 100 yen, and that pen is 150 yen."
+  answer: "あの ペンは この ペンより 50えん たかいです。"
+  wrong:
+    - option: "この ペンは あの ペンより 50えん たかいです。"
+      why: "This turns it round: この ペン is the cheaper one."
+    - option: "あの ペンは この ペンより 50えん やすいです。"
+      why: "あの ペン costs more, not less."
+    - option: "あの ペンは この ペンより 150えん たかいです。"
+      why: "150 yen is its price. The difference is 50 yen."
+  difficulty: 3
+  note: "This asks for the same prices as a comparison: 150 yen is 50 yen more than 100, so あの ペン is 50えん たかい."
+
+- id: n5-g4-0035
+  type: paraphrase
+  status: draft
+  sentence: "じゅぎょうは 9じに はじまって、12じに おわりました。"
+  en: "The class began at nine and ended at twelve."
+  answer: "じゅぎょうは 3じかん でした。"
+  wrong:
+    - option: "じゅぎょうは 12じかん でした。"
+      why: "12 is the time it ended, not how long it was."
+    - option: "じゅぎょうは 9じかん でした。"
+      why: "9 is the time it began. From nine to twelve is three hours."
+    - option: "じゅぎょうは 4じかん でした。"
+      why: "From nine to twelve is three hours, not four."
+  difficulty: 3
+  note: "This asks how long the class was: from nine to twelve, 3じかん."
