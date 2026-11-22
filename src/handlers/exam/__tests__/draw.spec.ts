@@ -748,8 +748,9 @@ describe(`a vocabulary test`, () => {
     word,
     sentence: `きのう __${word}__を みました。`,
     en: `e`,
-    answer: `よみ`,
-    wrong: [`よみい`, `よーみ`, `よっみ`],
+    // Numbered: two items with one reading would give each other away.
+    answer: `よみ${String(n)}`,
+    wrong: [`よみい${String(n)}`, `よーみ${String(n)}`, `よっみ${String(n)}`],
     difficulty,
     note: `n`
   });
@@ -858,7 +859,7 @@ describe(`a vocabulary test`, () => {
     const q = vocabQuestion(kanji(1, `雨`), 1, seeded(1));
     expect(q.prompt).toBe(`きのう __雨__を みました。`);
     expect(readingsOf(q.prompt)).toEqual([]);
-    expect(q.answered).toBe(`きのう __{雨|よみ}__を みました。`);
+    expect(q.answered).toBe(`きのう __{雨|よみ1}__を みました。`);
   });
 
   it(`reveals each type's answer in its sentence`, () => {
@@ -891,12 +892,25 @@ describe(`a vocabulary test`, () => {
       wrong: [`取`, `目`, `自`]
     };
     const eye = spelling(21, `目`);
+    // A 漢字読み reading is given away as an option too: the 夏 card teaches that ふゆ is winter.
+    const summer: KanjiItem = {
+      ...kanji(20, `夏`),
+      answer: `なつ`,
+      wrong: [`ふゆ`, `はる`, `あき`]
+    };
+    const winter: KanjiItem = {
+      ...kanji(21, `冬`),
+      answer: `ふゆ`,
+      wrong: [`ふよ`, `ぶゆ`, `ふうゆ`]
+    };
     const deck: Item[] = [
       ...corpus.filter((entry) => entry.type !== `context`),
       ...counters,
       ...Array.from({ length: 8 }, (_, i) => context(i + 3, levels[i % 3])),
       ear,
-      eye
+      eye,
+      summer,
+      winter
     ];
     for (let seed = 1; seed <= 60; seed += 1) {
       const ids = new Set(
@@ -904,6 +918,7 @@ describe(`a vocabulary test`, () => {
       );
       expect(ids.has(counters[0].id) && ids.has(counters[1].id)).toBe(false);
       expect(ids.has(ear.id) && ids.has(eye.id)).toBe(false);
+      expect(ids.has(summer.id) && ids.has(winter.id)).toBe(false);
     }
   });
 
@@ -922,7 +937,7 @@ describe(`a vocabulary test`, () => {
       const q = vocabQuestion(explained, 1, seeded(seed));
       q.options.forEach((option, index) => {
         expect(q.whys?.at(index)).toBe(
-          option === `よみ` ? `` : `why ${option}`
+          option === `よみ1` ? `` : `why ${option}`
         );
       });
     }

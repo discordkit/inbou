@@ -243,7 +243,7 @@ interface Card {
 interface Spoils {
   /** Written forms it asks about: the kanji a 漢字読み card reads, a 表記 answer. Given away wherever another card shows them. */
   written: string[];
-  /** Words it asks for: a 文脈規定 or 言い換え answer. Given away when another card offers it as an option, and explains it. */
+  /** Words it asks for: a 漢字読み reading, or a 文脈規定 or 言い換え answer. Given away when another card offers it as an option, and explains it. */
   words: string[];
   /** Every text the card shows: its sentence, options, note and whys. */
   shown: string;
@@ -269,8 +269,14 @@ const worked = (item: VocabItem): Spoils => {
     ...options,
     ...item.wrong.flatMap((option) => whyOf(option) ?? [])
   ].join(`\n`);
+  // A 漢字読み reading is a word too: the 夏 card's options teach that ふゆ is winter before a 冬 card asks it.
   return item.type === `kanji`
-    ? { written: targetsOf(item.sentence), words: [], shown, options }
+    ? {
+        written: targetsOf(item.sentence),
+        words: [item.answer],
+        shown,
+        options
+      }
     : item.type === `spelling`
       ? { written: [item.answer], words: [], shown, options }
       : { written: [], words: [item.answer], shown, options };
