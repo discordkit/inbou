@@ -1079,3 +1079,255 @@
       why: "わかる takes が, not を, and says you understand already."
   difficulty: 3
   note: "This asks what you do with Japanese before going to a Japanese university: ならう, learn it."
+
+- id: n5-g3-0078
+  type: context
+  status: draft
+  sentence: "（　）で てを あらいます。"
+  en: "I wash my hands with soap."
+  answer: せっけん
+  wrong: [さとう, しお, さいふ]
+  difficulty: 1
+  note: "This asks what you wash your hands with: せっけん, soap. さとう is sugar, しお salt and さいふ a wallet."
+
+- id: n5-g3-0079
+  type: context
+  status: draft
+  sentence: "つかれましたから、（　）で ねます。"
+  en: "I'm tired, so I'll sleep in bed."
+  answer: ベッド
+  wrong: [プール, ポスト, エレベーター]
+  difficulty: 1
+  note: "This asks where you sleep: in a ベッド, a bed."
+
+- id: n5-g3-0080
+  type: context
+  status: draft
+  sentence: "この （　）は おもしろいですから、まいしゅう かって よみます。"
+  en: "This magazine is interesting, so I buy and read it every week."
+  answer: ざっし
+  wrong: [ちず, かさ, たまご]
+  difficulty: 1
+  note: "This asks what you buy and read every week: a ざっし, a magazine."
+
+- id: n5-g3-0081
+  type: context
+  status: draft
+  sentence: "ケーキは （　）で たべましょう。"
+  en: "Let's eat the cake with a fork."
+  answer: フォーク
+  wrong: [ナイフ, コップ, ストーブ]
+  difficulty: 1
+  note: "This asks what you eat cake with: a フォーク, a fork. A ナイフ cuts, a コップ is a cup and a ストーブ a heater."
+
+- id: n5-g3-0082
+  type: context
+  status: draft
+  sentence: "あたまが とても （　）ですから、びょういんへ いきます。"
+  en: "My head really hurts, so I'm going to the hospital."
+  answer: いたい
+  wrong: [ひろい, あおい, ほそい]
+  difficulty: 1
+  note: "This asks why you go to the hospital: your head is いたい, it hurts."
+
+- id: n5-g3-0083
+  type: context
+  status: draft
+  sentence: "わたしの （　）は 5がつ 10かです。"
+  en: "My birthday is May 10th."
+  answer: たんじょうび
+  wrong: [なまえ, くに, しごと]
+  difficulty: 1
+  note: "This asks what is on a date such as May 10th: your たんじょうび, your birthday."
+
+- id: n5-g3-0084
+  type: context
+  status: draft
+  sentence: "あした テストが ありますから、ことばを （　）。"
+  en: "There's a test tomorrow, so I'll memorise the words."
+  answer: おぼえます
+  wrong:
+    - option: わすれます
+      why: "わすれる is to forget: the opposite of what a test needs."
+    - option: こまります
+      why: "こまる is to be in trouble. It does not take ことばを."
+    - option: おしえます
+      why: "おしえる is to teach. Before a test you learn the words yourself."
+  difficulty: 2
+  note: "This asks what you do with words before a test: おぼえる, memorise them."
+
+- id: n5-g3-0085
+  type: context
+  status: draft
+  sentence: "さいふを （　）、こまって います。"
+  en: "I've lost my wallet and I'm in trouble."
+  answer: なくして
+  wrong:
+    - option: かって
+      why: "Buying a wallet would not leave you in trouble."
+    - option: あけて
+      why: "Opening your wallet is no trouble."
+    - option: みせて
+      why: "Showing your wallet is no reason to be in trouble."
+  difficulty: 2
+  note: "This asks what happened to the wallet that left you in trouble: you lost it, なくした."
+
+- id: n5-g3-0086
+  type: context
+  status: draft
+  sentence: "まいにち しごとが おおくて、とても （　）です。"
+  en: "I have a lot of work every day, so I'm very busy."
+  answer: いそがしい
+  wrong:
+    - option: ひま
+      why: "ひま is having free time: the opposite of a lot of work."
+    - option: すずしい
+      why: "すずしい is cool, for the weather."
+    - option: かわいい
+      why: "かわいい is cute. Work does not make you cute."
+  difficulty: 2
+  note: "This asks what a lot of work makes you: いそがしい, busy."
+
+- id: n5-g3-0087
+  type: context
+  status: draft
+  sentence: "きょうは あついですね。（　） ビールが のみたいです。"
+  en: "It's hot today, isn't it? I want a cold beer."
+  answer: つめたい
+  wrong:
+    - option: あたたかい
+      why: "あたたかい is warm. On a hot day you want a cold drink."
+    - option: ぬるい
+      why: "ぬるい is lukewarm. On a hot day you want it cold."
+    - option: ほそい
+      why: "ほそい is thin, for things like a pen or a road."
+  difficulty: 2
+  note: "This asks what drink you want on a hot day: a つめたい one, cold."
+
+- id: n5-g3-0088
+  type: context
+  status: draft
+  sentence: "ケーキを （　） たべましたから、もう ありません。"
+  en: "I ate all the cake, so there's none left."
+  answer: ぜんぶ
+  wrong:
+    - option: すこし
+      why: "If you ate only a little, some would be left."
+    - option: ちょっと
+      why: "ちょっと is a little. Then some would be left."
+    - option: また
+      why: "また is again. It says nothing about how much is left."
+  difficulty: 2
+  note: "This asks how much you ate if none is left: ぜんぶ, all of it."
+
+- id: n5-g3-0089
+  type: context
+  status: draft
+  sentence: "つぎの （　）を わたって、みぎに まがって ください。"
+  en: "Cross the next intersection, then turn right."
+  answer: こうさてん
+  wrong:
+    - option: ろうか
+      why: "ろうか is a corridor, inside a building. You cross a road at an intersection."
+    - option: エレベーター
+      why: "You ride an エレベーター; you do not cross it."
+    - option: へや
+      why: "へや is a room. You cross a road at an intersection."
+  difficulty: 2
+  note: "This asks what you cross on a road before turning: a こうさてん, an intersection."
+
+- id: n5-g3-0090
+  type: context
+  status: draft
+  sentence: "この ぼうしは ちいさくて、とても （　）ですね。"
+  en: "This hat is small and very cute."
+  answer: かわいい
+  wrong:
+    - option: ふとい
+      why: "ふとい is thick, for a pen or a road, not a hat."
+    - option: うるさい
+      why: "うるさい is noisy. A hat makes no noise."
+    - option: すずしい
+      why: "すずしい is cool, for the weather."
+  difficulty: 2
+  note: "This asks what a small hat can be: かわいい, cute."
+
+- id: n5-g3-0091
+  type: context
+  status: draft
+  sentence: "わたしは まいあさ 6じに おきます。きょうは 7じに おきましたから、いつもより （　） おきました。"
+  en: "I get up at six every morning. Today I got up at seven, so I got up later than usual."
+  answer: おそく
+  wrong:
+    - option: はやく
+      why: "Seven is later than six, not earlier."
+    - option: たくさん
+      why: "たくさん is a lot, for amounts, not for times."
+    - option: すこし
+      why: "すこし is a little. You need a word for later: おそく."
+  difficulty: 3
+  note: "This asks how seven compares with six in the morning: it is later, おそく."
+
+- id: n5-g3-0092
+  type: context
+  status: draft
+  sentence: "A「コーヒーと こうちゃと、どちらが すきですか。」\nB「コーヒーの （　）が すきです。」"
+  en: "A: Which do you like, coffee or tea? B: I like coffee better."
+  answer: ほう
+  wrong:
+    - option: より
+      why: "より marks what is compared against: こうちゃより コーヒーが すき."
+    - option: ほか
+      why: "ほか is other. The answer picks one of the two."
+    - option: まえ
+      why: "まえ is in front, or before."
+  difficulty: 3
+  note: "This asks how to answer どちら: 〜の ほうが すき, I like this one better."
+
+- id: n5-g3-0093
+  type: context
+  status: draft
+  sentence: "りんごを みっつ かいました。いもうとに ひとつ あげましたから、いま （　） あります。"
+  en: "I bought three apples. I gave one to my sister, so now I have two."
+  answer: ふたつ
+  wrong:
+    - option: みっつ
+      why: "You gave one away, so three is no longer right."
+    - option: よっつ
+      why: "You had three, not four, before giving one away."
+    - option: ひとつ
+      why: "One is what you gave away. Three minus one is two."
+  difficulty: 3
+  note: "This asks how many are left: three minus one is two, ふたつ."
+
+- id: n5-g3-0094
+  type: context
+  status: draft
+  sentence: "この スープは ちょっと （　）ですね。しおを いれましょう。"
+  en: "This soup is a bit bland. Let's add salt."
+  answer: うすい
+  wrong:
+    - option: おおい
+      why: "おおい is many. Soup that needs salt tastes weak: うすい."
+    - option: あまい
+      why: "あまい is sweet. Salt is added to soup that tastes weak."
+    - option: ふるい
+      why: "ふるい is old. Salt fixes a weak taste, not age."
+  difficulty: 3
+  note: "This asks why you add salt: the soup tastes うすい, weak or bland."
+
+- id: n5-g3-0095
+  type: context
+  status: draft
+  sentence: "この かばんは わたしのでは ありません。（　）のですか。"
+  en: "This bag isn't mine. Whose is it?"
+  answer: だれ
+  wrong:
+    - option: なに
+      why: "なに asks what. Asking whose takes だれの."
+    - option: いつ
+      why: "いつ asks when."
+    - option: どれ
+      why: "どれ asks which one. Asking whose takes だれの."
+  difficulty: 3
+  note: "This asks which question word asks whose: だれの."

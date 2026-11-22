@@ -665,3 +665,183 @@
       why: "もらう is to receive and keep, and here it goes the other way."
   difficulty: 3
   note: "This asks for the same lending from the other side: if you lent it, たなかさん borrowed it from you, かりました."
+
+- id: n5-g4-0045
+  type: paraphrase
+  status: draft
+  sentence: "きょうは たいへん さむいです。"
+  en: "It is very cold today."
+  answer: "きょうは とても さむいです。"
+  wrong:
+    - "きょうは すこし さむいです。"
+    - "きょうは あまり さむくないです。"
+    - "きょうは とても あついです。"
+  difficulty: 1
+  note: "This asks what たいへん means before an adjective: very, とても."
+
+- id: n5-g4-0046
+  type: paraphrase
+  status: draft
+  sentence: "こんばん ともだちに でんわします。"
+  en: "I'll phone a friend this evening."
+  answer: "きょうの よる ともだちに でんわします。"
+  wrong:
+    - "きのうの よる ともだちに でんわしました。"
+    - "あしたの よる ともだちに でんわします。"
+    - "きょうの あさ ともだちに でんわします。"
+  difficulty: 1
+  note: "This asks what こんばん means: this evening, きょうの よる."
+
+- id: n5-g4-0047
+  type: paraphrase
+  status: draft
+  sentence: "きょうは ひまです。"
+  en: "I'm free today."
+  answer: "きょうは いそがしく ありません。"
+  wrong:
+    - "きょうは とても いそがしいです。"
+    - "きょうは しごとが たくさん あります。"
+    - "きょうは げんきじゃ ありません。"
+  difficulty: 1
+  note: "This asks what ひま means: having free time, not いそがしい."
+
+- id: n5-g4-0048
+  type: paraphrase
+  status: draft
+  sentence: "けさ こうえんを さんぽしました。"
+  en: "I took a walk in the park this morning."
+  answer: "きょうの あさ こうえんを さんぽしました。"
+  wrong:
+    - "きのうの あさ こうえんを さんぽしました。"
+    - "きょうの よる こうえんを さんぽしました。"
+    - "あしたの あさ こうえんを さんぽします。"
+  difficulty: 1
+  note: "This asks what けさ means: this morning, きょうの あさ."
+
+- id: n5-g4-0049
+  type: paraphrase
+  status: draft
+  sentence: "あには おととし けっこんしました。"
+  en: "My older brother got married the year before last."
+  answer: "あには にねんまえに けっこんしました。"
+  wrong:
+    - option: "あには きょねん けっこんしました。"
+      why: "きょねん is last year, one year ago. おととし is two."
+    - option: "あには さんねんまえに けっこんしました。"
+      why: "さんねんまえ is three years ago. おととし is two."
+    - option: "あには らいねん けっこんします。"
+      why: "らいねん is next year, still to come."
+  difficulty: 2
+  note: "This asks what おととし means: the year before last, にねんまえ, two years ago."
+
+- id: n5-g4-0050
+  type: paraphrase
+  status: draft
+  sentence: "にわに はなが たくさん さいて います。"
+  en: "Lots of flowers are blooming in the garden."
+  answer: "にわに はなが いっぱい さいて います。"
+  wrong:
+    - option: "にわに はなが すこし さいて います。"
+      why: "すこし is a few, the opposite of たくさん."
+    - option: "にわには はなが ありません。"
+      why: "This says there are no flowers at all."
+    - option: "にわに きれいな はなが さいて います。"
+      why: "きれい says how they look, not how many there are."
+  difficulty: 2
+  note: "This asks for another word for たくさん, a lot: いっぱい."
+
+- id: n5-g4-0051
+  type: paraphrase
+  status: draft
+  sentence: "また あそびに きて ください。"
+  en: "Please come and visit again."
+  answer: "もう いちど あそびに きて ください。"
+  wrong:
+    - option: "はじめて あそびに きて ください。"
+      why: "はじめて is for the first time. また is again."
+    - option: "あとで あそびに いきます。"
+      why: "This says you will go later. また asks them to come again."
+    - option: "もう こないで ください。"
+      why: "This asks them not to come any more, the opposite."
+  difficulty: 2
+  note: "This asks what また means: again, もう いちど."
+
+- id: n5-g4-0052
+  type: paraphrase
+  status: draft
+  sentence: "となりの へやが うるさいです。"
+  en: "The next room is noisy."
+  answer: "となりの へやの おとが おおきいです。"
+  wrong:
+    - option: "となりの へやは しずかです。"
+      why: "しずか is quiet, the opposite of うるさい."
+    - option: "となりの へやは せまいです。"
+      why: "せまい is about size, not noise."
+    - option: "となりの へやは くらいです。"
+      why: "くらい is dark: about light, not noise."
+  difficulty: 2
+  note: "This asks what うるさい means: noisy, with loud sounds, おとが おおきい."
+
+- id: n5-g4-0053
+  type: paraphrase
+  status: draft
+  sentence: "わたしは さらいねん だいがくを でます。"
+  en: "I will graduate from university the year after next."
+  answer: "わたしは らいねんの つぎの とし だいがくを でます。"
+  wrong:
+    - option: "わたしは らいねん だいがくを でます。"
+      why: "らいねん is next year. さらいねん is the year after that."
+    - option: "わたしは おととし だいがくを でました。"
+      why: "おととし is two years ago, in the past."
+    - option: "わたしは ことし だいがくを でます。"
+      why: "ことし is this year."
+  difficulty: 3
+  note: "This asks what さらいねん means: the year after next, らいねんの つぎの とし."
+
+- id: n5-g4-0054
+  type: paraphrase
+  status: draft
+  sentence: "この クラスで やまださんが いちばん せが たかいです。"
+  en: "Yamada is the tallest in this class."
+  answer: "この クラスに やまださんより せが たかい ひとは いません。"
+  wrong:
+    - option: "この クラスに やまださんより せが ひくい ひとは いません。"
+      why: "This would make やまださん the shortest."
+    - option: "この クラスで やまださんは いちばん せが ひくいです。"
+      why: "This is the opposite: the shortest."
+    - option: "この クラスには やまださんと おなじぐらいの ひとが たくさん います。"
+      why: "いちばん says nobody is taller. This says many are about the same."
+  difficulty: 3
+  note: "This asks for another way to say the tallest: nobody is taller than やまださん, やまださんより たかい ひとは いない."
+
+- id: n5-g4-0055
+  type: paraphrase
+  status: draft
+  sentence: "わたしには きょうだいが いません。"
+  en: "I have no brothers or sisters."
+  answer: "わたしには あにも あねも おとうとも いもうとも いません。"
+  wrong:
+    - option: "わたしには ともだちが いません。"
+      why: "ともだち are friends. きょうだい are brothers and sisters."
+    - option: "わたしには あにが ひとり います。"
+      why: "This says you have one older brother."
+    - option: "わたしには こどもが いません。"
+      why: "こども are children. きょうだい are brothers and sisters."
+  difficulty: 3
+  note: "This asks what きょうだい means: brothers and sisters, あに, あね, おとうと and いもうと."
+
+- id: n5-g4-0056
+  type: paraphrase
+  status: draft
+  sentence: "あねは わたしと おなじ がっこうの がくせいです。"
+  en: "My older sister is a student at the same school as me."
+  answer: "わたしも あねも その がっこうの がくせいです。"
+  wrong:
+    - option: "あねは わたしの がっこうの せんせいです。"
+      why: "This makes your sister a teacher there, not a student."
+    - option: "あねと わたしは ちがう がっこうの がくせいです。"
+      why: "ちがう is different, the opposite of おなじ."
+    - option: "あねは わたしの がっこうの そばに すんで います。"
+      why: "This says where she lives, not where she studies."
+  difficulty: 3
+  note: "This asks what おなじ がっこう means: you both study at that school, わたしも あねも."

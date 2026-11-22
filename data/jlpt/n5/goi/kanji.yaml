@@ -1175,3 +1175,217 @@
       why: "よっつ is four. Eight is やっつ."
   difficulty: 3
   note: "This asks the reading of 八つ, eight things: やっつ."
+
+- id: n5-g1-0079
+  type: kanji
+  status: draft
+  word: 見る
+  sentence: "きのう えいがを __見ました__。"
+  en: "I saw a film yesterday."
+  answer: みました
+  wrong: [ききました, よみました, かきました]
+  difficulty: 1
+  note: "This asks the reading of 見ました, saw or watched. ききました is heard, よみました read and かきました wrote."
+
+- id: n5-g1-0080
+  type: kanji
+  status: draft
+  word: 立つ
+  sentence: "みんな __立って__ ください。"
+  en: "Everyone, please stand up."
+  answer: たって
+  wrong: [すわって, はしって, ねて]
+  difficulty: 1
+  note: "This asks the reading of 立って, stand up. すわって is sit down, はしって run and ねて lie down or sleep."
+
+- id: n5-g1-0081
+  type: kanji
+  status: draft
+  word: 食べる
+  sentence: "あさごはんを __食べました__か。"
+  en: "Did you eat breakfast?"
+  answer: たべました
+  wrong: [のみました, つくりました, あらいました]
+  difficulty: 1
+  note: "This asks the reading of 食べました, ate. のみました is drank, つくりました made and あらいました washed."
+
+- id: n5-g1-0082
+  type: kanji
+  status: draft
+  word: 多い
+  sentence: "この まちは ひとが __多い__です。"
+  en: "This town has a lot of people."
+  answer: おおい
+  wrong: [すくない, ちかい, ひろい]
+  difficulty: 1
+  note: "This asks the reading of 多い, many. すくない is few, ちかい near and ひろい wide."
+
+- id: n5-g1-0083
+  type: kanji
+  status: draft
+  word: 来る
+  sentence: "あした ともだちが うちに __来ます__。"
+  en: "A friend is coming to my house tomorrow."
+  answer: きます
+  wrong:
+    - option: くます
+      why: "The verb is くる, but before ます it is き: きます."
+    - option: いきます
+      why: "いきます is 行きます, to go. 来ます is to come."
+    - option: こます
+      why: "こ is 来 in こない. Before ます it is き."
+  difficulty: 2
+  note: "This asks the reading of 来ます, to come. くる changes its sound: きます, きて, こない."
+
+- id: n5-g1-0084
+  type: kanji
+  status: draft
+  word: 聞く
+  sentence: "まいあさ ラジオを __聞きます__。"
+  en: "I listen to the radio every morning."
+  answer: ききます
+  wrong:
+    - option: きぎます
+      why: "The second き has no dakuten: ききます."
+    - option: ぶんきます
+      why: "ぶん is 聞 in しんぶん, but the verb is きく."
+    - option: きいます
+      why: "The ます form of きく is ききます."
+  difficulty: 2
+  note: "This asks the reading of 聞きます, to listen: き, then きます."
+
+- id: n5-g1-0085
+  type: kanji
+  status: draft
+  word: 帰る
+  sentence: "6じに うちへ __帰ります__。"
+  en: "I'll go home at six."
+  answer: かえります
+  wrong:
+    - option: かいります
+      why: "The verb is かえる: かえります."
+    - option: きります
+      why: "き is 帰 in some words, but the verb is かえる."
+    - option: かえます
+      why: "かえます is a different verb, to change. To go home is かえります."
+  difficulty: 2
+  note: "This asks the reading of 帰ります, to go home: かえ, then ります."
+
+- id: n5-g1-0086
+  type: kanji
+  status: draft
+  word: 使う
+  sentence: "この ペンを __使って__ ください。"
+  en: "Please use this pen."
+  answer: つかって
+  wrong:
+    - option: しかって
+      why: "し is 使 in たいしかん, but the verb is つかう."
+    - option: つがって
+      why: "つかって has no dakuten."
+    - option: つかいて
+      why: "The て form of つかう is つかって."
+  difficulty: 2
+  note: "This asks the reading of 使って, use: つか, then って."
+
+- id: n5-g1-0087
+  type: kanji
+  status: draft
+  word: 持つ
+  sentence: "この にもつを __持って__ ください。"
+  en: "Please carry this luggage."
+  answer: もって
+  wrong:
+    - option: じって
+      why: "じ is 持 in some words, but the verb is もつ."
+    - option: もちて
+      why: "The て form of もつ is もって."
+    - option: もうて
+      why: "もって has no long う."
+  difficulty: 2
+  note: "This asks the reading of 持って, hold or carry: も, then って."
+
+- id: n5-g1-0088
+  type: kanji
+  status: draft
+  word: 強い
+  sentence: "あには テニスが __強い__です。"
+  en: "My older brother is strong at tennis."
+  answer: つよい
+  wrong:
+    - option: よわい
+      why: "よわい is weak, the opposite."
+    - option: つおい
+      why: "The middle sound is よ, not お: つ・よ・い."
+    - option: きょうい
+      why: "きょう is 強 in べんきょう, but the adjective is つよい."
+  difficulty: 2
+  note: "This asks the reading of 強い, strong: つよい."
+
+- id: n5-g1-0089
+  type: kanji
+  status: draft
+  word: 二日
+  sentence: "__二日__ まえに にほんへ きました。"
+  en: "I came to Japan two days ago."
+  answer: ふつか
+  wrong:
+    - option: ふたか
+      why: "Two days is ふつか, with つ."
+    - option: ふっか
+      why: "ふつか has a full つ, not a small っ."
+    - option: にか
+      why: "Two days has its own reading: ふつか."
+  difficulty: 3
+  note: "This asks the reading of 二日, two days or the 2nd: ふつか."
+
+- id: n5-g1-0090
+  type: kanji
+  status: draft
+  word: 四日
+  sentence: "6がつ __四日__は かようびです。"
+  en: "June 4th is a Tuesday."
+  answer: よっか
+  wrong:
+    - option: よんか
+      why: "四 is よん when you count, but the 4th is よっか."
+    - option: よか
+      why: "よっか has a small っ."
+    - option: しにち
+      why: "The 4th of the month has its own reading: よっか."
+  difficulty: 3
+  note: "This asks the reading of 四日, the 4th of the month: よっか."
+
+- id: n5-g1-0091
+  type: kanji
+  status: draft
+  word: お母さん
+  sentence: "__お母さん__は どこですか。"
+  en: "Where is your mother?"
+  answer: おかあさん
+  wrong:
+    - option: おははさん
+      why: "はは is 母 on its own, but this word is read おかあさん."
+    - option: おかさん
+      why: "おかあさん has a long あ."
+    - option: おばあさん
+      why: "おばあさん is a grandmother. Mother is おかあさん."
+  difficulty: 3
+  note: "This asks the reading of お母さん, mother: おかあさん. On its own, 母 is はは."
+
+- id: n5-g1-0092
+  type: kanji
+  status: draft
+  word: 大きな
+  sentence: "__大きな__ いえに すんで います。"
+  en: "I live in a big house."
+  answer: おおきな
+  wrong:
+    - option: だいきな
+      why: "大 is おお in this word."
+    - option: おおぎな
+      why: "おおきな has no dakuten."
+    - option: おきな
+      why: "おおきな has a long お: おお."
+  difficulty: 3
+  note: "This asks the reading of 大きな, big, which comes before a noun: おおきな."

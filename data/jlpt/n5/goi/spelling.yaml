@@ -889,3 +889,241 @@
       why: "億 is a hundred million: 意 beside a person."
   difficulty: 3
   note: "This asks how はたらいて is written: 働いて, a person (亻) beside 動."
+
+- id: n5-g2-0059
+  type: spelling
+  status: draft
+  word: ギター
+  sentence: "あには __ぎたー__を ひきます。"
+  en: "My older brother plays the guitar."
+  answer: ギター
+  wrong:
+    - option: キター
+      why: "ぎ has a dakuten: ギ."
+    - option: ギダー
+      why: "た has no dakuten: タ."
+    - option: ギタ
+      why: "たー is long, so it ends with ー: ター."
+  difficulty: 1
+  note: "This asks how ぎたー is written. Words from other languages are written in katakana: ギター."
+
+- id: n5-g2-0060
+  type: spelling
+  status: draft
+  word: スカート
+  sentence: "あかい __すかーと__を はきます。"
+  en: "I'll wear a red skirt."
+  answer: スカート
+  wrong:
+    - option: ヌカート
+      why: "す is ス. ヌ, with a crossing stroke, is ぬ."
+    - option: スカード
+      why: "と has no dakuten: ト."
+    - option: スカト
+      why: "かー is long, so it is followed by ー: カー."
+  difficulty: 1
+  note: "This asks how すかーと, a skirt, is written: スカート."
+
+- id: n5-g2-0061
+  type: spelling
+  status: draft
+  word: ホテル
+  sentence: "えきの まえに __ほてる__が あります。"
+  en: "There is a hotel in front of the station."
+  answer: ホテル
+  wrong:
+    - option: ホテレ
+      why: "る is ル. レ is れ."
+    - option: ポテル
+      why: "ほ has no small circle: ホ."
+    - option: ホデル
+      why: "て has no dakuten: テ."
+  difficulty: 1
+  note: "This asks how ほてる, a hotel, is written: ホテル."
+
+- id: n5-g2-0062
+  type: spelling
+  status: draft
+  word: タクシー
+  sentence: "えきから __たくしー__で いきました。"
+  en: "I went from the station by taxi."
+  answer: タクシー
+  wrong:
+    - option: タケシー
+      why: "く is ク. ケ is け."
+    - option: タクツー
+      why: "し is シ, its strokes rising from the left. ツ is つ."
+    - option: ダクシー
+      why: "た has no dakuten: タ."
+  difficulty: 1
+  note: "This asks how たくしー, a taxi, is written: タクシー."
+
+- id: n5-g2-0063
+  type: spelling
+  status: draft
+  word: スプーン
+  sentence: "__すぷーん__で スープを のみます。"
+  en: "I eat soup with a spoon."
+  answer: スプーン
+  wrong:
+    - option: ヌプーン
+      why: "す is ス. ヌ, with a crossing stroke, is ぬ."
+    - option: スブーン
+      why: "ぷ has the small circle: プ. ブ is ぶ."
+    - option: スプーソ
+      why: "The last letter is ン. ソ is そ."
+  difficulty: 2
+  note: "This asks how すぷーん, a spoon, is written: スプーン."
+
+- id: n5-g2-0064
+  type: spelling
+  status: draft
+  word: ネクタイ
+  sentence: "ちちは まいにち __ねくたい__を します。"
+  en: "My father wears a tie every day."
+  answer: ネクタイ
+  wrong:
+    - option: ネケタイ
+      why: "く is ク. ケ is け."
+    - option: ネクダイ
+      why: "た has no dakuten: タ."
+    - option: ネタクイ
+      why: "The order is ね・く・た・い: ネクタイ."
+  difficulty: 2
+  note: "This asks how ねくたい, a necktie, is written: ネクタイ."
+
+- id: n5-g2-0065
+  type: spelling
+  status: draft
+  word: ハンカチ
+  sentence: "ポケットに __はんかち__が あります。"
+  en: "There is a handkerchief in my pocket."
+  answer: ハンカチ
+  wrong:
+    - option: ハソカチ
+      why: "ん is ン. ソ is そ."
+    - option: ハンカテ
+      why: "ち is チ. テ is て."
+    - option: ハンガチ
+      why: "か has no dakuten: カ."
+  difficulty: 2
+  note: "This asks how はんかち, a handkerchief, is written: ハンカチ."
+
+- id: n5-g2-0066
+  type: spelling
+  status: draft
+  word: エレベーター
+  sentence: "__えれべーたー__で 5かいへ いきます。"
+  en: "I'll take the lift to the fifth floor."
+  answer: エレベーター
+  wrong:
+    - option: エレペーター
+      why: "べ has a dakuten, not the small circle: ベ."
+    - option: エレベタ
+      why: "Both long sounds need ー: ベー and ター."
+    - option: エルベーター
+      why: "れ is レ. ル is る."
+  difficulty: 2
+  note: "This asks how えれべーたー, a lift, is written: エレベーター."
+
+- id: n5-g2-0067
+  type: spelling
+  status: draft
+  word: 乗る
+  sentence: "えきから バスに __のります__。"
+  en: "I get on the bus at the station."
+  answer: 乗ります
+  wrong:
+    - option: 来ります
+      why: "来 is くる, to come."
+    - option: 東ります
+      why: "東 is east, ひがし."
+    - option: 垂ります
+      why: "垂 means to hang down."
+  difficulty: 2
+  note: "This asks how のります, to get on, is written: 乗ります."
+
+- id: n5-g2-0068
+  type: spelling
+  status: draft
+  word: 入る
+  sentence: "ドアを あけて、へやに __はいります__。"
+  en: "I open the door and go into the room."
+  answer: 入ります
+  wrong:
+    - option: 人ります
+      why: "人 is a person. 入 is its mirror: the stroke on the right is the long one."
+    - option: 八ります
+      why: "八 is eight: two strokes that do not touch."
+    - option: 込ります
+      why: "込 is to be crowded: 入 inside ⻌. はいる on its own is 入."
+  difficulty: 2
+  note: "This asks how はいります, to go in, is written: 入ります."
+
+- id: n5-g2-0069
+  type: spelling
+  status: draft
+  word: 作る
+  sentence: "ははと いっしょに ケーキを __つくります__。"
+  en: "I make a cake with my mother."
+  answer: 作ります
+  wrong:
+    - option: 昨ります
+      why: "昨 means last, as in last night: 日 on the left. 作 has a person on the left."
+    - option: 作くります
+      why: "つくります keeps only ります after the kanji: 作ります."
+    - option: 仕ります
+      why: "仕 means to serve: 士 on the right. 作 has 乍."
+  difficulty: 2
+  note: "This asks how つくります, to make, is written: 作ります."
+
+- id: n5-g2-0070
+  type: spelling
+  status: draft
+  word: シャツ
+  sentence: "しろい __しゃつ__を かいました。"
+  en: "I bought a white shirt."
+  answer: シャツ
+  wrong:
+    - option: シャシ
+      why: "つ is ツ, its strokes coming down from the top. シ is し."
+    - option: ツャツ
+      why: "し is シ, its strokes rising from the left. ツ is つ."
+    - option: シャソ
+      why: "つ is ツ, with two short strokes. ソ, with one, is そ."
+  difficulty: 3
+  note: "This asks how しゃつ, a shirt, is written: シャツ. シ and ツ look alike: シ's short strokes sit on the left, ツ's along the top."
+
+- id: n5-g2-0071
+  type: spelling
+  status: draft
+  word: パーティー
+  sentence: "どようびに うちで __ぱーてぃー__を します。"
+  en: "I'm having a party at home on Saturday."
+  answer: パーティー
+  wrong:
+    - option: バーティー
+      why: "ぱ has the small circle: パ. バ is ば."
+    - option: パーテイー
+      why: "てぃ is テ with a small ィ, not a full イ."
+    - option: パーチー
+      why: "てぃ is テ with a small ィ. チ is ち."
+  difficulty: 3
+  note: "This asks how ぱーてぃー, a party, is written: パーティー, with a small ィ."
+
+- id: n5-g2-0072
+  type: spelling
+  status: draft
+  word: 売る
+  sentence: "この みせは やさいを __うって__ います。"
+  en: "This shop sells vegetables."
+  answer: 売って
+  wrong:
+    - option: 買って
+      why: "買 is かう, to buy: the other way round."
+    - option: 売て
+      why: "うって keeps って after the kanji: 売って."
+    - option: 読って
+      why: "読 is よむ, to read: 言 on the left of 売."
+  difficulty: 3
+  note: "This asks how うって is written: 売って, to sell. 売 and 買 look alike, and mean opposite things."
