@@ -8,6 +8,7 @@ import {
   composeQuestion,
   formQuestion,
   passageQuestions,
+  readingQuestions,
   reviewOf,
   type ExamQuestion
 } from "../draw.js";
@@ -20,12 +21,19 @@ import {
   itemProblems,
   itemsSchema,
   materialMarkup,
+  optionText,
   reviewLinksOf,
   WINDOW_SIZE,
   type Item,
   type Slot
 } from "../items.js";
-import { LABEL_MAX, questionMessage, revealMessage } from "../render.js";
+import {
+  CONTENT_MAX,
+  followUpText,
+  LABEL_MAX,
+  questionMessage,
+  revealMessage
+} from "../render.js";
 
 /**
  * The whole corpus, every run.
@@ -137,11 +145,37 @@ const longestCards = (item: Item): ExamQuestion[][] => {
         )
       );
     }
-    // No test draws reading yet: its cards arrive with /dokkai, and are measured here then.
+    // Each question alone, or for 問題5 every pair a test could ask, in text order.
     case `short`:
     case `mid`:
-    case `info`:
-      return [];
+    case `info`: {
+      const longest = {
+        ...item,
+        questions: item.questions.map((question) =>
+          `wrong` in question
+            ? {
+                ...question,
+                wrong: [...question.wrong]
+                  .sort((a, b) => optionText(b).length - optionText(a).length)
+                  .slice(0, 3)
+              }
+            : question
+        )
+      };
+      const indices = item.questions.map((_, index) => index);
+      const sets =
+        item.type === `mid`
+          ? choices(indices, 2)
+          : indices.map((index) => [index]);
+      return sets.map((asked) =>
+        readingQuestions(longest, asked, 1, zero).map((question) =>
+          // As shipped: the picture hosted, its text in the alt and the readings line.
+          question.material === undefined
+            ? question
+            : { ...question, image: `https://assets.example/${item.id}.webp` }
+        )
+      );
+    }
   }
 };
 
@@ -254,6 +288,47 @@ describe(`the mock-test corpus`, () => {
         }
       }
     }
+    expect(over).toEqual([]);
+  });
+
+  it(`closes every reading card while its voters' reply tokens still work`, () => {
+    // WHY: a student's private why is sent on the token of their vote, and a token works for 15 minutes. A card open longer would reach its reveal with dead tokens, and the whys would silently go nowhere. One minute is kept back for the reveal itself.
+    const TOKEN_LIFE_MS = 15 * 60_000;
+    const long = items.flatMap((item) =>
+      longestCards(item)
+        .filter((card) => card.some((question) => question.mondai >= 4))
+        .map((card) => ({
+          id: item.id,
+          ms: card.reduce((sum, question) => sum + question.timeoutMs, 0)
+        }))
+        .filter(({ ms }) => ms > TOKEN_LIFE_MS - 60_000)
+        .map(({ id, ms }) => `${id}: ${String(ms / 1000)} s`)
+    );
+    expect(long).toEqual([]);
+  });
+
+  it(`fits every private follow-up in one message`, () => {
+    // WHY: Discord rejects a follow-up over 2,000 characters, and the student would hear nothing. Measured at the worst a card can do: every question on it answered wrong, with its longest why.
+    const over = items.flatMap((item) =>
+      longestCards(item).flatMap((card) => {
+        const picks = card.flatMap((question) => {
+          const longestWhy = (question.whys ?? []).reduce(
+            (best, why, index) =>
+              why.length > (question.whys?.at(best)?.length ?? 0)
+                ? index
+                : best,
+            0
+          );
+          return longestWhy === question.correct
+            ? []
+            : [{ question, chose: longestWhy }];
+        });
+        const text = followUpText(picks) ?? ``;
+        return text.length > CONTENT_MAX
+          ? [`${item.id}: ${String(text.length)} characters`]
+          : [];
+      })
+    );
     expect(over).toEqual([]);
   });
 

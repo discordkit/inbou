@@ -1,6 +1,6 @@
 import { discord } from "@discordkit/client";
 import { handleCommand, type CommandDeps } from "./commands.js";
-import { discordEffects, v2Effects } from "./discord.js";
+import { discordEffects, followUpEffects, v2Effects } from "./discord.js";
 import type { ForwardedEvent } from "./events.js";
 import { handleExamInteraction } from "./exam/commands.js";
 import examCorpus from "./exam/corpus.json" with { type: "json" };
@@ -120,6 +120,7 @@ const review: Readonly<Record<string, ReviewLink>> = examCorpus.review;
 const examDepsFor = (env: Env, channelId: string): ExamDeps => ({
   discord: discordEffects,
   cards: v2Effects,
+  followUps: followUpEffects,
   session: examFor(env, channelId),
   items,
   review,

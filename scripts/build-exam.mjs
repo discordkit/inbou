@@ -23,7 +23,7 @@
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import * as v from "valibot";
 import { parse } from "yaml";
-import { BLUEPRINTS } from "../src/handlers/exam/blueprint.ts";
+import { BLUEPRINTS, READING_MIX } from "../src/handlers/exam/blueprint.ts";
 import {
   corpusProblems,
   grammarPointsSchema,
@@ -146,11 +146,38 @@ for (const [type, label] of Object.entries(READING)) {
   console.log(
     `dokkai ${label}: ${String(of.length)} items (${String(reviewed)} reviewed), ${String(questions.length)} questions (${levels})`
   );
+
+  // Fixed-order answers drift to the middle: in one draft, 23 of 28 were option 2 or 3. A student who learns that guesses better than chance.
+  const spread = [1, 2, 3, 4].map(
+    (position) =>
+      questions.filter(
+        (question) => `options` in question && question.answer === position
+      ).length
+  );
+  const ordered = spread.reduce((sum, count) => sum + count, 0);
+  if (ordered >= 8 && Math.min(...spread) < ordered / 4 / 2) {
+    console.log(
+      `hint: dokkai ${label} fixed-order answers sit at ${spread.map((count, i) => `${String(i + 1)}: ${String(count)}`).join(`, `)}; choose distractors so the answer lands on every position`
+    );
+  }
 }
 
 for (const [test, plans] of Object.entries(BLUEPRINTS)) {
   for (const plan of plans) {
-    if (plan.mondai === 3) {
+    if (`questions` in plan) {
+      // Reading shares one mix across its decks, shuffled each test, so a deck may be dealt a level up to as often as the mix holds it.
+      const type = { 4: `short`, 5: `mid`, 6: `info` }[plan.mondai];
+      const questions = shipped
+        .filter((item) => item.type === type)
+        .flatMap((item) => item.questions);
+      for (const level of [1, 2, 3]) {
+        report(
+          `${test} 問題${String(plan.mondai)} difficulty ${String(level)}`,
+          questions.filter((question) => question.difficulty === level).length,
+          Math.min(plan.questions, READING_MIX[level])
+        );
+      }
+    } else if (plan.mondai === 3) {
       const passages = shipped.filter(
         (item) => item.type === `passage` && item.blanks.length >= plan.blanks
       ).length;

@@ -12,6 +12,7 @@ import {
   type ExamInput,
   type ExamView,
   type PersistedExam,
+  type Reply,
   type VoteResult
 } from "./machine.js";
 
@@ -99,11 +100,17 @@ export class ExamSession extends DurableObject<ExamEnv> {
   async vote(
     userId: string,
     token: string,
-    option: number
+    option: number,
+    reply?: Reply
   ): Promise<VoteResult> {
     const actor = await this.#load();
     if (actor === null) return { outcome: `not-open` };
-    const result = castVote(actor, { userId, token, option });
+    const result = castVote(actor, {
+      userId,
+      token,
+      option,
+      ...(reply === undefined ? {} : { reply })
+    });
     if (result.outcome === `recorded` || result.outcome === `changed`) {
       await this.#save(actor);
     }

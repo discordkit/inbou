@@ -1,5 +1,6 @@
 import type { Interaction } from "@discordkit/client/interactions/types/Interaction";
-import type { DiscordEffects, V2Effects } from "../discord.js";
+import { diagnostics } from "../diagnostics.js";
+import type { DiscordEffects, FollowUpEffects, V2Effects } from "../discord.js";
 import type { TestId } from "./blueprint.js";
 import { drawTest, type Random } from "./draw.js";
 import type { Item, ReviewLink } from "./items.js";
@@ -10,10 +11,12 @@ import {
   type Closed,
   type ExamInput,
   type ExamView,
+  type Reply,
   type VoteResult
 } from "./machine.js";
 import {
   closedQuestionMessage,
+  followUpText,
   introMessage,
   myResultsText,
   questionMessage,
@@ -33,7 +36,12 @@ import {
 export interface ExamPort {
   begin: (input: ExamInput) => Promise<ExamView>;
   current: () => Promise<ExamView | null>;
-  vote: (userId: string, token: string, option: number) => Promise<VoteResult>;
+  vote: (
+    userId: string,
+    token: string,
+    option: number,
+    reply?: Reply
+  ) => Promise<VoteResult>;
   close: () => Promise<Closed | null>;
   resume: () => Promise<ExamView | null>;
   next: () => Promise<ExamView | null>;
@@ -47,6 +55,8 @@ export interface ExamDeps {
   discord: Pick<DiscordEffects, `reply`>;
   /** Questions, reveals and results, which are Components V2. */
   cards: V2Effects;
+  /** Private follow-ups, sent after a reveal to the players who pressed on its card. */
+  followUps: FollowUpEffects;
   session: ExamPort;
   /** Reviewed items only. Drafts never reach a channel. */
   items: readonly Item[];
@@ -223,6 +233,50 @@ export const handleResume = async (
   }
 };
 
+/**
+ * The most private follow-ups one reveal sends.
+ *
+ * Each is a call to Discord, and the free plan allows 50 per invocation. The rest of a reveal makes at most five (close, settle, reveal, then pause or results), so 40 leaves room. A student past the cap still finds their why in My results.
+ */
+export const FOLLOW_UP_MAX = 40;
+
+/**
+ * Tell each player who chose wrong, privately, why their choice was wrong.
+ *
+ * After the public reveal, so the private note follows the answer it explains. A player's latest press supplies the token, and their final vote is what is explained. Nobody is told anything about a card they did not answer.
+ */
+const sendFollowUps = async (
+  deps: ExamDeps,
+  { view, results }: Closed
+): Promise<void> => {
+  const { index, ballots, replies = {} } = view.context;
+  const players = new Set(
+    results.flatMap((_, offset) =>
+      Object.keys(ballots.at(index + offset) ?? {})
+    )
+  );
+  let sent = 0;
+  let skipped = 0;
+  for (const userId of players) {
+    const reply = replies[userId];
+    if (reply === undefined) continue;
+    const content = followUpText(
+      results.flatMap(({ question }, offset) => {
+        const chose = ballots.at(index + offset)?.[userId];
+        return chose === undefined ? [] : [{ question, chose }];
+      })
+    );
+    if (content === null) continue;
+    if (sent >= FOLLOW_UP_MAX) {
+      skipped += 1;
+      continue;
+    }
+    await deps.followUps.send(reply, content);
+    sent += 1;
+  }
+  if (skipped > 0) diagnostics.FOLLOW_UPS_CAPPED({ sent, skipped });
+};
+
 /** The question timer ended: settle it, reveal it, and move on. */
 export const handleTimeout = async (
   deps: ExamDeps,
@@ -247,6 +301,7 @@ export const handleTimeout = async (
     );
   }
   await deps.cards.post(channelId, revealMessage(results));
+  await sendFollowUps(deps, closed);
 
   // The last question reaches `finished` straight from `asking`.
   if (view.state === `finished`) {
@@ -263,7 +318,19 @@ export const handleVote = async (
   channelId: string,
   vote: { userId: string; token: string; option: number }
 ): Promise<VoteResult> => {
-  const result = await deps.session.vote(vote.userId, vote.token, vote.option);
+  // The press's own token, so the reveal can answer it privately. Absent from
+  // a malformed interaction, which then simply gets no follow-up.
+  const { applicationId, token } = interaction as Partial<Interaction>;
+  const reply =
+    typeof applicationId === `string` && typeof token === `string`
+      ? { application: applicationId, token }
+      : undefined;
+  const result = await deps.session.vote(
+    vote.userId,
+    vote.token,
+    vote.option,
+    reply
+  );
   const chosen = String(vote.option + 1);
   // On a passage card, say which row: four rows, one acknowledgement each.
   const row =

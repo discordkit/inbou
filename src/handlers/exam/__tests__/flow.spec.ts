@@ -2,6 +2,7 @@ import type { Interaction } from "@discordkit/client/interactions/types/Interact
 import { describe, expect, it } from "vite-plus/test";
 import {
   endTest,
+  FOLLOW_UP_MAX,
   handleResume,
   handleTimeout,
   handleVote,
@@ -10,7 +11,13 @@ import {
   type ExamDeps,
   type ExamPort
 } from "../flow.js";
-import type { FormItem, Item, PassageItem, ReviewLink } from "../items.js";
+import type {
+  FormItem,
+  Item,
+  PassageItem,
+  ReviewLink,
+  ShortItem
+} from "../items.js";
 import {
   begin,
   castVote,
@@ -42,10 +49,15 @@ const memorySession = (): ExamPort => {
       return viewOf(actor);
     },
     current: async () => (actor === null ? null : viewOf(actor)),
-    vote: async (userId, token, option) =>
+    vote: async (userId, token, option, reply) =>
       actor === null
         ? { outcome: `not-open` }
-        : castVote(actor, { userId, token, option }),
+        : castVote(actor, {
+            userId,
+            token,
+            option,
+            ...(reply === undefined ? {} : { reply })
+          }),
     close: async () => (actor === null ? null : closeQuestion(actor)),
     resume: async () => send({ type: `RESUME`, now: 0 }),
     next: async () => send({ type: `NEXT`, now: 0 }),
@@ -62,7 +74,8 @@ const memorySession = (): ExamPort => {
 type Call =
   | { kind: `reply`; content: string }
   | { kind: `post`; id: string; body: string }
-  | { kind: `edit`; id: string; body: string };
+  | { kind: `edit`; id: string; body: string }
+  | { kind: `followUp`; token: string; content: string };
 
 const item = (n: number): FormItem => ({
   id: `n5-b1-${String(n).padStart(4, `0`)}`,
@@ -85,7 +98,9 @@ const interaction = {} as unknown as Interaction;
 
 /** What a post or edit sent. A private reply has no message body. */
 const bodyOf = (call: Call | undefined): string =>
-  call === undefined || call.kind === `reply` ? `` : call.body;
+  call === undefined || call.kind === `reply` || call.kind === `followUp`
+    ? ``
+    : call.body;
 
 /** A seeded generator, so every run draws the same test. */
 const seeded = (seed: number): (() => number) => {
@@ -120,6 +135,11 @@ const setup = (
       },
       edit: async (_channel, id, components) => {
         calls.push({ kind: `edit`, id, body: JSON.stringify(components) });
+      }
+    },
+    followUps: {
+      send: async (reply, content) => {
+        calls.push({ kind: `followUp`, token: reply.token, content });
       }
     },
     session: memorySession(),
@@ -421,5 +441,94 @@ describe(`a passage card`, () => {
       kind: `reply`,
       content: expect.stringContaining(`［3］ You chose **1**`) as string
     });
+  });
+});
+
+describe(`private follow-ups after a reading reveal`, () => {
+  const explained = (n: number): ShortItem => ({
+    id: `n5-d4-${String(n).padStart(4, `0`)}`,
+    type: `short`,
+    status: `reviewed`,
+    text: `ぶん${String(n)}`,
+    en: `Text ${String(n)}.`,
+    questions: [
+      {
+        question: `しつもん${String(n)}`,
+        answer: `A`,
+        wrong: [
+          { option: `B`, why: `WHY-B` },
+          { option: `C`, why: `WHY-C` },
+          { option: `D`, why: `WHY-D` }
+        ],
+        difficulty: 2,
+        note: `n`
+      }
+    ]
+  });
+
+  /** A press from one player, carrying its own reply token. */
+  const press = (userId: string, token: string): Interaction =>
+    ({
+      applicationId: `app`,
+      token,
+      member: { user: { id: userId } }
+    }) as unknown as Interaction;
+
+  /** A reading test with its first card open, and a way to vote by option text. */
+  const opened = async () => {
+    const run = setup({ items: [explained(1), explained(2)] });
+    await startTest(run.deps, interaction, `chan`, `guild`, `dokkai`);
+    await handleResume(run.deps, `chan`);
+    const view = await run.deps.session.current();
+    const open = view?.context.questions.at(view.context.index);
+    if (open === undefined) throw new Error(`no open question`);
+    const choose = async (userId: string, token: string, option: string) => {
+      await handleVote(run.deps, press(userId, token), `chan`, {
+        userId,
+        token: open.token,
+        option: open.options.indexOf(option)
+      });
+    };
+    return { ...run, choose };
+  };
+
+  it(`tells each wrong voter, privately and after the reveal, why their final choice was wrong`, async () => {
+    // WHY: the user's design (2026-11-22). The why is personal to the choice, so it goes only to the student who made it, on their latest press, once the public answer is out.
+    const { deps, calls, choose } = await opened();
+    await choose(`ann`, `ann-1`, `B`);
+    await choose(`bob`, `bob-1`, `A`);
+    await choose(`cat`, `cat-1`, `C`);
+    await choose(`cat`, `cat-2`, `D`);
+    await handleTimeout(deps, `chan`);
+
+    const followUps = calls.filter((call) => call.kind === `followUp`);
+    expect(
+      followUps.map((call) =>
+        call.kind === `followUp` ? [call.token, call.content] : []
+      )
+    ).toEqual([
+      [`ann-1`, expect.stringContaining(`WHY-B`)],
+      [`cat-2`, expect.stringContaining(`WHY-D`)]
+    ]);
+    expect(JSON.stringify(followUps)).not.toContain(`WHY-C`);
+
+    const reveal = calls.findLastIndex(
+      (call) => call.kind === `post` && call.body.includes(`✅`)
+    );
+    const first = calls.findIndex((call) => call.kind === `followUp`);
+    expect(reveal).toBeGreaterThan(-1);
+    expect(first).toBeGreaterThan(reveal);
+  });
+
+  it(`sends at most FOLLOW_UP_MAX follow-ups from one reveal`, async () => {
+    // WHY: each follow-up is a call to Discord, and the free plan allows 50 per invocation. Past the cap the reveal itself, or the next question, would fail; the students left out still have My results.
+    const { deps, calls, choose } = await opened();
+    for (let n = 0; n < FOLLOW_UP_MAX + 5; n += 1) {
+      await choose(`p${String(n)}`, `t${String(n)}`, `B`);
+    }
+    await handleTimeout(deps, `chan`);
+    expect(calls.filter((call) => call.kind === `followUp`)).toHaveLength(
+      FOLLOW_UP_MAX
+    );
   });
 });

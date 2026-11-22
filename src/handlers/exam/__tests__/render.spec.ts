@@ -4,6 +4,7 @@ import {
   closedQuestionMessage,
   CONTENT_MAX,
   fitLabel,
+  followUpText,
   heading2,
   LABEL_MAX,
   myResultsText,
@@ -427,5 +428,95 @@ describe(`a button label`, () => {
     // WHY: Discord rejects the whole message over 80 characters, which loses
     // the question, not just the label.
     expect(fitLabel(`あ`.repeat(200))).toHaveLength(LABEL_MAX);
+  });
+});
+
+describe(`a reading card`, () => {
+  const reading = (overrides: Partial<ExamQuestion> = {}): ExamQuestion =>
+    question({
+      itemId: `n5-d4-0001`,
+      mondai: 4,
+      prompt: `{今日|きょう}は 6{時|じ}に {帰|かえ}ります。`,
+      answered: `{今日|きょう}は 6{時|じ}に {帰|かえ}ります。`,
+      question: `{何時|なんじ}に {帰|かえ}りますか。`,
+      options: [
+        `5{時|じ}に {帰|かえ}ります。`,
+        `6{時|じ}に {帰|かえ}ります。`,
+        `7{時|じ}`,
+        `8{時|じ}`
+      ],
+      whys: [`WHY-FIVE`, ``, `WHY-SEVEN`, `WHY-EIGHT`],
+      correct: 1,
+      ...overrides
+    });
+
+  it(`puts the options in the card, and only their numbers on the buttons`, () => {
+    // WHY: reading options are sentences, too long for an 80-character button and too important to trim. The paper prints them under the question; the buttons only pick one.
+    const message = questionMessage(view(reading()));
+    expect(
+      buttons(message)
+        .map((b) => b.label)
+        .slice(0, 4)
+    ).toEqual([`1`, `2`, `3`, `4`]);
+    expect(JSON.stringify(message)).toContain(`### 1　5時に 帰ります。`);
+  });
+
+  it(`shows a 問題6 picture in a gallery, its text as the alt`, () => {
+    // WHY: a student who cannot see the picture reads its alt text; without it, a 問題6 question has no material at all.
+    const message = questionMessage(
+      view(
+        reading({
+          mondai: 6,
+          prompt: ``,
+          answered: ``,
+          material: `バスの {時間|じかん}\n8:10 8:40`,
+          image: `https://assets.example/n5-d6-0001.webp`
+        })
+      )
+    );
+    const text = JSON.stringify(message);
+    expect(text).toContain(`"url":"https://assets.example/n5-d6-0001.webp"`);
+    expect(text).toContain(`"description":"バスの 時間 / 8:10 8:40"`);
+  });
+
+  it(`never shows a why in the channel, open or revealed`, () => {
+    // WHY: the user chose private whys, so the channel stays short (2026-11-22). A why in the reveal would also tell everyone which wrong answer a classmate picked.
+    const q = reading();
+    const tally = { counts: [2, 3, 1, 0], correct: 1, scorers: [] };
+    for (const message of [
+      questionMessage(view(q)),
+      closedQuestionMessage(view(q)),
+      revealMessage([{ question: q, tally }])
+    ]) {
+      expect(JSON.stringify(message)).not.toMatch(/WHY-/u);
+    }
+  });
+
+  it(`tells a student privately why their own choice was wrong, and nothing else`, () => {
+    // WHY: the follow-up is personal to the choice. Another option's why would explain a mistake they did not make.
+    const q = reading();
+    const text = followUpText([{ question: q, chose: 2 }]) ?? ``;
+    expect(text).toContain(`WHY-SEVEN`);
+    expect(text).not.toContain(`WHY-FIVE`);
+    expect(text).not.toContain(`WHY-EIGHT`);
+    expect(text).toContain(`The answer is **2 6時(じ)に 帰(かえ)ります。**`);
+  });
+
+  it(`says nothing privately to a student who chose right, or chose an option with no why`, () => {
+    // WHY: an easy question's note, public in the reveal, already covers it; a message saying only "you were wrong" adds noise and nothing to learn.
+    const q = reading({ whys: [``, ``, ``, `WHY-EIGHT`] });
+    expect(followUpText([{ question: q, chose: 1 }])).toBeNull();
+    expect(followUpText([{ question: q, chose: 0 }])).toBeNull();
+  });
+
+  it(`keeps a missed question's why in My results, where it can be read again`, () => {
+    // WHY: a private follow-up vanishes when Discord reloads. My results is the one place a student can read their why again.
+    const q = reading({ number: 1 });
+    const text = myResultsText(
+      [q],
+      [{ number: 1, chose: 3, correct: false, points: 0 }],
+      { userId: `ann`, points: 0, max: 3, correct: 0, asked: 1 }
+    );
+    expect(text).toContain(`> WHY-EIGHT`);
   });
 });

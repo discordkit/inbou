@@ -9,7 +9,14 @@ import {
   startTest,
   type ExamDeps
 } from "./flow.js";
+import type { TestId } from "./blueprint.js";
 import { BUTTON, parseResults, parseVote } from "./render.js";
+
+/** Each test's slash command. `start` and `end` work the same for every test. */
+export const TESTS: Readonly<Partial<Record<string, TestId>>> = {
+  bunpou: `bunpou`,
+  dokkai: `dokkai`
+};
 
 /**
  * Route the interactions that belong to mock tests.
@@ -54,8 +61,9 @@ export const handleExamInteraction = async (
 
   if (interaction.type !== InteractionType.APPLICATION_COMMAND) return false;
   const name = interaction.data?.name;
+  const test = name === undefined ? undefined : TESTS[name];
 
-  if (name === `bunpou`) {
+  if (test !== undefined) {
     if (channelId === null) {
       await deps.discord.reply(interaction, {
         content: `That command only works in a channel.`,
@@ -70,7 +78,7 @@ export const handleExamInteraction = async (
         interaction,
         channelId,
         interaction.guildId ?? null,
-        `bunpou`
+        test
       );
       return true;
     }

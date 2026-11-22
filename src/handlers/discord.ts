@@ -1,4 +1,5 @@
 import {
+  createFollowupMessage,
   createInteractionResponse,
   createMessage,
   createReaction,
@@ -107,6 +108,18 @@ export interface V2Effects {
     channelId: string,
     messageId: string,
     components: MessageComponent
+  ) => Promise<void>;
+}
+
+/**
+ * Private messages sent after the fact, on an earlier press's token.
+ *
+ * An ephemeral message must answer an interaction, so a bot can only speak privately to someone who pressed something in the last fifteen minutes. A mock-test vote is that press: its token lets the reveal follow up with that player alone.
+ */
+export interface FollowUpEffects {
+  send: (
+    reply: { application: string; token: string },
+    content: string
   ) => Promise<void>;
 }
 
@@ -266,6 +279,34 @@ export const v2Effects: V2Effects = {
       // already rejected by its token.
       diagnostics.DISCORD_REQUEST_FAILED({
         action: `settling a closed question`,
+        status: statusOf(error),
+        detail: detailOf(error)
+      });
+    }
+  }
+};
+
+export const followUpEffects: FollowUpEffects = {
+  send: async ({ application, token }, content) => {
+    try {
+      await createFollowupMessage(
+        {
+          application,
+          token,
+          body: {
+            content,
+            flags: MessageFlag.EPHEMERAL,
+            allowedMentions: NO_PINGS
+          }
+        },
+        // The token in the route is the credential; the bot token is not needed.
+        { anonymous: true }
+      );
+    } catch (error) {
+      // Not rethrown. One student missing a note must not stop the test, and
+      // My results has every why.
+      diagnostics.DISCORD_REQUEST_FAILED({
+        action: `sending a private follow-up`,
         status: statusOf(error),
         detail: detailOf(error)
       });
