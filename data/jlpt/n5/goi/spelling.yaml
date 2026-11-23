@@ -1130,7 +1130,7 @@
 
 - id: n5-g2-0073
   type: spelling
-  status: draft
+  status: reviewed
   word: 川
   sentence: "この まちには おおきな __かわ__が あります。"
   en: "There is a big river in this town."
@@ -1141,7 +1141,7 @@
 
 - id: n5-g2-0074
   type: spelling
-  status: draft
+  status: reviewed
   word: 国
   sentence: "あなたの __くに__は どこですか。"
   en: "Which country are you from?"
@@ -1152,7 +1152,7 @@
 
 - id: n5-g2-0075
   type: spelling
-  status: draft
+  status: reviewed
   word: 体
   sentence: "やさいは __からだ__に いいです。"
   en: "Vegetables are good for your body."
@@ -1169,7 +1169,7 @@
 
 - id: n5-g2-0076
   type: spelling
-  status: draft
+  status: reviewed
   word: 声
   sentence: "もっと おおきい __こえ__で はなして ください。"
   en: "Please speak in a louder voice."
@@ -1186,7 +1186,7 @@
 
 - id: n5-g2-0077
   type: spelling
-  status: draft
+  status: reviewed
   word: 服
   sentence: "デパートで あたらしい __ふく__を かいました。"
   en: "I bought new clothes at the department store."
@@ -1203,7 +1203,7 @@
 
 - id: n5-g2-0078
   type: spelling
-  status: draft
+  status: reviewed
   word: 切手
   sentence: "ゆうびんきょくで __きって__を かいました。"
   en: "I bought stamps at the post office."
@@ -1220,7 +1220,7 @@
 
 - id: n5-g2-0079
   type: spelling
-  status: draft
+  status: reviewed
   word: 買い物
   sentence: "にちようびに ははと __かいもの__に いきました。"
   en: "I went shopping with my mother on Sunday."
@@ -1237,7 +1237,7 @@
 
 - id: n5-g2-0080
   type: spelling
-  status: draft
+  status: reviewed
   word: 住む
   sentence: "あには いま とうきょうに __すんで__ います。"
   en: "My older brother lives in Tokyo now."
@@ -1254,7 +1254,7 @@
 
 - id: n5-g2-0081
   type: spelling
-  status: draft
+  status: reviewed
   word: 走る
   sentence: "こどもたちが こうえんで __はしって__ います。"
   en: "The children are running in the park."
@@ -1271,7 +1271,7 @@
 
 - id: n5-g2-0082
   type: spelling
-  status: draft
+  status: reviewed
   word: 着る
   sentence: "さむいので、うわぎを __きて__ でかけました。"
   en: "It was cold, so I put on a jacket and went out."
@@ -1288,7 +1288,7 @@
 
 - id: n5-g2-0083
   type: spelling
-  status: draft
+  status: reviewed
   word: 生まれる
   sentence: "いもうとは はるに __うまれました__。"
   en: "My younger sister was born in spring."
@@ -1305,7 +1305,7 @@
 
 - id: n5-g2-0084
   type: spelling
-  status: draft
+  status: reviewed
   word: カメラ
   sentence: "あたらしい __かめら__で しゃしんを とりました。"
   en: "I took photos with my new camera."
@@ -1316,7 +1316,7 @@
 
 - id: n5-g2-0085
   type: spelling
-  status: draft
+  status: reviewed
   word: テーブル
   sentence: "__てーぶる__の うえに おさらが あります。"
   en: "There are plates on the table."
@@ -1333,7 +1333,7 @@
 
 - id: n5-g2-0086
   type: spelling
-  status: draft
+  status: reviewed
   word: ポケット
   sentence: "__ぽけっと__に かぎが あります。"
   en: "The key is in my pocket."
@@ -1350,7 +1350,7 @@
 
 - id: n5-g2-0087
   type: spelling
-  status: draft
+  status: reviewed
   word: ニュース
   sentence: "まいあさ __にゅーす__を ききます。"
   en: "I listen to the news every morning."
@@ -1367,7 +1367,7 @@
 
 - id: n5-g2-0088
   type: spelling
-  status: draft
+  status: reviewed
   word: レストラン
   sentence: "えきの まえの __れすとらん__で ひるごはんを たべました。"
   en: "I had lunch at the restaurant in front of the station."
@@ -1384,7 +1384,7 @@
 
 - id: n5-g2-0089
   type: spelling
-  status: draft
+  status: reviewed
   word: ズボン
   sentence: "くろい __ずぼん__を はいて います。"
   en: "I'm wearing black trousers."
@@ -1401,7 +1401,7 @@
 
 - id: n5-g2-0090
   type: spelling
-  status: draft
+  status: reviewed
   word: トイレ
   sentence: "すみません、__といれ__は どこですか。"
   en: "Excuse me, where is the toilet?"

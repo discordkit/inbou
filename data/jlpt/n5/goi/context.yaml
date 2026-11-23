@@ -1334,7 +1334,7 @@
 
 - id: n5-g3-0096
   type: context
-  status: draft
+  status: reviewed
   sentence: "あめが ふって いますから、（　）を もって いきましょう。"
   en: "It's raining, so let's take an umbrella."
   answer: かさ
@@ -1344,7 +1344,7 @@
 
 - id: n5-g3-0097
   type: context
-  status: draft
+  status: reviewed
   sentence: "ねる まえに、でんきを （　） ください。"
   en: "Please turn off the light before you go to bed."
   answer: けして
@@ -1360,7 +1360,7 @@
 
 - id: n5-g3-0098
   type: context
-  status: draft
+  status: reviewed
   sentence: "あついですね。うわぎを （　）も いいですか。"
   en: "It's hot, isn't it? May I take off my jacket?"
   answer: ぬいで
@@ -1376,7 +1376,7 @@
 
 - id: n5-g3-0099
   type: context
-  status: draft
+  status: reviewed
   sentence: "さいふを いえに わすれて、とても （　） います。"
   en: "I left my wallet at home, and I'm in real trouble."
   answer: こまって
@@ -1392,7 +1392,7 @@
 
 - id: n5-g3-0100
   type: context
-  status: draft
+  status: reviewed
   sentence: "ともだちの でんわばんごうを （　）ので、でんわが できません。"
   en: "I've forgotten my friend's phone number, so I can't call."
   answer: わすれた
@@ -1408,7 +1408,7 @@
 
 - id: n5-g3-0101
   type: context
-  status: draft
+  status: reviewed
   sentence: "きょうは たくさん あるいたので、（　）。"
   en: "I walked a lot today, so I'm tired."
   answer: つかれました
@@ -1418,7 +1418,7 @@
 
 - id: n5-g3-0102
   type: context
-  status: draft
+  status: reviewed
   sentence: "あさは はれて いましたが、ごごから そらが （　）。"
   en: "It was sunny in the morning, but the sky clouded over in the afternoon."
   answer: くもりました
@@ -1434,7 +1434,7 @@
 
 - id: n5-g3-0103
   type: context
-  status: draft
+  status: reviewed
   sentence: "この おかしは さとうが たくさん はいって いて、とても （　）です。"
   en: "These sweets have lots of sugar in them, so they're very sweet."
   answer: あまい
@@ -1444,7 +1444,7 @@
 
 - id: n5-g3-0104
   type: context
-  status: draft
+  status: reviewed
   sentence: "あの せんせいは まだ にじゅうさいで、とても （　）です。"
   en: "That teacher is only twenty, and very young."
   answer: わかい
@@ -1460,7 +1460,7 @@
 
 - id: n5-g3-0105
   type: context
-  status: draft
+  status: reviewed
   sentence: "ひるは あついですが、よるは （　）です。"
   en: "It's hot in the daytime, but cool at night."
   answer: すずしい
@@ -1470,7 +1470,7 @@
 
 - id: n5-g3-0106
   type: context
-  status: draft
+  status: reviewed
   sentence: "えきの そばに すんで いるので、とても （　）です。"
   en: "I live near the station, so it's very convenient."
   answer: べんり
@@ -1486,7 +1486,7 @@
 
 - id: n5-g3-0107
   type: context
-  status: draft
+  status: reviewed
   sentence: "この くつは とても （　）です。ごねん はいて いますが、まだ きれいです。"
   en: "These shoes are very sturdy. I've worn them for five years, and they're still in good shape."
   answer: じょうぶ
@@ -1502,7 +1502,7 @@
 
 - id: n5-g3-0108
   type: context
-  status: draft
+  status: reviewed
   sentence: "この みちを （　） いくと、えきが あります。"
   en: "Go straight along this road and you'll find the station."
   answer: まっすぐ
@@ -1518,7 +1518,7 @@
 
 - id: n5-g3-0109
   type: context
-  status: draft
+  status: reviewed
   sentence: "いま （　） じゅうにじです。ひるごはんを たべましょう。"
   en: "It's exactly twelve o'clock now. Let's have lunch."
   answer: ちょうど
@@ -1534,7 +1534,7 @@
 
 - id: n5-g3-0110
   type: context
-  status: draft
+  status: reviewed
   sentence: "すみません、この りんごは ひとつ （　）ですか。"
   en: "Excuse me, how much is one of these apples?"
   answer: いくら
@@ -1550,7 +1550,7 @@
 
 - id: n5-g3-0111
   type: context
-  status: draft
+  status: reviewed
   sentence: "A「きのうは （　） がっこうを やすみましたか。」\nB「かぜを ひいたからです。」"
   en: "A: Why were you off school yesterday? B: Because I caught a cold."
   answer: どうして
@@ -1566,7 +1566,7 @@
 
 - id: n5-g3-0112
   type: context
-  status: draft
+  status: reviewed
   sentence: "まいにち いちじかん、ピアノの （　）を します。"
   en: "I practise the piano for an hour every day."
   answer: れんしゅう

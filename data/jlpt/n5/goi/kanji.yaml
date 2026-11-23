@@ -1392,7 +1392,7 @@
 
 - id: n5-g1-0093
   type: kanji
-  status: draft
+  status: reviewed
   word: 駅
   sentence: "まいあさ __駅__まで あるきます。"
   en: "I walk to the station every morning."
@@ -1403,7 +1403,7 @@
 
 - id: n5-g1-0094
   type: kanji
-  status: draft
+  status: reviewed
   word: 会社
   sentence: "あねは __会社__で はたらいて います。"
   en: "My older sister works at a company."
@@ -1420,7 +1420,7 @@
 
 - id: n5-g1-0095
   type: kanji
-  status: draft
+  status: reviewed
   word: 医者
   sentence: "あたまが いたいので、__医者__に いきます。"
   en: "I have a headache, so I'm going to the doctor."
@@ -1437,7 +1437,7 @@
 
 - id: n5-g1-0096
   type: kanji
-  status: draft
+  status: reviewed
   word: 教室
   sentence: "__教室__に がくせいが さんにん います。"
   en: "There are three students in the classroom."
@@ -1454,7 +1454,7 @@
 
 - id: n5-g1-0097
   type: kanji
-  status: draft
+  status: reviewed
   word: 車
   sentence: "ちちの __車__で こうえんへ いきました。"
   en: "We went to the park in my father's car."
@@ -1465,7 +1465,7 @@
 
 - id: n5-g1-0098
   type: kanji
-  status: draft
+  status: reviewed
   word: 後ろ
   sentence: "わたしの __後ろ__に だれが いますか。"
   en: "Who is behind me?"
@@ -1482,7 +1482,7 @@
 
 - id: n5-g1-0099
   type: kanji
-  status: draft
+  status: reviewed
   word: 左
   sentence: "あの かどを __左__に まがって ください。"
   en: "Please turn left at that corner."
@@ -1499,7 +1499,7 @@
 
 - id: n5-g1-0100
   type: kanji
-  status: draft
+  status: reviewed
   word: 来週
   sentence: "__来週__ ともだちが あそびに きます。"
   en: "A friend is coming to visit next week."
@@ -1516,7 +1516,7 @@
 
 - id: n5-g1-0101
   type: kanji
-  status: draft
+  status: reviewed
   word: 毎年
   sentence: "__毎年__ ふゆに やまへ いきます。"
   en: "I go to the mountains every winter."
@@ -1533,7 +1533,7 @@
 
 - id: n5-g1-0102
   type: kanji
-  status: draft
+  status: reviewed
   word: 書く
   sentence: "ここに なまえを __書いて__ ください。"
   en: "Please write your name here."
@@ -1550,7 +1550,7 @@
 
 - id: n5-g1-0103
   type: kanji
-  status: draft
+  status: reviewed
   word: 作文
   sentence: "せんせいに __作文__を だしました。"
   en: "I handed my essay in to the teacher."
@@ -1567,7 +1567,7 @@
 
 - id: n5-g1-0104
   type: kanji
-  status: draft
+  status: reviewed
   word: 店
   sentence: "あの __店__で パンを かいました。"
   en: "I bought bread at that shop."
@@ -1578,7 +1578,7 @@
 
 - id: n5-g1-0105
   type: kanji
-  status: draft
+  status: reviewed
   word: 出口
   sentence: "__出口__は あちらです。"
   en: "The exit is over there."
@@ -1595,7 +1595,7 @@
 
 - id: n5-g1-0106
   type: kanji
-  status: draft
+  status: reviewed
   word: 近く
   sentence: "わたしの いえの __近く__に こうえんが あります。"
   en: "There's a park near my house."
@@ -1612,7 +1612,7 @@
 
 - id: n5-g1-0107
   type: kanji
-  status: draft
+  status: reviewed
   word: 月曜日
   sentence: "__月曜日__に テストが あります。"
   en: "There's a test on Monday."
@@ -1629,7 +1629,7 @@
 
 - id: n5-g1-0108
   type: kanji
-  status: draft
+  status: reviewed
   word: 夏休み
   sentence: "__夏休み__に かぞくで うみへ いきます。"
   en: "I'm going to the sea with my family in the summer holidays."

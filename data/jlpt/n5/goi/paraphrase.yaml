@@ -848,7 +848,7 @@
 
 - id: n5-g4-0057
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "けいかんに みちを ききました。"
   en: "I asked a police officer the way."
   answer: "おまわりさんに みちを ききました。"
@@ -864,7 +864,7 @@
 
 - id: n5-g4-0058
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "マリアさんは にほんの だいがくの りゅうがくせいです。"
   en: "Maria is an international student at a Japanese university."
   answer: "マリアさんは ほかの くにから きて、にほんの だいがくで べんきょうして います。"
@@ -880,7 +880,7 @@
 
 - id: n5-g4-0059
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "こうえんに ひとが おおぜい います。"
   en: "There are lots of people in the park."
   answer: "こうえんに ひとが たくさん います。"
@@ -890,7 +890,7 @@
 
 - id: n5-g4-0060
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "やまださんの おくさんは せんせいです。"
   en: "Mr Yamada's wife is a teacher."
   answer: "やまださんと けっこんして いる ひとは せんせいです。"
@@ -906,7 +906,7 @@
 
 - id: n5-g4-0061
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしは さかなが きらいです。"
   en: "I don't like fish."
   answer: "わたしは さかなが すきでは ありません。"
@@ -916,7 +916,7 @@
 
 - id: n5-g4-0062
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "ばんごはんの あとで、しゅくだいを します。"
   en: "I do my homework after dinner."
   answer: "よるの ごはんを たべてから、しゅくだいを します。"
@@ -932,7 +932,7 @@
 
 - id: n5-g4-0063
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "きょうは せんたくを しました。"
   en: "I did the laundry today."
   answer: "きょうは ふくを あらいました。"
@@ -948,7 +948,7 @@
 
 - id: n5-g4-0064
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "あには ゆうびんきょくに つとめて います。"
   en: "My older brother works at the post office."
   answer: "あには ゆうびんきょくで はたらいて います。"
@@ -964,7 +964,7 @@
 
 - id: n5-g4-0065
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "ともだちが げんかんで まって います。"
   en: "My friend is waiting at the front door."
   answer: "ともだちが いえの いりぐちで まって います。"
@@ -980,7 +980,7 @@
 
 - id: n5-g4-0066
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "この おちゃは ぬるいです。"
   en: "This tea is lukewarm."
   answer: "この おちゃは あまり あつく ありません。"
@@ -996,7 +996,7 @@
 
 - id: n5-g4-0067
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "おとうとさんは いくつですか。"
   en: "How old is your younger brother?"
   answer: "おとうとさんは なんさいですか。"
