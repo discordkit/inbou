@@ -1009,3 +1009,155 @@
       why: "This asks how many brothers. いくつ, about a person, asks their age."
   difficulty: 2
   note: "This asks what いくつ means about a person: their age, なんさい."
+
+- id: n5-g4-0068
+  type: paraphrase
+  status: draft
+  sentence: "ちょっと やすみましょう。"
+  en: "Let's take a short rest."
+  answer: "すこし やすみましょう。"
+  wrong: ["たくさん やすみましょう。", "もう やすみません。", "あしたまで やすみましょう。"]
+  difficulty: 1
+  note: "This asks what ちょっと means: a little, すこし."
+
+- id: n5-g4-0069
+  type: paraphrase
+  status: draft
+  sentence: "コーヒーは いかがですか。"
+  en: "Would you like some coffee?"
+  answer: "コーヒーを のみませんか。"
+  wrong: ["コーヒーは どこですか。", "コーヒーは あまいですか。", "コーヒーが すきですか。"]
+  difficulty: 1
+  note: "This asks what いかがですか means when you offer something: won't you have some, のみませんか."
+
+- id: n5-g4-0070
+  type: paraphrase
+  status: draft
+  sentence: "わたしの かばんは これと ちがいます。"
+  en: "My bag is not this one."
+  answer: "これは わたしの かばんでは ありません。"
+  wrong: ["これは わたしの かばんです。", "わたしの かばんは これと おなじです。", "わたしの かばんは これより おおきいです。"]
+  difficulty: 1
+  note: "This asks what ちがいます means here: it is a different bag, so this one is not mine."
+
+- id: n5-g4-0071
+  type: paraphrase
+  status: draft
+  sentence: "あそこは こうばんです。"
+  en: "That's a police box over there."
+  answer: "あそこに おまわりさんが います。"
+  wrong: ["あそこで パンを うって います。", "あそこで きってを かいます。", "あそこで えいがを みます。"]
+  difficulty: 1
+  note: "This asks what a こうばん is: a small police station, where an おまわりさん works."
+
+- id: n5-g4-0072
+  type: paraphrase
+  status: draft
+  sentence: "ひとりで いくのは いやです。"
+  en: "I don't want to go on my own."
+  answer: "ひとりで いきたく ありません。"
+  wrong:
+    - option: "ひとりで いきたいです。"
+      why: "This is the opposite. いや means you don't want to."
+    - option: "ひとりで いく ことが できます。"
+      why: "This says you are able to go alone."
+    - option: "ふたりで いきたく ありません。"
+      why: "The sentence is about going alone, ひとりで."
+  difficulty: 2
+  note: "This asks what いや means: something you don't want, here いきたく ありません."
+
+- id: n5-g4-0073
+  type: paraphrase
+  status: draft
+  sentence: "デパートで かいものを しました。"
+  en: "I went shopping at the department store."
+  answer: "デパートで いろいろな ものを かいました。"
+  wrong:
+    - option: "デパートで ごはんを たべました。"
+      why: "This is a meal. かいもの is buying things."
+    - option: "デパートで ともだちに あいました。"
+      why: "This says you met a friend."
+    - option: "デパートで はたらきました。"
+      why: "This says you worked there."
+  difficulty: 2
+  note: "This asks what かいもの is: buying things, ものを かう."
+
+- id: n5-g4-0074
+  type: paraphrase
+  status: draft
+  sentence: "この かわの みずは きれいです。"
+  en: "The water in this river is clean."
+  answer: "この かわの みずは きたなく ありません。"
+  wrong:
+    - option: "この かわの みずは きたないです。"
+      why: "This is the opposite."
+    - option: "この かわの みずは つめたく ありません。"
+      why: "This is about how cold it is."
+    - option: "この かわの みずは あまり ありません。"
+      why: "This says there is not much water."
+  difficulty: 2
+  note: "This asks what きれい means about water: clean, きたなく ない."
+
+- id: n5-g4-0075
+  type: paraphrase
+  status: draft
+  sentence: "この ほんは うすいです。"
+  en: "This book is thin."
+  answer: "この ほんは あつく ありません。"
+  wrong:
+    - option: "この ほんは とても あついです。"
+      why: "This is the opposite. A thin book is not あつい, thick."
+    - option: "この ほんは あたらしく ありません。"
+      why: "This is about how new it is."
+    - option: "この ほんは おもしろく ありません。"
+      why: "This is about whether it is fun to read."
+  difficulty: 2
+  note: "This asks what うすい means for a book: thin, あつく ない. Here あつい is thick, not hot."
+
+- id: n5-g4-0076
+  type: paraphrase
+  status: draft
+  sentence: "わたしは やまだせんせいに ピアノを ならいました。"
+  en: "I learned the piano from Yamada-sensei."
+  answer: "やまだせんせいが わたしに ピアノを おしえました。"
+  wrong:
+    - option: "わたしが やまだせんせいに ピアノを おしえました。"
+      why: "This is the other way round: you taught the teacher."
+    - option: "やまだせんせいが わたしに ピアノを ならいました。"
+      why: "ならう is what the learner does. The teacher teaches: おしえる."
+    - option: "わたしは やまだせんせいと いっしょに ピアノを ならいました。"
+      why: "This says you both learned, with someone else teaching."
+  difficulty: 3
+  note: "This asks for the same lessons from the teacher's side: you learned from the teacher, so the teacher taught you, おしえました."
+
+- id: n5-g4-0077
+  type: paraphrase
+  status: draft
+  sentence: "としょかんでは しずかに して ください。"
+  en: "Please be quiet in the library."
+  answer: "としょかんでは おおきい こえで はなさないで ください。"
+  wrong:
+    - option: "としょかんでは おおきい こえで はなして ください。"
+      why: "This is the opposite."
+    - option: "としょかんでは ほんを よまないで ください。"
+      why: "This says don't read books. しずかに is about noise."
+    - option: "としょかんでは なにも たべないで ください。"
+      why: "This is about food, not noise."
+  difficulty: 3
+  note: "This asks what しずかに する means: not making noise, so not talking loudly."
+
+- id: n5-g4-0078
+  type: paraphrase
+  status: draft
+  sentence: "わたしは にほんに 3ねん すんで います。"
+  en: "I have lived in Japan for three years."
+  answer: "わたしは 3ねん まえに にほんへ きました。"
+  wrong:
+    - option: "わたしは 3ねん あとに にほんへ きます。"
+      why: "This is the future. すんで います says you live there now and have for three years."
+    - option: "わたしは にほんへ 3かい きました。"
+      why: "This counts visits, not years."
+    - option: "わたしは まえに 3ねん にほんに すんで いました。"
+      why: "すんで いました is in the past: you no longer live there. すんで います is now."
+  difficulty: 3
+  note: "This asks what 3ねん すんで います means: you came three years ago and still live there."

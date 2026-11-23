@@ -1409,3 +1409,267 @@
   wrong: [ドイレ, トイル, トエレ]
   difficulty: 1
   note: "This asks how といれ, a toilet, is written: トイレ."
+
+- id: n5-g2-0091
+  type: spelling
+  status: draft
+  word: 友だち
+  sentence: "きのう __ともだち__と こうえんへ いきました。"
+  en: "Yesterday I went to the park with a friend."
+  answer: 友だち
+  wrong: [有だち, 反だち, 支だち]
+  difficulty: 1
+  note: "This asks how ともだち, a friend, is written: 友だち."
+
+- id: n5-g2-0092
+  type: spelling
+  status: draft
+  word: 広い
+  sentence: "あたらしい いえは とても __ひろい__です。"
+  en: "My new house is very spacious."
+  answer: 広い
+  wrong: [庄い, 床い, 応い]
+  difficulty: 1
+  note: "This asks how ひろい, wide or spacious, is written: 広い."
+
+- id: n5-g2-0093
+  type: spelling
+  status: draft
+  word: 分かる
+  sentence: "この ことばが __わかりません__。"
+  en: "I don't understand this word."
+  answer: 分かりません
+  wrong: [公かりません, 今かりません, 父かりません]
+  difficulty: 1
+  note: "This asks how わかりません is written: 分かりません, from 分かる, to understand."
+
+- id: n5-g2-0094
+  type: spelling
+  status: draft
+  word: 何
+  sentence: "あした __なに__を しますか。"
+  en: "What will you do tomorrow?"
+  answer: 何
+  wrong: [向, 伺, 河]
+  difficulty: 1
+  note: "This asks how なに, what, is written: 何."
+
+- id: n5-g2-0095
+  type: spelling
+  status: draft
+  word: 明るい
+  sentence: "あさに なって、そとが __あかるく__ なりました。"
+  en: "Morning came, and it got light outside."
+  answer: 明るく
+  wrong:
+    - option: 朋るく
+      why: "朋 has two 月. 明 has 日 on the left."
+    - option: 晴るく
+      why: "晴 is the 晴 of はれ, fine weather. 明 has 月 on the right."
+    - option: 明かるく
+      why: "明るい has only るい after 明."
+  difficulty: 2
+  note: "This asks how あかるく is written: 明るく, from 明るい, bright."
+
+- id: n5-g2-0096
+  type: spelling
+  status: draft
+  word: 短い
+  sentence: "この えいがは __みじかい__ですね。"
+  en: "This film is short, isn't it?"
+  answer: 短い
+  wrong:
+    - option: 知い
+      why: "知 is しる, to know. 短 has 豆 on the right."
+    - option: 豆い
+      why: "豆 is only the right part of 短."
+    - option: 短かい
+      why: "短い has only い after 短."
+  difficulty: 2
+  note: "This asks how みじかい, short, is written: 短い."
+
+- id: n5-g2-0097
+  type: spelling
+  status: draft
+  word: 低い
+  sentence: "この いすは すこし __ひくい__です。"
+  en: "This chair is a little low."
+  answer: 低い
+  wrong:
+    - option: 底い
+      why: "底 is a bottom. 低 has a person, 亻, on the left."
+    - option: 抵い
+      why: "抵 has a hand, 扌, on the left. 低 has a person, 亻."
+    - option: 伝い
+      why: "伝 has 亻 too, but 云 on the right."
+  difficulty: 2
+  note: "This asks how ひくい, low, is written: 低い."
+
+- id: n5-g2-0098
+  type: spelling
+  status: draft
+  word: 地図
+  sentence: "この __ちず__を みて ください。"
+  en: "Please look at this map."
+  answer: 地図
+  wrong:
+    - option: 他図
+      why: "他 has a person, 亻, on the left. 地 has 土, earth."
+    - option: 地回
+      why: "回 is a box inside a box. 図 has marks inside its box."
+    - option: 也図
+      why: "也 is only the right part of 地."
+  difficulty: 2
+  note: "This asks how ちず, a map, is written: 地図."
+
+- id: n5-g2-0099
+  type: spelling
+  status: draft
+  word: 所
+  sentence: "ここは しずかな __ところ__ですね。"
+  en: "This is a quiet place, isn't it?"
+  answer: 所
+  wrong:
+    - option: 折
+      why: "折 has a hand, 扌, on the left. 所 has 戸."
+    - option: 斤
+      why: "斤 is only the right part of 所."
+    - option: 戸
+      why: "戸 is と, a door. It is only the left part of 所."
+  difficulty: 2
+  note: "This asks how ところ, a place, is written: 所."
+
+- id: n5-g2-0100
+  type: spelling
+  status: draft
+  word: 弱い
+  sentence: "この こどもは からだが __よわい__です。"
+  en: "This child isn't very strong."
+  answer: 弱い
+  wrong:
+    - option: 弓い
+      why: "弓 is half of 弱. 弱 has two, each with two short marks."
+    - option: 羽い
+      why: "羽 is はね, a wing. It has no 弓."
+    - option: 弱わい
+      why: "弱い has only い after 弱."
+  difficulty: 3
+  note: "This asks how よわい, weak, is written: 弱い, two 弓 side by side, each with two short marks."
+
+- id: n5-g2-0101
+  type: spelling
+  status: draft
+  word: アパート
+  sentence: "あには ちいさい __あぱーと__に すんで います。"
+  en: "My older brother lives in a small flat."
+  answer: アパート
+  wrong: [アバート, アパード, マパート]
+  difficulty: 1
+  note: "This asks how あぱーと, a flat, is written: アパート."
+
+- id: n5-g2-0102
+  type: spelling
+  status: draft
+  word: コート
+  sentence: "さむいですから、__こーと__を きて ください。"
+  en: "It's cold, so please wear a coat."
+  answer: コート
+  wrong: [コーナ, ユート, コード]
+  difficulty: 1
+  note: "This asks how こーと, a coat, is written: コート."
+
+- id: n5-g2-0103
+  type: spelling
+  status: draft
+  word: コピー
+  sentence: "これを さんまい __こぴー__して ください。"
+  en: "Please make three copies of this."
+  answer: コピー
+  wrong: [コビー, ユピー, コピイ]
+  difficulty: 1
+  note: "This asks how こぴー, a copy, is written: コピー."
+
+- id: n5-g2-0104
+  type: spelling
+  status: draft
+  word: スリッパ
+  sentence: "へやの なかでは __すりっぱ__を はいて ください。"
+  en: "Please wear slippers inside the room."
+  answer: スリッパ
+  wrong:
+    - option: スリツパ
+      why: "っ is a small ッ, not a full ツ."
+    - option: スリッバ
+      why: "ぱ has a small circle: パ. バ is ば."
+    - option: スソッパ
+      why: "り is リ. ソ is そ."
+  difficulty: 2
+  note: "This asks how すりっぱ, slippers, is written: スリッパ, with a small ッ."
+
+- id: n5-g2-0105
+  type: spelling
+  status: draft
+  word: ページ
+  sentence: "ほんを じゅう __ぺーじ__ よみました。"
+  en: "I read ten pages of the book."
+  answer: ページ
+  wrong:
+    - option: ベージ
+      why: "ぺ has a small circle: ペ. ベ is べ."
+    - option: ペーシ
+      why: "じ has two dots: ジ. シ is し."
+    - option: ペーツ
+      why: "じ is ジ. ツ is つ."
+  difficulty: 2
+  note: "This asks how ぺーじ, a page, is written: ページ."
+
+- id: n5-g2-0106
+  type: spelling
+  status: draft
+  word: カップ
+  sentence: "あたらしい __かっぷ__で コーヒーを のみました。"
+  en: "I drank coffee from my new cup."
+  answer: カップ
+  wrong:
+    - option: カッブ
+      why: "ぷ has a small circle: プ. ブ is ぶ."
+    - option: カツプ
+      why: "っ is a small ッ, not a full ツ."
+    - option: ヤップ
+      why: "か is カ. ヤ is や."
+  difficulty: 2
+  note: "This asks how かっぷ, a cup, is written: カップ."
+
+- id: n5-g2-0107
+  type: spelling
+  status: draft
+  word: スポーツ
+  sentence: "あには __すぽーつ__が だいすきです。"
+  en: "My older brother loves sport."
+  answer: スポーツ
+  wrong:
+    - option: スボーツ
+      why: "ぽ has a small circle: ポ. ボ is ぼ."
+    - option: スポーッ
+      why: "つ here is a full ツ, not a small ッ."
+    - option: スポーシ
+      why: "つ is ツ. シ is し."
+  difficulty: 2
+  note: "This asks how すぽーつ, sport, is written: スポーツ, with a full ツ at the end."
+
+- id: n5-g2-0108
+  type: spelling
+  status: draft
+  word: メートル
+  sentence: "うちから こうえんまで 300 __めーとる__ぐらいです。"
+  en: "It's about 300 metres from home to the park."
+  answer: メートル
+  wrong:
+    - option: ナートル
+      why: "め is メ. ナ is な."
+    - option: メートレ
+      why: "る is ル. レ is れ."
+    - option: メーテル
+      why: "と is ト. テ is て."
+  difficulty: 3
+  note: "This asks how めーとる, a metre, is written: メートル."

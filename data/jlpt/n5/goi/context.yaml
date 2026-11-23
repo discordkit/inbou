@@ -1579,3 +1579,239 @@
       why: "けっこん is marriage."
   difficulty: 2
   note: "This asks what you do with the piano every day: れんしゅう, practice."
+
+- id: n5-g3-0113
+  type: context
+  status: draft
+  sentence: "（　）で アメリカへ いきました。"
+  en: "I went to America by plane."
+  answer: ひこうき
+  wrong: [ちかてつ, バス, ポスト]
+  difficulty: 1
+  note: "This asks how you travel to a country across the sea: by ひこうき, a plane."
+
+- id: n5-g3-0114
+  type: context
+  status: draft
+  sentence: "かいものから かえって、たまごを （　）に いれました。"
+  en: "When I got back from shopping, I put the eggs in the fridge."
+  answer: れいぞうこ
+  wrong: [ほんだな, ポスト, ふろ]
+  difficulty: 1
+  note: "This asks where you keep eggs cold: the れいぞうこ, the fridge."
+
+- id: n5-g3-0115
+  type: context
+  status: draft
+  sentence: "つめたい （　）を のみました。"
+  en: "I drank some cold milk."
+  answer: ぎゅうにゅう
+  wrong: [パン, たまご, りんご]
+  difficulty: 1
+  note: "This asks what you can drink: ぎゅうにゅう, milk."
+
+- id: n5-g3-0116
+  type: context
+  status: draft
+  sentence: "（　）の バスは なんじに きますか。"
+  en: "What time does the next bus come?"
+  answer: つぎ
+  wrong: [まえ, よこ, なか]
+  difficulty: 1
+  note: "This asks which bus is still to come: the つぎ, the next one."
+
+- id: n5-g3-0117
+  type: context
+  status: draft
+  sentence: "あつい （　）に はいって、からだが あたたかく なりました。"
+  en: "I got into a hot bath and warmed up."
+  answer: おふろ
+  wrong: [つくえ, まど, ほんだな]
+  difficulty: 1
+  note: "This asks what you get into to warm up: a hot おふろ, a bath."
+
+- id: n5-g3-0118
+  type: context
+  status: draft
+  sentence: "（　）で えいがを みました。"
+  en: "I saw a film at the cinema."
+  answer: えいがかん
+  wrong: [としょかん, びょういん, がっこう]
+  difficulty: 1
+  note: "This asks where you see a film: the えいがかん, a cinema."
+
+- id: n5-g3-0119
+  type: context
+  status: draft
+  sentence: "てがみを （　）に いれて、きってを はりました。"
+  en: "I put the letter in an envelope and stuck a stamp on it."
+  answer: ふうとう
+  wrong:
+    - option: はがき
+      why: "はがき is a postcard. You can't put a letter inside it."
+    - option: さいふ
+      why: "さいふ is a wallet. A stamp goes on an envelope."
+    - option: ほんだな
+      why: "ほんだな is a bookcase."
+  difficulty: 2
+  note: "This asks what you put a letter in: a ふうとう, an envelope."
+
+- id: n5-g3-0120
+  type: context
+  status: draft
+  sentence: "A「ケーキを もう ひとつ どうですか。」\nB「いいえ、もう （　）です。」"
+  en: "A: How about another piece of cake? B: No, thank you. I've had enough."
+  answer: けっこう
+  wrong:
+    - option: すき
+      why: "すき is to like. B's いいえ says no, thank you: もう けっこうです."
+    - option: しずか
+      why: "しずか is quiet."
+    - option: きれい
+      why: "きれい is pretty or clean."
+  difficulty: 2
+  note: "This asks the polite way to say no to more: いいえ、もう けっこうです."
+
+- id: n5-g3-0121
+  type: context
+  status: draft
+  sentence: "A「かぜは もう （　）ですか。」\nB「はい、もう よく なりました。」"
+  en: "A: Are you over your cold now? B: Yes, I'm better now."
+  answer: だいじょうぶ
+  wrong:
+    - option: ひま
+      why: "ひま is free, with time to spare."
+    - option: たいへん
+      why: "たいへん is hard or terrible. B says the cold is better."
+    - option: いや
+      why: "いや is unpleasant. B answers about getting better."
+  difficulty: 2
+  note: "This asks how to ask if someone is all right: だいじょうぶですか."
+
+- id: n5-g3-0122
+  type: context
+  status: draft
+  sentence: "A「たんじょうびに なにが （　）ですか。」\nB「あたらしい かばんです。」"
+  en: "A: What do you want for your birthday? B: A new bag."
+  answer: ほしい
+  wrong:
+    - option: すき
+      why: "すき is to like. A birthday present is something you want: ほしい."
+    - option: ほそい
+      why: "ほそい is thin."
+    - option: まるい
+      why: "まるい is round."
+  difficulty: 2
+  note: "This asks the word for wanting something: ほしい."
+
+- id: n5-g3-0123
+  type: context
+  status: draft
+  sentence: "この しゅくだいは いちじかん （　）。"
+  en: "This homework took an hour."
+  answer: かかりました
+  wrong:
+    - option: ありました
+      why: "ある is for things that are there. The time a job takes is かかる."
+    - option: しました
+      why: "する is to do. The time a job takes is かかる."
+    - option: なりました
+      why: "なる is to become."
+  difficulty: 2
+  note: "This asks the verb for how long something takes: かかる."
+
+- id: n5-g3-0124
+  type: context
+  status: draft
+  sentence: "めがねを （　） しんぶんを よみます。"
+  en: "I put on my glasses and read the newspaper."
+  answer: かけて
+  wrong:
+    - option: きて
+      why: "きる is for clothes on your body. Glasses take かける."
+    - option: はいて
+      why: "はく is for shoes, socks and trousers."
+    - option: かぶって
+      why: "かぶる is for hats."
+  difficulty: 2
+  note: "This asks the verb for putting on glasses: めがねを かける."
+
+- id: n5-g3-0125
+  type: context
+  status: draft
+  sentence: "きのうの テストは とても （　）、できませんでした。"
+  en: "Yesterday's test was very hard, and I couldn't do it."
+  answer: むずかしくて
+  wrong:
+    - option: やさしくて
+      why: "やさしい is easy. An easy test you could do."
+    - option: みじかくて
+      why: "みじかい is short. A short test is not why you can't do it."
+    - option: おもくて
+      why: "おもい is heavy, for things you carry."
+  difficulty: 2
+  note: "This asks why you couldn't do the test: it was むずかしい, difficult."
+
+- id: n5-g3-0126
+  type: context
+  status: draft
+  sentence: "わからない ことばが ありましたから、（　）を ひきました。"
+  en: "There was a word I didn't know, so I looked it up in the dictionary."
+  answer: じしょ
+  wrong:
+    - option: しんぶん
+      why: "You read a しんぶん. You look a word up in a じしょ: じしょを ひく."
+    - option: ノート
+      why: "A ノート is for writing in."
+    - option: てがみ
+      why: "A てがみ is a letter."
+  difficulty: 2
+  note: "This asks what you look a word up in: a じしょ, with じしょを ひく."
+
+- id: n5-g3-0127
+  type: context
+  status: draft
+  sentence: "A「にほんは （　）ですか。」\nB「いいえ、きょねんも きました。」"
+  en: "A: Is this your first time in Japan? B: No, I came last year too."
+  answer: はじめて
+  wrong:
+    - option: いつも
+      why: "いつも is always. B says no, they came last year too, so A asked about a first time."
+    - option: もう
+      why: "もう is already."
+    - option: ときどき
+      why: "ときどき is sometimes."
+  difficulty: 2
+  note: "This asks the word for a first time: はじめて."
+
+- id: n5-g3-0128
+  type: context
+  status: draft
+  sentence: "ははが よんで いますから、（　） いきます。"
+  en: "My mother is calling me, so I'll go right away."
+  answer: すぐに
+  wrong:
+    - option: ときどき
+      why: "ときどき is sometimes. When someone calls, you go at once."
+    - option: いつも
+      why: "いつも is always. This is about one call, now."
+    - option: もっと
+      why: "もっと is more, for comparing."
+  difficulty: 2
+  note: "This asks the word for at once: すぐに."
+
+- id: n5-g3-0129
+  type: context
+  status: draft
+  sentence: "ともだちに かりた ほんを （　）。"
+  en: "I gave back the book I'd borrowed from my friend."
+  answer: かえしました
+  wrong:
+    - option: かしました
+      why: "かす is to lend. The book was your friend's, and you had borrowed it."
+    - option: あげました
+      why: "あげる is to give as a present. A borrowed book goes back."
+    - option: もらいました
+      why: "もらう is to receive. The book is going back to your friend."
+  difficulty: 3
+  note: "This asks the verb for giving back something you borrowed: かえす."
