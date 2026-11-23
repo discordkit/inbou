@@ -884,7 +884,12 @@
   sentence: "こうえんに ひとが おおぜい います。"
   en: "There are lots of people in the park."
   answer: "こうえんに ひとが たくさん います。"
-  wrong: ["こうえんに ひとが すこし います。", "こうえんに ひとが ふたり います。", "こうえんに ひとが ひとりも いません。"]
+  wrong:
+    [
+      "こうえんに ひとが すこし います。",
+      "こうえんに ひとが ふたり います。",
+      "こうえんに ひとが ひとりも いません。"
+    ]
   difficulty: 1
   note: "This asks what おおぜい means: many people, たくさん."
 
@@ -910,7 +915,12 @@
   sentence: "わたしは さかなが きらいです。"
   en: "I don't like fish."
   answer: "わたしは さかなが すきでは ありません。"
-  wrong: ["わたしは さかなが だいすきです。", "わたしは さかなを よく たべます。", "わたしは さかなが ほしいです。"]
+  wrong:
+    [
+      "わたしは さかなが だいすきです。",
+      "わたしは さかなを よく たべます。",
+      "わたしは さかなが ほしいです。"
+    ]
   difficulty: 1
   note: "This asks what きらい means: not liking something, すきでは ない."
 
@@ -1016,7 +1026,12 @@
   sentence: "ちょっと やすみましょう。"
   en: "Let's take a short rest."
   answer: "すこし やすみましょう。"
-  wrong: ["たくさん やすみましょう。", "もう やすみません。", "あしたまで やすみましょう。"]
+  wrong:
+    [
+      "たくさん やすみましょう。",
+      "もう やすみません。",
+      "あしたまで やすみましょう。"
+    ]
   difficulty: 1
   note: "This asks what ちょっと means: a little, すこし."
 
@@ -1026,7 +1041,12 @@
   sentence: "コーヒーは いかがですか。"
   en: "Would you like some coffee?"
   answer: "コーヒーを のみませんか。"
-  wrong: ["コーヒーは どこですか。", "コーヒーは あまいですか。", "コーヒーが すきですか。"]
+  wrong:
+    [
+      "コーヒーは どこですか。",
+      "コーヒーは あまいですか。",
+      "コーヒーが すきですか。"
+    ]
   difficulty: 1
   note: "This asks what いかがですか means when you offer something: won't you have some, のみませんか."
 
@@ -1036,7 +1056,12 @@
   sentence: "わたしの かばんは これと ちがいます。"
   en: "My bag is not this one."
   answer: "これは わたしの かばんでは ありません。"
-  wrong: ["これは わたしの かばんです。", "わたしの かばんは これと おなじです。", "わたしの かばんは これより おおきいです。"]
+  wrong:
+    [
+      "これは わたしの かばんです。",
+      "わたしの かばんは これと おなじです。",
+      "わたしの かばんは これより おおきいです。"
+    ]
   difficulty: 1
   note: "This asks what ちがいます means here: it is a different bag, so this one is not mine."
 
@@ -1046,7 +1071,12 @@
   sentence: "あそこは こうばんです。"
   en: "That's a police box over there."
   answer: "あそこに おまわりさんが います。"
-  wrong: ["あそこで パンを うって います。", "あそこで きってを かいます。", "あそこで えいがを みます。"]
+  wrong:
+    [
+      "あそこで パンを うって います。",
+      "あそこで きってを かいます。",
+      "あそこで えいがを みます。"
+    ]
   difficulty: 1
   note: "This asks what a こうばん is: a small police station, where an おまわりさん works."
 
