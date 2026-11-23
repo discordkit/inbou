@@ -1646,7 +1646,7 @@
 
 - id: n5-g1-0109
   type: kanji
-  status: draft
+  status: reviewed
   word: 空
   sentence: "きょうは __空__が とても きれいです。"
   en: "The sky is very beautiful today."
@@ -1657,7 +1657,7 @@
 
 - id: n5-g1-0110
   type: kanji
-  status: draft
+  status: reviewed
   word: お父さん
   sentence: "__お父さん__は なんの しごとを して いますか。"
   en: "What does your father do for a living?"
@@ -1668,7 +1668,7 @@
 
 - id: n5-g1-0111
   type: kanji
-  status: draft
+  status: reviewed
   word: 千
   sentence: "この ほんは __千__えんでした。"
   en: "This book was a thousand yen."
@@ -1679,7 +1679,7 @@
 
 - id: n5-g1-0112
   type: kanji
-  status: draft
+  status: reviewed
   word: 黒い
   sentence: "あの __黒い__ ぼうしは だれのですか。"
   en: "Whose is that black hat?"
@@ -1690,7 +1690,7 @@
 
 - id: n5-g1-0113
   type: kanji
-  status: draft
+  status: reviewed
   word: お茶
   sentence: "ごはんの あとで __お茶__を のみます。"
   en: "I drink tea after meals."
@@ -1701,7 +1701,7 @@
 
 - id: n5-g1-0114
   type: kanji
-  status: draft
+  status: reviewed
   word: 着く
   sentence: "バスは 10じに __着きました__。"
   en: "The bus arrived at ten."
@@ -1718,7 +1718,7 @@
 
 - id: n5-g1-0115
   type: kanji
-  status: draft
+  status: reviewed
   word: 南
   sentence: "この へやは __南__に まどが あって、あかるいです。"
   en: "This room has a window to the south, and it's bright."
@@ -1735,7 +1735,7 @@
 
 - id: n5-g1-0116
   type: kanji
-  status: draft
+  status: reviewed
   word: 始まる
   sentence: "えいがは なんじに __始まります__か。"
   en: "What time does the film start?"
@@ -1752,7 +1752,7 @@
 
 - id: n5-g1-0117
   type: kanji
-  status: draft
+  status: reviewed
   word: 見せる
   sentence: "あたらしい くつを ともだちに __見せました__。"
   en: "I showed my new shoes to a friend."
@@ -1769,7 +1769,7 @@
 
 - id: n5-g1-0118
   type: kanji
-  status: draft
+  status: reviewed
   word: 切る
   sentence: "りんごを ふたつに __切りました__。"
   en: "I cut the apple in two."
@@ -1786,7 +1786,7 @@
 
 - id: n5-g1-0119
   type: kanji
-  status: draft
+  status: reviewed
   word: 七つ
   sentence: "たまごを __七つ__ かいました。"
   en: "I bought seven eggs."
@@ -1803,7 +1803,7 @@
 
 - id: n5-g1-0120
   type: kanji
-  status: draft
+  status: reviewed
   word: 毎月
   sentence: "__毎月__ ははに てがみを かきます。"
   en: "I write to my mother every month."
@@ -1820,7 +1820,7 @@
 
 - id: n5-g1-0121
   type: kanji
-  status: draft
+  status: reviewed
   word: 先週
   sentence: "__先週__ ともだちと えいがを みました。"
   en: "I saw a film with a friend last week."
@@ -1837,7 +1837,7 @@
 
 - id: n5-g1-0122
   type: kanji
-  status: draft
+  status: reviewed
   word: 木曜日
   sentence: "__木曜日__に としょかんへ いきます。"
   en: "I'm going to the library on Thursday."
@@ -1854,7 +1854,7 @@
 
 - id: n5-g1-0123
   type: kanji
-  status: draft
+  status: reviewed
   word: 答える
   sentence: "せんせいの しつもんに __答えて__ ください。"
   en: "Please answer the teacher's question."
@@ -1871,7 +1871,7 @@
 
 - id: n5-g1-0124
   type: kanji
-  status: draft
+  status: reviewed
   word: 夕飯
   sentence: "__夕飯__は なんじに たべますか。"
   en: "What time do you eat dinner?"

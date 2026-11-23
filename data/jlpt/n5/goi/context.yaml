@@ -1583,16 +1583,22 @@
 - id: n5-g3-0113
   type: context
   status: draft
-  sentence: "（　）で アメリカへ いきました。"
-  en: "I went to America by plane."
+  sentence: "とうきょうから おおさかまで （　）で とんで いきました。"
+  en: "I flew from Tokyo to Osaka by plane."
   answer: ひこうき
-  wrong: [ちかてつ, バス, ポスト]
-  difficulty: 1
-  note: "This asks how you travel to a country across the sea: by ひこうき, a plane."
+  wrong:
+    - option: でんしゃ
+      why: "You can go to おおさか by でんしゃ, but a train runs on the ground. とんで, flew, needs a plane."
+    - option: バス
+      why: "You can go to おおさか by バス, but a bus runs on roads. とんで, flew, needs a plane."
+    - option: ちかてつ
+      why: "ちかてつ, the underground, runs below a city. It does not fly."
+  difficulty: 2
+  note: "This asks what you fly in: a ひこうき, a plane. とんで, from とぶ, to fly, rules out the others."
 
 - id: n5-g3-0114
   type: context
-  status: draft
+  status: reviewed
   sentence: "かいものから かえって、たまごを （　）に いれました。"
   en: "When I got back from shopping, I put the eggs in the fridge."
   answer: れいぞうこ
@@ -1602,7 +1608,7 @@
 
 - id: n5-g3-0115
   type: context
-  status: draft
+  status: reviewed
   sentence: "つめたい （　）を のみました。"
   en: "I drank some cold milk."
   answer: ぎゅうにゅう
@@ -1612,7 +1618,7 @@
 
 - id: n5-g3-0116
   type: context
-  status: draft
+  status: reviewed
   sentence: "（　）の バスは なんじに きますか。"
   en: "What time does the next bus come?"
   answer: つぎ
@@ -1622,7 +1628,7 @@
 
 - id: n5-g3-0117
   type: context
-  status: draft
+  status: reviewed
   sentence: "あつい （　）に はいって、からだが あたたかく なりました。"
   en: "I got into a hot bath and warmed up."
   answer: おふろ
@@ -1632,7 +1638,7 @@
 
 - id: n5-g3-0118
   type: context
-  status: draft
+  status: reviewed
   sentence: "（　）で えいがを みました。"
   en: "I saw a film at the cinema."
   answer: えいがかん
@@ -1642,7 +1648,7 @@
 
 - id: n5-g3-0119
   type: context
-  status: draft
+  status: reviewed
   sentence: "てがみを （　）に いれて、きってを はりました。"
   en: "I put the letter in an envelope and stuck a stamp on it."
   answer: ふうとう
@@ -1658,7 +1664,7 @@
 
 - id: n5-g3-0120
   type: context
-  status: draft
+  status: reviewed
   sentence: "A「ケーキを もう ひとつ どうですか。」\nB「いいえ、もう （　）です。」"
   en: "A: How about another piece of cake? B: No, thank you. I've had enough."
   answer: けっこう
@@ -1674,7 +1680,7 @@
 
 - id: n5-g3-0121
   type: context
-  status: draft
+  status: reviewed
   sentence: "A「かぜは もう （　）ですか。」\nB「はい、もう よく なりました。」"
   en: "A: Are you over your cold now? B: Yes, I'm better now."
   answer: だいじょうぶ
@@ -1690,7 +1696,7 @@
 
 - id: n5-g3-0122
   type: context
-  status: draft
+  status: reviewed
   sentence: "A「たんじょうびに なにが （　）ですか。」\nB「あたらしい かばんです。」"
   en: "A: What do you want for your birthday? B: A new bag."
   answer: ほしい
@@ -1706,7 +1712,7 @@
 
 - id: n5-g3-0123
   type: context
-  status: draft
+  status: reviewed
   sentence: "この しゅくだいは いちじかん （　）。"
   en: "This homework took an hour."
   answer: かかりました
@@ -1722,7 +1728,7 @@
 
 - id: n5-g3-0124
   type: context
-  status: draft
+  status: reviewed
   sentence: "めがねを （　） しんぶんを よみます。"
   en: "I put on my glasses and read the newspaper."
   answer: かけて
@@ -1738,7 +1744,7 @@
 
 - id: n5-g3-0125
   type: context
-  status: draft
+  status: reviewed
   sentence: "きのうの テストは とても （　）、できませんでした。"
   en: "Yesterday's test was very hard, and I couldn't do it."
   answer: むずかしくて
@@ -1754,7 +1760,7 @@
 
 - id: n5-g3-0126
   type: context
-  status: draft
+  status: reviewed
   sentence: "わからない ことばが ありましたから、（　）を ひきました。"
   en: "There was a word I didn't know, so I looked it up in the dictionary."
   answer: じしょ
@@ -1770,7 +1776,7 @@
 
 - id: n5-g3-0127
   type: context
-  status: draft
+  status: reviewed
   sentence: "A「にほんは （　）ですか。」\nB「いいえ、きょねんも きました。」"
   en: "A: Is this your first time in Japan? B: No, I came last year too."
   answer: はじめて
@@ -1786,7 +1792,7 @@
 
 - id: n5-g3-0128
   type: context
-  status: draft
+  status: reviewed
   sentence: "ははが よんで いますから、（　） いきます。"
   en: "My mother is calling me, so I'll go right away."
   answer: すぐに
@@ -1802,7 +1808,7 @@
 
 - id: n5-g3-0129
   type: context
-  status: draft
+  status: reviewed
   sentence: "ともだちに かりた ほんを （　）。"
   en: "I gave back the book I'd borrowed from my friend."
   answer: かえしました

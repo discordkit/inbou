@@ -13315,6 +13315,325 @@
       "sentence": "まいにち いちじかん、ピアノの （　）を します。"
     },
     {
+      "id": "n5-g3-0114",
+      "status": "reviewed",
+      "en": "When I got back from shopping, I put the eggs in the fridge.",
+      "answer": "れいぞうこ",
+      "wrong": ["ほんだな", "ポスト", "ふろ"],
+      "difficulty": 1,
+      "note": "This asks where you keep eggs cold: the れいぞうこ, the fridge.",
+      "type": "context",
+      "sentence": "かいものから かえって、たまごを （　）に いれました。"
+    },
+    {
+      "id": "n5-g3-0115",
+      "status": "reviewed",
+      "en": "I drank some cold milk.",
+      "answer": "ぎゅうにゅう",
+      "wrong": ["パン", "たまご", "りんご"],
+      "difficulty": 1,
+      "note": "This asks what you can drink: ぎゅうにゅう, milk.",
+      "type": "context",
+      "sentence": "つめたい （　）を のみました。"
+    },
+    {
+      "id": "n5-g3-0116",
+      "status": "reviewed",
+      "en": "What time does the next bus come?",
+      "answer": "つぎ",
+      "wrong": ["まえ", "よこ", "なか"],
+      "difficulty": 1,
+      "note": "This asks which bus is still to come: the つぎ, the next one.",
+      "type": "context",
+      "sentence": "（　）の バスは なんじに きますか。"
+    },
+    {
+      "id": "n5-g3-0117",
+      "status": "reviewed",
+      "en": "I got into a hot bath and warmed up.",
+      "answer": "おふろ",
+      "wrong": ["つくえ", "まど", "ほんだな"],
+      "difficulty": 1,
+      "note": "This asks what you get into to warm up: a hot おふろ, a bath.",
+      "type": "context",
+      "sentence": "あつい （　）に はいって、からだが あたたかく なりました。"
+    },
+    {
+      "id": "n5-g3-0118",
+      "status": "reviewed",
+      "en": "I saw a film at the cinema.",
+      "answer": "えいがかん",
+      "wrong": ["としょかん", "びょういん", "がっこう"],
+      "difficulty": 1,
+      "note": "This asks where you see a film: the えいがかん, a cinema.",
+      "type": "context",
+      "sentence": "（　）で えいがを みました。"
+    },
+    {
+      "id": "n5-g3-0119",
+      "status": "reviewed",
+      "en": "I put the letter in an envelope and stuck a stamp on it.",
+      "answer": "ふうとう",
+      "wrong": [
+        {
+          "option": "はがき",
+          "why": "はがき is a postcard. You can't put a letter inside it."
+        },
+        {
+          "option": "さいふ",
+          "why": "さいふ is a wallet. A stamp goes on an envelope."
+        },
+        {
+          "option": "ほんだな",
+          "why": "ほんだな is a bookcase."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks what you put a letter in: a ふうとう, an envelope.",
+      "type": "context",
+      "sentence": "てがみを （　）に いれて、きってを はりました。"
+    },
+    {
+      "id": "n5-g3-0120",
+      "status": "reviewed",
+      "en": "A: How about another piece of cake? B: No, thank you. I've had enough.",
+      "answer": "けっこう",
+      "wrong": [
+        {
+          "option": "すき",
+          "why": "すき is to like. B's いいえ says no, thank you: もう けっこうです."
+        },
+        {
+          "option": "しずか",
+          "why": "しずか is quiet."
+        },
+        {
+          "option": "きれい",
+          "why": "きれい is pretty or clean."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks the polite way to say no to more: いいえ、もう けっこうです.",
+      "type": "context",
+      "sentence": "A「ケーキを もう ひとつ どうですか。」\nB「いいえ、もう （　）です。」"
+    },
+    {
+      "id": "n5-g3-0121",
+      "status": "reviewed",
+      "en": "A: Are you over your cold now? B: Yes, I'm better now.",
+      "answer": "だいじょうぶ",
+      "wrong": [
+        {
+          "option": "ひま",
+          "why": "ひま is free, with time to spare."
+        },
+        {
+          "option": "たいへん",
+          "why": "たいへん is hard or terrible. B says the cold is better."
+        },
+        {
+          "option": "いや",
+          "why": "いや is unpleasant. B answers about getting better."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks how to ask if someone is all right: だいじょうぶですか.",
+      "type": "context",
+      "sentence": "A「かぜは もう （　）ですか。」\nB「はい、もう よく なりました。」"
+    },
+    {
+      "id": "n5-g3-0122",
+      "status": "reviewed",
+      "en": "A: What do you want for your birthday? B: A new bag.",
+      "answer": "ほしい",
+      "wrong": [
+        {
+          "option": "すき",
+          "why": "すき is to like. A birthday present is something you want: ほしい."
+        },
+        {
+          "option": "ほそい",
+          "why": "ほそい is thin."
+        },
+        {
+          "option": "まるい",
+          "why": "まるい is round."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks the word for wanting something: ほしい.",
+      "type": "context",
+      "sentence": "A「たんじょうびに なにが （　）ですか。」\nB「あたらしい かばんです。」"
+    },
+    {
+      "id": "n5-g3-0123",
+      "status": "reviewed",
+      "en": "This homework took an hour.",
+      "answer": "かかりました",
+      "wrong": [
+        {
+          "option": "ありました",
+          "why": "ある is for things that are there. The time a job takes is かかる."
+        },
+        {
+          "option": "しました",
+          "why": "する is to do. The time a job takes is かかる."
+        },
+        {
+          "option": "なりました",
+          "why": "なる is to become."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks the verb for how long something takes: かかる.",
+      "type": "context",
+      "sentence": "この しゅくだいは いちじかん （　）。"
+    },
+    {
+      "id": "n5-g3-0124",
+      "status": "reviewed",
+      "en": "I put on my glasses and read the newspaper.",
+      "answer": "かけて",
+      "wrong": [
+        {
+          "option": "きて",
+          "why": "きる is for clothes on your body. Glasses take かける."
+        },
+        {
+          "option": "はいて",
+          "why": "はく is for shoes, socks and trousers."
+        },
+        {
+          "option": "かぶって",
+          "why": "かぶる is for hats."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks the verb for putting on glasses: めがねを かける.",
+      "type": "context",
+      "sentence": "めがねを （　） しんぶんを よみます。"
+    },
+    {
+      "id": "n5-g3-0125",
+      "status": "reviewed",
+      "en": "Yesterday's test was very hard, and I couldn't do it.",
+      "answer": "むずかしくて",
+      "wrong": [
+        {
+          "option": "やさしくて",
+          "why": "やさしい is easy. An easy test you could do."
+        },
+        {
+          "option": "みじかくて",
+          "why": "みじかい is short. A short test is not why you can't do it."
+        },
+        {
+          "option": "おもくて",
+          "why": "おもい is heavy, for things you carry."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks why you couldn't do the test: it was むずかしい, difficult.",
+      "type": "context",
+      "sentence": "きのうの テストは とても （　）、できませんでした。"
+    },
+    {
+      "id": "n5-g3-0126",
+      "status": "reviewed",
+      "en": "There was a word I didn't know, so I looked it up in the dictionary.",
+      "answer": "じしょ",
+      "wrong": [
+        {
+          "option": "しんぶん",
+          "why": "You read a しんぶん. You look a word up in a じしょ: じしょを ひく."
+        },
+        {
+          "option": "ノート",
+          "why": "A ノート is for writing in."
+        },
+        {
+          "option": "てがみ",
+          "why": "A てがみ is a letter."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks what you look a word up in: a じしょ, with じしょを ひく.",
+      "type": "context",
+      "sentence": "わからない ことばが ありましたから、（　）を ひきました。"
+    },
+    {
+      "id": "n5-g3-0127",
+      "status": "reviewed",
+      "en": "A: Is this your first time in Japan? B: No, I came last year too.",
+      "answer": "はじめて",
+      "wrong": [
+        {
+          "option": "いつも",
+          "why": "いつも is always. B says no, they came last year too, so A asked about a first time."
+        },
+        {
+          "option": "もう",
+          "why": "もう is already."
+        },
+        {
+          "option": "ときどき",
+          "why": "ときどき is sometimes."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks the word for a first time: はじめて.",
+      "type": "context",
+      "sentence": "A「にほんは （　）ですか。」\nB「いいえ、きょねんも きました。」"
+    },
+    {
+      "id": "n5-g3-0128",
+      "status": "reviewed",
+      "en": "My mother is calling me, so I'll go right away.",
+      "answer": "すぐに",
+      "wrong": [
+        {
+          "option": "ときどき",
+          "why": "ときどき is sometimes. When someone calls, you go at once."
+        },
+        {
+          "option": "いつも",
+          "why": "いつも is always. This is about one call, now."
+        },
+        {
+          "option": "もっと",
+          "why": "もっと is more, for comparing."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks the word for at once: すぐに.",
+      "type": "context",
+      "sentence": "ははが よんで いますから、（　） いきます。"
+    },
+    {
+      "id": "n5-g3-0129",
+      "status": "reviewed",
+      "en": "I gave back the book I'd borrowed from my friend.",
+      "answer": "かえしました",
+      "wrong": [
+        {
+          "option": "かしました",
+          "why": "かす is to lend. The book was your friend's, and you had borrowed it."
+        },
+        {
+          "option": "あげました",
+          "why": "あげる is to give as a present. A borrowed book goes back."
+        },
+        {
+          "option": "もらいました",
+          "why": "もらう is to receive. The book is going back to your friend."
+        }
+      ],
+      "difficulty": 3,
+      "note": "This asks the verb for giving back something you borrowed: かえす.",
+      "type": "context",
+      "sentence": "ともだちに かりた ほんを （　）。"
+    },
+    {
       "id": "n5-g1-0001",
       "status": "reviewed",
       "en": "There is a white notebook on the desk.",
@@ -15586,6 +15905,341 @@
       "sentence": "__夏休み__に かぞくで うみへ いきます。"
     },
     {
+      "id": "n5-g1-0109",
+      "status": "reviewed",
+      "en": "The sky is very beautiful today.",
+      "answer": "そら",
+      "wrong": ["そろ", "ぞら", "さら"],
+      "difficulty": 1,
+      "note": "This asks the reading of 空, the sky: そら.",
+      "type": "kanji",
+      "word": "空",
+      "sentence": "きょうは __空__が とても きれいです。"
+    },
+    {
+      "id": "n5-g1-0110",
+      "status": "reviewed",
+      "en": "What does your father do for a living?",
+      "answer": "おとうさん",
+      "wrong": ["おとおさん", "おどうさん", "おとさん"],
+      "difficulty": 1,
+      "note": "This asks the reading of お父さん, father: おとうさん, with a long う.",
+      "type": "kanji",
+      "word": "お父さん",
+      "sentence": "__お父さん__は なんの しごとを して いますか。"
+    },
+    {
+      "id": "n5-g1-0111",
+      "status": "reviewed",
+      "en": "This book was a thousand yen.",
+      "answer": "せん",
+      "wrong": ["ぜん", "せい", "そん"],
+      "difficulty": 1,
+      "note": "This asks the reading of 千, a thousand: せん.",
+      "type": "kanji",
+      "word": "千",
+      "sentence": "この ほんは __千__えんでした。"
+    },
+    {
+      "id": "n5-g1-0112",
+      "status": "reviewed",
+      "en": "Whose is that black hat?",
+      "answer": "くろい",
+      "wrong": ["くるい", "ころい", "ぐろい"],
+      "difficulty": 1,
+      "note": "This asks the reading of 黒い, black: くろい.",
+      "type": "kanji",
+      "word": "黒い",
+      "sentence": "あの __黒い__ ぼうしは だれのですか。"
+    },
+    {
+      "id": "n5-g1-0113",
+      "status": "reviewed",
+      "en": "I drink tea after meals.",
+      "answer": "おちゃ",
+      "wrong": ["おちや", "おじゃ", "おさ"],
+      "difficulty": 1,
+      "note": "This asks the reading of お茶, tea: おちゃ, with a small ゃ.",
+      "type": "kanji",
+      "word": "お茶",
+      "sentence": "ごはんの あとで __お茶__を のみます。"
+    },
+    {
+      "id": "n5-g1-0114",
+      "status": "reviewed",
+      "en": "The bus arrived at ten.",
+      "answer": "つきました",
+      "wrong": [
+        {
+          "option": "づきました",
+          "why": "つきました has no dakuten."
+        },
+        {
+          "option": "ちゃくました",
+          "why": "着 can be ちゃく in some longer words, but 着く is つく."
+        },
+        {
+          "option": "つくました",
+          "why": "着く becomes つきました before ました."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks the reading of 着きました, from 着く, to arrive: つきました.",
+      "type": "kanji",
+      "word": "着く",
+      "sentence": "バスは 10じに __着きました__。"
+    },
+    {
+      "id": "n5-g1-0115",
+      "status": "reviewed",
+      "en": "This room has a window to the south, and it's bright.",
+      "answer": "みなみ",
+      "wrong": [
+        {
+          "option": "みなめ",
+          "why": "南 ends in み: みなみ."
+        },
+        {
+          "option": "みだみ",
+          "why": "みなみ has な, with no dakuten."
+        },
+        {
+          "option": "まなみ",
+          "why": "南 begins with み: みなみ."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks the reading of 南, south: みなみ.",
+      "type": "kanji",
+      "word": "南",
+      "sentence": "この へやは __南__に まどが あって、あかるいです。"
+    },
+    {
+      "id": "n5-g1-0116",
+      "status": "reviewed",
+      "en": "What time does the film start?",
+      "answer": "はじまります",
+      "wrong": [
+        {
+          "option": "はしまります",
+          "why": "はじまります has a dakuten: じ."
+        },
+        {
+          "option": "はじめます",
+          "why": "始めます, with め, is はじめます. Here 始 is followed by まります."
+        },
+        {
+          "option": "はじまいます",
+          "why": "始まる ends in る, so its ます form is はじまります."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks the reading of 始まります, from 始まる, to begin: はじまります.",
+      "type": "kanji",
+      "word": "始まる",
+      "sentence": "えいがは なんじに __始まります__か。"
+    },
+    {
+      "id": "n5-g1-0117",
+      "status": "reviewed",
+      "en": "I showed my new shoes to a friend.",
+      "answer": "みせました",
+      "wrong": [
+        {
+          "option": "みぜました",
+          "why": "みせました has no dakuten."
+        },
+        {
+          "option": "みえました",
+          "why": "見えました, with え, is from 見える, to be seen. Here 見 is followed by せました."
+        },
+        {
+          "option": "けんせました",
+          "why": "見 can be けん in some longer words, but 見せる is みせる."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks the reading of 見せました, from 見せる, to show: みせました.",
+      "type": "kanji",
+      "word": "見せる",
+      "sentence": "あたらしい くつを ともだちに __見せました__。"
+    },
+    {
+      "id": "n5-g1-0118",
+      "status": "reviewed",
+      "en": "I cut the apple in two.",
+      "answer": "きりました",
+      "wrong": [
+        {
+          "option": "ぎりました",
+          "why": "きりました has no dakuten."
+        },
+        {
+          "option": "きれました",
+          "why": "切れました, with れ, is from 切れる. Here 切 is followed by りました."
+        },
+        {
+          "option": "せつりました",
+          "why": "切 can be せつ in some longer words, but 切る is きる."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks the reading of 切りました, from 切る, to cut: きりました.",
+      "type": "kanji",
+      "word": "切る",
+      "sentence": "りんごを ふたつに __切りました__。"
+    },
+    {
+      "id": "n5-g1-0119",
+      "status": "reviewed",
+      "en": "I bought seven eggs.",
+      "answer": "ななつ",
+      "wrong": [
+        {
+          "option": "しちつ",
+          "why": "七 can be しち, but with つ it is ななつ."
+        },
+        {
+          "option": "ななっつ",
+          "why": "ななつ has no small っ."
+        },
+        {
+          "option": "ななづ",
+          "why": "ななつ has no dakuten."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks the reading of 七つ, seven things: ななつ.",
+      "type": "kanji",
+      "word": "七つ",
+      "sentence": "たまごを __七つ__ かいました。"
+    },
+    {
+      "id": "n5-g1-0120",
+      "status": "reviewed",
+      "en": "I write to my mother every month.",
+      "answer": "まいつき",
+      "wrong": [
+        {
+          "option": "まいづき",
+          "why": "まいつき has no dakuten."
+        },
+        {
+          "option": "まえつき",
+          "why": "毎 is まい, every."
+        },
+        {
+          "option": "まいがつ",
+          "why": "月 is がつ in the names of months, like いちがつ. Every month is まいつき."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks the reading of 毎月, every month: まいつき. まいげつ is also right, so it is not among the options.",
+      "type": "kanji",
+      "word": "毎月",
+      "sentence": "__毎月__ ははに てがみを かきます。"
+    },
+    {
+      "id": "n5-g1-0121",
+      "status": "reviewed",
+      "en": "I saw a film with a friend last week.",
+      "answer": "せんしゅう",
+      "wrong": [
+        {
+          "option": "せんしゅ",
+          "why": "せんしゅう has a long う."
+        },
+        {
+          "option": "せんじゅう",
+          "why": "週 is しゅう, with no dakuten."
+        },
+        {
+          "option": "さきしゅう",
+          "why": "先 is せん in this word."
+        }
+      ],
+      "difficulty": 3,
+      "note": "This asks the reading of 先週, last week: せんしゅう.",
+      "type": "kanji",
+      "word": "先週",
+      "sentence": "__先週__ ともだちと えいがを みました。"
+    },
+    {
+      "id": "n5-g1-0122",
+      "status": "reviewed",
+      "en": "I'm going to the library on Thursday.",
+      "answer": "もくようび",
+      "wrong": [
+        {
+          "option": "きようび",
+          "why": "木 is もく in the names of days."
+        },
+        {
+          "option": "もくようひ",
+          "why": "日 is び here, with a dakuten."
+        },
+        {
+          "option": "もくよび",
+          "why": "ようび has a long う: よう."
+        }
+      ],
+      "difficulty": 3,
+      "note": "This asks the reading of 木曜日, Thursday: もくようび.",
+      "type": "kanji",
+      "word": "木曜日",
+      "sentence": "__木曜日__に としょかんへ いきます。"
+    },
+    {
+      "id": "n5-g1-0123",
+      "status": "reviewed",
+      "en": "Please answer the teacher's question.",
+      "answer": "こたえて",
+      "wrong": [
+        {
+          "option": "こだえて",
+          "why": "こたえて has no dakuten."
+        },
+        {
+          "option": "とうえて",
+          "why": "答 can be とう in some longer words, but 答える is こたえる."
+        },
+        {
+          "option": "こたいて",
+          "why": "答える becomes こたえて, with え."
+        }
+      ],
+      "difficulty": 3,
+      "note": "This asks the reading of 答えて, the て-form of 答える, to answer: こたえて.",
+      "type": "kanji",
+      "word": "答える",
+      "sentence": "せんせいの しつもんに __答えて__ ください。"
+    },
+    {
+      "id": "n5-g1-0124",
+      "status": "reviewed",
+      "en": "What time do you eat dinner?",
+      "answer": "ゆうはん",
+      "wrong": [
+        {
+          "option": "ゆうばん",
+          "why": "飯 is はん here, with no dakuten."
+        },
+        {
+          "option": "ゆはん",
+          "why": "ゆうはん has a long う."
+        },
+        {
+          "option": "ゆうぱん",
+          "why": "飯 is はん here, with no small circle."
+        }
+      ],
+      "difficulty": 3,
+      "note": "This asks the reading of 夕飯, the evening meal: ゆうはん. ゆうめし is another reading, so it is not among the options.",
+      "type": "kanji",
+      "word": "夕飯",
+      "sentence": "__夕飯__は なんじに たべますか。"
+    },
+    {
       "id": "n5-g4-0001",
       "status": "reviewed",
       "en": "This room is small.",
@@ -17012,6 +17666,234 @@
       "note": "This asks what いくつ means about a person: their age, なんさい.",
       "type": "paraphrase",
       "sentence": "おとうとさんは いくつですか。"
+    },
+    {
+      "id": "n5-g4-0068",
+      "status": "reviewed",
+      "en": "Let's take a short rest.",
+      "answer": "すこし やすみましょう。",
+      "wrong": [
+        "たくさん やすみましょう。",
+        "もう やすみません。",
+        "あしたまで やすみましょう。"
+      ],
+      "difficulty": 1,
+      "note": "This asks what ちょっと means: a little, すこし.",
+      "type": "paraphrase",
+      "sentence": "ちょっと やすみましょう。"
+    },
+    {
+      "id": "n5-g4-0069",
+      "status": "reviewed",
+      "en": "Would you like some coffee?",
+      "answer": "コーヒーを のみませんか。",
+      "wrong": [
+        "コーヒーは どこですか。",
+        "コーヒーは あまいですか。",
+        "コーヒーが すきですか。"
+      ],
+      "difficulty": 1,
+      "note": "This asks what いかがですか means when you offer something: won't you have some, のみませんか.",
+      "type": "paraphrase",
+      "sentence": "コーヒーは いかがですか。"
+    },
+    {
+      "id": "n5-g4-0070",
+      "status": "reviewed",
+      "en": "My bag is not this one.",
+      "answer": "これは わたしの かばんでは ありません。",
+      "wrong": [
+        "これは わたしの かばんです。",
+        "わたしの かばんは これと おなじです。",
+        "わたしの かばんは これより おおきいです。"
+      ],
+      "difficulty": 1,
+      "note": "This asks what ちがいます means here: it is a different bag, so this one is not mine.",
+      "type": "paraphrase",
+      "sentence": "わたしの かばんは これと ちがいます。"
+    },
+    {
+      "id": "n5-g4-0071",
+      "status": "reviewed",
+      "en": "That's a police box over there.",
+      "answer": "あそこに おまわりさんが います。",
+      "wrong": [
+        "あそこで パンを うって います。",
+        "あそこで きってを かいます。",
+        "あそこで えいがを みます。"
+      ],
+      "difficulty": 1,
+      "note": "This asks what a こうばん is: a small police station, where an おまわりさん works.",
+      "type": "paraphrase",
+      "sentence": "あそこは こうばんです。"
+    },
+    {
+      "id": "n5-g4-0072",
+      "status": "reviewed",
+      "en": "I don't want to go on my own.",
+      "answer": "ひとりで いきたく ありません。",
+      "wrong": [
+        {
+          "option": "ひとりで いきたいです。",
+          "why": "This is the opposite. いや means you don't want to."
+        },
+        {
+          "option": "ひとりで いく ことが できます。",
+          "why": "This says you are able to go alone."
+        },
+        {
+          "option": "ふたりで いきたく ありません。",
+          "why": "The sentence is about going alone, ひとりで."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks what いや means: something you don't want, here いきたく ありません.",
+      "type": "paraphrase",
+      "sentence": "ひとりで いくのは いやです。"
+    },
+    {
+      "id": "n5-g4-0073",
+      "status": "reviewed",
+      "en": "I went shopping at the department store.",
+      "answer": "デパートで いろいろな ものを かいました。",
+      "wrong": [
+        {
+          "option": "デパートで ごはんを たべました。",
+          "why": "This is a meal. かいもの is buying things."
+        },
+        {
+          "option": "デパートで ともだちに あいました。",
+          "why": "This says you met a friend."
+        },
+        {
+          "option": "デパートで はたらきました。",
+          "why": "This says you worked there."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks what かいもの is: buying things, ものを かう.",
+      "type": "paraphrase",
+      "sentence": "デパートで かいものを しました。"
+    },
+    {
+      "id": "n5-g4-0074",
+      "status": "reviewed",
+      "en": "The water in this river is clean.",
+      "answer": "この かわの みずは きたなく ありません。",
+      "wrong": [
+        {
+          "option": "この かわの みずは きたないです。",
+          "why": "This is the opposite."
+        },
+        {
+          "option": "この かわの みずは つめたく ありません。",
+          "why": "This is about how cold it is."
+        },
+        {
+          "option": "この かわの みずは あまり ありません。",
+          "why": "This says there is not much water."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks what きれい means about water: clean, きたなく ない.",
+      "type": "paraphrase",
+      "sentence": "この かわの みずは きれいです。"
+    },
+    {
+      "id": "n5-g4-0075",
+      "status": "reviewed",
+      "en": "This book is thin.",
+      "answer": "この ほんは あつく ありません。",
+      "wrong": [
+        {
+          "option": "この ほんは とても あついです。",
+          "why": "This is the opposite. A thin book is not あつい, thick."
+        },
+        {
+          "option": "この ほんは あたらしく ありません。",
+          "why": "This is about how new it is."
+        },
+        {
+          "option": "この ほんは おもしろく ありません。",
+          "why": "This is about whether it is fun to read."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks what うすい means for a book: thin, あつく ない. Here あつい is thick, not hot.",
+      "type": "paraphrase",
+      "sentence": "この ほんは うすいです。"
+    },
+    {
+      "id": "n5-g4-0076",
+      "status": "reviewed",
+      "en": "I learned the piano from Yamada-sensei.",
+      "answer": "やまだせんせいが わたしに ピアノを おしえました。",
+      "wrong": [
+        {
+          "option": "わたしが やまだせんせいに ピアノを おしえました。",
+          "why": "This is the other way round: you taught the teacher."
+        },
+        {
+          "option": "やまだせんせいが わたしに ピアノを ならいました。",
+          "why": "ならう is what the learner does. The teacher teaches: おしえる."
+        },
+        {
+          "option": "わたしは やまだせんせいと いっしょに ピアノを ならいました。",
+          "why": "This says you both learned, with someone else teaching."
+        }
+      ],
+      "difficulty": 3,
+      "note": "This asks for the same lessons from the teacher's side: you learned from the teacher, so the teacher taught you, おしえました.",
+      "type": "paraphrase",
+      "sentence": "わたしは やまだせんせいに ピアノを ならいました。"
+    },
+    {
+      "id": "n5-g4-0077",
+      "status": "reviewed",
+      "en": "Please be quiet in the library.",
+      "answer": "としょかんでは おおきい こえで はなさないで ください。",
+      "wrong": [
+        {
+          "option": "としょかんでは おおきい こえで はなして ください。",
+          "why": "This is the opposite."
+        },
+        {
+          "option": "としょかんでは ほんを よまないで ください。",
+          "why": "This says don't read books. しずかに is about noise."
+        },
+        {
+          "option": "としょかんでは なにも たべないで ください。",
+          "why": "This is about food, not noise."
+        }
+      ],
+      "difficulty": 3,
+      "note": "This asks what しずかに する means: not making noise, so not talking loudly.",
+      "type": "paraphrase",
+      "sentence": "としょかんでは しずかに して ください。"
+    },
+    {
+      "id": "n5-g4-0078",
+      "status": "reviewed",
+      "en": "I have lived in Japan for three years.",
+      "answer": "わたしは 3ねん まえに にほんへ きました。",
+      "wrong": [
+        {
+          "option": "わたしは 3ねん あとに にほんへ きます。",
+          "why": "This is the future. すんで います says you live there now and have for three years."
+        },
+        {
+          "option": "わたしは にほんへ 3かい きました。",
+          "why": "This counts visits, not years."
+        },
+        {
+          "option": "わたしは まえに 3ねん にほんに すんで いました。",
+          "why": "すんで いました is in the past: you no longer live there. すんで います is now."
+        }
+      ],
+      "difficulty": 3,
+      "note": "This asks what 3ねん すんで います means: you came three years ago and still live there.",
+      "type": "paraphrase",
+      "sentence": "わたしは にほんに 3ねん すんで います。"
     },
     {
       "id": "n5-g2-0001",
@@ -18989,6 +19871,365 @@
       "type": "spelling",
       "word": "トイレ",
       "sentence": "すみません、__といれ__は どこですか。"
+    },
+    {
+      "id": "n5-g2-0091",
+      "status": "reviewed",
+      "en": "Yesterday I went to the park with a friend.",
+      "answer": "友だち",
+      "wrong": ["有だち", "反だち", "支だち"],
+      "difficulty": 1,
+      "note": "This asks how ともだち, a friend, is written: 友だち.",
+      "type": "spelling",
+      "word": "友だち",
+      "sentence": "きのう __ともだち__と こうえんへ いきました。"
+    },
+    {
+      "id": "n5-g2-0092",
+      "status": "reviewed",
+      "en": "My new house is very spacious.",
+      "answer": "広い",
+      "wrong": ["庄い", "床い", "応い"],
+      "difficulty": 1,
+      "note": "This asks how ひろい, wide or spacious, is written: 広い.",
+      "type": "spelling",
+      "word": "広い",
+      "sentence": "あたらしい いえは とても __ひろい__です。"
+    },
+    {
+      "id": "n5-g2-0093",
+      "status": "reviewed",
+      "en": "I don't understand this word.",
+      "answer": "分かりません",
+      "wrong": ["公かりません", "今かりません", "父かりません"],
+      "difficulty": 1,
+      "note": "This asks how わかりません is written: 分かりません, from 分かる, to understand.",
+      "type": "spelling",
+      "word": "分かる",
+      "sentence": "この ことばが __わかりません__。"
+    },
+    {
+      "id": "n5-g2-0094",
+      "status": "reviewed",
+      "en": "What will you do tomorrow?",
+      "answer": "何",
+      "wrong": ["向", "伺", "河"],
+      "difficulty": 1,
+      "note": "This asks how なに, what, is written: 何.",
+      "type": "spelling",
+      "word": "何",
+      "sentence": "あした __なに__を しますか。"
+    },
+    {
+      "id": "n5-g2-0095",
+      "status": "reviewed",
+      "en": "Morning came, and it got light outside.",
+      "answer": "明るく",
+      "wrong": [
+        {
+          "option": "朋るく",
+          "why": "朋 has two 月. 明 has 日 on the left."
+        },
+        {
+          "option": "晴るく",
+          "why": "晴 is the 晴 of はれ, fine weather. 明 has 月 on the right."
+        },
+        {
+          "option": "明かるく",
+          "why": "明るい has only るい after 明."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks how あかるく is written: 明るく, from 明るい, bright.",
+      "type": "spelling",
+      "word": "明るい",
+      "sentence": "あさに なって、そとが __あかるく__ なりました。"
+    },
+    {
+      "id": "n5-g2-0096",
+      "status": "reviewed",
+      "en": "This film is short, isn't it?",
+      "answer": "短い",
+      "wrong": [
+        {
+          "option": "知い",
+          "why": "知 is しる, to know. 短 has 豆 on the right."
+        },
+        {
+          "option": "豆い",
+          "why": "豆 is only the right part of 短."
+        },
+        {
+          "option": "短かい",
+          "why": "短い has only い after 短."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks how みじかい, short, is written: 短い.",
+      "type": "spelling",
+      "word": "短い",
+      "sentence": "この えいがは __みじかい__ですね。"
+    },
+    {
+      "id": "n5-g2-0097",
+      "status": "reviewed",
+      "en": "This chair is a little low.",
+      "answer": "低い",
+      "wrong": [
+        {
+          "option": "底い",
+          "why": "底 is a bottom. 低 has a person, 亻, on the left."
+        },
+        {
+          "option": "抵い",
+          "why": "抵 has a hand, 扌, on the left. 低 has a person, 亻."
+        },
+        {
+          "option": "伝い",
+          "why": "伝 has 亻 too, but 云 on the right."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks how ひくい, low, is written: 低い.",
+      "type": "spelling",
+      "word": "低い",
+      "sentence": "この いすは すこし __ひくい__です。"
+    },
+    {
+      "id": "n5-g2-0098",
+      "status": "reviewed",
+      "en": "Please look at this map.",
+      "answer": "地図",
+      "wrong": [
+        {
+          "option": "他図",
+          "why": "他 has a person, 亻, on the left. 地 has 土, earth."
+        },
+        {
+          "option": "地回",
+          "why": "回 is a box inside a box. 図 has marks inside its box."
+        },
+        {
+          "option": "也図",
+          "why": "也 is only the right part of 地."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks how ちず, a map, is written: 地図.",
+      "type": "spelling",
+      "word": "地図",
+      "sentence": "この __ちず__を みて ください。"
+    },
+    {
+      "id": "n5-g2-0099",
+      "status": "reviewed",
+      "en": "This is a quiet place, isn't it?",
+      "answer": "所",
+      "wrong": [
+        {
+          "option": "折",
+          "why": "折 has a hand, 扌, on the left. 所 has 戸."
+        },
+        {
+          "option": "斤",
+          "why": "斤 is only the right part of 所."
+        },
+        {
+          "option": "戸",
+          "why": "戸 is と, a door. It is only the left part of 所."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks how ところ, a place, is written: 所.",
+      "type": "spelling",
+      "word": "所",
+      "sentence": "ここは しずかな __ところ__ですね。"
+    },
+    {
+      "id": "n5-g2-0100",
+      "status": "reviewed",
+      "en": "This child isn't very strong.",
+      "answer": "弱い",
+      "wrong": [
+        {
+          "option": "弓い",
+          "why": "弓 is half of 弱. 弱 has two, each with two short marks."
+        },
+        {
+          "option": "羽い",
+          "why": "羽 is はね, a wing. It has no 弓."
+        },
+        {
+          "option": "弱わい",
+          "why": "弱い has only い after 弱."
+        }
+      ],
+      "difficulty": 3,
+      "note": "This asks how よわい, weak, is written: 弱い, two 弓 side by side, each with two short marks.",
+      "type": "spelling",
+      "word": "弱い",
+      "sentence": "この こどもは からだが __よわい__です。"
+    },
+    {
+      "id": "n5-g2-0101",
+      "status": "reviewed",
+      "en": "My older brother lives in a small flat.",
+      "answer": "アパート",
+      "wrong": ["アバート", "アパード", "マパート"],
+      "difficulty": 1,
+      "note": "This asks how あぱーと, a flat, is written: アパート.",
+      "type": "spelling",
+      "word": "アパート",
+      "sentence": "あには ちいさい __あぱーと__に すんで います。"
+    },
+    {
+      "id": "n5-g2-0102",
+      "status": "reviewed",
+      "en": "It's cold, so please wear a coat.",
+      "answer": "コート",
+      "wrong": ["コーナ", "ユート", "コード"],
+      "difficulty": 1,
+      "note": "This asks how こーと, a coat, is written: コート.",
+      "type": "spelling",
+      "word": "コート",
+      "sentence": "さむいですから、__こーと__を きて ください。"
+    },
+    {
+      "id": "n5-g2-0103",
+      "status": "reviewed",
+      "en": "Please make three copies of this.",
+      "answer": "コピー",
+      "wrong": ["コビー", "ユピー", "コピイ"],
+      "difficulty": 1,
+      "note": "This asks how こぴー, a copy, is written: コピー.",
+      "type": "spelling",
+      "word": "コピー",
+      "sentence": "これを さんまい __こぴー__して ください。"
+    },
+    {
+      "id": "n5-g2-0104",
+      "status": "reviewed",
+      "en": "Please wear slippers inside the room.",
+      "answer": "スリッパ",
+      "wrong": [
+        {
+          "option": "スリツパ",
+          "why": "っ is a small ッ, not a full ツ."
+        },
+        {
+          "option": "スリッバ",
+          "why": "ぱ has a small circle: パ. バ is ば."
+        },
+        {
+          "option": "スソッパ",
+          "why": "り is リ. ソ is そ."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks how すりっぱ, slippers, is written: スリッパ, with a small ッ.",
+      "type": "spelling",
+      "word": "スリッパ",
+      "sentence": "へやの なかでは __すりっぱ__を はいて ください。"
+    },
+    {
+      "id": "n5-g2-0105",
+      "status": "reviewed",
+      "en": "I read ten pages of the book.",
+      "answer": "ページ",
+      "wrong": [
+        {
+          "option": "ベージ",
+          "why": "ぺ has a small circle: ペ. ベ is べ."
+        },
+        {
+          "option": "ペーシ",
+          "why": "じ has two dots: ジ. シ is し."
+        },
+        {
+          "option": "ペーツ",
+          "why": "じ is ジ. ツ is つ."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks how ぺーじ, a page, is written: ページ.",
+      "type": "spelling",
+      "word": "ページ",
+      "sentence": "ほんを じゅう __ぺーじ__ よみました。"
+    },
+    {
+      "id": "n5-g2-0106",
+      "status": "reviewed",
+      "en": "I drank coffee from my new cup.",
+      "answer": "カップ",
+      "wrong": [
+        {
+          "option": "カッブ",
+          "why": "ぷ has a small circle: プ. ブ is ぶ."
+        },
+        {
+          "option": "カツプ",
+          "why": "っ is a small ッ, not a full ツ."
+        },
+        {
+          "option": "ヤップ",
+          "why": "か is カ. ヤ is や."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks how かっぷ, a cup, is written: カップ.",
+      "type": "spelling",
+      "word": "カップ",
+      "sentence": "あたらしい __かっぷ__で コーヒーを のみました。"
+    },
+    {
+      "id": "n5-g2-0107",
+      "status": "reviewed",
+      "en": "My older brother loves sport.",
+      "answer": "スポーツ",
+      "wrong": [
+        {
+          "option": "スボーツ",
+          "why": "ぽ has a small circle: ポ. ボ is ぼ."
+        },
+        {
+          "option": "スポーッ",
+          "why": "つ here is a full ツ, not a small ッ."
+        },
+        {
+          "option": "スポーシ",
+          "why": "つ is ツ. シ is し."
+        }
+      ],
+      "difficulty": 2,
+      "note": "This asks how すぽーつ, sport, is written: スポーツ, with a full ツ at the end.",
+      "type": "spelling",
+      "word": "スポーツ",
+      "sentence": "あには __すぽーつ__が だいすきです。"
+    },
+    {
+      "id": "n5-g2-0108",
+      "status": "reviewed",
+      "en": "It's about 300 metres from home to the park.",
+      "answer": "メートル",
+      "wrong": [
+        {
+          "option": "ナートル",
+          "why": "め is メ. ナ is な."
+        },
+        {
+          "option": "メートレ",
+          "why": "る is ル. レ is れ."
+        },
+        {
+          "option": "メーテル",
+          "why": "と is ト. テ is て."
+        }
+      ],
+      "difficulty": 3,
+      "note": "This asks how めーとる, a metre, is written: メートル.",
+      "type": "spelling",
+      "word": "メートル",
+      "sentence": "うちから こうえんまで 300 __めーとる__ぐらいです。"
     }
   ],
   "review": {

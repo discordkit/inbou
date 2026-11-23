@@ -1412,7 +1412,7 @@
 
 - id: n5-g2-0091
   type: spelling
-  status: draft
+  status: reviewed
   word: 友だち
   sentence: "きのう __ともだち__と こうえんへ いきました。"
   en: "Yesterday I went to the park with a friend."
@@ -1423,7 +1423,7 @@
 
 - id: n5-g2-0092
   type: spelling
-  status: draft
+  status: reviewed
   word: 広い
   sentence: "あたらしい いえは とても __ひろい__です。"
   en: "My new house is very spacious."
@@ -1434,7 +1434,7 @@
 
 - id: n5-g2-0093
   type: spelling
-  status: draft
+  status: reviewed
   word: 分かる
   sentence: "この ことばが __わかりません__。"
   en: "I don't understand this word."
@@ -1445,7 +1445,7 @@
 
 - id: n5-g2-0094
   type: spelling
-  status: draft
+  status: reviewed
   word: 何
   sentence: "あした __なに__を しますか。"
   en: "What will you do tomorrow?"
@@ -1456,7 +1456,7 @@
 
 - id: n5-g2-0095
   type: spelling
-  status: draft
+  status: reviewed
   word: 明るい
   sentence: "あさに なって、そとが __あかるく__ なりました。"
   en: "Morning came, and it got light outside."
@@ -1473,7 +1473,7 @@
 
 - id: n5-g2-0096
   type: spelling
-  status: draft
+  status: reviewed
   word: 短い
   sentence: "この えいがは __みじかい__ですね。"
   en: "This film is short, isn't it?"
@@ -1490,7 +1490,7 @@
 
 - id: n5-g2-0097
   type: spelling
-  status: draft
+  status: reviewed
   word: 低い
   sentence: "この いすは すこし __ひくい__です。"
   en: "This chair is a little low."
@@ -1507,7 +1507,7 @@
 
 - id: n5-g2-0098
   type: spelling
-  status: draft
+  status: reviewed
   word: 地図
   sentence: "この __ちず__を みて ください。"
   en: "Please look at this map."
@@ -1524,7 +1524,7 @@
 
 - id: n5-g2-0099
   type: spelling
-  status: draft
+  status: reviewed
   word: 所
   sentence: "ここは しずかな __ところ__ですね。"
   en: "This is a quiet place, isn't it?"
@@ -1541,7 +1541,7 @@
 
 - id: n5-g2-0100
   type: spelling
-  status: draft
+  status: reviewed
   word: 弱い
   sentence: "この こどもは からだが __よわい__です。"
   en: "This child isn't very strong."
@@ -1558,7 +1558,7 @@
 
 - id: n5-g2-0101
   type: spelling
-  status: draft
+  status: reviewed
   word: アパート
   sentence: "あには ちいさい __あぱーと__に すんで います。"
   en: "My older brother lives in a small flat."
@@ -1569,7 +1569,7 @@
 
 - id: n5-g2-0102
   type: spelling
-  status: draft
+  status: reviewed
   word: コート
   sentence: "さむいですから、__こーと__を きて ください。"
   en: "It's cold, so please wear a coat."
@@ -1580,7 +1580,7 @@
 
 - id: n5-g2-0103
   type: spelling
-  status: draft
+  status: reviewed
   word: コピー
   sentence: "これを さんまい __こぴー__して ください。"
   en: "Please make three copies of this."
@@ -1591,7 +1591,7 @@
 
 - id: n5-g2-0104
   type: spelling
-  status: draft
+  status: reviewed
   word: スリッパ
   sentence: "へやの なかでは __すりっぱ__を はいて ください。"
   en: "Please wear slippers inside the room."
@@ -1608,7 +1608,7 @@
 
 - id: n5-g2-0105
   type: spelling
-  status: draft
+  status: reviewed
   word: ページ
   sentence: "ほんを じゅう __ぺーじ__ よみました。"
   en: "I read ten pages of the book."
@@ -1625,7 +1625,7 @@
 
 - id: n5-g2-0106
   type: spelling
-  status: draft
+  status: reviewed
   word: カップ
   sentence: "あたらしい __かっぷ__で コーヒーを のみました。"
   en: "I drank coffee from my new cup."
@@ -1642,7 +1642,7 @@
 
 - id: n5-g2-0107
   type: spelling
-  status: draft
+  status: reviewed
   word: スポーツ
   sentence: "あには __すぽーつ__が だいすきです。"
   en: "My older brother loves sport."
@@ -1659,7 +1659,7 @@
 
 - id: n5-g2-0108
   type: spelling
-  status: draft
+  status: reviewed
   word: メートル
   sentence: "うちから こうえんまで 300 __めーとる__ぐらいです。"
   en: "It's about 300 metres from home to the park."

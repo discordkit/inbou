@@ -1022,7 +1022,7 @@
 
 - id: n5-g4-0068
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "ちょっと やすみましょう。"
   en: "Let's take a short rest."
   answer: "すこし やすみましょう。"
@@ -1037,7 +1037,7 @@
 
 - id: n5-g4-0069
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "コーヒーは いかがですか。"
   en: "Would you like some coffee?"
   answer: "コーヒーを のみませんか。"
@@ -1052,7 +1052,7 @@
 
 - id: n5-g4-0070
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしの かばんは これと ちがいます。"
   en: "My bag is not this one."
   answer: "これは わたしの かばんでは ありません。"
@@ -1067,7 +1067,7 @@
 
 - id: n5-g4-0071
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "あそこは こうばんです。"
   en: "That's a police box over there."
   answer: "あそこに おまわりさんが います。"
@@ -1082,7 +1082,7 @@
 
 - id: n5-g4-0072
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "ひとりで いくのは いやです。"
   en: "I don't want to go on my own."
   answer: "ひとりで いきたく ありません。"
@@ -1098,7 +1098,7 @@
 
 - id: n5-g4-0073
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "デパートで かいものを しました。"
   en: "I went shopping at the department store."
   answer: "デパートで いろいろな ものを かいました。"
@@ -1114,7 +1114,7 @@
 
 - id: n5-g4-0074
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "この かわの みずは きれいです。"
   en: "The water in this river is clean."
   answer: "この かわの みずは きたなく ありません。"
@@ -1130,7 +1130,7 @@
 
 - id: n5-g4-0075
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "この ほんは うすいです。"
   en: "This book is thin."
   answer: "この ほんは あつく ありません。"
@@ -1146,7 +1146,7 @@
 
 - id: n5-g4-0076
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしは やまだせんせいに ピアノを ならいました。"
   en: "I learned the piano from Yamada-sensei."
   answer: "やまだせんせいが わたしに ピアノを おしえました。"
@@ -1162,7 +1162,7 @@
 
 - id: n5-g4-0077
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "としょかんでは しずかに して ください。"
   en: "Please be quiet in the library."
   answer: "としょかんでは おおきい こえで はなさないで ください。"
@@ -1178,7 +1178,7 @@
 
 - id: n5-g4-0078
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしは にほんに 3ねん すんで います。"
   en: "I have lived in Japan for three years."
   answer: "わたしは 3ねん まえに にほんへ きました。"
