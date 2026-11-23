@@ -2,7 +2,7 @@
 
 Practice tests in the shape of the real JLPT, played in a Discord channel. The bot asks one question at a time with numbered buttons, everyone answers privately, and everyone who is right scores. Students repeat the tests until they can hold a steady score before the real exam.
 
-Status: **draft 3**, 2026-11-22. Decisions here are settled unless marked open; section 10 lists what is not. Phases 1 to 3 of section 9 are built, and so is the reading half of phase 5: `/bunpou` ships with 230 reviewed items, and `/dokkai` with 94 reading items (258 questions). Results history and full-section tests (`/moshi`) come next.
+Status: **draft 4**, 2026-11-22. Decisions here are settled unless marked open; section 10 lists what is not. Phases 1 to 3 of section 9 are built, and so are the reading half of phase 5 and phase 6: `/bunpou` ships with 230 reviewed items, `/dokkai` with 94 reading items (258 questions), and `/goi` with 490 vocabulary items. Results history and full-section tests (`/moshi`) come next.
 
 ## Why a poll and not a race
 
@@ -27,7 +27,18 @@ N5 has three test sections. Section 2, 言語知識（文法）・読解, takes 
 
 Every item has four options, numbered 1 to 4. Text uses spaces between phrases (分かち書き), and every kanji carries furigana.
 
-**What 問題1 really tests.** In the official sample, about half the items test particles. The rest test adverbs, question words, こそあど words, a verb form inside a pattern (飲み + ながら), and set phrases (ください, 来ませんか). Grammar lists put patterns like 〜たことがある first; the paper does not. The corpus is weighted to match the paper.
+**What grammar's 問題1 really tests.** In the official sample, about half the items test particles. The rest test adverbs, question words, こそあど words, a verb form inside a pattern (飲み + ながら), and set phrases (ください, 来ませんか). Grammar lists put patterns like 〜たことがある first; the paper does not. The corpus is weighted to match the paper.
+
+Section 1, 言語知識（文字・語彙）, takes 20 minutes for 21 items. It numbers its 問題 from 1 again:
+
+| 問題 | Name         | What it asks                                                        | Items |
+| ---- | ------------ | ------------------------------------------------------------------- | ----- |
+| 1    | 漢字読み     | Read the underlined word in kanji; choose its hiragana              | 7     |
+| 2    | 表記         | The underlined word is in hiragana; choose its kanji or katakana    | 5     |
+| 3    | 文脈規定     | Choose the word that fits the blank （　）                          | 6     |
+| 4    | 言い換え類義 | Choose the sentence that means about the same as the underlined one | 3     |
+
+**Section 1 prints everything in kana except what it tests**: the 漢字読み word and the 表記 options. So it needs no furigana. In the official sample, 漢字読み's wrong options are near-miss readings (a lost dakuten, a short vowel for a long one, a missing small っ) or other words of the same kind. 表記's are look-alike kanji and katakana. 文脈規定's options are one word class in one form, and 言い換え's sentences differ in one phrase.
 
 **How the JLPT scores.** It uses scaled scores from Item Response Theory: the result depends on _which_ items a person got right, not on how many. N5 reports two scoring sections. Vocabulary, grammar and reading together score 0–120, with a minimum of 38. Listening scores 0–60, with a minimum of 19. The pass mark is 80 of 180.
 
@@ -64,7 +75,9 @@ One test belongs to one channel. The bot posts a question, players press a numbe
 - **A press on an old question does nothing** except a private "that question has closed". Each question carries a short random token in its buttons, and the session rejects any other token.
 - **The answer is never in a button's `customId`.** A client can read those. The correct position lives only in the session.
 - **Timers depend on how much there is to read.** Each type has a base time, plus time per character of text the player must read. A passage or reading text counts in full for its first question and not again.
-- **Together, the two tests take the real paper's 40 minutes.** `/bunpou` and `/dokkai` are the 22 questions of the real grammar-and-reading section, and students practise to finish inside its limit. Grammar runs at about a minute a question, as guides advise. Reading gets the rest, about 22 minutes, through a pace factor per 問題 (`PACE` in `draw.ts`): about 3.4 minutes for a 問題4 question, 5.4 for a 問題5 question and 4.5 for 問題6. A corpus test keeps the pair between 38 and 42 minutes, so a batch of longer texts that shifts it fails.
+- **Together, the two tests take the real paper's 40 minutes.** `/bunpou` and `/dokkai` are the 22 questions of the real grammar-and-reading section, and students practise to finish inside its limit. Grammar runs at about a minute a question, as guides advise. Reading gets the rest, about 22 minutes, through a pace factor per question type (`PACE` in `draw.ts`): about 3.4 minutes for a 問題4 question, 5.4 for a 問題5 question and 4.5 for 問題6. A corpus test keeps the pair between 38 and 42 minutes, so a batch of longer texts that shifts it fails.
+- **`/goi` takes the real paper's 20 minutes.** Each vocabulary question has a base of 35 seconds plus its reading time, which comes to the paper's pace of about 57 seconds a question. A corpus test keeps the test between 19 and 21 minutes.
+- **Timers, instructions and layouts are keyed by question type, not by 問題 number.** Section 1 numbers its 問題 from 1 again, so /goi's 問題1 is not /bunpou's. The number is only what the card shows. A test that was running when this changed is given its types from its 問題 numbers when it restores, which was all Section 2 had.
 - **Players can join at any question.** Nothing depends on being there at the start.
 
 ### Results
@@ -78,19 +91,20 @@ A student who misses a question should know where to read about it. Each grammar
 - **Only where a page really covers the point.** The nearest page is fine; a page that does not teach the point is not. About one point in six has no link (〜ては いけません, 〜ほうがいい, とても, and others). `exam:build` lists the points in use without one.
 - **Each page once per question.** Two points can share a section, such as と for "with" and いっしょに.
 - **No preview cards.** Links are written `[で](<url>)`; the `<>` stops Discord from adding a card for each one.
-- **My results stays under Discord's 2,000 characters.** A student who missed most of a test could otherwise get no reply at all. When the links do not fit, they are left out from the last miss back, and the reply says the answer cards have them. The answers always stay.
+- **My results stays under Discord's 2,000 characters.** A student who missed most of a test could otherwise get no reply at all. When the links do not fit, they are left out from the last miss back, and the reply says the answer cards have them. The answers and whys always stay. When even the reply without links is too long, which only `/goi`'s 21 questions can reach, the rest follow in more private messages, and a question always stays on the same message as its why.
 - **Links are checked against the live site.** The build checks only their shape. `vp run exam:links` fetches each page once and checks that every section exists. Run it after adding or changing a link.
 
 The card also shows a guide line: the real N5 needs 38 of 120 (32%) in its first scoring section. The JLPT scales its scores, so we show this as a guide, not as an equivalent.
 
-### Private explanations (reading)
+### Private explanations (reading and vocabulary)
 
-Reading is comprehension, not a grammar point, so a student who missed a question needs to be led back into the text. Each reading option can carry a **why**: what in the text rules it out.
+Reading is comprehension, not a grammar point, so a student who missed a question needs to be led back into the text. Each reading option can carry a **why**: what in the text rules it out. Vocabulary options carry whys too: what the wrong word means or how it is really read, and what in the sentence rules it out.
 
 - **The why goes only to the student who chose that option**, privately, just after the public reveal. A vote is a button press, and a press's token lets the bot reply privately for fifteen minutes. The session keeps each voter's latest token for the open card, and the reveal uses it. Tokens are credentials, so they are kept only on cards that explain something, and dropped when the next card opens.
 - **The channel sees the answer, the vote bars, a short note and the English.** The note says what the question asked and where the text answers it, so a student who did not vote still learns something. The whys stay out of the channel, which keeps it short.
 - **My results lists each missed question's why.** A private message vanishes when Discord reloads, and My results is where a student can read it again.
 - **One reveal sends at most 40 private messages.** Each is a call to Discord, and the free plan allows 50 per invocation. A student past the cap still has My results. `FOLLOW_UPS_CAPPED` is reported when it happens.
+- **Easy questions need no whys.** Only medium and hard wrong options must have one; an easy question's public note is enough. A card with nothing to explain keeps no reply tokens.
 - **Grammar keeps its public notes for now**, until the private follow-ups have been seen in play.
 
 ## 3. Commands
@@ -102,11 +116,13 @@ The commands follow the skill split of the Shin Kanzen Master series, which we u
 /bunpou end              — end the test in this channel and show the results
 /dokkai start            — reading: 問題4–6, 5 questions
 /dokkai end              — end the test in this channel and show the results
+/goi start               — vocabulary: 問題1–4 of Section 1, 21 questions
+/goi end                 — end the test in this channel and show the results
 /moshi start section:2   — the whole of Section 2, grammar then reading (planned)
 /moshi history           — your recent results and average, private (planned)
 ```
 
-`/goi` (vocabulary) and `/choukai` (listening) come later. The conjugation quiz keeps `/quiz`.
+`/choukai` (listening) comes later. The conjugation quiz keeps `/quiz`.
 
 A test cannot start while a `/quiz` session runs in the same channel, and the other way round. Typed answers and button votes in one channel at once would confuse everyone.
 
@@ -211,6 +227,37 @@ Reading items live in `data/jlpt/n5/dokkai/`: `short.yaml` (問題4), `mid.yaml`
 - **`__phrase__`** underlines a phrase in the text, for the paper's "what does this refer to" questions.
 - **A 問題6 item's `material` is structured data**, not text: one of about 25 kinds of document (a bus-stop timetable, a receipt, a ticket machine, a medicine bag, a delivery slip, a group chat, notices and signs). Templates in `src/handlers/exam/material/` draw each kind to look like the real thing, so students learn where each kind of document keeps its information. The picture holds only the information, never the options. The build checks each kind's structure: a receipt's sums, a timetable's columns, a calendar's legend.
 
+### Vocabulary items (Section 1)
+
+Vocabulary items live in `data/jlpt/n5/goi/`: `kanji.yaml` (漢字読み), `spelling.yaml` (表記), `context.yaml` (文脈規定) and `paraphrase.yaml` (言い換え類義). Each item is one sentence and one question.
+
+```yaml
+- id: n5-g1-0133
+  type: kanji
+  status: reviewed
+  word: 言う # the dictionary form, for the word list and the give-away rule
+  sentence: "せんせいは なんと __言いました__か。"
+  en: "What did the teacher say?"
+  answer: いいました
+  wrong:
+    - option: ゆいました
+      why: "言う sounds like ゆう, but it is written いう. So 言いました is いいました."
+    - option: げんいました
+      why: "言 can be げん in some longer words, but 言う is いう."
+    - option: いえました
+      why: "いえました would be 言えました, could say. Here 言 is followed by いました."
+  difficulty: 2
+  note: "This asks the reading of 言いました, from 言う, to say: いいました."
+```
+
+- **Kana, but for what is tested.** A sentence has no ruby. A 漢字読み sentence has one `__word__` in kanji; a 表記 sentence has one `__word__` in kana; a 文脈規定 sentence has one （　）. So a 漢字読み card has no readings line, and its reading cannot reach the card, a button or the alt text before the reveal.
+- **`word` is the dictionary form** of a 漢字読み or 表記 word, which may be inflected in the sentence (言いました, from 言う).
+- **Options are drawn,** as in 問題1: `answer` plus three or more `wrong`. 漢字読み options are hiragana. A 表記 answer is kanji or katakana. Options for 問題1–3 go on labelled buttons; 言い換え's options are sentences, so they sit in the card, as in reading.
+- **A medium or hard wrong option says why it is wrong,** and the why goes privately to whoever chose it (section 2).
+- **A 文脈規定 sentence rules out every wrong option itself.** 「（　）で アメリカへ いきました」 rules out a bus only if the reader assumes an ocean on the way. 「とうきょうから おおさかまで （　）で とんで いきました」 says the trip flew, so only ひこうき fits.
+
+**The word list.** The trap a reviewer misses most is an option that is wrong in its sentence but right somewhere else. 大人 is おとな, but JMdict also reads it だいにん, as a fare sign does; はし is 橋 and also 箸. `vp run exam:vocab` writes `data/jlpt/vocab.json`: the 667 N5 and 630 N4 words with every way JMdict writes and reads them, and every reading of their kanji spellings from any entry. Like the other corpora, it is built on purpose and committed, so CI never needs the network. The build checks every vocabulary item against it (below). JMdict checks items; people still write them.
+
 ### What code checks, and what a person checks
 
 Code checks every item, drafts included, in `vp test`:
@@ -222,11 +269,13 @@ Code checks every item, drafts included, in `vp test`:
 - Every reviewed item, in every variant, passes through the real renderer and stays inside Discord's limits.
 - The committed corpus matches the source files and holds no drafts.
 - Reading: every medium and hard wrong option has a why, and no ordered answer has one. Every word of a picture is in its alt text. Every picture fits its canvas, measured with the real fonts. Every reading card closes inside its voters' fifteen-minute reply tokens, and every private follow-up fits in one message.
+- Vocabulary: the sentence is kana but for its one tested word or blank. A tested kanji is N5 or N4. The word is on the N5 or N4 list, and an N4 word gets a hint. A 漢字読み answer is a reading JMdict gives, and no wrong option is another reading of the same kanji. No 表記 wrong option is another N5 or N4 word with the same reading. Every medium and hard wrong option has a why. `/goi` averages 19 to 21 minutes, fills every test to 21 questions, and sends My results in messages that each fit.
 
 Code cannot check that a wrong option is really wrong. That is the main trap: a distractor that is also grammatical. The official sample asks 家（　）出ます and leaves out から, because から would also be right. So a person reviews every item for these points:
 
 - Each wrong option is wrong in its sentence.
 - Each ★ window has one valid order.
+- In 文脈規定, the sentence itself rules out each wrong option, not an assumption about the world.
 - The Japanese is natural.
 - The item is at N5 level.
 - The difficulty rating fits.
@@ -240,6 +289,8 @@ Think of each question type as a deck of cards.
 - **After the test, every card goes back into its deck.** Nothing is remembered between tests. Repeated exposure is the point; the random choices above keep repeats from being identical.
 - **Each deck is drawn by difficulty.** The blueprint fixes the difficulty mix, for example 3 easy, 4 medium and 2 hard for 問題1. Every test is then about equally hard, and a student's scores can be compared from test to test. If a level runs short, the draw borrows from the nearest level and does not fail.
 - **Reading shares one mix across its decks.** Every `/dokkai` test asks 2 easy, 2 medium and 1 hard question (`READING_MIX`), shuffled across its five questions each time. Tests stay equally hard, and every approved question can come up: a fixed level per deck would never ask 問題6's easy or hard questions, because 問題6 asks only one. 問題5 asks the two questions of its text nearest the levels it was dealt, in text order.
+- **Vocabulary draws each deck by its own mix**: 2 easy, 3 medium and 2 hard 漢字読み; 2, 2 and 1 表記; 2, 3 and 1 文脈規定; and one of each level for 言い換え.
+- **No vocabulary card gives another's answer away.** Two cards never share a test when one card's kanji, or its 表記 answer, appears anywhere in the other (sentence, options, note or whys), or when its 漢字読み, 文脈規定 or 言い換え answer is one of the other's options. A 夏 card that offers ふゆ and explains it would answer a later 冬 card, so seasons, directions and times of day are spread across tests, as the paper spreads them. A corpus test checks that the real decks still fill every test to 21 questions. Each item's texts are worked out once and kept, so a draw of the 490-item corpus takes about 4 ms on average and 7.5 ms on a cold first draw, inside the free plan's 10 ms of CPU.
 - **The draw prefers different grammar points within a deck**, because the real paper does not test one point twice.
 - **The whole test is drawn when it starts** and stored in the session. Questions are numbered 1–17 straight through 問題1, 2 and 3, as on the paper.
 
@@ -251,7 +302,7 @@ Think of each question type as a deck of cards.
 
 ## 7. What Discord constrains
 
-- **No furigana.** Discord cannot place text above text. A sentence is shown as the paper prints it, without readings, and its readings follow in one small line below: 日曜日 にちようび · 学校 がっこう. The first live test tried inline readings, 日曜日(にちようび)に, and they made sentences hard to read. Buttons, notes and private results keep inline readings in half-width brackets, because they have no room for a second line. Items store ruby markup, so this is a renderer choice and never touches the corpus.
+- **No furigana.** Discord cannot place text above text. A sentence is shown as the paper prints it, without readings, and its readings follow in one small line below: 日曜日 にちようび · 学校 がっこう. The first live test tried inline readings, 日曜日(にちようび)に, and they made sentences hard to read. Buttons, notes and private results keep inline readings in half-width brackets, because they have no room for a second line. Items store ruby markup, so this is a renderer choice and never touches the corpus. Vocabulary cards have no readings line, because Section 1 prints everything in kana but the word it tests.
 - **A heading is already bold.** The answer in a revealed sentence is underlined, not bold; a bold answer vanished into the heading in the first live test.
 - **Underscores mean italics.** The ★ line uses full-width underscores: ＿＿ ＿＿ ★ ＿＿.
 - **Components V2 is all or nothing.** A V2 message cannot have `content` or embeds, so the whole card is built from components. The accent colour shows the state: blue while open, green when revealed.
@@ -281,22 +332,25 @@ button exam:v:<token>:<n> ─► commands.ts ─► flow ─► private "You cho
 
 Each phase ends with something we can show.
 
-Phases 1 to 3 are done, and so is `/dokkai` from phase 5.
+Phases 1 to 3 are done, and so are `/dokkai` from phase 5 and `/goi` (phase 6).
 
 1. **`/bunpou` end to end, with 問題1 only.** Item schema and build, draw, machine, session, Components V2 cards, vote routing, about 20 reviewed seed items.
 2. **問題2 and 問題3.** The ★ and passage draws and cards. `/bunpou` runs the full 9 + 4 + 4.
 3. **Content.** Complete the grammar point list, then draft batches of about 20 items per category for review. `exam:build` reports how many items each deck holds at each difficulty. A deck is playable when each difficulty level holds at least twice what one test draws. Targets: 150 or more for 問題1 (weighted to particles), 60 ★ sentences, 15 passages.
 4. **Results, history and calibration.** A player's results are stored only if they have not opted out of tracking, and `/privacy forget` erases them. Item statistics hold no user ids. `/moshi history`, `exam:stats`, and an update to `docs/PRIVACY.md`.
 5. **`/dokkai` and `/moshi section:2`.** `/dokkai` is built: the reading item types, 問題6 pictures drawn in code and hosted on `inbou-assets`, and private explanations. `/moshi section:2`, grammar then reading in one sitting, is next.
+6. **`/goi`, Section 1.** Questions keyed by type rather than 問題 number, the four vocabulary item types, the word list from JMdict, the give-away rule, and 490 reviewed items. An earlier draft said JMdict could generate the 漢字読み and 表記 items. It cannot: the word corpus keeps only words that conjugate, and JMdict's example sentences are often unnatural. So JMdict checks items, and people write them (section 4).
 
-Later: `/goi`, whose 漢字読み and 表記 items can be generated from the JMdict corpus we already build; then N4; then `/choukai`, which needs audio.
+Later: N4; then `/choukai`, which needs audio.
 
 ## 10. Still open
 
 - **Word spacing for N5.** If sentences still read poorly with the readings line, add learner word spacing (particles separated) as an authoring step that rewrites the YAML, never at runtime. vscode-jisho's `spacing.ts` skips kana-only text, which is most of N5, so it would need a kana-aware pass or hand review.
-- **Timer constants.** The pair is set to the real paper's 40 minutes; how that time is spread across 問題 is a first guess, to tune in play.
-- **The difficulty mix.** 3 / 4 / 2 for 問題1 and 2 / 2 / 1 for reading are first guesses. Students' real results (phase 4) should decide them: a test that feels beyond students is a reason to shift the mix, not to rewrite items.
+- **Timer constants.** The pair is set to the real paper's 40 minutes; how that time is spread across 問題 is a first guess, to tune in play. So is /goi's 35-second base for every vocabulary type.
+- **The difficulty mix.** 3 / 4 / 2 for 問題1, 2 / 2 / 1 for reading and the four vocabulary mixes are first guesses. Students' real results (phase 4) should decide them: a test that feels beyond students is a reason to shift the mix, not to rewrite items.
 - **More than 40 wrong voters on one reading card.** Past the cap, follow-ups would need a second invocation; for now those students read their whys in My results.
+- **The give-away conflicts, built by `exam:build`.** The draw works out which vocabulary cards conflict each time it runs, and its cost grows with the corpus, about 0.3 ms for every 50 items. Built once into `corpus.json`, the conflicts could be shown on the review page, and a draw would only look them up.
+- **Vocabulary coverage.** The decks test 465 of the 667 N5 words: 295 of the 355 the paper could write in kanji, 50 of the 80 katakana words and 120 of the 232 words written only in kana. New batches should aim at the words not yet asked.
 - **Writing the 問題6 templates as JSX.** takumi takes React elements, which would give typed styles in place of CSS strings. Worth doing when the templates next change much; proved by comparing every drawn picture before and after.
 
 ## 11. Sources and licensing
@@ -304,5 +358,6 @@ Later: `/goi`, whose 漢字読み and 表記 items can be generated from the JMd
 - **Format:** the official N5 sample paper and test guide from [jlpt.jp](https://www.jlpt.jp/e/guideline/testsections.html), and the [item counts after the 2020 change](https://jlpt.jp/e/topics/202009091599642827.html). We copy the format and the standard instruction lines, never the items.
 - **Grammar points:** the list starts from Jonathan Waller's N5 grammar list ([tanos.co.uk](https://tanos.co.uk/jlpt/skills/grammar/), reported to be CC BY; to confirm) and is checked against Wikibooks, JLPT Sensei, Bunpro, Genki and Minna no Nihongo. A list of grammar point names is a set of facts. We write our own explanations.
 - **Items:** written for this project. Textbooks, workbooks and Tofugu are copyrighted, and we never copy their sentences.
+- **Vocabulary:** the N5 and N4 word lists are Jonathan Waller's, via [stephenmk/yomitan-jlpt-vocab](https://github.com/stephenmk/yomitan-jlpt-vocab) (CC BY-SA 4.0), joined by entry id to [JMdict](https://www.edrdg.org/jmdict/j_jmdict.html) (EDRDG, CC BY-SA 4.0) through [jmdict-simplified](https://github.com/scriptin/jmdict-simplified). They check items and never write them. Items avoid the official sample's words and option sets.
 - **Kanji list:** the old JLPT levels 4 and 3 in [KANJIDIC2](https://www.edrdg.org/wiki/index.php/KANJIDIC_Project) (EDRDG, CC BY-SA 4.0).
 - **Reading:** practice sites were played for format only (にほんごクイズ, Coto Academy, The Japanese Page, Open Exam Prep, JLPT Books); no item is copied from them. The 問題6 pictures use five fonts under the SIL Open Font License (Noto Sans JP, Noto Serif JP, Zen Maru Gothic, Klee One, DotGothic16, via fontsource), drawn by takumi (MIT or Apache 2.0) at build time only.
