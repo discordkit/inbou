@@ -382,8 +382,10 @@ describe(`the mock-test corpus`, () => {
   });
 
   it(`gives vocabulary the real paper's 20 minutes`, () => {
-    // WHY: /goi is the real Section 1, 21 questions in 20 minutes, and students practise to finish inside it, as for Section 2. Measured over many draws, so a batch of longer sentences that shifts it shows here. Drafts included while the deck is new: once it ships, this reads only what students get.
-    const pool = items.filter(isVocab);
+    // WHY: /goi is the real Section 1, 21 questions in 20 minutes, and students practise to finish inside it, as for Section 2. Measured over many draws of what students get, so a batch of longer sentences that shifts it shows here.
+    const pool = items
+      .filter(isVocab)
+      .filter((item) => item.status === `reviewed`);
     let state = 7;
     const random = (): number => {
       state = (state * 1_664_525 + 1_013_904_223) % 4_294_967_296;
