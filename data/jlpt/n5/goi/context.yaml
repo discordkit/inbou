@@ -1821,3 +1821,203 @@
       why: "もらう is to receive. The book is going back to your friend."
   difficulty: 3
   note: "This asks the verb for giving back something you borrowed: かえす."
+
+- id: n5-g3-0130
+  type: context
+  status: draft
+  sentence: "きれいな はなを かいましたから、（　）に いれました。"
+  en: "I bought some pretty flowers, so I put them in a vase."
+  answer: かびん
+  wrong: [さいふ, くつ, ポスト]
+  difficulty: 1
+  note: "This asks what you put flowers in: a かびん, a vase."
+
+- id: n5-g3-0131
+  type: context
+  status: draft
+  sentence: "まいあさ （　）を つくって、ひるに かいしゃで たべます。"
+  en: "Every morning I make a packed lunch and eat it at work at midday."
+  answer: おべんとう
+  wrong: [ほんだな, くつした, かばん]
+  difficulty: 1
+  note: "This asks what you make in the morning and eat at lunch: an おべんとう, a packed lunch."
+
+- id: n5-g3-0132
+  type: context
+  status: draft
+  sentence: "わたしの （　）は ねこです。なまえは タマです。"
+  en: "My pet is a cat. Its name is Tama."
+  answer: ペット
+  wrong: [ノート, ラジオ, パン]
+  difficulty: 1
+  note: "This asks what a cat with a name can be: a ペット, a pet."
+
+- id: n5-g3-0133
+  type: context
+  status: draft
+  sentence: "あしたは にほんごの （　）が ありますから、こんばん べんきょうします。"
+  en: "There's a Japanese test tomorrow, so I'm studying tonight."
+  answer: テスト
+  wrong: [ポスト, ペン, ストーブ]
+  difficulty: 1
+  note: "This asks what you study for the night before: a テスト, a test."
+
+- id: n5-g3-0134
+  type: context
+  status: draft
+  sentence: "この はしを （　）と、むこうに こうえんが あります。"
+  en: "Cross this bridge and there's a park on the other side."
+  answer: わたる
+  wrong:
+    - option: はいる
+      why: "はいる is to go into a room or a building. You cross a bridge: わたる."
+    - option: あける
+      why: "あける is to open."
+    - option: のる
+      why: "のる is to get on a bus or a train."
+  difficulty: 2
+  note: "This asks the verb for crossing a bridge or a road: わたる."
+
+- id: n5-g3-0135
+  type: context
+  status: draft
+  sentence: "この ボタンを （　）と、ドアが あきます。"
+  en: "Press this button and the door opens."
+  answer: おす
+  wrong:
+    - option: ひく
+      why: "ひく is to pull. A button is pushed: おす."
+    - option: しめる
+      why: "しめる is to close."
+    - option: けす
+      why: "けす is to turn off a light."
+  difficulty: 2
+  note: "This asks the verb for pressing a button: おす."
+
+- id: n5-g3-0136
+  type: context
+  status: draft
+  sentence: "A「この ケーキは 100えんですよ。」\nB「えっ、（　）ですか。やすいですね。」"
+  en: "A: This cake is 100 yen. B: What, really? That's cheap."
+  answer: ほんとう
+  wrong:
+    - option: しずか
+      why: "しずか is quiet. B is surprised and asks: really?"
+    - option: いや
+      why: "いや is unpleasant."
+    - option: きれい
+      why: "きれい is pretty or clean. B is surprised by the price."
+  difficulty: 2
+  note: "This asks the word for asking if something is true: ほんとうですか, really?"
+
+- id: n5-g3-0137
+  type: context
+  status: draft
+  sentence: "あしたは ともだちと （　）に えいがを みます。"
+  en: "Tomorrow I'm going to see a film together with a friend."
+  answer: いっしょ
+  wrong:
+    - option: すこし
+      why: "すこし is a little. ともだちと … に means with a friend: いっしょに."
+    - option: たくさん
+      why: "たくさん is a lot."
+    - option: とても
+      why: "とても is very, before an adjective."
+  difficulty: 2
+  note: "This asks the word for doing something together: いっしょに."
+
+- id: n5-g3-0138
+  type: context
+  status: draft
+  sentence: "でかける まえに、ドアに （　）を かけて ください。"
+  en: "Please lock the door before you go out."
+  answer: かぎ
+  wrong:
+    - option: めがね
+      why: "めがねを かける is to put on glasses. A door is locked with a かぎ."
+    - option: しょうゆ
+      why: "しょうゆを かける is to pour soy sauce on food."
+    - option: おかね
+      why: "おかねを かける is to spend money."
+  difficulty: 2
+  note: "This asks what you lock a door with: a かぎ, a key, with かぎを かける."
+
+- id: n5-g3-0139
+  type: context
+  status: draft
+  sentence: "みせの ひとが （　）に みちを おしえました。"
+  en: "The shop assistant kindly told me the way."
+  answer: しんせつ
+  wrong:
+    - option: ひま
+      why: "ひま is free, with time to spare."
+    - option: いや
+      why: "いや is unpleasant."
+    - option: きらい
+      why: "きらい is to dislike."
+  difficulty: 2
+  note: "This asks the word for being kind and helpful: しんせつ."
+
+- id: n5-g3-0140
+  type: context
+  status: draft
+  sentence: "しごとが （　）から、うちへ かえります。"
+  en: "Work has finished, so I'm going home."
+  answer: おわりました
+  wrong:
+    - option: はじまりました
+      why: "はじまる is to begin. You go home when work ends."
+    - option: ありました
+      why: "ある is for things that are there. You go home when work is over."
+    - option: なりました
+      why: "なる is to become."
+  difficulty: 2
+  note: "This asks the verb for work coming to an end: おわる."
+
+- id: n5-g3-0141
+  type: context
+  status: draft
+  sentence: "かばんは ここに （　） ください。"
+  en: "Please put your bag here."
+  answer: おいて
+  wrong:
+    - option: とって
+      why: "とる is to take. To leave it here, you put it down: おく."
+    - option: すわって
+      why: "すわる is to sit."
+    - option: あけて
+      why: "あける is to open."
+  difficulty: 2
+  note: "This asks the verb for putting something down: おく."
+
+- id: n5-g3-0142
+  type: context
+  status: draft
+  sentence: "あねは びょういんで （　） います。"
+  en: "My older sister works at a hospital."
+  answer: はたらいて
+  wrong:
+    - option: すんで
+      why: "すむ is to live. People work at a hospital: はたらく."
+    - option: あそんで
+      why: "あそぶ is to play."
+    - option: およいで
+      why: "およぐ is to swim."
+  difficulty: 2
+  note: "This asks the verb for having a job somewhere: はたらく."
+
+- id: n5-g3-0143
+  type: context
+  status: draft
+  sentence: "あさ はやく おきて、ふじさんに （　）。"
+  en: "I got up early and climbed Mount Fuji."
+  answer: のぼりました
+  wrong:
+    - option: のりました
+      why: "のる is for a bus, a train or a bicycle. You climb a mountain: のぼる."
+    - option: すわりました
+      why: "すわる is to sit."
+    - option: はしりました
+      why: "はしる is to run. You climb a mountain: のぼる."
+  difficulty: 2
+  note: "This asks the verb for climbing a mountain: のぼる."

@@ -1673,3 +1673,199 @@
       why: "と is ト. テ is て."
   difficulty: 3
   note: "This asks how めーとる, a metre, is written: メートル."
+
+- id: n5-g2-0109
+  type: spelling
+  status: draft
+  word: 太い
+  sentence: "この えんぴつは __ふとい__です。"
+  en: "This pencil is thick."
+  answer: 太い
+  wrong: [大い, 天い, 丈い]
+  difficulty: 1
+  note: "This asks how ふとい, thick, is written: 太い, 大 with a dot."
+
+- id: n5-g2-0110
+  type: spelling
+  status: draft
+  word: 早い
+  sentence: "けさは __はやく__ おきました。"
+  en: "I got up early this morning."
+  answer: 早く
+  wrong: [旱く, 草く, 卓く]
+  difficulty: 1
+  note: "This asks how はやく, early, is written: 早く, from 早い."
+
+- id: n5-g2-0111
+  type: spelling
+  status: draft
+  word: ゼロ
+  sentence: "__ぜろ__から きゅうまで かいて ください。"
+  en: "Please write from zero to nine."
+  answer: ゼロ
+  wrong: [セロ, ゼコ, ゾロ]
+  difficulty: 1
+  note: "This asks how ぜろ, zero, is written: ゼロ."
+
+- id: n5-g2-0112
+  type: spelling
+  status: draft
+  word: グラム
+  sentence: "さとうを 500 __ぐらむ__ かいました。"
+  en: "I bought 500 grams of sugar."
+  answer: グラム
+  wrong: [グラヌ, クラム, グテム]
+  difficulty: 1
+  note: "This asks how ぐらむ, a gram, is written: グラム."
+
+- id: n5-g2-0113
+  type: spelling
+  status: draft
+  word: プール
+  sentence: "がっこうの __ぷーる__は おおきいです。"
+  en: "The school's pool is big."
+  answer: プール
+  wrong: [ブール, プーノ, フール]
+  difficulty: 1
+  note: "This asks how ぷーる, a swimming pool, is written: プール."
+
+- id: n5-g2-0114
+  type: spelling
+  status: draft
+  word: 土曜日
+  sentence: "__どようび__に えいがを みます。"
+  en: "I'm going to see a film on Saturday."
+  answer: 土曜日
+  wrong: [士曜日, 土濯日, 上曜日]
+  difficulty: 1
+  note: "This asks how どようび, Saturday, is written: 土曜日."
+
+- id: n5-g2-0115
+  type: spelling
+  status: draft
+  word: 青い
+  sentence: "この __あおい__ ノートは だれのですか。"
+  en: "Whose is this blue notebook?"
+  answer: 青い
+  wrong: [晴い, 清い, 責い]
+  difficulty: 1
+  note: "This asks how あおい, blue, is written: 青い."
+
+- id: n5-g2-0116
+  type: spelling
+  status: draft
+  word: 開ける
+  sentence: "あついですから、まどを __あけます__。"
+  en: "It's hot, so I'll open the window."
+  answer: 開けます
+  wrong:
+    - option: 閉けます
+      why: "閉 is しめる, to close: the opposite. 開 has 开 inside the gate."
+    - option: 間けます
+      why: "間 has 日 inside the gate."
+    - option: 開きます
+      why: "開きます is read あきます. あけます takes け: 開けます."
+  difficulty: 2
+  note: "This asks how あけます is written: 開けます, from 開ける, to open."
+
+- id: n5-g2-0117
+  type: spelling
+  status: draft
+  word: シャワー
+  sentence: "この へやには __しゃわー__が ありません。"
+  en: "This room has no shower."
+  answer: シャワー
+  wrong:
+    - option: シヤワー
+      why: "しゃ has a small ャ."
+    - option: シャウー
+      why: "わ is ワ. ウ is う."
+    - option: ツャワー
+      why: "し is シ. ツ is つ."
+  difficulty: 2
+  note: "This asks how しゃわー, a shower, is written: シャワー."
+
+- id: n5-g2-0118
+  type: spelling
+  status: draft
+  word: コップ
+  sentence: "__こっぷ__に みずを いれて ください。"
+  en: "Please put some water in the glass."
+  answer: コップ
+  wrong:
+    - option: コツプ
+      why: "っ is a small ッ, not a full ツ."
+    - option: コッブ
+      why: "ぷ has a small circle: プ. ブ is ぶ."
+    - option: ユップ
+      why: "こ is コ. ユ is ゆ."
+  difficulty: 2
+  note: "This asks how こっぷ, a glass or cup, is written: コップ."
+
+- id: n5-g2-0119
+  type: spelling
+  status: draft
+  word: 天気
+  sentence: "あしたの __てんき__は どうですか。"
+  en: "What will the weather be like tomorrow?"
+  answer: 天気
+  wrong:
+    - option: 夫気
+      why: "夫 is おっと, a husband. Its top line is the longer one. 天 has a short top line."
+    - option: 天汽
+      why: "汽 has water, 氵, on the left. 気 has none."
+    - option: 大気
+      why: "大 is おおきい. 天 has one more line on top."
+  difficulty: 2
+  note: "This asks how てんき, the weather, is written: 天気."
+
+- id: n5-g2-0120
+  type: spelling
+  status: draft
+  word: 魚
+  sentence: "この __さかな__は おいしいです。"
+  en: "This fish is delicious."
+  answer: 魚
+  wrong:
+    - option: 角
+      why: "角 is かど, a corner. It has no four dots below."
+    - option: 黒
+      why: "黒 is くろ, black. It has 里 above the four dots."
+    - option: 漁
+      why: "漁 has water, 氵, on the left."
+  difficulty: 2
+  note: "This asks how さかな, a fish, is written: 魚."
+
+- id: n5-g2-0121
+  type: spelling
+  status: draft
+  word: カレンダー
+  sentence: "かべに __かれんだー__が あります。"
+  en: "There's a calendar on the wall."
+  answer: カレンダー
+  wrong:
+    - option: カレソダー
+      why: "ん is ン. ソ is そ."
+    - option: カレンター
+      why: "だ has two dots: ダ. タ is た."
+    - option: ガレンダー
+      why: "か has no dots: カ. ガ is が."
+  difficulty: 3
+  note: "This asks how かれんだー, a calendar, is written: カレンダー."
+
+- id: n5-g2-0122
+  type: spelling
+  status: draft
+  word: レコード
+  sentence: "ちちは よる __れこーど__を ききます。"
+  en: "My father listens to records in the evening."
+  answer: レコード
+  wrong:
+    - option: ロコード
+      why: "れ is レ. ロ is ろ."
+    - option: レユード
+      why: "こ is コ. ユ is ゆ."
+    - option: レコーボ
+      why: "ど is ド. ボ is ぼ."
+  difficulty: 2
+  note: "This asks how れこーど, a record, is written: レコード."

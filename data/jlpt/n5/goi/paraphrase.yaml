@@ -1191,3 +1191,170 @@
       why: "すんで いました is in the past: you no longer live there. すんで います is now."
   difficulty: 3
   note: "This asks what 3ねん すんで います means: you came three years ago and still live there."
+
+- id: n5-g4-0079
+  type: paraphrase
+  status: draft
+  sentence: "こちらは やまださんです。"
+  en: "This is Mr Yamada."
+  answer: "この ひとは やまださんです。"
+  wrong:
+    [
+      "あの ひとは やまださんです。",
+      "やまださんは ここに いません。",
+      "やまださんは あちらに います。"
+    ]
+  difficulty: 1
+  note: "This asks what こちら means when you introduce someone: this person, この ひと."
+
+- id: n5-g4-0080
+  type: paraphrase
+  status: draft
+  sentence: "あの かたは どなたですか。"
+  en: "Who is that person?"
+  answer: "あの ひとは だれですか。"
+  wrong:
+    [
+      "あの ひとは どこに いますか。",
+      "あの ひとは なんさいですか。",
+      "あの ひとは なにを して いますか。"
+    ]
+  difficulty: 1
+  note: "This asks what the polite words かた and どなた mean: かた is ひと, a person, and どなた is だれ, who."
+
+- id: n5-g4-0081
+  type: paraphrase
+  status: draft
+  sentence: "わたしは にほんごが すこし できます。"
+  en: "I can speak a little Japanese."
+  answer: "わたしは にほんごが すこし わかります。"
+  wrong:
+    [
+      "わたしは にほんごが よく わかります。",
+      "わたしは にほんごが わかりません。",
+      "わたしは えいごが すこし わかります。"
+    ]
+  difficulty: 1
+  note: "This asks what すこし できます means for a language: you understand a little, すこし わかります."
+
+- id: n5-g4-0082
+  type: paraphrase
+  status: draft
+  sentence: "いまから でかけます。"
+  en: "I'm going out now."
+  answer: "これから でかけます。"
+  wrong: ["きのう でかけました。", "あした でかけます。", "もう でかけません。"]
+  difficulty: 1
+  note: "This asks what いまから means: from now, これから."
+
+- id: n5-g4-0083
+  type: paraphrase
+  status: draft
+  sentence: "おじいさんは ことし 80さいです。"
+  en: "My grandfather is 80 this year."
+  answer: "ははの ちちは ことし 80さいです。"
+  wrong:
+    - option: "ははの あには ことし 80さいです。"
+      why: "ははの あに is your mother's older brother, an uncle: おじさん."
+    - option: "ちちの ははは ことし 80さいです。"
+      why: "ちちの はは is a grandmother: おばあさん."
+    - option: "ちちの おとうとは ことし 80さいです。"
+      why: "ちちの おとうと is an uncle: おじさん."
+  difficulty: 2
+  note: "This asks who おじいさん is: a grandfather, ははの ちち or ちちの ちち."
+
+- id: n5-g4-0084
+  type: paraphrase
+  status: draft
+  sentence: "りっぱな いえですね。"
+  en: "What a fine house!"
+  answer: "おおきくて きれいな いえですね。"
+  wrong:
+    - option: "せまい いえですね。"
+      why: "せまい is small inside. りっぱ is fine and grand."
+    - option: "きたない いえですね。"
+      why: "きたない is dirty. りっぱ is fine and grand."
+    - option: "やすい いえですね。"
+      why: "やすい is cheap. りっぱ is about how the house looks."
+  difficulty: 2
+  note: "This asks what りっぱ means: fine and grand, here おおきくて きれい."
+
+- id: n5-g4-0085
+  type: paraphrase
+  status: draft
+  sentence: "この まちには いろいろな くにの ひとが すんで います。"
+  en: "People from many different countries live in this town."
+  answer: "この まちには たくさんの くにの ひとが すんで います。"
+  wrong:
+    - option: "この まちには ひとつの くにの ひとだけ すんで います。"
+      why: "だけ means only. いろいろな くに is many countries."
+    - option: "この まちには ほかの くにの ひとが すんで いません。"
+      why: "This says nobody from another country lives there."
+    - option: "この まちには にほんの ひとが たくさん すんで います。"
+      why: "This says many Japanese people. いろいろな くに is many countries."
+  difficulty: 2
+  note: "This asks what いろいろな means: many kinds, here many countries, たくさんの くに."
+
+- id: n5-g4-0086
+  type: paraphrase
+  status: draft
+  sentence: "きのうは あめでしたから、そとへ でかけませんでした。"
+  en: "It rained yesterday, so I didn't go out."
+  answer: "きのうは あめでしたから、いちにち いえに いました。"
+  wrong:
+    - option: "きのうは いい てんきでしたから、いえに いました。"
+      why: "The sentence says it rained."
+    - option: "きのうは あめでしたが、そとへ でかけました。"
+      why: "This says you went out. The sentence says you didn't."
+    - option: "きのうは あめでしたから、そとで あそびました。"
+      why: "This says you played outside."
+  difficulty: 2
+  note: "This asks what not going out means: you stayed at home all day, いちにち いえに いました."
+
+- id: n5-g4-0087
+  type: paraphrase
+  status: draft
+  sentence: "しゅくだいを しました。それから、ほんを よみました。"
+  en: "I did my homework. After that, I read a book."
+  answer: "しゅくだいを してから、ほんを よみました。"
+  wrong:
+    - option: "ほんを よんでから、しゅくだいを しました。"
+      why: "This is the other order."
+    - option: "しゅくだいを しないで、ほんを よみました。"
+      why: "This says you did not do your homework."
+    - option: "しゅくだいを する まえに、ほんを よみました。"
+      why: "まえに is before. それから means after that."
+  difficulty: 3
+  note: "This asks what それから means: after that, the same as てから."
+
+- id: n5-g4-0088
+  type: paraphrase
+  status: draft
+  sentence: "わたしの へやは あねの へやより ひろいです。"
+  en: "My room is bigger than my older sister's."
+  answer: "あねの へやは わたしの へやより せまいです。"
+  wrong:
+    - option: "あねの へやは わたしの へやより ひろいです。"
+      why: "This is the other way round."
+    - option: "わたしの へやは あねの へやより せまいです。"
+      why: "This says your room is the smaller one."
+    - option: "わたしの へやと あねの へやは おなじです。"
+      why: "The sentence says one room is bigger."
+  difficulty: 3
+  note: "This asks for the same comparison from the other side: if your room is ひろい, your sister's is せまい."
+
+- id: n5-g4-0089
+  type: paraphrase
+  status: draft
+  sentence: "きのうは すいようびでした。"
+  en: "Yesterday was Wednesday."
+  answer: "あしたは きんようびです。"
+  wrong:
+    - option: "あしたは すいようびです。"
+      why: "Wednesday was yesterday, not tomorrow."
+    - option: "きょうは かようびです。"
+      why: "かようび, Tuesday, was the day before yesterday."
+    - option: "あしたは どようびです。"
+      why: "Yesterday was Wednesday, so today is Thursday and tomorrow is Friday, not Saturday."
+  difficulty: 3
+  note: "This asks you to count the days: yesterday was Wednesday, so tomorrow is Friday, きんようび."

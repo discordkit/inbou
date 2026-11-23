@@ -1885,3 +1885,171 @@
       why: "飯 is はん here, with no small circle."
   difficulty: 3
   note: "This asks the reading of 夕飯, the evening meal: ゆうはん. ゆうめし is another reading, so it is not among the options."
+
+- id: n5-g1-0125
+  type: kanji
+  status: draft
+  word: 西
+  sentence: "わたしの へやの まどは __西__に あります。"
+  en: "The window of my room faces west."
+  answer: にし
+  wrong: [にじ, にす, ひし]
+  difficulty: 1
+  note: "This asks the reading of 西, west: にし."
+
+- id: n5-g1-0126
+  type: kanji
+  status: draft
+  word: 赤い
+  sentence: "__赤い__ りんごを みっつ かいました。"
+  en: "I bought three red apples."
+  answer: あかい
+  wrong: [あがい, あけい, おかい]
+  difficulty: 1
+  note: "This asks the reading of 赤い, red: あかい."
+
+- id: n5-g1-0127
+  type: kanji
+  status: draft
+  word: お兄さん
+  sentence: "__お兄さん__は なんさいですか。"
+  en: "How old is your older brother?"
+  answer: おにいさん
+  wrong: [おにさん, おにんさん, おねえさん]
+  difficulty: 1
+  note: "This asks the reading of お兄さん, someone's older brother: おにいさん. おねえさん is an older sister."
+
+- id: n5-g1-0128
+  type: kanji
+  status: draft
+  word: 村
+  sentence: "おじいさんは ちいさな __村__に すんで います。"
+  en: "My grandfather lives in a small village."
+  answer: むら
+  wrong: [もら, むろ, みら]
+  difficulty: 1
+  note: "This asks the reading of 村, a village: むら."
+
+- id: n5-g1-0129
+  type: kanji
+  status: draft
+  word: 妹
+  sentence: "__妹__は まだ ろくさいです。"
+  en: "My younger sister is only six."
+  answer: いもうと
+  wrong: [いもと, おとうと, あね]
+  difficulty: 1
+  note: "This asks the reading of 妹, my younger sister: いもうと. おとうと is a younger brother and あね an older sister."
+
+- id: n5-g1-0130
+  type: kanji
+  status: draft
+  word: 男の子
+  sentence: "あの __男の子__は だれですか。"
+  en: "Who is that boy?"
+  answer: おとこのこ
+  wrong: [おどこのこ, おとこのひと, おとこのご]
+  difficulty: 1
+  note: "This asks the reading of 男の子, a boy: おとこのこ. おとこのひと is a man."
+
+- id: n5-g1-0131
+  type: kanji
+  status: draft
+  word: 五つ
+  sentence: "りんごを __五つ__ ください。"
+  en: "Five apples, please."
+  answer: いつつ
+  wrong:
+    - option: ごつ
+      why: "五 can be ご, but with つ it is いつつ."
+    - option: いっつ
+      why: "いつつ has no small っ."
+    - option: いづつ
+      why: "いつつ has no dakuten."
+  difficulty: 2
+  note: "This asks the reading of 五つ, five things: いつつ."
+
+- id: n5-g1-0132
+  type: kanji
+  status: draft
+  word: 茶わん
+  sentence: "あたらしい __茶わん__で ごはんを たべます。"
+  en: "I eat my rice from a new rice bowl."
+  answer: ちゃわん
+  wrong:
+    - option: ちやわん
+      why: "ちゃわん has a small ゃ."
+    - option: ちゃばん
+      why: "茶わん ends in わん, with わ."
+    - option: さわん
+      why: "茶 can be さ in some words, but 茶わん is ちゃわん."
+  difficulty: 2
+  note: "This asks the reading of 茶わん, a rice bowl: ちゃわん."
+
+- id: n5-g1-0133
+  type: kanji
+  status: draft
+  word: 言う
+  sentence: "せんせいは なんと __言いました__か。"
+  en: "What did the teacher say?"
+  answer: いいました
+  wrong:
+    - option: ゆいました
+      why: "言う sounds like ゆう, but it is written いう. So 言いました is いいました."
+    - option: げんいました
+      why: "言 can be げん in some longer words, but 言う is いう."
+    - option: いえました
+      why: "いえました would be 言えました, could say. Here 言 is followed by いました."
+  difficulty: 2
+  note: "This asks the reading of 言いました, from 言う, to say: いいました."
+
+- id: n5-g1-0134
+  type: kanji
+  status: draft
+  word: お手洗い
+  sentence: "__お手洗い__は にかいに あります。"
+  en: "The toilets are on the second floor."
+  answer: おてあらい
+  wrong:
+    - option: おてあれい
+      why: "洗い is あらい, with ら."
+    - option: おしゅあらい
+      why: "手 is て in this word."
+    - option: おてわらい
+      why: "洗い is あらい, with あ."
+  difficulty: 2
+  note: "This asks the reading of お手洗い, a toilet: おてあらい, from 手, hand, and 洗う, to wash."
+
+- id: n5-g1-0135
+  type: kanji
+  status: draft
+  word: 九つ
+  sentence: "この へやには いすが __九つ__ あります。"
+  en: "There are nine chairs in this room."
+  answer: ここのつ
+  wrong:
+    - option: きゅうつ
+      why: "九 can be きゅう, but with つ it is ここのつ."
+    - option: ここのっつ
+      why: "ここのつ has no small っ."
+    - option: こののつ
+      why: "ここのつ is ここ, then の, then つ."
+  difficulty: 3
+  note: "This asks the reading of 九つ, nine things: ここのつ."
+
+- id: n5-g1-0136
+  type: kanji
+  status: draft
+  word: 六日
+  sentence: "__六日__に ははが くにから きます。"
+  en: "My mother is coming from my home country on the 6th."
+  answer: むいか
+  wrong:
+    - option: ろくにち
+      why: "The 6th of the month has its own reading: むいか."
+    - option: むっか
+      why: "むいか has い, not a small っ."
+    - option: むいにち
+      why: "日 is か in むいか."
+  difficulty: 3
+  note: "This asks the reading of 六日, the 6th of the month: むいか."
