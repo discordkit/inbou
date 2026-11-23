@@ -1,0 +1,1871 @@
+# 問題2 表記 — the underlined word is in kana; choose how it is written, in kanji or katakana.
+#
+# The sentence is all kana, and the underlined word, `__like this__`, is the word to spell. `word` is the word's dictionary form as JMdict spells it. The build checks it against the N5 word list, and a test never asks the same word in 問題1 and 問題2. Original sentences only: never copy a published one.
+#
+# Distractors are look-alikes, as on the paper: a kanji with a similar shape (休 and 体, 名 and 各), the wrong okurigana, or katakana that differ by a stroke or a dakuten (ン and ソ, ボ and ポ). They need not be N5 kanji, because the student only has to reject them. Never use a real word with the same reading (はし: 橋 and 箸): that option would be right somewhere, and the build fails on it.
+#
+# A medium or hard question says why each wrong option is wrong (`- option: … why: …`): what the look-alike really is, so the student can tell the two apart next time. The build fails without them. The note is public at the reveal.
+
+- id: n5-g2-0001
+  type: spelling
+  status: reviewed
+  word: 水
+  sentence: "すみません、__みず__を ください。"
+  en: "Excuse me, may I have some water?"
+  answer: 水
+  wrong: [氷, 木, 火]
+  difficulty: 1
+  note: "This asks how みず is written: 水. 氷 is こおり (ice), 木 is き (a tree) and 火 is ひ (fire)."
+
+- id: n5-g2-0002
+  type: spelling
+  status: reviewed
+  word: 右
+  sentence: "__みぎ__の ドアから でて ください。"
+  en: "Please go out through the door on the right."
+  answer: 右
+  wrong:
+    - option: 左
+      why: "左 is ひだり, the other side. 右 has 口 at the bottom; 左 has 工."
+    - option: 石
+      why: "石 is いし, a stone."
+    - option: 名
+      why: "名 is the な of なまえ (a name)."
+  difficulty: 2
+  note: "This asks how みぎ is written: 右. Its partner 左 (ひだり) differs only at the bottom."
+
+- id: n5-g2-0003
+  type: spelling
+  status: reviewed
+  word: ボールペン
+  sentence: "この __ぼーるぺん__で かいて ください。"
+  en: "Please write with this ballpoint pen."
+  answer: ボールペン
+  wrong:
+    - option: ボールペソ
+      why: "The last letter is ン (n). ソ (so) looks like it, but its long stroke goes down from the top."
+    - option: ポールペン
+      why: "ぼ has a dakuten, so it is ボ. ポ, with the small circle, is ぽ."
+    - option: ボーレペン
+      why: "る is ル. レ is れ."
+  difficulty: 2
+  note: "This asks how ぼーるぺん is written: ボールペン. Words from other languages are written in katakana."
+
+- id: n5-g2-0004
+  type: spelling
+  status: reviewed
+  word: 名前
+  sentence: "ここに __なまえ__を かいて ください。"
+  en: "Please write your name here."
+  answer: 名前
+  wrong:
+    - option: 各前
+      why: "The first kanji is 名 (な). 各 (かく, each) has a different top."
+    - option: 名部
+      why: "The second kanji is 前 (まえ). 部 is ぶ, a part or a club."
+    - option: 各部
+      why: "Neither kanji is right: なまえ is 名 and 前."
+  difficulty: 2
+  note: "This asks how なまえ is written: 名前, the な of 名 and the まえ of 前."
+
+- id: n5-g2-0005
+  type: spelling
+  status: reviewed
+  word: 電車
+  sentence: "まいあさ __でんしゃ__で かいしゃへ いきます。"
+  en: "I go to work by train every morning."
+  answer: 電車
+  wrong:
+    - option: 雷車
+      why: "雷 is かみなり, thunder: 田 under the rain. 電 has 申 under the rain, with a long tail."
+    - option: 電東
+      why: "The second kanji is 車 (くるま). 東 is ひがし, east."
+    - option: 雷東
+      why: "Both kanji are look-alikes. でんしゃ is 電, with 申 under the rain, and 車."
+  difficulty: 3
+  note: "This asks how でんしゃ is written: 電車. 電 is electricity, and 車 a vehicle."
+
+- id: n5-g2-0006
+  type: spelling
+  status: reviewed
+  word: 新しい
+  sentence: "きのう __あたらしい__ くつを かいました。"
+  en: "I bought new shoes yesterday."
+  answer: 新しい
+  wrong:
+    - option: 親しい
+      why: "親しい is したしい, close (as friends are). 親 has 見 on the right; 新 has 斤."
+    - option: 新い
+      why: "The kanji is right, but あたらしい keeps しい after it: 新しい."
+    - option: 薪しい
+      why: "薪 is たきぎ, firewood: 新 with grass on top. There is no such word."
+  difficulty: 3
+  note: "This asks how あたらしい is written: 新しい, with しい after the kanji."
+
+- id: n5-g2-0007
+  type: spelling
+  status: reviewed
+  word: 山
+  sentence: "たかい __やま__に のぼりました。"
+  en: "I climbed a high mountain."
+  answer: 山
+  wrong: [川, 木, 森]
+  difficulty: 1
+  note: "This asks how やま, a mountain, is written: 山. 川 is a river, 木 a tree and 森 a forest."
+
+- id: n5-g2-0008
+  type: spelling
+  status: reviewed
+  word: 花
+  sentence: "こうえんに きれいな __はな__が さいて います。"
+  en: "Pretty flowers are blooming in the park."
+  answer: 花
+  wrong: [茶, 英, 化]
+  difficulty: 1
+  note: "This asks how はな, a flower, is written: 花. 茶 is tea, 英 is the えい of えいご, and 化 means to change."
+
+- id: n5-g2-0009
+  type: spelling
+  status: reviewed
+  word: 口
+  sentence: "__くち__を おおきく あけて ください。"
+  en: "Please open your mouth wide."
+  answer: 口
+  wrong: [日, 田, 回]
+  difficulty: 1
+  note: "This asks how くち, a mouth, is written: 口. 日 is the sun or a day, 田 a rice field, and 回 a time, as in いっかい."
+
+- id: n5-g2-0010
+  type: spelling
+  status: reviewed
+  word: 兄
+  sentence: "わたしの __あに__は いしゃです。"
+  en: "My older brother is a doctor."
+  answer: 兄
+  wrong: [弟, 姉, 妹]
+  difficulty: 1
+  note: "This asks how あに, my older brother, is written: 兄. 弟 is a younger brother, 姉 an older sister and 妹 a younger sister."
+
+- id: n5-g2-0011
+  type: spelling
+  status: reviewed
+  word: 目
+  sentence: "__め__が あかいですね。"
+  en: "Your eyes are red."
+  answer: 目
+  wrong:
+    - option: 自
+      why: "自 is the じ of じぶん (yourself): 目 with a short stroke on top."
+    - option: 日
+      why: "日 is the sun or a day: one line inside, not two."
+    - option: 月
+      why: "月 is the moon or a month: its left side is a long curve."
+  difficulty: 2
+  note: "This asks how め, an eye, is written: 目, a box with two lines inside."
+
+- id: n5-g2-0012
+  type: spelling
+  status: reviewed
+  word: 人
+  sentence: "あそこに いる __ひと__は だれですか。"
+  en: "Who is the person over there?"
+  answer: 人
+  wrong:
+    - option: 入
+      why: "入 means to enter. It mirrors 人: in 入 the stroke on the right is the long one."
+    - option: 八
+      why: "八 is eight: two strokes that do not touch."
+    - option: 大
+      why: "大 means big: 人 with a line across it."
+  difficulty: 2
+  note: "This asks how ひと, a person, is written: 人."
+
+- id: n5-g2-0013
+  type: spelling
+  status: reviewed
+  word: テレビ
+  sentence: "まいばん __てれび__で ニュースを みます。"
+  en: "I watch the news on TV every evening."
+  answer: テレビ
+  wrong:
+    - option: テレピ
+      why: "び has a dakuten, so it is ビ. ピ, with the small circle, is ぴ."
+    - option: デレビ
+      why: "て has no dakuten: テ. デ is で."
+    - option: テレヒ
+      why: "び has a dakuten: ビ. ヒ is ひ."
+  difficulty: 2
+  note: "This asks how てれび is written. Words from other languages are written in katakana: テレビ."
+
+- id: n5-g2-0014
+  type: spelling
+  status: reviewed
+  word: 休む
+  sentence: "あたまが いたいですから、がっこうを __やすみます__。"
+  en: "I have a headache, so I will stay home from school."
+  answer: 休みます
+  wrong:
+    - option: 体みます
+      why: "体 is the body. 休 has a person beside a tree."
+    - option: 林みます
+      why: "林 is a wood: two trees and no person."
+    - option: 木みます
+      why: "木 is a tree. やすむ adds a person beside it: 休."
+  difficulty: 2
+  note: "This asks how やすみます is written: 休みます, a person resting by a tree."
+
+- id: n5-g2-0015
+  type: spelling
+  status: reviewed
+  word: 本
+  sentence: "としょかんで __ほん__を 3さつ かりました。"
+  en: "I borrowed three books from the library."
+  answer: 本
+  wrong:
+    - option: 木
+      why: "木 is a tree. 本 is a tree with a short line near its foot."
+    - option: 末
+      why: "末 is the end: a tree with a long line on top. 本 has its short line near the bottom."
+    - option: 未
+      why: "未 is not yet: a tree with a short line on top. 本 has its short line near the bottom."
+  difficulty: 2
+  note: "This asks how ほん, a book, is written: 本, a tree with a short line near its foot."
+
+- id: n5-g2-0016
+  type: spelling
+  status: reviewed
+  word: 耳
+  sentence: "ねこの __みみ__は おおきいですね。"
+  en: "The cat has big ears."
+  answer: 耳
+  wrong:
+    - option: 取
+      why: "取 means to take: 耳 with a hand beside it."
+    - option: 早
+      why: "早 means early: the sun over a cross."
+    - option: 自
+      why: "自 is the じ of じぶん. 耳 has a long stroke out to the right at the bottom."
+  difficulty: 2
+  note: "This asks how みみ, an ear, is written: 耳."
+
+- id: n5-g2-0017
+  type: spelling
+  status: reviewed
+  word: 午後
+  sentence: "__ごご__ さんじに えきで あいましょう。"
+  en: "Let's meet at the station at three in the afternoon."
+  answer: 午後
+  wrong:
+    - option: 牛後
+      why: "牛 is a cow: its middle line goes through the top. In 午 it does not."
+    - option: 午役
+      why: "役 is a role, read やく. 後 has 幺 and 夂 on the right."
+    - option: 牛役
+      why: "Neither kanji is right: ごご is 午, with no line through the top, and 後."
+  difficulty: 3
+  note: "This asks how ごご, the afternoon, is written: 午後. 午 is noon, and 後 after."
+
+- id: n5-g2-0018
+  type: spelling
+  status: reviewed
+  word: 話す
+  sentence: "ともだちと にほんごで __はなします__。"
+  en: "I talk with my friends in Japanese."
+  answer: 話します
+  wrong:
+    - option: 語します
+      why: "語 is the ご of にほんご, a language. 話 has 舌, the tongue, on the right."
+    - option: 詰します
+      why: "詰 means to pack. 話 has 舌 on the right, not 吉."
+    - option: 話なします
+      why: "話 already says はな, so only します follows: 話します."
+  difficulty: 3
+  note: "This asks how はなします is written: 話します, with 舌, the tongue, on the right."
+
+- id: n5-g2-0019
+  type: spelling
+  status: reviewed
+  word: 図書館
+  sentence: "__としょかん__は なんじまで あいて いますか。"
+  en: "Until what time is the library open?"
+  answer: 図書館
+  wrong:
+    - option: 図書官
+      why: "官 is an official, with no 食 on the left. A building such as a library is 館."
+    - option: 区書館
+      why: "区 is a ward of a city. と is 図."
+    - option: 図昼館
+      why: "昼 is noon. しょ is 書, writing."
+  difficulty: 3
+  note: "This asks how としょかん, a library, is written: 図書館, a building (館) of books (図書)."
+
+- id: n5-g2-0020
+  type: spelling
+  status: reviewed
+  word: お金
+  sentence: "さいふに __おかね__が ありません。"
+  en: "There's no money in my wallet."
+  answer: お金
+  wrong: [お茶, お米, お酒]
+  difficulty: 1
+  note: "This asks how おかね, money, is written: お金. お茶 is tea, お米 rice and お酒 sake."
+
+- id: n5-g2-0021
+  type: spelling
+  status: reviewed
+  word: 風
+  sentence: "きょうは __かぜ__が つよいですね。"
+  en: "The wind is strong today, isn't it?"
+  answer: 風
+  wrong: [雨, 雪, 雲]
+  difficulty: 1
+  note: "This asks how かぜ, the wind, is written: 風. 雨 is rain, 雪 snow and 雲 a cloud."
+
+- id: n5-g2-0022
+  type: spelling
+  status: reviewed
+  word: 前
+  sentence: "えきの __まえ__で まって います。"
+  en: "I'm waiting in front of the station."
+  answer: 前
+  wrong: [後, 上, 中]
+  difficulty: 1
+  note: "This asks how まえ, in front, is written: 前. 後 is behind or after, 上 above and 中 inside."
+
+- id: n5-g2-0023
+  type: spelling
+  status: reviewed
+  word: 家
+  sentence: "あたらしい __いえ__に すんで います。"
+  en: "I live in a new house."
+  answer: 家
+  wrong: [店, 駅, 寺]
+  difficulty: 1
+  note: "This asks how いえ, a house, is written: 家. 店 is a shop, 駅 a station and 寺 a temple."
+
+- id: n5-g2-0024
+  type: spelling
+  status: reviewed
+  word: 道
+  sentence: "この __みち__を まっすぐ いって ください。"
+  en: "Please go straight along this road."
+  answer: 道
+  wrong:
+    - option: 首
+      why: "首 is the neck. 道 has 首 inside, with a long stroke running under it."
+    - option: 通
+      why: "通 means to pass through. Its inside is different: not 首."
+    - option: 近
+      why: "近 means near: 斤 inside, not 首."
+  difficulty: 2
+  note: "This asks how みち, a road, is written: 道, 首 with a long stroke under it."
+
+- id: n5-g2-0025
+  type: spelling
+  status: reviewed
+  word: 秋
+  sentence: "__あき__に きょうとへ いきました。"
+  en: "I went to Kyoto in the autumn."
+  answer: 秋
+  wrong:
+    - option: 科
+      why: "科 is a subject of study. 秋 has 火, fire, on the right."
+    - option: 私
+      why: "私 is わたし: 禾 with ム on the right."
+    - option: 和
+      why: "和 means Japanese style: 禾 with 口 on the right."
+  difficulty: 2
+  note: "This asks how あき, autumn, is written: 秋, 禾 with 火 on the right."
+
+- id: n5-g2-0026
+  type: spelling
+  status: reviewed
+  word: 新聞
+  sentence: "ちちは まいあさ __しんぶん__を よみます。"
+  en: "My father reads the newspaper every morning."
+  answer: 新聞
+  wrong:
+    - option: 新間
+      why: "間 means between: 門 with 日 inside. 聞 has 耳, an ear, inside."
+    - option: 親聞
+      why: "親 is a parent. しん here is 新, new."
+    - option: 新問
+      why: "問 is a question: 門 with 口 inside. 聞 has 耳 inside."
+  difficulty: 2
+  note: "This asks how しんぶん is written: 新聞, new (新) things heard (聞)."
+
+- id: n5-g2-0027
+  type: spelling
+  status: reviewed
+  word: 映画
+  sentence: "にちようびに __えいが__を みました。"
+  en: "I saw a film on Sunday."
+  answer: 映画
+  wrong:
+    - option: 英画
+      why: "英 is the えい of えいご. In えいが it is 映, with 日 on the left."
+    - option: 映面
+      why: "面 is a face or a surface. が is 画, a picture."
+    - option: 央画
+      why: "央 is the middle. 映 adds 日 on its left."
+  difficulty: 2
+  note: "This asks how えいが, a film, is written: 映画, a picture (画) that is shown (映)."
+
+- id: n5-g2-0028
+  type: spelling
+  status: reviewed
+  word: 歩く
+  sentence: "えきまで __あるきます__。"
+  en: "I'll walk to the station."
+  answer: 歩きます
+  wrong:
+    - option: 走きます
+      why: "走 is to run, はしる. あるく is 歩."
+    - option: 少きます
+      why: "少 is a little, すこし. 歩 has 止 on top."
+    - option: 止きます
+      why: "止 is to stop, とまる. 歩 adds a part under it."
+  difficulty: 2
+  note: "This asks how あるきます is written: 歩きます."
+
+- id: n5-g2-0029
+  type: spelling
+  status: reviewed
+  word: 電気
+  sentence: "へやの __でんき__を けして ください。"
+  en: "Please turn off the light in the room."
+  answer: 電気
+  wrong:
+    - option: 電汽
+      why: "汽 is steam: 気 with water on the left. き here is 気."
+    - option: 雷気
+      why: "雷 is thunder: 田 under the rain. 電 has 申 under the rain."
+    - option: 雷汽
+      why: "Neither kanji is right: でんき is 電 and 気."
+  difficulty: 2
+  note: "This asks how でんき, electricity or a light, is written: 電気."
+
+- id: n5-g2-0030
+  type: spelling
+  status: reviewed
+  word: 病院
+  sentence: "__びょういん__は えきの まえに あります。"
+  en: "The hospital is in front of the station."
+  answer: 病院
+  wrong:
+    - option: 病完
+      why: "完 means complete. いん here is 院, a building, with ⻖ on the left."
+    - option: 疲院
+      why: "疲 means tired. びょう is 病, with 丙 inside the frame."
+    - option: 疲完
+      why: "Neither kanji is right: びょういん is 病 and 院."
+  difficulty: 3
+  note: "This asks how びょういん, a hospital, is written: 病院, a building (院) for illness (病)."
+
+- id: n5-g2-0031
+  type: spelling
+  status: reviewed
+  word: 勉強
+  sentence: "まいばん にほんごを __べんきょう__します。"
+  en: "I study Japanese every evening."
+  answer: 勉強
+  wrong:
+    - option: 免強
+      why: "免 means to excuse. 勉 adds 力, strength, on the right."
+    - option: 勉弱
+      why: "弱 is weak, the opposite of 強."
+    - option: 勤強
+      why: "勤 is to work at a job. べん is 勉."
+  difficulty: 3
+  note: "This asks how べんきょう, study, is written: 勉強."
+
+- id: n5-g2-0032
+  type: spelling
+  status: reviewed
+  word: 起きる
+  sentence: "まいあさ 6じに __おきます__。"
+  en: "I get up at six every morning."
+  answer: 起きます
+  wrong:
+    - option: 記きます
+      why: "記 means to write down, with 言 on the left. 起 has 走 on the left."
+    - option: 走きます
+      why: "走 is to run. 起 has 走 on the left with 己 beside it."
+    - option: 起ます
+      why: "おきます keeps き after the kanji: 起きます."
+  difficulty: 3
+  note: "This asks how おきます is written: 起きます."
+
+- id: n5-g2-0033
+  type: spelling
+  status: reviewed
+  word: 外
+  sentence: "__そと__は さむいですよ。"
+  en: "It's cold outside."
+  answer: 外
+  wrong: [中, 上, 下]
+  difficulty: 1
+  note: "This asks how そと, outside, is written: 外. 中 is inside, 上 above and 下 below."
+
+- id: n5-g2-0034
+  type: spelling
+  status: reviewed
+  word: 夜
+  sentence: "__よる__ おそく ねました。"
+  en: "I went to bed late at night."
+  answer: 夜
+  wrong: [夕, 晩, 昨]
+  difficulty: 1
+  note: "This asks how よる, night, is written: 夜. 夕 is early evening, 晩 the evening, and 昨 means last, as in last night."
+
+- id: n5-g2-0035
+  type: spelling
+  status: reviewed
+  word: 金曜日
+  sentence: "__きんようび__に あいましょう。"
+  en: "Let's meet on Friday."
+  answer: 金曜日
+  wrong: [土曜日, 木曜日, 月曜日]
+  difficulty: 1
+  note: "This asks how きんようび, Friday, is written: 金曜日. 土曜日 is Saturday, 木曜日 Thursday and 月曜日 Monday."
+
+- id: n5-g2-0036
+  type: spelling
+  status: reviewed
+  word: 女
+  sentence: "あの __おんな__の ひとは だれですか。"
+  en: "Who is that woman?"
+  answer: 女
+  wrong: [男, 子, 母]
+  difficulty: 1
+  note: "This asks how おんな, a woman, is written: 女. 男 is a man, 子 a child and 母 a mother."
+
+- id: n5-g2-0037
+  type: spelling
+  status: reviewed
+  word: 少し
+  sentence: "__すこし__ まって ください。"
+  en: "Please wait a moment."
+  answer: 少し
+  wrong:
+    - option: 小し
+      why: "小 is small, as in ちいさい. 少 has a slanting stroke at the bottom."
+    - option: 多し
+      why: "多 is many, as in おおい: the opposite."
+    - option: 少こし
+      why: "すこし keeps only し after the kanji: 少し."
+  difficulty: 2
+  note: "This asks how すこし, a little, is written: 少し."
+
+- id: n5-g2-0038
+  type: spelling
+  status: reviewed
+  word: ご飯
+  sentence: "いっしょに __ごはん__を たべませんか。"
+  en: "Shall we eat together?"
+  answer: ご飯
+  wrong:
+    - option: ご飲
+      why: "飲 is to drink, のむ: 欠 on the right. 飯 has 反."
+    - option: ご館
+      why: "館 is a building, as in としょかん: 官 on the right."
+    - option: ご版
+      why: "版 is a printing block: 片 on the left. 飯 has 食 on the left."
+  difficulty: 2
+  note: "This asks how ごはん, a meal or rice, is written: ご飯, with 食, food, on the left."
+
+- id: n5-g2-0039
+  type: spelling
+  status: reviewed
+  word: 安い
+  sentence: "この みせの パンは __やすい__です。"
+  en: "The bread at this shop is cheap."
+  answer: 安い
+  wrong:
+    - option: 女い
+      why: "女 is a woman. 安 adds a roof on top."
+    - option: 字い
+      why: "字 is a letter: 子 under the roof, not 女."
+    - option: 安すい
+      why: "やすい keeps only い after the kanji: 安い."
+  difficulty: 2
+  note: "This asks how やすい, cheap, is written: 安い, 女 under a roof."
+
+- id: n5-g2-0040
+  type: spelling
+  status: reviewed
+  word: 会う
+  sentence: "えきで ともだちに __あいます__。"
+  en: "I'm meeting a friend at the station."
+  answer: 会います
+  wrong:
+    - option: 今います
+      why: "今 is いま, now. 会 has 云 under its roof."
+    - option: 公います
+      why: "公 means public. 会 has a roof on top."
+    - option: 会ます
+      why: "あいます keeps い after the kanji: 会います."
+  difficulty: 2
+  note: "This asks how あいます, to meet someone, is written: 会います."
+
+- id: n5-g2-0041
+  type: spelling
+  status: reviewed
+  word: 寒い
+  sentence: "きょうは とても __さむい__です。"
+  en: "It is very cold today."
+  answer: 寒い
+  wrong:
+    - option: 寒むい
+      why: "さむい keeps only い after the kanji: 寒い."
+    - option: 暑い
+      why: "暑い is あつい, hot: the opposite."
+    - option: 実い
+      why: "実 is a fruit or a seed. Its inside is different from 寒."
+  difficulty: 2
+  note: "This asks how さむい, cold (for weather), is written: 寒い."
+
+- id: n5-g2-0042
+  type: spelling
+  status: reviewed
+  word: 飲む
+  sentence: "まいあさ コーヒーを __のみます__。"
+  en: "I drink coffee every morning."
+  answer: 飲みます
+  wrong:
+    - option: 飯みます
+      why: "飯 is cooked rice, as in ごはん: 反 on the right, not 欠."
+    - option: 食みます
+      why: "食 is to eat, たべる. のむ is 飲, with 欠 on the right."
+    - option: 飲ます
+      why: "のみます keeps み after the kanji: 飲みます."
+  difficulty: 2
+  note: "This asks how のみます is written: 飲みます, with 欠 on the right."
+
+- id: n5-g2-0043
+  type: spelling
+  status: reviewed
+  word: 質問
+  sentence: "せんせいに __しつもん__を しました。"
+  en: "I asked the teacher a question."
+  answer: 質問
+  wrong:
+    - option: 質間
+      why: "間 is between: 日 inside the gate. 問 has 口 inside."
+    - option: 貿問
+      why: "貿 is trade. 質 has two 斤 on top."
+    - option: 質門
+      why: "門 is a gate. A question is 問, with 口 inside the gate."
+  difficulty: 3
+  note: "This asks how しつもん, a question, is written: 質問, with 口, a mouth, inside the gate."
+
+- id: n5-g2-0044
+  type: spelling
+  status: reviewed
+  word: 洗う
+  sentence: "ごはんの まえに てを __あらいます__。"
+  en: "I wash my hands before eating."
+  answer: 洗います
+  wrong:
+    - option: 先います
+      why: "先 is さき, ahead. 洗 adds water on the left."
+    - option: 流います
+      why: "流 means to flow. 洗 has 先 on the right."
+    - option: 洗らいます
+      why: "あらいます keeps only います after the kanji: 洗います."
+  difficulty: 3
+  note: "This asks how あらいます, to wash, is written: 洗います, water beside 先."
+
+- id: n5-g2-0045
+  type: spelling
+  status: reviewed
+  word: 好き
+  sentence: "わたしは ねこが __すき__です。"
+  en: "I like cats."
+  answer: 好き
+  wrong:
+    - option: 如き
+      why: "如 means like or as: 口 on the right, not 子."
+    - option: 好すき
+      why: "すき keeps only き after the kanji: 好き."
+    - option: 姉き
+      why: "姉 is an older sister: 市 on the right, not 子."
+  difficulty: 3
+  note: "This asks how すき is written: 好き, 女 beside 子."
+
+- id: n5-g2-0046
+  type: spelling
+  status: reviewed
+  word: 手紙
+  sentence: "ははに __てがみ__を かきました。"
+  en: "I wrote a letter to my mother."
+  answer: 手紙
+  wrong: [切手, 手帳, 手袋]
+  difficulty: 1
+  note: "This asks how てがみ, a letter, is written: 手紙, hand and paper. 切手 is a stamp, 手帳 a notebook and 手袋 gloves."
+
+- id: n5-g2-0047
+  type: spelling
+  status: reviewed
+  word: 食べ物
+  sentence: "すきな __たべもの__は なんですか。"
+  en: "What food do you like?"
+  answer: 食べ物
+  wrong: [飲み物, 着物, 果物]
+  difficulty: 1
+  note: "This asks how たべもの, food, is written: 食べ物. 飲み物 is a drink, 着物 a kimono and 果物 fruit."
+
+- id: n5-g2-0048
+  type: spelling
+  status: reviewed
+  word: 洋服
+  sentence: "デパートで あたらしい __ようふく__を かいました。"
+  en: "I bought new clothes at the department store."
+  answer: 洋服
+  wrong: [和服, 洋食, 衣服]
+  difficulty: 1
+  note: "This asks how ようふく, Western clothes, is written: 洋服. 和服 is Japanese dress, 洋食 Western food and 衣服 clothing in general, read いふく."
+
+- id: n5-g2-0049
+  type: spelling
+  status: reviewed
+  word: 去年
+  sentence: "__きょねん__ にほんへ きました。"
+  en: "I came to Japan last year."
+  answer: 去年
+  wrong: [今年, 来年, 毎年]
+  difficulty: 1
+  note: "This asks how きょねん, last year, is written: 去年. 今年 is this year, 来年 next year and 毎年 every year."
+
+- id: n5-g2-0050
+  type: spelling
+  status: reviewed
+  word: 薬
+  sentence: "かぜを ひきましたから、__くすり__を のみました。"
+  en: "I caught a cold, so I took some medicine."
+  answer: 薬
+  wrong:
+    - option: 楽
+      why: "楽 is fun, as in たのしい. 薬 adds grass on top."
+    - option: 葉
+      why: "葉 is a leaf. 薬 has 楽 under the grass."
+    - option: 茶
+      why: "茶 is tea. 薬 has 楽 under the grass."
+  difficulty: 2
+  note: "This asks how くすり, medicine, is written: 薬, 楽 under grass (艹)."
+
+- id: n5-g2-0051
+  type: spelling
+  status: reviewed
+  word: 池
+  sentence: "こうえんの __いけ__に さかなが います。"
+  en: "There are fish in the pond in the park."
+  answer: 池
+  wrong:
+    - option: 地
+      why: "地 is the ground, with 土 on the left. 池 has water on the left."
+    - option: 他
+      why: "他 means other, with a person on the left."
+    - option: 治
+      why: "治 is to cure: water on the left, but 台 on the right."
+  difficulty: 2
+  note: "This asks how いけ, a pond, is written: 池, with water (氵) on the left."
+
+- id: n5-g2-0052
+  type: spelling
+  status: reviewed
+  word: 歌
+  sentence: "すきな __うた__を うたって ください。"
+  en: "Please sing a song you like."
+  answer: 歌
+  wrong:
+    - option: 欠
+      why: "欠 means lacking. 歌 has 哥 on its left."
+    - option: 哥
+      why: "哥 is only part of this kanji. 歌 adds 欠 on the right."
+    - option: 欲
+      why: "欲 means to want, with 谷 on the left."
+  difficulty: 2
+  note: "This asks how うた, a song, is written: 歌."
+
+- id: n5-g2-0053
+  type: spelling
+  status: reviewed
+  word: 自動車
+  sentence: "ちちは __じどうしゃ__の かいしゃで はたらいて います。"
+  en: "My father works for a car company."
+  answer: 自動車
+  wrong:
+    - option: 自転車
+      why: "自転車 is じてんしゃ, a bicycle: 転, turning, not 動, moving."
+    - option: 自働車
+      why: "働 is to work, with a person on the left. どう here is 動, moving."
+    - option: 自動者
+      why: "者 is a person. しゃ here is 車, a vehicle."
+  difficulty: 2
+  note: "This asks how じどうしゃ, a car, is written: 自動車, a vehicle (車) that moves (動) by itself (自)."
+
+- id: n5-g2-0054
+  type: spelling
+  status: reviewed
+  word: 近い
+  sentence: "えきは ここから __ちかい__です。"
+  en: "The station is close to here."
+  answer: 近い
+  wrong:
+    - option: 遠い
+      why: "遠い is とおい, far: the opposite."
+    - option: 近かい
+      why: "ちかい keeps only い after the kanji: 近い."
+    - option: 返い
+      why: "返 is to return: 反 inside, not 斤."
+  difficulty: 2
+  note: "This asks how ちかい, near, is written: 近い."
+
+- id: n5-g2-0055
+  type: spelling
+  status: reviewed
+  word: 重い
+  sentence: "この かばんは とても __おもい__です。"
+  en: "This bag is very heavy."
+  answer: 重い
+  wrong:
+    - option: 軽い
+      why: "軽い is かるい, light: the opposite."
+    - option: 動い
+      why: "動 is to move: 重 with 力 on the right."
+    - option: 重もい
+      why: "おもい keeps only い after the kanji: 重い."
+  difficulty: 2
+  note: "This asks how おもい, heavy, is written: 重い."
+
+- id: n5-g2-0056
+  type: spelling
+  status: reviewed
+  word: 教える
+  sentence: "せんせいが にほんごを __おしえます__。"
+  en: "The teacher teaches Japanese."
+  answer: 教えます
+  wrong:
+    - option: 孝えます
+      why: "孝 is respect for parents. 教 adds 攵 on the right."
+    - option: 救えます
+      why: "救 is to rescue: 求 on the left. 教 has 孝 on the left."
+    - option: 教しえます
+      why: "おしえます keeps only えます after the kanji: 教えます."
+  difficulty: 3
+  note: "This asks how おしえます, to teach, is written: 教えます."
+
+- id: n5-g2-0057
+  type: spelling
+  status: reviewed
+  word: 借りる
+  sentence: "としょかんで ほんを __かります__。"
+  en: "I borrow books from the library."
+  answer: 借ります
+  wrong:
+    - option: 貸ります
+      why: "貸 is かす, to lend: the other way round."
+    - option: 措ります
+      why: "措 has a hand (扌) on the left. 借 has a person (亻)."
+    - option: 昔ります
+      why: "昔 is long ago. 借 adds a person on the left."
+  difficulty: 3
+  note: "This asks how かります, to borrow, is written: 借ります, a person beside 昔."
+
+- id: n5-g2-0058
+  type: spelling
+  status: reviewed
+  word: 働く
+  sentence: "あには ぎんこうで __はたらいて__ います。"
+  en: "My older brother works at a bank."
+  answer: 働いて
+  wrong:
+    - option: 動いて
+      why: "動 is to move. 働 adds a person on the left."
+    - option: 働らいて
+      why: "はたらいて keeps only いて after the kanji: 働いて."
+    - option: 億いて
+      why: "億 is a hundred million: 意 beside a person."
+  difficulty: 3
+  note: "This asks how はたらいて is written: 働いて, a person (亻) beside 動."
+
+- id: n5-g2-0059
+  type: spelling
+  status: reviewed
+  word: ギター
+  sentence: "あには __ぎたー__を ひきます。"
+  en: "My older brother plays the guitar."
+  answer: ギター
+  wrong:
+    - option: キター
+      why: "ぎ has a dakuten: ギ."
+    - option: ギダー
+      why: "た has no dakuten: タ."
+    - option: ギタ
+      why: "たー is long, so it ends with ー: ター."
+  difficulty: 1
+  note: "This asks how ぎたー is written. Words from other languages are written in katakana: ギター."
+
+- id: n5-g2-0060
+  type: spelling
+  status: reviewed
+  word: スカート
+  sentence: "あかい __すかーと__を はきます。"
+  en: "I'll wear a red skirt."
+  answer: スカート
+  wrong:
+    - option: ヌカート
+      why: "す is ス. ヌ, with a crossing stroke, is ぬ."
+    - option: スカード
+      why: "と has no dakuten: ト."
+    - option: スカト
+      why: "かー is long, so it is followed by ー: カー."
+  difficulty: 1
+  note: "This asks how すかーと, a skirt, is written: スカート."
+
+- id: n5-g2-0061
+  type: spelling
+  status: reviewed
+  word: ホテル
+  sentence: "えきの まえに __ほてる__が あります。"
+  en: "There is a hotel in front of the station."
+  answer: ホテル
+  wrong:
+    - option: ホテレ
+      why: "る is ル. レ is れ."
+    - option: ポテル
+      why: "ほ has no small circle: ホ."
+    - option: ホデル
+      why: "て has no dakuten: テ."
+  difficulty: 1
+  note: "This asks how ほてる, a hotel, is written: ホテル."
+
+- id: n5-g2-0062
+  type: spelling
+  status: reviewed
+  word: タクシー
+  sentence: "えきから __たくしー__で いきました。"
+  en: "I went from the station by taxi."
+  answer: タクシー
+  wrong:
+    - option: タケシー
+      why: "く is ク. ケ is け."
+    - option: タクツー
+      why: "し is シ, its strokes rising from the left. ツ is つ."
+    - option: ダクシー
+      why: "た has no dakuten: タ."
+  difficulty: 1
+  note: "This asks how たくしー, a taxi, is written: タクシー."
+
+- id: n5-g2-0063
+  type: spelling
+  status: reviewed
+  word: スプーン
+  sentence: "__すぷーん__で スープを のみます。"
+  en: "I eat soup with a spoon."
+  answer: スプーン
+  wrong:
+    - option: ヌプーン
+      why: "す is ス. ヌ, with a crossing stroke, is ぬ."
+    - option: スブーン
+      why: "ぷ has the small circle: プ. ブ is ぶ."
+    - option: スプーソ
+      why: "The last letter is ン. ソ is そ."
+  difficulty: 2
+  note: "This asks how すぷーん, a spoon, is written: スプーン."
+
+- id: n5-g2-0064
+  type: spelling
+  status: reviewed
+  word: ネクタイ
+  sentence: "ちちは まいにち __ねくたい__を します。"
+  en: "My father wears a tie every day."
+  answer: ネクタイ
+  wrong:
+    - option: ネケタイ
+      why: "く is ク. ケ is け."
+    - option: ネクダイ
+      why: "た has no dakuten: タ."
+    - option: ネタクイ
+      why: "The order is ね・く・た・い: ネクタイ."
+  difficulty: 2
+  note: "This asks how ねくたい, a necktie, is written: ネクタイ."
+
+- id: n5-g2-0065
+  type: spelling
+  status: reviewed
+  word: ハンカチ
+  sentence: "ポケットに __はんかち__が あります。"
+  en: "There is a handkerchief in my pocket."
+  answer: ハンカチ
+  wrong:
+    - option: ハソカチ
+      why: "ん is ン. ソ is そ."
+    - option: ハンカテ
+      why: "ち is チ. テ is て."
+    - option: ハンガチ
+      why: "か has no dakuten: カ."
+  difficulty: 2
+  note: "This asks how はんかち, a handkerchief, is written: ハンカチ."
+
+- id: n5-g2-0066
+  type: spelling
+  status: reviewed
+  word: エレベーター
+  sentence: "__えれべーたー__で 5かいへ いきます。"
+  en: "I'll take the lift to the fifth floor."
+  answer: エレベーター
+  wrong:
+    - option: エレペーター
+      why: "べ has a dakuten, not the small circle: ベ."
+    - option: エレベタ
+      why: "Both long sounds need ー: ベー and ター."
+    - option: エルベーター
+      why: "れ is レ. ル is る."
+  difficulty: 2
+  note: "This asks how えれべーたー, a lift, is written: エレベーター."
+
+- id: n5-g2-0067
+  type: spelling
+  status: reviewed
+  word: 乗る
+  sentence: "えきから バスに __のります__。"
+  en: "I get on the bus at the station."
+  answer: 乗ります
+  wrong:
+    - option: 来ります
+      why: "来 is くる, to come."
+    - option: 東ります
+      why: "東 is east, ひがし."
+    - option: 垂ります
+      why: "垂 means to hang down."
+  difficulty: 2
+  note: "This asks how のります, to get on, is written: 乗ります."
+
+- id: n5-g2-0068
+  type: spelling
+  status: reviewed
+  word: 入る
+  sentence: "ドアを あけて、へやに __はいります__。"
+  en: "I open the door and go into the room."
+  answer: 入ります
+  wrong:
+    - option: 人ります
+      why: "人 is a person. 入 is its mirror: the stroke on the right is the long one."
+    - option: 八ります
+      why: "八 is eight: two strokes that do not touch."
+    - option: 込ります
+      why: "込 is to be crowded: 入 inside ⻌. はいる on its own is 入."
+  difficulty: 2
+  note: "This asks how はいります, to go in, is written: 入ります."
+
+- id: n5-g2-0069
+  type: spelling
+  status: reviewed
+  word: 作る
+  sentence: "ははと いっしょに ケーキを __つくります__。"
+  en: "I make a cake with my mother."
+  answer: 作ります
+  wrong:
+    - option: 昨ります
+      why: "昨 means last, as in last night: 日 on the left. 作 has a person on the left."
+    - option: 作くります
+      why: "つくります keeps only ります after the kanji: 作ります."
+    - option: 仕ります
+      why: "仕 means to serve: 士 on the right. 作 has 乍."
+  difficulty: 2
+  note: "This asks how つくります, to make, is written: 作ります."
+
+- id: n5-g2-0070
+  type: spelling
+  status: reviewed
+  word: シャツ
+  sentence: "しろい __しゃつ__を かいました。"
+  en: "I bought a white shirt."
+  answer: シャツ
+  wrong:
+    - option: シャシ
+      why: "つ is ツ, its strokes coming down from the top. シ is し."
+    - option: ツャツ
+      why: "し is シ, its strokes rising from the left. ツ is つ."
+    - option: シャソ
+      why: "つ is ツ, with two short strokes. ソ, with one, is そ."
+  difficulty: 3
+  note: "This asks how しゃつ, a shirt, is written: シャツ. シ and ツ look alike: シ's short strokes sit on the left, ツ's along the top."
+
+- id: n5-g2-0071
+  type: spelling
+  status: reviewed
+  word: パーティー
+  sentence: "どようびに うちで __ぱーてぃー__を します。"
+  en: "I'm having a party at home on Saturday."
+  answer: パーティー
+  wrong:
+    - option: バーティー
+      why: "ぱ has the small circle: パ. バ is ば."
+    - option: パーテイー
+      why: "てぃ is テ with a small ィ, not a full イ."
+    - option: パーチー
+      why: "てぃ is テ with a small ィ. チ is ち."
+  difficulty: 3
+  note: "This asks how ぱーてぃー, a party, is written: パーティー, with a small ィ."
+
+- id: n5-g2-0072
+  type: spelling
+  status: reviewed
+  word: 売る
+  sentence: "この みせは やさいを __うって__ います。"
+  en: "This shop sells vegetables."
+  answer: 売って
+  wrong:
+    - option: 買って
+      why: "買 is かう, to buy: the other way round."
+    - option: 売て
+      why: "うって keeps って after the kanji: 売って."
+    - option: 読って
+      why: "読 is よむ, to read: 言 on the left of 売."
+  difficulty: 3
+  note: "This asks how うって is written: 売って, to sell. 売 and 買 look alike, and mean opposite things."
+
+- id: n5-g2-0073
+  type: spelling
+  status: reviewed
+  word: 川
+  sentence: "この まちには おおきな __かわ__が あります。"
+  en: "There is a big river in this town."
+  answer: 川
+  wrong: [州, 小, 山]
+  difficulty: 1
+  note: "This asks how かわ, a river, is written: 川, three lines."
+
+- id: n5-g2-0074
+  type: spelling
+  status: reviewed
+  word: 国
+  sentence: "あなたの __くに__は どこですか。"
+  en: "Which country are you from?"
+  answer: 国
+  wrong: [困, 図, 固]
+  difficulty: 1
+  note: "This asks how くに, a country, is written: 国, with 玉 inside the box."
+
+- id: n5-g2-0075
+  type: spelling
+  status: reviewed
+  word: 体
+  sentence: "やさいは __からだ__に いいです。"
+  en: "Vegetables are good for your body."
+  answer: 体
+  wrong:
+    - option: 休
+      why: "休 is やすむ, to rest. Its right part, 木, has no short line across the foot."
+    - option: 林
+      why: "林 is はやし, a wood: two trees."
+    - option: 付
+      why: "付 has 寸 on the right."
+  difficulty: 2
+  note: "This asks how からだ, the body, is written: 体. 休, to rest, has one line fewer on the right."
+
+- id: n5-g2-0076
+  type: spelling
+  status: reviewed
+  word: 声
+  sentence: "もっと おおきい __こえ__で はなして ください。"
+  en: "Please speak in a louder voice."
+  answer: 声
+  wrong:
+    - option: 音
+      why: "音 is おと, a sound. A voice is こえ: 声."
+    - option: 売
+      why: "売 is うる, to sell."
+    - option: 戸
+      why: "戸 is と, a door."
+  difficulty: 2
+  note: "This asks how こえ, a voice, is written: 声. A sound that is not a voice is おと, 音."
+
+- id: n5-g2-0077
+  type: spelling
+  status: reviewed
+  word: 服
+  sentence: "デパートで あたらしい __ふく__を かいました。"
+  en: "I bought new clothes at the department store."
+  answer: 服
+  wrong:
+    - option: 腹
+      why: "腹 is はら, the belly."
+    - option: 報
+      why: "報 has 幸 on the left. 服 has 月."
+    - option: 月
+      why: "月 is つき, the moon. 服 has more on the right."
+  difficulty: 2
+  note: "This asks how ふく, clothes, is written: 服."
+
+- id: n5-g2-0078
+  type: spelling
+  status: reviewed
+  word: 切手
+  sentence: "ゆうびんきょくで __きって__を かいました。"
+  en: "I bought stamps at the post office."
+  answer: 切手
+  wrong:
+    - option: 切毛
+      why: "毛 is け, hair: its last stroke bends to the right. 手 ends in a hook."
+    - option: 功手
+      why: "切 is 七 and 刀. 功 is 工 and 力."
+    - option: 刀手
+      why: "刀 is only the right part of 切. 切 has 七 on the left."
+  difficulty: 3
+  note: "This asks how きって, a stamp, is written: 切手. 手 and 毛 look alike."
+
+- id: n5-g2-0079
+  type: spelling
+  status: reviewed
+  word: 買い物
+  sentence: "にちようびに ははと __かいもの__に いきました。"
+  en: "I went shopping with my mother on Sunday."
+  answer: 買い物
+  wrong:
+    - option: 貝い物
+      why: "貝 is a shellfish. 買 has 罒 on top of 貝."
+    - option: 売い物
+      why: "売 is うる, to sell. 買 is かう, to buy."
+    - option: 買い勿
+      why: "物 has 牛 on the left."
+  difficulty: 3
+  note: "This asks how かいもの, shopping, is written: 買い物, with 買 as in かう, to buy."
+
+- id: n5-g2-0080
+  type: spelling
+  status: reviewed
+  word: 住む
+  sentence: "あには いま とうきょうに __すんで__ います。"
+  en: "My older brother lives in Tokyo now."
+  answer: 住んで
+  wrong:
+    - option: 注んで
+      why: "注 has water, 氵, on the left. 住 has a person, 亻."
+    - option: 柱んで
+      why: "柱 has a tree, 木, on the left. 住 has a person, 亻."
+    - option: 往んで
+      why: "往 has two strokes on the left, 彳. 住 has one person, 亻."
+  difficulty: 3
+  note: "This asks how すんで is written: 住んで, from 住む, to live. A person, 亻, sits on the left."
+
+- id: n5-g2-0081
+  type: spelling
+  status: reviewed
+  word: 走る
+  sentence: "こどもたちが こうえんで __はしって__ います。"
+  en: "The children are running in the park."
+  answer: 走って
+  wrong:
+    - option: 赤って
+      why: "赤 is あか, red. It has 土 on top too, but a different part below."
+    - option: 起って
+      why: "起 is おきる, to get up. 走 is only its left part."
+    - option: 徒って
+      why: "徒 has 彳 on the left. 走 has nothing beside it."
+  difficulty: 2
+  note: "This asks how はしって is written: 走って, from 走る, to run."
+
+- id: n5-g2-0082
+  type: spelling
+  status: reviewed
+  word: 着る
+  sentence: "さむいので、うわぎを __きて__ でかけました。"
+  en: "It was cold, so I put on a jacket and went out."
+  answer: 着て
+  wrong:
+    - option: 来て
+      why: "来て, from くる, is also read きて, but it means come. Putting on clothes is 着る."
+    - option: 切て
+      why: "切る, to cut, becomes 切って, with a small っ."
+    - option: 着って
+      why: "着る becomes 着て, with no っ."
+  difficulty: 3
+  note: "This asks how きて is written here: 着て, from 着る, to put on. 来て, from くる, sounds the same."
+
+- id: n5-g2-0083
+  type: spelling
+  status: reviewed
+  word: 生まれる
+  sentence: "いもうとは はるに __うまれました__。"
+  en: "My younger sister was born in spring."
+  answer: 生まれました
+  wrong:
+    - option: 牛まれました
+      why: "牛 is うし, a cow. 生 has a line along the bottom."
+    - option: 主まれました
+      why: "主 has a dot on top."
+    - option: 星まれました
+      why: "星 has 日 on top."
+  difficulty: 2
+  note: "This asks how うまれました is written: 生まれました, from 生まれる, to be born."
+
+- id: n5-g2-0084
+  type: spelling
+  status: reviewed
+  word: カメラ
+  sentence: "あたらしい __かめら__で しゃしんを とりました。"
+  en: "I took photos with my new camera."
+  answer: カメラ
+  wrong: [カメヲ, カナラ, カヌラ]
+  difficulty: 1
+  note: "This asks how かめら, a camera, is written: カメラ."
+
+- id: n5-g2-0085
+  type: spelling
+  status: reviewed
+  word: テーブル
+  sentence: "__てーぶる__の うえに おさらが あります。"
+  en: "There are plates on the table."
+  answer: テーブル
+  wrong:
+    - option: テーブレ
+      why: "る is ル, two strokes. レ is れ."
+    - option: テープル
+      why: "ぶ has two dots: ブ. プ, with a circle, is ぷ."
+    - option: ラーブル
+      why: "て is テ. ラ, with one short line on top, is ら."
+  difficulty: 2
+  note: "This asks how てーぶる, a table, is written: テーブル."
+
+- id: n5-g2-0086
+  type: spelling
+  status: reviewed
+  word: ポケット
+  sentence: "__ぽけっと__に かぎが あります。"
+  en: "The key is in my pocket."
+  answer: ポケット
+  wrong:
+    - option: ボケット
+      why: "ぽ has a small circle: ポ. ボ is ぼ."
+    - option: ポケツト
+      why: "っ is a small ッ, not a full ツ."
+    - option: ポクット
+      why: "け is ケ. ク is く."
+  difficulty: 2
+  note: "This asks how ぽけっと, a pocket, is written: ポケット, with a small ッ."
+
+- id: n5-g2-0087
+  type: spelling
+  status: reviewed
+  word: ニュース
+  sentence: "まいあさ __にゅーす__を ききます。"
+  en: "I listen to the news every morning."
+  answer: ニュース
+  wrong:
+    - option: ニョース
+      why: "にゅ has a small ュ. ョ is ょ."
+    - option: ニユース
+      why: "にゅ takes a small ュ, not a full ユ."
+    - option: ニューヌ
+      why: "す is ス. ヌ, with an extra stroke, is ぬ."
+  difficulty: 3
+  note: "This asks how にゅーす, the news, is written: ニュース, with a small ュ."
+
+- id: n5-g2-0088
+  type: spelling
+  status: reviewed
+  word: レストラン
+  sentence: "えきの まえの __れすとらん__で ひるごはんを たべました。"
+  en: "I had lunch at the restaurant in front of the station."
+  answer: レストラン
+  wrong:
+    - option: レストラソ
+      why: "ん is ン, its long stroke rising from below. ソ is そ."
+    - option: レストヲン
+      why: "ら is ラ. ヲ is を."
+    - option: レストテン
+      why: "ら is ラ. テ, with two lines across, is て."
+  difficulty: 3
+  note: "This asks how れすとらん, a restaurant, is written: レストラン."
+
+- id: n5-g2-0089
+  type: spelling
+  status: reviewed
+  word: ズボン
+  sentence: "くろい __ずぼん__を はいて います。"
+  en: "I'm wearing black trousers."
+  answer: ズボン
+  wrong:
+    - option: スボン
+      why: "ず has two dots: ズ. ス is す."
+    - option: ズポン
+      why: "ぼ has two dots: ボ. ポ is ぽ."
+    - option: ヌボン
+      why: "ず is ズ. ヌ is ぬ."
+  difficulty: 2
+  note: "This asks how ずぼん, trousers, is written: ズボン."
+
+- id: n5-g2-0090
+  type: spelling
+  status: reviewed
+  word: トイレ
+  sentence: "すみません、__といれ__は どこですか。"
+  en: "Excuse me, where is the toilet?"
+  answer: トイレ
+  wrong: [ドイレ, トイル, トエレ]
+  difficulty: 1
+  note: "This asks how といれ, a toilet, is written: トイレ."
+
+- id: n5-g2-0091
+  type: spelling
+  status: reviewed
+  word: 友だち
+  sentence: "きのう __ともだち__と こうえんへ いきました。"
+  en: "Yesterday I went to the park with a friend."
+  answer: 友だち
+  wrong: [有だち, 反だち, 支だち]
+  difficulty: 1
+  note: "This asks how ともだち, a friend, is written: 友だち."
+
+- id: n5-g2-0092
+  type: spelling
+  status: reviewed
+  word: 広い
+  sentence: "あたらしい いえは とても __ひろい__です。"
+  en: "My new house is very spacious."
+  answer: 広い
+  wrong: [庄い, 床い, 応い]
+  difficulty: 1
+  note: "This asks how ひろい, wide or spacious, is written: 広い."
+
+- id: n5-g2-0093
+  type: spelling
+  status: reviewed
+  word: 分かる
+  sentence: "この ことばが __わかりません__。"
+  en: "I don't understand this word."
+  answer: 分かりません
+  wrong: [公かりません, 今かりません, 父かりません]
+  difficulty: 1
+  note: "This asks how わかりません is written: 分かりません, from 分かる, to understand."
+
+- id: n5-g2-0094
+  type: spelling
+  status: reviewed
+  word: 何
+  sentence: "あした __なに__を しますか。"
+  en: "What will you do tomorrow?"
+  answer: 何
+  wrong: [向, 伺, 河]
+  difficulty: 1
+  note: "This asks how なに, what, is written: 何."
+
+- id: n5-g2-0095
+  type: spelling
+  status: reviewed
+  word: 明るい
+  sentence: "あさに なって、そとが __あかるく__ なりました。"
+  en: "Morning came, and it got light outside."
+  answer: 明るく
+  wrong:
+    - option: 朋るく
+      why: "朋 has two 月. 明 has 日 on the left."
+    - option: 晴るく
+      why: "晴 is the 晴 of はれ, fine weather. 明 has 月 on the right."
+    - option: 明かるく
+      why: "明るい has only るい after 明."
+  difficulty: 2
+  note: "This asks how あかるく is written: 明るく, from 明るい, bright."
+
+- id: n5-g2-0096
+  type: spelling
+  status: reviewed
+  word: 短い
+  sentence: "この えいがは __みじかい__ですね。"
+  en: "This film is short, isn't it?"
+  answer: 短い
+  wrong:
+    - option: 知い
+      why: "知 is しる, to know. 短 has 豆 on the right."
+    - option: 豆い
+      why: "豆 is only the right part of 短."
+    - option: 短かい
+      why: "短い has only い after 短."
+  difficulty: 2
+  note: "This asks how みじかい, short, is written: 短い."
+
+- id: n5-g2-0097
+  type: spelling
+  status: reviewed
+  word: 低い
+  sentence: "この いすは すこし __ひくい__です。"
+  en: "This chair is a little low."
+  answer: 低い
+  wrong:
+    - option: 底い
+      why: "底 is a bottom. 低 has a person, 亻, on the left."
+    - option: 抵い
+      why: "抵 has a hand, 扌, on the left. 低 has a person, 亻."
+    - option: 伝い
+      why: "伝 has 亻 too, but 云 on the right."
+  difficulty: 2
+  note: "This asks how ひくい, low, is written: 低い."
+
+- id: n5-g2-0098
+  type: spelling
+  status: reviewed
+  word: 地図
+  sentence: "この __ちず__を みて ください。"
+  en: "Please look at this map."
+  answer: 地図
+  wrong:
+    - option: 他図
+      why: "他 has a person, 亻, on the left. 地 has 土, earth."
+    - option: 地回
+      why: "回 is a box inside a box. 図 has marks inside its box."
+    - option: 也図
+      why: "也 is only the right part of 地."
+  difficulty: 2
+  note: "This asks how ちず, a map, is written: 地図."
+
+- id: n5-g2-0099
+  type: spelling
+  status: reviewed
+  word: 所
+  sentence: "ここは しずかな __ところ__ですね。"
+  en: "This is a quiet place, isn't it?"
+  answer: 所
+  wrong:
+    - option: 折
+      why: "折 has a hand, 扌, on the left. 所 has 戸."
+    - option: 斤
+      why: "斤 is only the right part of 所."
+    - option: 戸
+      why: "戸 is と, a door. It is only the left part of 所."
+  difficulty: 2
+  note: "This asks how ところ, a place, is written: 所."
+
+- id: n5-g2-0100
+  type: spelling
+  status: reviewed
+  word: 弱い
+  sentence: "この こどもは からだが __よわい__です。"
+  en: "This child isn't very strong."
+  answer: 弱い
+  wrong:
+    - option: 弓い
+      why: "弓 is half of 弱. 弱 has two, each with two short marks."
+    - option: 羽い
+      why: "羽 is はね, a wing. It has no 弓."
+    - option: 弱わい
+      why: "弱い has only い after 弱."
+  difficulty: 3
+  note: "This asks how よわい, weak, is written: 弱い, two 弓 side by side, each with two short marks."
+
+- id: n5-g2-0101
+  type: spelling
+  status: reviewed
+  word: アパート
+  sentence: "あには ちいさい __あぱーと__に すんで います。"
+  en: "My older brother lives in a small flat."
+  answer: アパート
+  wrong: [アバート, アパード, マパート]
+  difficulty: 1
+  note: "This asks how あぱーと, a flat, is written: アパート."
+
+- id: n5-g2-0102
+  type: spelling
+  status: reviewed
+  word: コート
+  sentence: "さむいですから、__こーと__を きて ください。"
+  en: "It's cold, so please wear a coat."
+  answer: コート
+  wrong: [コーナ, ユート, コード]
+  difficulty: 1
+  note: "This asks how こーと, a coat, is written: コート."
+
+- id: n5-g2-0103
+  type: spelling
+  status: reviewed
+  word: コピー
+  sentence: "これを さんまい __こぴー__して ください。"
+  en: "Please make three copies of this."
+  answer: コピー
+  wrong: [コビー, ユピー, コピイ]
+  difficulty: 1
+  note: "This asks how こぴー, a copy, is written: コピー."
+
+- id: n5-g2-0104
+  type: spelling
+  status: reviewed
+  word: スリッパ
+  sentence: "へやの なかでは __すりっぱ__を はいて ください。"
+  en: "Please wear slippers inside the room."
+  answer: スリッパ
+  wrong:
+    - option: スリツパ
+      why: "っ is a small ッ, not a full ツ."
+    - option: スリッバ
+      why: "ぱ has a small circle: パ. バ is ば."
+    - option: スソッパ
+      why: "り is リ. ソ is そ."
+  difficulty: 2
+  note: "This asks how すりっぱ, slippers, is written: スリッパ, with a small ッ."
+
+- id: n5-g2-0105
+  type: spelling
+  status: reviewed
+  word: ページ
+  sentence: "ほんを じゅう __ぺーじ__ よみました。"
+  en: "I read ten pages of the book."
+  answer: ページ
+  wrong:
+    - option: ベージ
+      why: "ぺ has a small circle: ペ. ベ is べ."
+    - option: ペーシ
+      why: "じ has two dots: ジ. シ is し."
+    - option: ペーツ
+      why: "じ is ジ. ツ is つ."
+  difficulty: 2
+  note: "This asks how ぺーじ, a page, is written: ページ."
+
+- id: n5-g2-0106
+  type: spelling
+  status: reviewed
+  word: カップ
+  sentence: "あたらしい __かっぷ__で コーヒーを のみました。"
+  en: "I drank coffee from my new cup."
+  answer: カップ
+  wrong:
+    - option: カッブ
+      why: "ぷ has a small circle: プ. ブ is ぶ."
+    - option: カツプ
+      why: "っ is a small ッ, not a full ツ."
+    - option: ヤップ
+      why: "か is カ. ヤ is や."
+  difficulty: 2
+  note: "This asks how かっぷ, a cup, is written: カップ."
+
+- id: n5-g2-0107
+  type: spelling
+  status: reviewed
+  word: スポーツ
+  sentence: "あには __すぽーつ__が だいすきです。"
+  en: "My older brother loves sport."
+  answer: スポーツ
+  wrong:
+    - option: スボーツ
+      why: "ぽ has a small circle: ポ. ボ is ぼ."
+    - option: スポーッ
+      why: "つ here is a full ツ, not a small ッ."
+    - option: スポーシ
+      why: "つ is ツ. シ is し."
+  difficulty: 2
+  note: "This asks how すぽーつ, sport, is written: スポーツ, with a full ツ at the end."
+
+- id: n5-g2-0108
+  type: spelling
+  status: reviewed
+  word: メートル
+  sentence: "うちから こうえんまで 300 __めーとる__ぐらいです。"
+  en: "It's about 300 metres from home to the park."
+  answer: メートル
+  wrong:
+    - option: ナートル
+      why: "め is メ. ナ is な."
+    - option: メートレ
+      why: "る is ル. レ is れ."
+    - option: メーテル
+      why: "と is ト. テ is て."
+  difficulty: 3
+  note: "This asks how めーとる, a metre, is written: メートル."
+
+- id: n5-g2-0109
+  type: spelling
+  status: reviewed
+  word: 太い
+  sentence: "この えんぴつは __ふとい__です。"
+  en: "This pencil is thick."
+  answer: 太い
+  wrong: [大い, 天い, 丈い]
+  difficulty: 1
+  note: "This asks how ふとい, thick, is written: 太い, 大 with a dot."
+
+- id: n5-g2-0110
+  type: spelling
+  status: reviewed
+  word: 早い
+  sentence: "けさは __はやく__ おきました。"
+  en: "I got up early this morning."
+  answer: 早く
+  wrong: [旱く, 草く, 卓く]
+  difficulty: 1
+  note: "This asks how はやく, early, is written: 早く, from 早い."
+
+- id: n5-g2-0111
+  type: spelling
+  status: reviewed
+  word: ゼロ
+  sentence: "__ぜろ__から きゅうまで かいて ください。"
+  en: "Please write from zero to nine."
+  answer: ゼロ
+  wrong: [セロ, ゼコ, ゾロ]
+  difficulty: 1
+  note: "This asks how ぜろ, zero, is written: ゼロ."
+
+- id: n5-g2-0112
+  type: spelling
+  status: reviewed
+  word: グラム
+  sentence: "さとうを 500 __ぐらむ__ かいました。"
+  en: "I bought 500 grams of sugar."
+  answer: グラム
+  wrong: [グラヌ, クラム, グテム]
+  difficulty: 1
+  note: "This asks how ぐらむ, a gram, is written: グラム."
+
+- id: n5-g2-0113
+  type: spelling
+  status: reviewed
+  word: プール
+  sentence: "がっこうの __ぷーる__は おおきいです。"
+  en: "The school's pool is big."
+  answer: プール
+  wrong: [ブール, プーノ, フール]
+  difficulty: 1
+  note: "This asks how ぷーる, a swimming pool, is written: プール."
+
+- id: n5-g2-0114
+  type: spelling
+  status: reviewed
+  word: 土曜日
+  sentence: "__どようび__に えいがを みます。"
+  en: "I'm going to see a film on Saturday."
+  answer: 土曜日
+  wrong: [士曜日, 土濯日, 上曜日]
+  difficulty: 1
+  note: "This asks how どようび, Saturday, is written: 土曜日."
+
+- id: n5-g2-0115
+  type: spelling
+  status: reviewed
+  word: 青い
+  sentence: "この __あおい__ ノートは だれのですか。"
+  en: "Whose is this blue notebook?"
+  answer: 青い
+  wrong: [晴い, 清い, 責い]
+  difficulty: 1
+  note: "This asks how あおい, blue, is written: 青い."
+
+- id: n5-g2-0116
+  type: spelling
+  status: reviewed
+  word: 開ける
+  sentence: "あついですから、まどを __あけます__。"
+  en: "It's hot, so I'll open the window."
+  answer: 開けます
+  wrong:
+    - option: 閉けます
+      why: "閉 is しめる, to close: the opposite. 開 has 开 inside the gate."
+    - option: 間けます
+      why: "間 has 日 inside the gate."
+    - option: 開きます
+      why: "開きます is read あきます. あけます takes け: 開けます."
+  difficulty: 2
+  note: "This asks how あけます is written: 開けます, from 開ける, to open."
+
+- id: n5-g2-0117
+  type: spelling
+  status: reviewed
+  word: シャワー
+  sentence: "この へやには __しゃわー__が ありません。"
+  en: "This room has no shower."
+  answer: シャワー
+  wrong:
+    - option: シヤワー
+      why: "しゃ has a small ャ."
+    - option: シャウー
+      why: "わ is ワ. ウ is う."
+    - option: ツャワー
+      why: "し is シ. ツ is つ."
+  difficulty: 2
+  note: "This asks how しゃわー, a shower, is written: シャワー."
+
+- id: n5-g2-0118
+  type: spelling
+  status: reviewed
+  word: コップ
+  sentence: "__こっぷ__に みずを いれて ください。"
+  en: "Please put some water in the glass."
+  answer: コップ
+  wrong:
+    - option: コツプ
+      why: "っ is a small ッ, not a full ツ."
+    - option: コッブ
+      why: "ぷ has a small circle: プ. ブ is ぶ."
+    - option: ユップ
+      why: "こ is コ. ユ is ゆ."
+  difficulty: 2
+  note: "This asks how こっぷ, a glass or cup, is written: コップ."
+
+- id: n5-g2-0119
+  type: spelling
+  status: reviewed
+  word: 天気
+  sentence: "あしたの __てんき__は どうですか。"
+  en: "What will the weather be like tomorrow?"
+  answer: 天気
+  wrong:
+    - option: 夫気
+      why: "夫 is おっと, a husband. Its top line is the longer one. 天 has a short top line."
+    - option: 天汽
+      why: "汽 has water, 氵, on the left. 気 has none."
+    - option: 大気
+      why: "大 is おおきい. 天 has one more line on top."
+  difficulty: 2
+  note: "This asks how てんき, the weather, is written: 天気."
+
+- id: n5-g2-0120
+  type: spelling
+  status: reviewed
+  word: 魚
+  sentence: "この __さかな__は おいしいです。"
+  en: "This fish is delicious."
+  answer: 魚
+  wrong:
+    - option: 角
+      why: "角 is かど, a corner. It has no four dots below."
+    - option: 黒
+      why: "黒 is くろ, black. It has 里 above the four dots."
+    - option: 漁
+      why: "漁 has water, 氵, on the left."
+  difficulty: 2
+  note: "This asks how さかな, a fish, is written: 魚."
+
+- id: n5-g2-0121
+  type: spelling
+  status: reviewed
+  word: カレンダー
+  sentence: "かべに __かれんだー__が あります。"
+  en: "There's a calendar on the wall."
+  answer: カレンダー
+  wrong:
+    - option: カレソダー
+      why: "ん is ン. ソ is そ."
+    - option: カレンター
+      why: "だ has two dots: ダ. タ is た."
+    - option: ガレンダー
+      why: "か has no dots: カ. ガ is が."
+  difficulty: 3
+  note: "This asks how かれんだー, a calendar, is written: カレンダー."
+
+- id: n5-g2-0122
+  type: spelling
+  status: reviewed
+  word: レコード
+  sentence: "ちちは よる __れこーど__を ききます。"
+  en: "My father listens to records in the evening."
+  answer: レコード
+  wrong:
+    - option: ロコード
+      why: "れ is レ. ロ is ろ."
+    - option: レユード
+      why: "こ is コ. ユ is ゆ."
+    - option: レコーボ
+      why: "ど is ド. ボ is ぼ."
+  difficulty: 2
+  note: "This asks how れこーど, a record, is written: レコード."

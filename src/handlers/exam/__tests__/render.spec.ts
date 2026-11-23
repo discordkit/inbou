@@ -7,6 +7,7 @@ import {
   followUpText,
   heading2,
   LABEL_MAX,
+  myResultsPages,
   myResultsText,
   parseResults,
   parseVote,
@@ -28,6 +29,7 @@ import {
 const question = (overrides: Partial<ExamQuestion> = {}): ExamQuestion => ({
   itemId: `n5-b1-0001`,
   slot: 1,
+  type: `form`,
   mondai: 1,
   number: 3,
   card: 3,
@@ -95,7 +97,13 @@ describe(`a passage question`, () => {
     // read badly; on one card each row must say which blank it answers, and
     // each button must carry its own blank's token.
     const blanks = [14, 15, 16, 17].map((number) =>
-      question({ mondai: 3, number, card: 14, token: `tok${String(number)}` })
+      question({
+        type: `passage`,
+        mondai: 3,
+        number,
+        card: 14,
+        token: `tok${String(number)}`
+      })
     );
     const card = questionMessage({ questions: blanks, total: 17, endsAt: 0 });
     const json = JSON.stringify(card);
@@ -125,6 +133,7 @@ describe(`a passage question`, () => {
       questionMessage(
         view(
           question({
+            type: `passage`,
             mondai: 3,
             intro: `ケンさんが メールを {書|か}きました。`,
             prompt: `こんにちは。**［14］**。`
@@ -225,6 +234,7 @@ describe(`the reveal`, () => {
     // once, at the end.
     const blank = (number: number, en: string) =>
       question({
+        type: `passage`,
         mondai: 3,
         number,
         card: 14,
@@ -281,11 +291,21 @@ describe(`the reveal`, () => {
     const reveal = JSON.stringify(
       revealMessage([
         {
-          question: question({ mondai: 3, number: 14, review: [DE] }),
+          question: question({
+            type: `passage`,
+            mondai: 3,
+            number: 14,
+            review: [DE]
+          }),
           tally: { counts: [0, 1, 0, 0], correct: 1, scorers: [] }
         },
         {
-          question: question({ mondai: 3, number: 15, review: [TO] }),
+          question: question({
+            type: `passage`,
+            mondai: 3,
+            number: 15,
+            review: [TO]
+          }),
           tally: { counts: [0, 1, 0, 0], correct: 1, scorers: [] }
         }
       ])
@@ -377,6 +397,39 @@ describe(`results`, () => {
     expect(text).not.toContain(TO.url);
   });
 
+  it(`splits My results across messages rather than drop a why, each why beside its question`, () => {
+    // WHY: a why is the reason My results exists (the private follow-up vanishes on reload), and Discord rejects a message over 2,000 characters, so a student who missed most of /goi's 21 questions would see nothing. A why on the wrong page would explain the wrong question.
+    const questions = Array.from({ length: 21 }, (_, i) =>
+      question({
+        number: i + 1,
+        whys: [`WHY-${String(i + 1)} ${`x`.repeat(120)}`, ``, ``, ``]
+      })
+    );
+    const answers = questions.map((q) => ({
+      number: q.number,
+      chose: 0,
+      correct: false,
+      points: 0
+    }));
+    const result = { userId: `ann`, points: 0, max: 42, correct: 0, asked: 21 };
+    const pages = myResultsPages(questions, answers, result);
+    expect(pages.length).toBeGreaterThan(1);
+    for (const page of pages) {
+      expect(page.length).toBeLessThanOrEqual(CONTENT_MAX);
+    }
+    for (const q of questions) {
+      const n = String(q.number);
+      const page = pages.find((p) => p.includes(`WHY-${n} `)) ?? ``;
+      expect(page).toContain(`${n} ❌ を → **で**\n> WHY-${n} `);
+    }
+    // A short result is the one message it always was.
+    expect(
+      myResultsPages(questions.slice(0, 2), answers.slice(0, 2), result)
+    ).toEqual([
+      myResultsText(questions.slice(0, 2), answers.slice(0, 2), result)
+    ]);
+  });
+
   it(`escapes square brackets in a link's label`, () => {
     // WHY: a "]" in the label would end the link text early, and Discord would show broken markup instead of a link.
     const text = myResultsText(
@@ -435,6 +488,7 @@ describe(`a reading card`, () => {
   const reading = (overrides: Partial<ExamQuestion> = {}): ExamQuestion =>
     question({
       itemId: `n5-d4-0001`,
+      type: `short`,
       mondai: 4,
       prompt: `{今日|きょう}は 6{時|じ}に {帰|かえ}ります。`,
       answered: `{今日|きょう}は 6{時|じ}に {帰|かえ}ります。`,
@@ -466,6 +520,7 @@ describe(`a reading card`, () => {
     const message = questionMessage(
       view(
         reading({
+          type: `info`,
           mondai: 6,
           prompt: ``,
           answered: ``,
@@ -518,5 +573,70 @@ describe(`a reading card`, () => {
       { userId: `ann`, points: 0, max: 3, correct: 0, asked: 1 }
     );
     expect(text).toContain(`> WHY-EIGHT`);
+  });
+});
+
+describe(`a vocabulary card`, () => {
+  const vocab = (overrides: Partial<ExamQuestion> = {}): ExamQuestion =>
+    question({
+      itemId: `n5-g1-0001`,
+      type: `kanji`,
+      mondai: 1,
+      prompt: `__先週__ うみへ いきました。`,
+      answered: `__{先週|せんしゅう}__ うみへ いきました。`,
+      options: [`せんしゅ`, `せんしゅう`, `せんじゅう`, `さきしゅう`],
+      correct: 1,
+      points: [],
+      ...overrides
+    });
+
+  it(`shows a 漢字読み word with no reading, and its options on the buttons`, () => {
+    // WHY: the reading is the question, so the card must not print it anywhere. The options go on labelled buttons, the user's choice for Section 1.
+    const message = questionMessage(view(vocab()));
+    const text = JSON.stringify(message);
+    expect(text).toContain(`## __先週__ うみへ いきました。`);
+    expect(text).not.toContain(`先週 せんしゅう`);
+    expect(text).not.toContain(`先週(せんしゅう)`);
+    expect(
+      buttons(message)
+        .map((b) => b.label)
+        .slice(0, 4)
+    ).toEqual([`1 せんしゅ`, `2 せんしゅう`, `3 せんじゅう`, `4 さきしゅう`]);
+  });
+
+  it(`reveals the 漢字読み word with its reading`, () => {
+    // WHY: the reveal is where a student who guessed learns the reading.
+    const tally = { counts: [1, 2, 0, 0], correct: 1, scorers: [] };
+    expect(
+      JSON.stringify(revealMessage([{ question: vocab(), tally }]))
+    ).toContain(`-# 先週 せんしゅう`);
+  });
+
+  it(`puts 言い換え's sentences in the card, with the sentence asked about underlined`, () => {
+    // WHY: the options are whole sentences, too long for a button and too important to trim, and the paper underlines the whole sentence they paraphrase.
+    const message = questionMessage(
+      view(
+        vocab({
+          type: `paraphrase`,
+          mondai: 4,
+          prompt: `__あには きょうしです。__`,
+          answered: `__あには きょうしです。__`,
+          options: [
+            `あには ならって います。`,
+            `あには おしえて います。`,
+            `あには がくせいです。`,
+            `あには ねて います。`
+          ]
+        })
+      )
+    );
+    const text = JSON.stringify(message);
+    expect(text).toContain(`## __あには きょうしです。__`);
+    expect(text).toContain(`### 2　あには おしえて います。`);
+    expect(
+      buttons(message)
+        .map((b) => b.label)
+        .slice(0, 4)
+    ).toEqual([`1`, `2`, `3`, `4`]);
   });
 });

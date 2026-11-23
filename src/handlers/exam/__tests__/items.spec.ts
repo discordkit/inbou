@@ -14,14 +14,21 @@ import {
   parse,
   plain,
   reviewLinksOf,
+  wordHints,
+  wordProblems,
   type ComposeItem,
+  type ContextItem,
   type FormItem,
   type InfoItem,
+  type KanjiItem,
   type Material,
   type Option,
+  type ParaphraseItem,
   type PassageItem,
   type Sheet,
-  type ShortItem
+  type ShortItem,
+  type SpellingItem,
+  type VocabList
 } from "../items.js";
 
 /**
@@ -858,6 +865,291 @@ describe(`reading items`, () => {
         })
       )
     ).toEqual([]);
+  });
+});
+
+describe(`vocabulary items`, () => {
+  const kanji = (overrides: Partial<KanjiItem> = {}): KanjiItem => ({
+    id: `n5-g1-0001`,
+    type: `kanji`,
+    status: `draft`,
+    word: `先週`,
+    sentence: `__先週__ うみへ いきました。`,
+    en: `I went to the sea last week.`,
+    answer: `せんしゅう`,
+    wrong: [`せんしゅ`, `せんじゅう`, `さきしゅう`],
+    difficulty: 1,
+    note: `This asks the reading of 先週.`,
+    ...overrides
+  });
+  const spelling = (overrides: Partial<SpellingItem> = {}): SpellingItem => ({
+    id: `n5-g2-0001`,
+    type: `spelling`,
+    status: `draft`,
+    word: `学校`,
+    sentence: `ヤンさんの __がっこう__は どこですか。`,
+    en: `Where is Yan's school?`,
+    answer: `学校`,
+    wrong: [`学枚`, `字校`, `字枚`],
+    difficulty: 1,
+    note: `校 is the school; 枚 counts flat things.`,
+    ...overrides
+  });
+  const context = (overrides: Partial<ContextItem> = {}): ContextItem => ({
+    id: `n5-g3-0001`,
+    type: `context`,
+    status: `draft`,
+    sentence: `さむいですから、まどを ${BLANK} ください。`,
+    en: `It is cold, so please close the window.`,
+    answer: `しめて`,
+    wrong: [`あけて`, `つけて`, `きって`],
+    difficulty: 1,
+    note: `A cold room wants the window shut.`,
+    ...overrides
+  });
+  const paraphrase = (
+    overrides: Partial<ParaphraseItem> = {}
+  ): ParaphraseItem => ({
+    id: `n5-g4-0001`,
+    type: `paraphrase`,
+    status: `draft`,
+    sentence: `あには えいごの きょうしです。`,
+    en: `My older brother is an English teacher.`,
+    answer: `あには えいごを おしえて います。`,
+    wrong: [
+      `あには えいごを ならって います。`,
+      `あには えいごが すきです。`,
+      `あには えいごの がくせいです。`
+    ],
+    difficulty: 1,
+    note: `きょうし is a teacher: someone who teaches.`,
+    ...overrides
+  });
+
+  it(`passes a well-formed item of each type`, () => {
+    for (const each of [kanji(), spelling(), context(), paraphrase()]) {
+      expect(itemProblems(each, POINTS)).toEqual([]);
+    }
+  });
+
+  it(`catches a kanji outside the word a question tests`, () => {
+    // WHY: Section 1 writes everything in kana except what it tests, and prints no readings. A kanji elsewhere would need a reading the card cannot show without breaking that rule.
+    expect(
+      itemProblems(
+        kanji({ sentence: `{今日|きょう}と __先週__は いそがしかったです。` }),
+        POINTS
+      )
+    ).toContain(
+      `n5-g1-0001: Section 1 prints no readings; write the sentence without ruby`
+    );
+    expect(
+      itemProblems(
+        kanji({ sentence: `今日と __先週__は いそがしかったです。` }),
+        POINTS
+      )
+    ).toEqual([
+      `n5-g1-0001: kanji 今 in the sentence; Section 1 writes everything but the tested word in kana`,
+      `n5-g1-0001: kanji 日 in the sentence; Section 1 writes everything but the tested word in kana`
+    ]);
+    expect(
+      itemProblems(
+        paraphrase({ answer: `あには えいごを {教|おし}えて います。` }),
+        POINTS
+      )
+    ).toContain(
+      `n5-g4-0001: kanji 教 in an option; Section 1 writes these in kana`
+    );
+  });
+
+  it(`asks 漢字読み for a kanji the paper would test, answered in hiragana`, () => {
+    // WHY: the paper asks the reading ひらがなで, of words in N5 and N4 kanji. A katakana answer, a target with nothing to read, or a kanji above N4 is a different test.
+    expect(
+      itemProblems(
+        kanji({ wrong: [`センシュウ`, `せんじゅう`, `さきしゅう`] }),
+        POINTS
+      )
+    ).toEqual([
+      `n5-g1-0001: option "センシュウ" is not hiragana; 漢字読み answers are written ひらがなで`
+    ]);
+    expect(
+      itemProblems(
+        kanji({ sentence: `__せんしゅう__ うみへ いきました。` }),
+        POINTS
+      )
+    ).toEqual([`n5-g1-0001: the underlined word has no kanji to read`]);
+    expect(
+      itemProblems(
+        kanji({
+          word: `机`,
+          sentence: `__机__の うえに あります。`,
+          answer: `つくえ`,
+          wrong: [`つぐえ`, `つくい`, `づくえ`]
+        }),
+        POINTS
+      )
+    ).toEqual([
+      `n5-g1-0001: kanji 机 is above N4; the paper would not ask its reading`
+    ]);
+  });
+
+  it(`asks 表記 to spell a kana word in kanji or katakana`, () => {
+    // WHY: 表記 tests writing. An answer already in hiragana tests nothing, and an underlined word in kanji shows the student the answer.
+    expect(itemProblems(spelling({ answer: `がっこう` }), POINTS)).toEqual([
+      `n5-g2-0001: the answer is all hiragana; a 表記 answer is written in kanji or katakana`
+    ]);
+    expect(
+      itemProblems(
+        spelling({ sentence: `ヤンさんの __学校__は どこですか。` }),
+        POINTS
+      )
+    ).toEqual([
+      `n5-g2-0001: kanji 学 in the sentence; Section 1 writes everything but the tested word in kana`,
+      `n5-g2-0001: kanji 校 in the sentence; Section 1 writes everything but the tested word in kana`,
+      `n5-g2-0001: the underlined word must be kana; it is what the student spells`
+    ]);
+  });
+
+  it(`underlines exactly one word where the paper does, and nowhere else`, () => {
+    // WHY: the card underlines what is asked about. Two underlines leave the student guessing which; an underline on a 文脈規定 sentence points at something that is not asked.
+    expect(
+      itemProblems(kanji({ sentence: `先週 うみへ いきました。` }), POINTS)
+    ).toContain(`n5-g1-0001: underline exactly one word, as __…__`);
+    expect(
+      itemProblems(
+        context({ sentence: `__さむい__ですから、まどを ${BLANK} ください。` }),
+        POINTS
+      )
+    ).toEqual([`n5-g3-0001: only 漢字読み and 表記 underline a word`]);
+    expect(
+      itemProblems(
+        context({ sentence: `さむいですから、まどを しめて ください。` }),
+        POINTS
+      )
+    ).toEqual([`n5-g3-0001: a 文脈規定 sentence has exactly one ${BLANK}`]);
+  });
+
+  it(`asks a medium or hard question to say why each wrong option is wrong`, () => {
+    // WHY: a near-miss reading such as せんしゅ is wrong by a rule the student may not know; the user asked for a why at medium and hard, as for reading.
+    const hard = kanji({
+      difficulty: 3,
+      wrong: [
+        { option: `せんしゅ`, why: `しゅう is long: せんしゅう.` },
+        `せんじゅう`,
+        `さきしゅう`
+      ]
+    });
+    expect(itemProblems(hard, POINTS)).toEqual([
+      `n5-g1-0001: a medium or hard question says why each wrong option is wrong; "せんじゅう" has no why`,
+      `n5-g1-0001: a medium or hard question says why each wrong option is wrong; "さきしゅう" has no why`
+    ]);
+  });
+
+  it(`points out an answer the sentence already shows`, () => {
+    // WHY: a 漢字読み sentence that has せんしゅう in kana elsewhere gives the reading away. A hint, because a short answer can sit inside another word by chance.
+    expect(
+      itemHints(kanji({ sentence: `せんしゅうは __先週__です。` }))
+    ).toEqual([
+      `n5-g1-0001: the answer "せんしゅう" also appears outside the underlined word, which may give it away`
+    ]);
+    expect(itemHints(kanji())).toEqual([]);
+  });
+});
+
+describe(`the word list`, () => {
+  const LIST: VocabList = {
+    source: `test`,
+    levels: `test`,
+    license: `test`,
+    words: [
+      { level: 5, kanji: [`大人`], kana: [`おとな`] },
+      { level: 5, kanji: [`橋`], kana: [`はし`] },
+      { level: 5, kanji: [`箸`], kana: [`はし`] },
+      { level: 4, kanji: [`港`], kana: [`みなと`] }
+    ],
+    readings: {
+      大人: [`おとな`, `だいにん`, `たいじん`],
+      橋: [`はし`],
+      箸: [`はし`],
+      港: [`みなと`]
+    }
+  };
+  const read = (overrides: Partial<KanjiItem> = {}): KanjiItem => ({
+    id: `n5-g1-0001`,
+    type: `kanji`,
+    status: `draft`,
+    word: `大人`,
+    sentence: `__大人__の きっぷは いくらですか。`,
+    en: `How much is an adult ticket?`,
+    answer: `おとな`,
+    wrong: [`おおと`, `おとうな`, `おどな`],
+    difficulty: 1,
+    note: `n`,
+    ...overrides
+  });
+  const spell = (overrides: Partial<SpellingItem> = {}): SpellingItem => ({
+    id: `n5-g2-0001`,
+    type: `spelling`,
+    status: `draft`,
+    word: `橋`,
+    sentence: `この __はし__を わたります。`,
+    en: `I cross this bridge.`,
+    answer: `橋`,
+    wrong: [`矯`, `槁`, `喬`],
+    difficulty: 1,
+    note: `n`,
+    ...overrides
+  });
+
+  it(`passes words on the list, read and written as JMdict has them`, () => {
+    expect(wordProblems([read(), spell()], LIST)).toEqual([]);
+  });
+
+  it(`catches a 漢字読み option that is another reading of the same kanji`, () => {
+    // WHY: on a fare sign 大人 is read だいにん. An option that is right somewhere is a trap code can see and a reviewer can miss; the paper never uses one.
+    expect(
+      wordProblems([read({ wrong: [`だいにん`, `おとうな`, `おどな`] })], LIST)
+    ).toEqual([
+      `n5-g1-0001: だいにん is also a reading of 大人, so the option is right somewhere`
+    ]);
+  });
+
+  it(`catches a 表記 option that is another word with the same reading`, () => {
+    // WHY: はし is 橋, a bridge, and 箸, chopsticks. Only the sentence tells them apart, so 表記 must not ask the student to choose between them.
+    expect(wordProblems([spell({ wrong: [`箸`, `槁`, `喬`] })], LIST)).toEqual([
+      `n5-g2-0001: 箸 is also an N5 or N4 word read はし, so the option is right somewhere`
+    ]);
+  });
+
+  it(`catches an answer the dictionary does not give, and a word off the list`, () => {
+    // WHY: a typo in an answer key marks every right student wrong. And the paper tests N5 words: a word on neither list is off level, or misspelt.
+    expect(
+      wordProblems(
+        [read({ answer: `おとうな`, wrong: [`おおと`, `おとな`, `おどな`] })],
+        LIST
+      )
+    ).toEqual([
+      `n5-g1-0001: JMdict does not read 大人 as おとうな`,
+      `n5-g1-0001: おとな is also a reading of 大人, so the option is right somewhere`
+    ]);
+    expect(wordProblems([read({ word: `机` })], LIST)).toEqual([
+      `n5-g1-0001: 机 is not an N5 or N4 word on the list; check its spelling, or choose another word`
+    ]);
+  });
+
+  it(`points out an N4 word, which the N5 paper rarely tests`, () => {
+    expect(
+      wordHints(
+        [
+          spell({
+            word: `港`,
+            sentence: `__みなと__へ いきます。`,
+            answer: `港`
+          })
+        ],
+        LIST
+      )
+    ).toEqual([`n5-g2-0001: 港 is an N4 word; the N5 paper tests N5 words`]);
+    expect(wordHints([spell()], LIST)).toEqual([]);
   });
 });
 

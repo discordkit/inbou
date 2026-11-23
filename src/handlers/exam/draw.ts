@@ -9,27 +9,34 @@ import {
   type TestId
 } from "./blueprint.js";
 import {
+  BLANK,
   chunksOf,
   fill,
+  isVocab,
   joinChunks,
   materialMarkup,
   optionText,
   parse,
   partsOf,
   plain,
+  targetsOf,
   whyOf,
   WINDOW_SIZE,
+  withTarget,
   type ComposeItem,
   type Difficulty,
   type FormItem,
   type InfoItem,
   type Item,
+  type ItemType,
   type MidItem,
+  type Option,
   type PassageItem,
   type ReadingQuestion,
   type ReviewLink,
   type ShortItem,
-  type Slot
+  type Slot,
+  type VocabItem
 } from "./items.js";
 
 /**
@@ -56,6 +63,9 @@ export interface ExamQuestion {
   itemId: string;
   /** Which slot, window or blank of the item was asked, 1-based. */
   slot: number;
+  /** The kind of question: its instructions, timer and card. */
+  type: ItemType;
+  /** The 問題 number the card shows. */
   mondai: Mondai;
   /** 1-based, numbered straight through the test, as on the paper. */
   number: number;
@@ -117,16 +127,22 @@ export interface ExamQuestion {
  * higher because arranging takes longer than choosing; 問題3 lower because its
  * passage adds most of the time.
  */
-export const BASE_MS: Readonly<Record<Mondai, number>> = {
-  1: 40_000,
-  2: 60_000,
-  3: 30_000,
+export const BASE_MS: Readonly<Record<ItemType, number>> = {
+  form: 40_000,
+  compose: 60_000,
+  passage: 30_000,
   // Reading: per question, and the text is read once per card on top.
-  4: 30_000,
-  5: 30_000,
+  short: 30_000,
+  mid: 30_000,
   // A picture may need opening at full size before it can be read: the user's
   // condition for pictures taller than a chat window.
-  6: 60_000
+  info: 60_000,
+  // Vocabulary: about the paper's pace with the reading time added, 20
+  // minutes for 21 questions. The corpus test holds the average to it.
+  kanji: 35_000,
+  spelling: 35_000,
+  context: 35_000,
+  paraphrase: 35_000
 };
 
 /** Reading time per character of text the player has to read. */
@@ -136,14 +152,20 @@ export const PER_CHAR_MS = 500;
  * How much longer than the formula above each 問題 runs.
  *
  * Set against the real paper (the user's choice, 2026-11-22). N5's grammar-and-reading section is 22 questions in 40 minutes, and /bunpou and /dokkai are those 22. /bunpou keeps the formula's pace, about a minute a question, as guides advise for grammar. Reading gets the rest, about 22 minutes: about 3.4 minutes for a 問題4 question, 5.4 for a 問題5 question and 4.5 for 問題6, near the guides' 3 for a short text and 5 to 6 for a longer one. The factors turn the formula's average for each 問題 into those times, and keep longer texts longer. The corpus test holds the pair to the real 40 minutes.
+ *
+ * /goi keeps the formula's pace. Section 1 allows 20 minutes for 21 questions, about what the formula gives its short sentences, and a corpus test holds it there.
  */
-export const PACE: Readonly<Record<Mondai, number>> = {
-  1: 1,
-  2: 1,
-  3: 1,
-  4: 2,
-  5: 2.5,
-  6: 1.8
+export const PACE: Readonly<Record<ItemType, number>> = {
+  form: 1,
+  compose: 1,
+  passage: 1,
+  short: 2,
+  mid: 2.5,
+  info: 1.8,
+  kanji: 1,
+  spelling: 1,
+  context: 1,
+  paraphrase: 1
 };
 
 /** How a ★ line shows its four blanks, with the star in one. */
@@ -179,7 +201,7 @@ const tokenFrom = (random: Random): string =>
  * countdown shows.
  */
 export const timeoutFor = (
-  mondai: Mondai,
+  type: ItemType,
   text: string,
   options: readonly string[]
 ): number => {
@@ -187,7 +209,7 @@ export const timeoutFor = (
     plain(text).length +
     options.reduce((sum, option) => sum + plain(option).length, 0);
   return (
-    Math.ceil(((BASE_MS[mondai] + chars * PER_CHAR_MS) * PACE[mondai]) / 1000) *
+    Math.ceil(((BASE_MS[type] + chars * PER_CHAR_MS) * PACE[type]) / 1000) *
     1000
   );
 };
@@ -217,26 +239,85 @@ interface Card {
   points: readonly string[];
 }
 
-/** A deck whose cards are drawn one by one, by difficulty. */
-type DeckMondai = MixPlan[`mondai`] | 4 | 6;
+/** What a vocabulary card asks for, and everything it shows a student: the two halves of a give-away. */
+interface Spoils {
+  /** Written forms it asks about: the kanji a 漢字読み card reads, a 表記 answer. Given away wherever another card shows them. */
+  written: string[];
+  /** Words it asks for: a 漢字読み reading, or a 文脈規定 or 言い換え answer. Given away when another card offers it as an option, and explains it. */
+  words: string[];
+  /** Every text the card shows: its sentence, options, note and whys. */
+  shown: string;
+  options: string[];
+}
+
+/** Each item's spoils, worked out once: a test compares them many times, inside the Worker's CPU budget. */
+const SPOILS = new WeakMap<VocabItem, Spoils>();
+
+const spoilsOf = (item: VocabItem): Spoils => {
+  const known = SPOILS.get(item);
+  if (known !== undefined) return known;
+  const spoils = worked(item);
+  SPOILS.set(item, spoils);
+  return spoils;
+};
+
+const worked = (item: VocabItem): Spoils => {
+  const options = [item.answer, ...item.wrong.map(optionText)];
+  const shown = [
+    item.sentence,
+    item.note,
+    ...options,
+    ...item.wrong.flatMap((option) => whyOf(option) ?? [])
+  ].join(`\n`);
+  // A 漢字読み reading is a word too: the 夏 card's options teach that ふゆ is winter before a 冬 card asks it.
+  return item.type === `kanji`
+    ? {
+        written: targetsOf(item.sentence),
+        words: [item.answer],
+        shown,
+        options
+      }
+    : item.type === `spelling`
+      ? { written: [item.answer], words: [], shown, options }
+      : { written: [], words: [item.answer], shown, options };
+};
+
+const spoils = (asks: Spoils, shows: Spoils): boolean =>
+  asks.written.some((form) => shows.shown.includes(form)) ||
+  asks.words.some((word) => shows.options.includes(word));
 
 /**
- * 問題1's cards are slots; 問題2's are windows; 問題4's and 問題6's are the questions of their texts and pictures.
+ * Would two cards in one test give each other's answer away?
+ *
+ * A 漢字読み card reveals 雨 as あめ, so a 表記 card asking あめ minutes later is answered. A counter card explains まい as its wrong option, so a card asking for the counter for paper is too. Either way round counts: within a deck the order is shuffled, and a student sees every reveal before the next card.
  */
-const cardsOf = (items: readonly Item[], mondai: DeckMondai): Card[] =>
+const giveAway = (a: Item, b: Item): boolean => {
+  if (!isVocab(a) || !isVocab(b)) return false;
+  const x = spoilsOf(a);
+  const y = spoilsOf(b);
+  return spoils(x, y) || spoils(y, x);
+};
+
+/** A deck whose cards are drawn one by one, by difficulty. */
+type DeckType = MixPlan[`type`] | `short` | `info`;
+
+/**
+ * A form's cards are its slots; a compose item's are its windows; a short text's and a picture's are their questions; a vocabulary item is one card.
+ */
+const cardsOf = (items: readonly Item[], type: DeckType): Card[] =>
   items.flatMap((item): Card[] => {
+    if (item.type !== type) return [];
     const units: ReadonlyArray<{
       difficulty: Difficulty;
       points?: readonly string[];
     }> =
-      mondai === 1 && item.type === `form`
+      item.type === `form`
         ? item.slots
-        : mondai === 2 && item.type === `compose`
+        : item.type === `compose`
           ? item.windows
-          : (mondai === 4 && item.type === `short`) ||
-              (mondai === 6 && item.type === `info`)
+          : item.type === `short` || item.type === `info`
             ? item.questions
-            : [];
+            : [item];
     return units.map((unit, index) => ({
       item,
       index,
@@ -250,7 +331,9 @@ const LEVELS: readonly Difficulty[] = [1, 2, 3];
 /**
  * Draw one deck's share, by difficulty.
  *
- * Three preferences, strongest first:
+ * One rule: **never a card that gives an answer away**, to or from a card this test already holds (`asked`) or this deck has drawn. See {@link giveAway}.
+ *
+ * Then three preferences, strongest first:
  *
  *  1. **One card per item.** Two slots of the same sentence in one test would
  *     show the sentence twice, with the second answer already given away.
@@ -264,10 +347,14 @@ const LEVELS: readonly Difficulty[] = [1, 2, 3];
  */
 export const drawDeck = (
   items: readonly Item[],
-  plan: { mondai: DeckMondai; mix: Mix },
-  random: Random
+  plan: { type: DeckType; mix: Mix },
+  random: Random,
+  asked: readonly Item[] = []
 ): Array<{ item: Item; index: number }> => {
-  const cards = cardsOf(items, plan.mondai);
+  // Filtered once against what the test holds, then again only against each new pick, so a draw stays cheap.
+  let cards = cardsOf(items, plan.type).filter(
+    (card) => !asked.some((other) => giveAway(card.item, other))
+  );
   const wanted = LEVELS.flatMap((level) =>
     Array.from({ length: plan.mix[level] }, () => level)
   );
@@ -296,6 +383,9 @@ export const drawDeck = (
     chosen.push(card);
     usedItems.add(card.item.id);
     for (const point of card.points) usedPoints.add(point);
+    cards = cards.filter(
+      (other) => other.item === card.item || !giveAway(other.item, card.item)
+    );
   }
 
   return shuffle(chosen, random).map(({ item, index }) => ({ item, index }));
@@ -326,6 +416,7 @@ export const formQuestion = (
   return {
     itemId: item.id,
     slot: asked,
+    type: `form`,
     mondai: 1,
     number,
     card: number,
@@ -338,7 +429,7 @@ export const formQuestion = (
     en: item.en,
     note: slot.note,
     token: tokenFrom(random),
-    timeoutMs: timeoutFor(1, prompt, options)
+    timeoutMs: timeoutFor(`form`, prompt, options)
   };
 };
 
@@ -391,6 +482,7 @@ export const composeQuestion = (
   return {
     itemId: item.id,
     slot: windowIndex + 1,
+    type: `compose`,
     mondai: 2,
     number,
     card: number,
@@ -403,7 +495,7 @@ export const composeQuestion = (
     en: item.en,
     note: window.note,
     token: tokenFrom(random),
-    timeoutMs: timeoutFor(2, prompt, options)
+    timeoutMs: timeoutFor(`compose`, prompt, options)
   };
 };
 
@@ -467,6 +559,7 @@ export const passageQuestions = (
     return {
       itemId: item.id,
       slot,
+      type: `passage`,
       mondai: 3,
       number: numberOf(slot),
       card: firstNumber,
@@ -480,7 +573,7 @@ export const passageQuestions = (
       en: position === asked.length - 1 ? item.en : ``,
       note: blank.note,
       token: tokenFrom(random),
-      timeoutMs: timeoutFor(3, position === 0 ? prompt : ``, options)
+      timeoutMs: timeoutFor(`passage`, position === 0 ? prompt : ``, options)
     };
   });
 };
@@ -508,22 +601,35 @@ const MONDAI_OF: Readonly<Record<ReadingItem[`type`], 4 | 5 | 6>> = {
 };
 
 /**
+ * The answer and three of its wrong options, shuffled, with each option's why beside it.
+ *
+ * Shuffled as pairs, so a why can never end up under another option.
+ */
+const drawnOptions = (
+  answer: string,
+  wrong: readonly Option[],
+  random: Random
+): { options: string[]; whys: string[]; correct: number } => {
+  const drawn = shuffle(wrong, random).slice(0, OPTION_COUNT - 1);
+  const all = shuffle([answer, ...drawn], random);
+  return {
+    options: all.map(optionText),
+    whys: all.map((option) => whyOf(option) ?? ``),
+    correct: all.indexOf(answer)
+  };
+};
+
+/**
  * A reading question's four options, with each option's why beside it.
  *
- * Drawn options are shuffled as pairs, so a why can never end up under another option. Ordered options keep the order they are written in: the paper prints times and prices in order, and shuffled, 9:30 could come before 9:00.
+ * Drawn options are shuffled as pairs (see {@link drawnOptions}). Ordered options keep the order they are written in: the paper prints times and prices in order, and shuffled, 9:30 could come before 9:00.
  */
 const readingOptions = (
   question: ReadingQuestion,
   random: Random
 ): { options: string[]; whys: string[]; correct: number } => {
   if (`wrong` in question) {
-    const drawn = shuffle(question.wrong, random).slice(0, OPTION_COUNT - 1);
-    const all = shuffle([question.answer, ...drawn], random);
-    return {
-      options: all.map(optionText),
-      whys: all.map((option) => whyOf(option) ?? ``),
-      correct: all.indexOf(question.answer)
-    };
+    return drawnOptions(question.answer, question.wrong, random);
   }
   return {
     options: question.options.map(optionText),
@@ -562,6 +668,7 @@ export const readingQuestions = (
     return {
       itemId: item.id,
       slot: index + 1,
+      type: item.type,
       mondai,
       number: firstNumber + position,
       card: firstNumber,
@@ -580,9 +687,94 @@ export const readingQuestions = (
       en: position === asked.length - 1 ? item.en : ``,
       note: question.note,
       token: tokenFrom(random),
-      timeoutMs: timeoutFor(mondai, `${read}${question.question}`, options)
+      timeoutMs: timeoutFor(item.type, `${read}${question.question}`, options)
     };
   });
+};
+
+const VOCAB_MONDAI: Readonly<Record<VocabItem[`type`], Mondai>> = {
+  kanji: 1,
+  spelling: 2,
+  context: 3,
+  paraphrase: 4
+};
+
+/**
+ * What a vocabulary card shows, and what its reveal shows.
+ *
+ * - 漢字読み shows the kanji underlined and no reading: the reading is the question. The reveal adds it.
+ * - 表記 shows the word in kana underlined. The reveal shows it written, with its reading when it has kanji.
+ * - 文脈規定 shows its blank. The reveal fills it in.
+ * - 言い換え underlines the whole sentence, as the paper does; the answer is another sentence, named in the reveal.
+ */
+const vocabPrompts = (
+  item: VocabItem
+): { prompt: string; answered: string } => {
+  const target = (show: (word: string) => string): string =>
+    withTarget(item.sentence, show);
+  switch (item.type) {
+    case `kanji`:
+      return {
+        prompt: item.sentence,
+        answered: target((word) => `__{${word}|${item.answer}}__`)
+      };
+    case `spelling`:
+      return {
+        prompt: item.sentence,
+        answered: target((word) =>
+          /\p{Script=Han}/u.test(item.answer)
+            ? `__{${item.answer}|${word}}__`
+            : `__${item.answer}__`
+        )
+      };
+    case `context`:
+      return {
+        prompt: item.sentence,
+        answered: item.sentence.replace(BLANK, `__${item.answer}__`)
+      };
+    case `paraphrase`:
+      return {
+        prompt: `__${item.sentence}__`,
+        answered: `__${item.sentence}__`
+      };
+  }
+};
+
+/**
+ * Section 1: one sentence, one question, on a card of its own.
+ *
+ * Whys are kept only when the item has some: a card's whys are what make the session hold its voters' reply tokens, and a token is a credential, so a card with nothing to explain holds none.
+ */
+export const vocabQuestion = (
+  item: VocabItem,
+  number: number,
+  random: Random
+): ExamQuestion => {
+  const { prompt, answered } = vocabPrompts(item);
+  const { options, whys, correct } = drawnOptions(
+    item.answer,
+    item.wrong,
+    random
+  );
+  return {
+    itemId: item.id,
+    slot: 1,
+    type: item.type,
+    mondai: VOCAB_MONDAI[item.type],
+    number,
+    card: number,
+    prompt,
+    answered,
+    options,
+    ...(whys.some((why) => why !== ``) ? { whys } : {}),
+    correct,
+    difficulty: item.difficulty,
+    points: [],
+    en: item.en,
+    note: item.note,
+    token: tokenFrom(random),
+    timeoutMs: timeoutFor(item.type, prompt, options)
+  };
 };
 
 /** Every way to choose `size` entries of `list`, each in list order. */
@@ -692,6 +884,8 @@ export const drawTest = (
   pictures: Readonly<Record<string, string>> = {}
 ): ExamQuestion[] => {
   const questions: ExamQuestion[] = [];
+  /** The vocabulary asked so far, so a later deck cannot give an earlier answer away, nor have its own given away. */
+  const asked: Item[] = [];
   const plans = BLUEPRINTS[test];
   const reading = plans.filter(
     (plan): plan is ReadingPlan => `questions` in plan
@@ -733,7 +927,7 @@ export const drawTest = (
       }
       for (const { item, index } of drawDeck(
         items,
-        { mondai: plan.mondai, mix: mixOf(levels) },
+        { type: plan.type, mix: mixOf(levels) },
         random
       )) {
         if (item.type === `short` || item.type === `info`) {
@@ -750,12 +944,15 @@ export const drawTest = (
       }
       continue;
     }
-    for (const { item, index } of drawDeck(items, plan, random)) {
+    for (const { item, index } of drawDeck(items, plan, random, asked)) {
       const number = questions.length + 1;
       if (item.type === `form`) {
         questions.push(formQuestion(item, index, number, random));
       } else if (item.type === `compose`) {
         questions.push(composeQuestion(item, index, number, random));
+      } else if (isVocab(item)) {
+        questions.push(vocabQuestion(item, number, random));
+        asked.push(item);
       }
     }
   }

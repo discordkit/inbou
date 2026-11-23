@@ -11,19 +11,26 @@ import {
   readingQuestions,
   reviewOf,
   timeoutFor,
+  vocabQuestion,
   type Random
 } from "../draw.js";
 import {
+  BLANK,
   materialMarkup,
   plain,
+  readingsOf,
   type ComposeItem,
+  type ContextItem,
   type Difficulty,
   type FormItem,
   type InfoItem,
   type Item,
+  type KanjiItem,
   type MidItem,
+  type ParaphraseItem,
   type PassageItem,
-  type ShortItem
+  type ShortItem,
+  type SpellingItem
 } from "../items.js";
 
 /**
@@ -164,7 +171,7 @@ describe(`drawing a deck`, () => {
       ...[1, 2, 3, 4, 5, 6].map((n) => item(n, 1, `same-point`)),
       ...[7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map((n) => item(n, 1))
     ];
-    const plan = { mondai: 1 as const, mix: { 1: 9, 2: 0, 3: 0 } };
+    const plan = { type: `form` as const, mix: { 1: 9, 2: 0, 3: 0 } };
     for (let seed = 1; seed <= 20; seed += 1) {
       const drawn = drawDeck(items, plan, seeded(seed));
       const same = drawn.filter(
@@ -226,8 +233,13 @@ describe(`a question`, () => {
   it(`gives longer questions more time, in whole seconds`, () => {
     // WHY: the timer is weighted by length, so a dialogue does not get the
     // same time as a five-word sentence.
-    const short = timeoutFor(1, `ぶん（1）です。`, [`あ`, `い`, `う`, `え`]);
-    const long = timeoutFor(1, `ながい ながい ながい ぶん（1）です。`, [
+    const short = timeoutFor(`form`, `ぶん（1）です。`, [
+      `あ`,
+      `い`,
+      `う`,
+      `え`
+    ]);
+    const long = timeoutFor(`form`, `ながい ながい ながい ぶん（1）です。`, [
       `あ`,
       `い`,
       `う`,
@@ -711,7 +723,7 @@ describe(`a reading test`, () => {
       seeded(1)
     );
     expect(second?.timeoutMs).toBe(
-      timeoutFor(5, second?.question ?? ``, second?.options ?? [])
+      timeoutFor(`mid`, second?.question ?? ``, second?.options ?? [])
     );
     expect(first?.timeoutMs).toBeGreaterThan(second?.timeoutMs ?? 0);
 
@@ -720,5 +732,215 @@ describe(`a reading test`, () => {
     expect(page?.timeoutMs).toBeGreaterThanOrEqual(
       60_000 + plain(material).length * PER_CHAR_MS
     );
+  });
+});
+
+describe(`a vocabulary test`, () => {
+  const pad = (n: number): string => String(n).padStart(4, `0`);
+  const kanji = (
+    n: number,
+    word: string,
+    difficulty: Difficulty = 1
+  ): KanjiItem => ({
+    id: `n5-g1-${pad(n)}`,
+    type: `kanji`,
+    status: `reviewed`,
+    word,
+    sentence: `きのう __${word}__を みました。`,
+    en: `e`,
+    // Numbered: two items with one reading would give each other away.
+    answer: `よみ${String(n)}`,
+    wrong: [`よみい${String(n)}`, `よーみ${String(n)}`, `よっみ${String(n)}`],
+    difficulty,
+    note: `n`
+  });
+  const spelling = (
+    n: number,
+    word: string,
+    difficulty: Difficulty = 1
+  ): SpellingItem => ({
+    id: `n5-g2-${pad(n)}`,
+    type: `spelling`,
+    status: `reviewed`,
+    word,
+    sentence: `きのう __よみ__を みました。`,
+    en: `e`,
+    answer: word,
+    wrong: [`甲`, `乙`, `丙`],
+    difficulty,
+    note: `n`
+  });
+  const context = (n: number, difficulty: Difficulty = 1): ContextItem => ({
+    id: `n5-g3-${pad(n)}`,
+    type: `context`,
+    status: `reviewed`,
+    sentence: `まどを ${BLANK} ください。`,
+    en: `e`,
+    // Numbered, so no item offers another's answer as an option: that would be a give-away.
+    answer: `しめて${String(n)}`,
+    wrong: [`あけて${String(n)}`, `つけて${String(n)}`, `きって${String(n)}`],
+    difficulty,
+    note: `n`
+  });
+  const paraphrase = (
+    n: number,
+    difficulty: Difficulty = 1
+  ): ParaphraseItem => ({
+    id: `n5-g4-${pad(n)}`,
+    type: `paraphrase`,
+    status: `reviewed`,
+    sentence: `あには きょうしです。`,
+    en: `e`,
+    answer: `あには おしえて います。${String(n)}`,
+    wrong: [
+      `あには ならって います。${String(n)}`,
+      `あには がくせいです。${String(n)}`,
+      `あには ねて います。${String(n)}`
+    ],
+    difficulty,
+    note: `n`
+  });
+  const levels: Difficulty[] = [1, 2, 3];
+  const WORDS = [
+    `山`,
+    `川`,
+    `雨`,
+    `空`,
+    `花`,
+    `目`,
+    `口`,
+    `手`,
+    `足`,
+    `耳`,
+    `車`,
+    `本`
+  ];
+  const corpus: Item[] = [
+    ...WORDS.map((word, i) => kanji(i + 1, word, levels[i % 3])),
+    ...WORDS.map((word, i) => spelling(i + 1, word, levels[i % 3])),
+    ...Array.from({ length: 9 }, (_, i) => context(i + 1, levels[i % 3])),
+    ...Array.from({ length: 6 }, (_, i) => paraphrase(i + 1, levels[i % 3]))
+  ];
+
+  it(`draws 7 + 5 + 6 + 3, numbered 1 to 21, in the paper's order`, () => {
+    // WHY: /goi is the real Section 1, with its own もんだい1–4, so students meet the paper's shape and count.
+    const test = drawTest(`goi`, corpus, {}, seeded(1));
+    expect(test.map((q) => q.number)).toEqual(
+      Array.from({ length: 21 }, (_, i) => i + 1)
+    );
+    expect(test.map((q) => `${String(q.mondai)} ${q.type}`)).toEqual([
+      ...Array.from({ length: 7 }, () => `1 kanji`),
+      ...Array.from({ length: 5 }, () => `2 spelling`),
+      ...Array.from({ length: 6 }, () => `3 context`),
+      ...Array.from({ length: 3 }, () => `4 paraphrase`)
+    ]);
+  });
+
+  it(`never asks 表記 for a word 漢字読み showed in the same test`, () => {
+    // WHY: 漢字読み's reveal shows 雨 as あめ, so a 表記 card asking あめ minutes later has had its answer given away. Every word here is in both decks, so only the rule keeps them apart.
+    for (let seed = 1; seed <= 40; seed += 1) {
+      const test = drawTest(`goi`, corpus, {}, seeded(seed * 1_000_003));
+      const read = new Set(
+        test.filter((q) => q.type === `kanji`).map((q) => q.prompt)
+      );
+      const spelled = test
+        .filter((q) => q.type === `spelling`)
+        .map((q) => corpus.find((entry) => entry.id === q.itemId))
+        .map((entry) => (entry?.type === `spelling` ? entry.word : ``));
+      expect(spelled).toHaveLength(5);
+      for (const word of spelled) {
+        expect(read).not.toContain(`きのう __${word}__を みました。`);
+      }
+    }
+  });
+
+  it(`shows a 漢字読み word without its reading until the reveal`, () => {
+    // WHY: the reading is the question. On the card it would be the answer.
+    const q = vocabQuestion(kanji(1, `雨`), 1, seeded(1));
+    expect(q.prompt).toBe(`きのう __雨__を みました。`);
+    expect(readingsOf(q.prompt)).toEqual([]);
+    expect(q.answered).toBe(`きのう __{雨|よみ1}__を みました。`);
+  });
+
+  it(`reveals each type's answer in its sentence`, () => {
+    // WHY: the reveal is where a student checks themselves, so it shows the sentence as it should read: the word written, the blank filled, the meaning matched.
+    expect(vocabQuestion(spelling(1, `雨`), 1, seeded(1)).answered).toBe(
+      `きのう __{雨|よみ}__を みました。`
+    );
+    expect(
+      vocabQuestion(
+        { ...spelling(2, `シャツ`), answer: `シャツ` },
+        1,
+        seeded(1)
+      ).answered
+    ).toBe(`きのう __シャツ__を みました。`);
+    expect(vocabQuestion(context(1), 1, seeded(1)).answered).toBe(
+      `まどを __しめて1__ ください。`
+    );
+    const p = vocabQuestion(paraphrase(1), 1, seeded(1));
+    expect(p.prompt).toBe(`__あには きょうしです。__`);
+  });
+
+  it(`never puts two cards in a test when one's options or notes give the other's answer away`, () => {
+    // WHY: a counter card explains まい as a wrong option ("まい counts flat things"), so a card asking for the counter for paper is answered before it is asked. The same for a 表記 card offering 目 as a look-alike beside one asking め. Found while drafting the second batch.
+    const counters: ContextItem[] = [
+      { ...context(1), answer: `ひき`, wrong: [`まい`, `ほん`, `だい`] },
+      { ...context(2), answer: `まい`, wrong: [`こ`, `さつ`, `ほん`] }
+    ];
+    const ear: SpellingItem = {
+      ...spelling(20, `耳`),
+      wrong: [`取`, `目`, `自`]
+    };
+    const eye = spelling(21, `目`);
+    // A 漢字読み reading is given away as an option too: the 夏 card teaches that ふゆ is winter.
+    const summer: KanjiItem = {
+      ...kanji(20, `夏`),
+      answer: `なつ`,
+      wrong: [`ふゆ`, `はる`, `あき`]
+    };
+    const winter: KanjiItem = {
+      ...kanji(21, `冬`),
+      answer: `ふゆ`,
+      wrong: [`ふよ`, `ぶゆ`, `ふうゆ`]
+    };
+    const deck: Item[] = [
+      ...corpus.filter((entry) => entry.type !== `context`),
+      ...counters,
+      ...Array.from({ length: 8 }, (_, i) => context(i + 3, levels[i % 3])),
+      ear,
+      eye,
+      summer,
+      winter
+    ];
+    for (let seed = 1; seed <= 60; seed += 1) {
+      const ids = new Set(
+        drawTest(`goi`, deck, {}, seeded(seed * 1_000_003)).map((q) => q.itemId)
+      );
+      expect(ids.has(counters[0].id) && ids.has(counters[1].id)).toBe(false);
+      expect(ids.has(ear.id) && ids.has(eye.id)).toBe(false);
+      expect(ids.has(summer.id) && ids.has(winter.id)).toBe(false);
+    }
+  });
+
+  it(`keeps each why beside its option, and holds none when nothing is explained`, () => {
+    // WHY: a why that drifted would explain someone else's mistake. And whys are what make the session keep voters' reply tokens, which are credentials: a card with nothing to explain should keep none.
+    const explained: KanjiItem = {
+      ...kanji(1, `雨`, 2),
+      wrong: [
+        { option: `よみい`, why: `why よみい` },
+        { option: `よーみ`, why: `why よーみ` },
+        { option: `よっみ`, why: `why よっみ` },
+        { option: `よみみ`, why: `why よみみ` }
+      ]
+    };
+    for (let seed = 1; seed <= 30; seed += 1) {
+      const q = vocabQuestion(explained, 1, seeded(seed));
+      q.options.forEach((option, index) => {
+        expect(q.whys?.at(index)).toBe(
+          option === `よみ1` ? `` : `why ${option}`
+        );
+      });
+    }
+    expect(vocabQuestion(kanji(1, `雨`), 1, seeded(1)).whys).toBeUndefined();
   });
 });

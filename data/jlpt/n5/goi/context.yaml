@@ -1,0 +1,2023 @@
+# 問題3 文脈規定 — choose the word that fits the blank, （　）.
+#
+# The sentence and the options are all kana, as on the paper. The options are one word class in one form: four て-forms, four counters, four い-adjectives. Exactly one fits: something in the sentence must rule out each of the others, never general knowledge alone. Original sentences only: never copy a published one.
+#
+# A medium or hard question says why each wrong option is wrong (`- option: … why: …`): what the word means, and what in the sentence rules it out. The build fails without them. The note is public at the reveal: what the blank needs.
+
+- id: n5-g3-0001
+  type: context
+  status: reviewed
+  sentence: "ちちは まいあさ しんぶんを （　）。"
+  en: "My father reads the newspaper every morning."
+  answer: よみます
+  wrong: [ききます, のみます, はきます]
+  difficulty: 1
+  note: "This asks what you do with a しんぶん, a newspaper: よみます, read it."
+
+- id: n5-g3-0002
+  type: context
+  status: reviewed
+  sentence: "にほんでは （　）で ごはんを たべます。"
+  en: "In Japan, people eat rice with chopsticks."
+  answer: はし
+  wrong: [はさみ, かさ, かぎ]
+  difficulty: 1
+  note: "This asks what you eat rice with: はし, chopsticks. はさみ are scissors, かさ an umbrella and かぎ a key."
+
+- id: n5-g3-0003
+  type: context
+  status: reviewed
+  sentence: "へやが くらいですから、でんきを （　） ください。"
+  en: "The room is dark, so please turn on the light."
+  answer: つけて
+  wrong:
+    - option: けして
+      why: "けして turns the light off. The room is dark, so you want it on."
+    - option: しめて
+      why: "しめて closes a door or a window, not a light."
+    - option: あけて
+      why: "あけて opens a door or a window. A light is turned on with つけて."
+  difficulty: 2
+  note: "This asks what you do to a light in a dark room: つけて, turn it on."
+
+- id: n5-g3-0004
+  type: context
+  status: reviewed
+  sentence: "この にもつは （　）ですから、ふたりで もちましょう。"
+  en: "This luggage is heavy, so let's carry it together."
+  answer: おもい
+  wrong:
+    - option: かるい
+      why: "かるい is light. A light bag does not need two people."
+    - option: やすい
+      why: "やすい is cheap. The price is no reason for two people to carry it."
+    - option: あたらしい
+      why: "あたらしい is new. Being new is no reason for two people to carry it."
+  difficulty: 2
+  note: "This asks why it takes two people to carry: the luggage is おもい, heavy."
+
+- id: n5-g3-0005
+  type: context
+  status: reviewed
+  sentence: "さむいですから、（　）を きます。"
+  en: "It is cold, so I will put on a sweater."
+  answer: セーター
+  wrong:
+    - option: くつ
+      why: "くつ (shoes) go on with はきます, not きます."
+    - option: めがね
+      why: "めがね (glasses) go on with かけます, not きます."
+    - option: ぼうし
+      why: "ぼうし (a hat) goes on with かぶります, not きます."
+  difficulty: 2
+  note: "This asks what you put on with きます: clothes for the body, such as a セーター. Shoes, glasses and hats each take their own verb."
+
+- id: n5-g3-0006
+  type: context
+  status: reviewed
+  sentence: "えんぴつを 2（　） かいました。"
+  en: "I bought two pencils."
+  answer: ほん
+  wrong:
+    - option: まい
+      why: "まい counts flat things: paper, shirts, tickets."
+    - option: だい
+      why: "だい counts machines: cars, computers."
+    - option: ひき
+      why: "ひき counts small animals: cats, dogs, fish."
+  difficulty: 2
+  note: "This asks the counter for long, thin things such as pencils: ほん. 2ほん is read にほん."
+
+- id: n5-g3-0007
+  type: context
+  status: reviewed
+  sentence: "（　）は あさから あめでしたが、きょうは いい てんきです。"
+  en: "It rained from the morning yesterday, but today the weather is fine."
+  answer: きのう
+  wrong:
+    - option: あした
+      why: "あした is tomorrow, but でした says it has already happened."
+    - option: あさって
+      why: "あさって is the day after tomorrow, still to come. でした is past."
+    - option: らいしゅう
+      why: "らいしゅう is next week, still to come. でした is past."
+  difficulty: 3
+  note: "This asks which day was rainy. でした puts it in the past, and きょう is fine, so it was きのう."
+
+- id: n5-g3-0008
+  type: context
+  status: reviewed
+  sentence: "あたまが いたいですから、（　）を のみました。"
+  en: "I had a headache, so I took some medicine."
+  answer: くすり
+  wrong: [パン, ほん, くつ]
+  difficulty: 1
+  note: "This asks what you take for a headache: くすり, medicine. のむ is the verb for medicine, as for drinks."
+
+- id: n5-g3-0009
+  type: context
+  status: reviewed
+  sentence: "この みせの ケーキは とても （　）です。"
+  en: "The cakes at this shop are very good."
+  answer: おいしい
+  wrong: [ひろい, わかい, せまい]
+  difficulty: 1
+  note: "This asks what a cake can be: おいしい, tasty. ひろい and せまい are for rooms and places, and わかい for people."
+
+- id: n5-g3-0010
+  type: context
+  status: reviewed
+  sentence: "えきの まえで ともだちを （　）。"
+  en: "I waited for my friend in front of the station."
+  answer: まちました
+  wrong: [のみました, よみました, かきました]
+  difficulty: 1
+  note: "This asks what you do for a friend in front of the station: まちました, waited."
+
+- id: n5-g3-0011
+  type: context
+  status: reviewed
+  sentence: "（　）が ふって いますから、かさを もって いきます。"
+  en: "It is raining, so I will take an umbrella."
+  answer: あめ
+  wrong: [かぜ, くも, そら]
+  difficulty: 1
+  note: "This asks what falls, so that you need an umbrella: あめ, rain. ふる is used for rain and snow."
+
+- id: n5-g3-0012
+  type: context
+  status: reviewed
+  sentence: "あついですね。つめたい （　）を のみませんか。"
+  en: "It's hot, isn't it? Shall we have a cold juice?"
+  answer: ジュース
+  wrong: [パン, スプーン, ノート]
+  difficulty: 1
+  note: "This asks what you can drink cold: ジュース."
+
+- id: n5-g3-0013
+  type: context
+  status: reviewed
+  sentence: "にわに ねこが 2（　） います。"
+  en: "There are two cats in the garden."
+  answer: ひき
+  wrong: [まい, ほん, だい]
+  difficulty: 1
+  note: "This asks the counter for small animals: ひき. 2ひき is read にひき."
+
+- id: n5-g3-0014
+  type: context
+  status: reviewed
+  sentence: "この カレーは とても （　）ですから、こどもは たべません。"
+  en: "This curry is very hot, so the children won't eat it."
+  answer: からい
+  wrong:
+    - option: あまい
+      why: "あまい is sweet. Children like sweet food, so it would not stop them."
+    - option: やすい
+      why: "やすい is cheap. A low price is no reason for children not to eat it."
+    - option: あたらしい
+      why: "あたらしい is new. Being new is no reason for children not to eat it."
+  difficulty: 2
+  note: "This asks why the children will not eat the curry: it is からい, hot and spicy."
+
+- id: n5-g3-0015
+  type: context
+  status: reviewed
+  sentence: "（　）で きってを かいました。"
+  en: "I bought stamps at the post office."
+  answer: ゆうびんきょく
+  wrong:
+    - option: ぎんこう
+      why: "ぎんこう is a bank, for money. Stamps are sold at the post office."
+    - option: としょかん
+      why: "としょかん is a library: it lends books and sells nothing."
+    - option: びょういん
+      why: "びょういん is a hospital, where you go when you are ill."
+  difficulty: 2
+  note: "This asks where you buy stamps, きって: at the ゆうびんきょく, the post office."
+
+- id: n5-g3-0016
+  type: context
+  status: reviewed
+  sentence: "ねる まえに シャワーを （　）。"
+  en: "I take a shower before I go to bed."
+  answer: あびます
+  wrong:
+    - option: はいります
+      why: "はいる goes with a bath: おふろに はいります. A shower takes あびる."
+    - option: あらいます
+      why: "あらう washes something, such as your hands or your hair. A shower itself takes あびる."
+    - option: のります
+      why: "のる is for getting on a bus or a train."
+  difficulty: 2
+  note: "This asks the verb for taking a shower: シャワーを あびる."
+
+- id: n5-g3-0017
+  type: context
+  status: reviewed
+  sentence: "ちちの おかあさんは わたしの （　）です。"
+  en: "My father's mother is my grandmother."
+  answer: おばあさん
+  wrong:
+    - option: おじいさん
+      why: "おじいさん is a grandfather, a man."
+    - option: おばさん
+      why: "おばさん, with a short ば, is an aunt. A grandmother is おばあさん."
+    - option: おねえさん
+      why: "おねえさん is an older sister."
+  difficulty: 2
+  note: "This asks who your father's mother is: your grandmother, おばあさん, with a long あ."
+
+- id: n5-g3-0018
+  type: context
+  status: reviewed
+  sentence: "この もんだいは （　）ですから、すぐ こたえが わかりました。"
+  en: "This question was easy, so I knew the answer at once."
+  answer: やさしい
+  wrong:
+    - option: むずかしい
+      why: "むずかしい is difficult. A difficult question is not answered at once."
+    - option: ながい
+      why: "ながい is long. A long question takes longer, not less time."
+    - option: おもい
+      why: "おもい is heavy. A question has no weight."
+  difficulty: 2
+  note: "This asks why the answer came at once: the question was やさしい, easy."
+
+- id: n5-g3-0019
+  type: context
+  status: reviewed
+  sentence: "ここは としょかんですから、（　） はなして ください。"
+  en: "This is a library, so please talk quietly."
+  answer: しずかに
+  wrong:
+    - option: にぎやかに
+      why: "にぎやか is lively and noisy: the opposite of what a library wants."
+    - option: げんきに
+      why: "げんきに is cheerfully. It says nothing about keeping your voice down."
+    - option: じょうずに
+      why: "じょうずに is skilfully. A library asks for quiet, not skill."
+  difficulty: 2
+  note: "This asks how to talk in a library: しずかに, quietly."
+
+- id: n5-g3-0020
+  type: context
+  status: reviewed
+  sentence: "この かみを 3（　） ください。"
+  en: "Three sheets of this paper, please."
+  answer: まい
+  wrong:
+    - option: ほん
+      why: "ほん counts long, thin things: pencils, bottles."
+    - option: こ
+      why: "こ counts small round things: apples, eggs."
+    - option: さつ
+      why: "さつ counts books and notebooks."
+  difficulty: 2
+  note: "This asks the counter for flat things such as paper: まい. 3まい is read さんまい."
+
+- id: n5-g3-0021
+  type: context
+  status: reviewed
+  sentence: "あには わたしより 3さい （　）です。"
+  en: "My older brother is three years older than me."
+  answer: うえ
+  wrong:
+    - option: した
+      why: "した would make him younger. An older brother, あに, is older: うえ."
+    - option: まえ
+      why: "まえ is in front, or before. Ages are compared with うえ and した."
+    - option: あと
+      why: "あと is after, for time. Ages are compared with うえ and した."
+  difficulty: 3
+  note: "This asks how ages compare. An older brother, あに, is older than you: 3さい うえ."
+
+- id: n5-g3-0022
+  type: context
+  status: reviewed
+  sentence: "わたしの へやは 2かいです。（　）を あがって、みぎの へやです。"
+  en: "My room is on the second floor. Go up the stairs; it's the room on the right."
+  answer: かいだん
+  wrong:
+    - option: ろうか
+      why: "ろうか is a corridor. It is flat: you walk along it, not up it."
+    - option: げんかん
+      why: "げんかん is the entrance hall, at the bottom, where you take off your shoes."
+    - option: だいどころ
+      why: "だいどころ is the kitchen: a room, not a way up."
+  difficulty: 3
+  note: "This asks how you go up to the second floor: you climb the かいだん, the stairs."
+
+- id: n5-g3-0023
+  type: context
+  status: reviewed
+  sentence: "えきまで あるいて 1じかん かかります。とても （　）ですね。"
+  en: "It takes an hour to walk to the station. That's a long way, isn't it?"
+  answer: とおい
+  wrong:
+    - option: ちかい
+      why: "ちかい is near. An hour on foot is far."
+    - option: はやい
+      why: "はやい is fast or early. Distance is とおい or ちかい."
+    - option: おそい
+      why: "おそい is slow or late. Distance is とおい or ちかい."
+  difficulty: 3
+  note: "This asks what an hour's walk to the station means: the station is とおい, far."
+
+- id: n5-g3-0024
+  type: context
+  status: reviewed
+  sentence: "A「ひるごはんは たべましたか。」\nB「いいえ、（　） たべて いません。」"
+  en: "A: Have you had lunch? B: No, not yet."
+  answer: まだ
+  wrong:
+    - option: もう
+      why: "もう goes with something already done: もう たべました. After いいえ and たべて いません, it is まだ."
+    - option: すぐ
+      why: "すぐ is right away. It does not go with たべて いません."
+    - option: ちょうど
+      why: "ちょうど is just or exactly. It does not go with a 'not yet' answer."
+  difficulty: 3
+  note: "This asks what fits 'No, not yet': まだ. まだ 〜て いません is something that has not happened yet."
+
+- id: n5-g3-0025
+  type: context
+  status: reviewed
+  sentence: "この くすりは ごはんを たべた （　）に のんで ください。"
+  en: "Please take this medicine after you eat."
+  answer: あと
+  wrong:
+    - option: まえ
+      why: "まえ takes the plain form: たべる まえに. たべた, the past, goes with あと."
+    - option: よこ
+      why: "よこ is beside: a place, not a time."
+    - option: なか
+      why: "なか is inside: a place, not a time."
+  difficulty: 3
+  note: "This asks when to take the medicine: after eating, たべた あとに."
+
+- id: n5-g3-0026
+  type: context
+  status: reviewed
+  sentence: "まいあさ はを （　）。"
+  en: "I brush my teeth every morning."
+  answer: みがきます
+  wrong: [たべます, きります, かぶります]
+  difficulty: 1
+  note: "This asks what you do to your teeth every morning: みがきます, brush them."
+
+- id: n5-g3-0027
+  type: context
+  status: reviewed
+  sentence: "（　）に のって、かいしゃへ いきます。"
+  en: "I take the train to work."
+  answer: でんしゃ
+  wrong: [いけ, にわ, へや]
+  difficulty: 1
+  note: "This asks what you ride to work: でんしゃ, a train. のる is for getting on things that carry you."
+
+- id: n5-g3-0028
+  type: context
+  status: reviewed
+  sentence: "（　）を ひいて、きのうから ねて います。"
+  en: "I caught a cold and have been in bed since yesterday."
+  answer: かぜ
+  wrong:
+    - option: せき
+      why: "せき is a cough. A cough comes with が でる, not ひく."
+    - option: みみ
+      why: "みみ is an ear. You cannot ひく an ear."
+    - option: こえ
+      why: "こえ is a voice. You cannot ひく a voice."
+  difficulty: 2
+  note: "This asks what you catch and stay in bed with: a cold, かぜを ひく."
+
+- id: n5-g3-0029
+  type: context
+  status: reviewed
+  sentence: "レストランの （　）には カレーと ラーメンが あります。"
+  en: "The restaurant's menu has curry and ramen."
+  answer: メニュー
+  wrong: [カレンダー, ポスト, ラジオ]
+  difficulty: 1
+  note: "This asks where a restaurant lists its food: the メニュー, the menu."
+
+- id: n5-g3-0030
+  type: context
+  status: reviewed
+  sentence: "（　）で まちがえた じを けしました。"
+  en: "I rubbed out the wrong letters with an eraser."
+  answer: けしゴム
+  wrong: [えんぴつ, はさみ, ノート]
+  difficulty: 1
+  note: "This asks what you rub out letters with: a けしゴム, an eraser."
+
+- id: n5-g3-0031
+  type: context
+  status: reviewed
+  sentence: "パーティーで みんなで うたを （　）。"
+  en: "We all sang songs at the party."
+  answer: うたいました
+  wrong: [のりました, しめました, ふきました]
+  difficulty: 1
+  note: "This asks what you do with a song: うたう, sing it."
+
+- id: n5-g3-0032
+  type: context
+  status: reviewed
+  sentence: "デパートで あたらしい くつを （　）。"
+  en: "I bought new shoes at the department store."
+  answer: かいました
+  wrong: [ききました, あるきました, およぎました]
+  difficulty: 1
+  note: "This asks what you do with shoes at a department store: かいました, bought them."
+
+- id: n5-g3-0033
+  type: context
+  status: reviewed
+  sentence: "わたしは まいあさ コーヒーに さとうを （　）。"
+  en: "I put sugar in my coffee every morning."
+  answer: いれます
+  wrong:
+    - option: だします
+      why: "だす takes something out. Sugar goes in: いれる."
+    - option: あけます
+      why: "あける opens something, such as a door or a box."
+    - option: きります
+      why: "きる cuts, with a knife or scissors."
+  difficulty: 2
+  note: "This asks what you do with sugar and coffee: you put it in, コーヒーに いれる."
+
+- id: n5-g3-0034
+  type: context
+  status: reviewed
+  sentence: "わたしは ともだちから じしょを （　）。"
+  en: "I borrowed a dictionary from a friend."
+  answer: かりました
+  wrong:
+    - option: かしました
+      why: "かす is to lend. ともだちから says the dictionary came to you: かりる, borrow."
+    - option: あげました
+      why: "あげる is to give something away. ともだちから says it came to you."
+    - option: おしえました
+      why: "おしえる is to teach. You cannot teach a dictionary."
+  difficulty: 2
+  note: "This asks which way the dictionary went: from your friend to you, so you borrowed it, かりました."
+
+- id: n5-g3-0035
+  type: context
+  status: reviewed
+  sentence: "この みずは （　）ですから、のまないで ください。"
+  en: "This water is dirty, so please don't drink it."
+  answer: きたない
+  wrong:
+    - option: きれい
+      why: "きれい is clean. Clean water is no reason not to drink."
+    - option: つめたい
+      why: "つめたい is cold. Cold water is fine to drink."
+    - option: あたたかい
+      why: "あたたかい is warm. Warm water is fine to drink."
+  difficulty: 2
+  note: "This asks why you should not drink the water: it is きたない, dirty."
+
+- id: n5-g3-0036
+  type: context
+  status: reviewed
+  sentence: "この へやは まどが なくて、（　）です。"
+  en: "This room has no windows, so it is dark."
+  answer: くらい
+  wrong:
+    - option: あかるい
+      why: "あかるい is bright. A room with no windows is dark."
+    - option: あたらしい
+      why: "あたらしい is new. Windows do not make a room new or old."
+    - option: ひろい
+      why: "ひろい is spacious. Windows do not make a room big or small."
+  difficulty: 2
+  note: "This asks what a room without windows is like: くらい, dark."
+
+- id: n5-g3-0037
+  type: context
+  status: reviewed
+  sentence: "にちようびは がっこうが （　）です。"
+  en: "There is no school on Sundays."
+  answer: やすみ
+  wrong:
+    - option: しごと
+      why: "しごと is work. A school on Sunday is closed: やすみ."
+    - option: じゅぎょう
+      why: "じゅぎょう is a lesson. A school is not a lesson."
+    - option: しゅくだい
+      why: "しゅくだい is homework. A school is not homework."
+  difficulty: 2
+  note: "This asks what a school is on Sunday: やすみ, closed."
+
+- id: n5-g3-0038
+  type: context
+  status: reviewed
+  sentence: "でんしゃに のる まえに、えきで （　）を かいます。"
+  en: "Before getting on the train, I buy a ticket at the station."
+  answer: きっぷ
+  wrong:
+    - option: きって
+      why: "きって is a stamp, for a letter. A train needs a きっぷ."
+    - option: ちず
+      why: "ちず is a map. You do not need one to get on a train."
+    - option: かさ
+      why: "かさ is an umbrella. It has nothing to do with getting on a train."
+  difficulty: 2
+  note: "This asks what you buy at the station to ride a train: a きっぷ, a ticket. きって, with one letter different, is a stamp."
+
+- id: n5-g3-0039
+  type: context
+  status: reviewed
+  sentence: "バスが きませんでしたから、えきまで （　）。"
+  en: "The bus didn't come, so I walked to the station."
+  answer: あるきました
+  wrong:
+    - option: のりました
+      why: "There was no bus to get on. Without one, you go on foot."
+    - option: まちました
+      why: "まつ is to wait. えきまで says you went to the station."
+    - option: かえりました
+      why: "かえる is to go home, not to the station."
+  difficulty: 3
+  note: "This asks how you got to the station when the bus did not come: on foot, あるきました."
+
+- id: n5-g3-0040
+  type: context
+  status: reviewed
+  sentence: "この カメラは 5まんえんでした。（　）ですね。"
+  en: "This camera was 50,000 yen. That's expensive."
+  answer: たかい
+  wrong:
+    - option: やすい
+      why: "やすい is cheap. 50,000 yen is a lot for a camera."
+    - option: ひくい
+      why: "ひくい is low, for height. A price is たかい or やすい."
+    - option: ながい
+      why: "ながい is long. The sentence is about the price."
+  difficulty: 3
+  note: "This asks what 50,000 yen for a camera is: たかい, expensive. たかい is used for prices as well as height."
+
+- id: n5-g3-0041
+  type: context
+  status: reviewed
+  sentence: "わたしは まいにち 7じかん （　）。"
+  en: "I sleep seven hours every day."
+  answer: ねます
+  wrong:
+    - option: おきます
+      why: "おきる is to get up, which takes a moment, not seven hours."
+    - option: あいます
+      why: "あう is to meet someone, and needs a person: ともだちに あう."
+    - option: つきます
+      why: "つく is to arrive, which takes a moment, not seven hours."
+  difficulty: 3
+  note: "This asks what you do for seven hours every day: ねます, sleep."
+
+- id: n5-g3-0042
+  type: context
+  status: reviewed
+  sentence: "（　）、わたしは にほんへ きました。いま にほんに 1ねん います。"
+  en: "I came to Japan last year. I have been in Japan for a year now."
+  answer: きょねん
+  wrong:
+    - option: らいねん
+      why: "らいねん is next year, still to come. きました is past."
+    - option: あした
+      why: "あした is tomorrow, still to come. きました is past."
+    - option: らいしゅう
+      why: "らいしゅう is next week, still to come. きました is past."
+  difficulty: 3
+  note: "This asks when you came to Japan. きました is past, and you have been here a year, so it was きょねん, last year."
+
+- id: n5-g3-0043
+  type: context
+  status: reviewed
+  sentence: "この ほんは むずかしいですから、（　） よみましょう。"
+  en: "This book is difficult, so let's read it slowly."
+  answer: ゆっくり
+  wrong:
+    - option: はやく
+      why: "はやく is quickly. A hard book is read slowly."
+    - option: まっすぐ
+      why: "まっすぐ is straight, for going along a road."
+    - option: きれいに
+      why: "きれいに is neatly or prettily, for writing or tidying, not reading."
+  difficulty: 3
+  note: "This asks how to read a difficult book: ゆっくり, slowly."
+
+- id: n5-g3-0044
+  type: context
+  status: reviewed
+  sentence: "この スープは （　）ですから、ゆっくり のんで ください。"
+  en: "This soup is hot, so please drink it slowly."
+  answer: あつい
+  wrong: [さむい, すずしい, ふるい]
+  difficulty: 1
+  note: "This asks why you drink the soup slowly: it is あつい, hot. さむい and すずしい are for the weather."
+
+- id: n5-g3-0045
+  type: context
+  status: reviewed
+  sentence: "（　）が すきましたから、ごはんを たべましょう。"
+  en: "I'm hungry, so let's eat."
+  answer: おなか
+  wrong: [のど, あたま, せなか]
+  difficulty: 1
+  note: "This asks what is empty when you want to eat: おなかが すく, to be hungry."
+
+- id: n5-g3-0046
+  type: context
+  status: reviewed
+  sentence: "わたしの すきな （　）は りんごです。"
+  en: "My favourite fruit is the apple."
+  answer: くだもの
+  wrong: [やさい, のみもの, どうぶつ]
+  difficulty: 1
+  note: "This asks what kind of thing an apple is: a くだもの, a fruit."
+
+- id: n5-g3-0047
+  type: context
+  status: reviewed
+  sentence: "この みちは くるまが おおいですから、（　）です。"
+  en: "This road has a lot of cars, so it is dangerous."
+  answer: あぶない
+  wrong: [あまい, おもしろい, わかい]
+  difficulty: 1
+  note: "This asks what a road with many cars is: あぶない, dangerous."
+
+- id: n5-g3-0048
+  type: context
+  status: reviewed
+  sentence: "パンに バターを （　） たべます。"
+  en: "I spread butter on my bread and eat it."
+  answer: ぬって
+  wrong: [のって, まがって, はいって]
+  difficulty: 1
+  note: "This asks what you do with butter on bread: ぬる, spread it."
+
+- id: n5-g3-0049
+  type: context
+  status: reviewed
+  sentence: "つかれましたから、すこし （　）。"
+  en: "I'm tired, so let's rest a little."
+  answer: やすみましょう
+  wrong: [はしりましょう, はたらきましょう, およぎましょう]
+  difficulty: 1
+  note: "This asks what to do when you are tired: やすむ, rest."
+
+- id: n5-g3-0050
+  type: context
+  status: reviewed
+  sentence: "この えいがは とても （　）ですから、もう いちど みたいです。"
+  en: "This film is really interesting, so I want to see it again."
+  answer: おもしろい
+  wrong:
+    - option: つまらない
+      why: "つまらない is dull. Nobody wants to see a dull film again."
+    - option: ながい
+      why: "ながい is long. Length is no reason to see a film again."
+    - option: うるさい
+      why: "うるさい is noisy. That is no reason to see a film again."
+  difficulty: 2
+  note: "This asks why you want to see the film again: it is おもしろい, interesting."
+
+- id: n5-g3-0051
+  type: context
+  status: reviewed
+  sentence: "にもつが おもいですから、タクシーを （　）。"
+  en: "The luggage is heavy, so let's call a taxi."
+  answer: よびましょう
+  wrong:
+    - option: かいましょう
+      why: "You do not buy a taxi; you call one: よぶ."
+    - option: のみましょう
+      why: "のむ is to drink."
+    - option: おしえましょう
+      why: "おしえる is to teach."
+  difficulty: 2
+  note: "This asks what you do to get a taxi: よぶ, call one."
+
+- id: n5-g3-0052
+  type: context
+  status: reviewed
+  sentence: "せんせい、この ことばの （　）を おしえて ください。"
+  en: "Teacher, please tell me what this word means."
+  answer: いみ
+  wrong:
+    - option: こえ
+      why: "こえ is a voice. For a word you don't know, you ask its meaning."
+    - option: なまえ
+      why: "なまえ is a name. For a word you don't know, you ask its meaning."
+    - option: うた
+      why: "うた is a song. A word has a meaning, not a song."
+  difficulty: 2
+  note: "This asks what you ask about a word you don't know: its いみ, its meaning."
+
+- id: n5-g3-0053
+  type: context
+  status: reviewed
+  sentence: "この ペンは インクが ありません。（　） ペンを かして ください。"
+  en: "This pen has no ink. Please lend me another pen."
+  answer: ほかの
+  wrong:
+    - option: おなじ
+      why: "おなじ is the same. A pen with no ink is no use; you want another one."
+    - option: この
+      why: "この ペン is the one with no ink."
+    - option: どの
+      why: "どの asks which. This is a request, not a question."
+  difficulty: 2
+  note: "This asks which pen you want when yours has no ink: ほかの, another one."
+
+- id: n5-g3-0054
+  type: context
+  status: reviewed
+  sentence: "A「ここから えきまで （　） かかりますか。」\nB「バスで 10ぷんです。」"
+  en: "A: How long does it take from here to the station? B: Ten minutes by bus."
+  answer: どのぐらい
+  wrong:
+    - option: なんじ
+      why: "なんじ asks the time on a clock. かかりますか asks how long it takes."
+    - option: どこ
+      why: "どこ asks where. The answer, ten minutes, is a length of time."
+    - option: なに
+      why: "なに asks what. かかりますか asks how long."
+  difficulty: 2
+  note: "This asks which question word fits かかりますか, how long does it take: どのぐらい."
+
+- id: n5-g3-0055
+  type: context
+  status: reviewed
+  sentence: "この くつは ちいさいですから、もっと （　） くつを ください。"
+  en: "These shoes are small, so please give me bigger ones."
+  answer: おおきい
+  wrong:
+    - option: ちいさい
+      why: "ちいさい is small, and these are already too small."
+    - option: やすい
+      why: "やすい is cheap. The problem is the size."
+    - option: ふるい
+      why: "ふるい is old. The problem is the size."
+  difficulty: 2
+  note: "This asks what shoes you want when yours are too small: おおきい, bigger ones."
+
+- id: n5-g3-0056
+  type: context
+  status: reviewed
+  sentence: "わたしは コーヒーが すきですが、こうちゃは （　） すきじゃ ありません。"
+  en: "I like coffee, but I don't like tea very much."
+  answer: あまり
+  wrong:
+    - option: とても
+      why: "とても goes with a positive: とても すきです. With じゃ ありません, it is あまり."
+    - option: よく
+      why: "よく does not go with すきじゃ ありません."
+    - option: たくさん
+      why: "たくさん is a lot, for amounts. It does not go with すき."
+  difficulty: 3
+  note: "This asks which word goes with a negative: あまり 〜じゃ ありません, not very."
+
+- id: n5-g3-0057
+  type: context
+  status: reviewed
+  sentence: "A「（　） にほんへ きましたか。」\nB「きょねんの 4がつです。」"
+  en: "A: When did you come to Japan? B: In April last year."
+  answer: いつ
+  wrong:
+    - option: どこ
+      why: "どこ asks where. The answer gives a time: last April."
+    - option: だれ
+      why: "だれ asks who. The answer gives a time."
+    - option: どうして
+      why: "どうして asks why. The answer gives a time."
+  difficulty: 3
+  note: "This asks which question word the answer fits. B gives a time, so A asked いつ, when."
+
+- id: n5-g3-0058
+  type: context
+  status: reviewed
+  sentence: "ちちは たばこを すいません。からだに （　）ですから。"
+  en: "My father doesn't smoke, because it's bad for your health."
+  answer: わるい
+  wrong:
+    - option: いい
+      why: "If smoking were good for the body, it would be no reason not to smoke."
+    - option: おおきい
+      why: "Size has nothing to do with smoking."
+    - option: じょうぶ
+      why: "じょうぶ is strong or healthy. It does not fit からだに 〜です."
+  difficulty: 3
+  note: "This asks why he does not smoke: it is からだに わるい, bad for your health."
+
+- id: n5-g3-0059
+  type: context
+  status: reviewed
+  sentence: "こどもが ねて いますから、（　） こえで はなして ください。"
+  en: "The children are asleep, so please talk in a quiet voice."
+  answer: ちいさい
+  wrong:
+    - option: おおきい
+      why: "A loud voice would wake the children."
+    - option: げんきな
+      why: "A lively voice would wake the children."
+    - option: ひろい
+      why: "ひろい is wide, for rooms and roads, not voices."
+  difficulty: 3
+  note: "This asks what voice to use near sleeping children: a ちいさい こえ, a quiet voice."
+
+- id: n5-g3-0060
+  type: context
+  status: reviewed
+  sentence: "100えんの ノートを 3さつ かいました。ぜんぶで （　）でした。"
+  en: "I bought three 100-yen notebooks. That was 300 yen in all."
+  answer: さんびゃくえん
+  wrong:
+    - option: さんひゃくえん
+      why: "Three hundred is さんびゃく, with a dakuten."
+    - option: ひゃくさんえん
+      why: "ひゃくさんえん is 103 yen."
+    - option: さんぜんえん
+      why: "さんぜんえん is 3,000 yen."
+  difficulty: 3
+  note: "This asks the total: three notebooks at 100 yen is 300 yen, read さんびゃくえん."
+
+- id: n5-g3-0061
+  type: context
+  status: reviewed
+  sentence: "あついですから、（　）を つけましょう。"
+  en: "It's hot, so let's turn on the air conditioner."
+  answer: エアコン
+  wrong: [ストーブ, ラジオ, カメラ]
+  difficulty: 1
+  note: "This asks what you turn on when it is hot: the エアコン, the air conditioner. A ストーブ is a heater, for cold days."
+
+- id: n5-g3-0062
+  type: context
+  status: reviewed
+  sentence: "（　）に のって、かわを わたりました。"
+  en: "I crossed the river by boat."
+  answer: ふね
+  wrong: [つくえ, まど, かべ]
+  difficulty: 1
+  note: "This asks what you ride across a river: a ふね, a boat."
+
+- id: n5-g3-0063
+  type: context
+  status: reviewed
+  sentence: "さむいですから、（　）を しめて ください。"
+  en: "It's cold, so please close the door."
+  answer: ドア
+  wrong: [ラジオ, くつ, いす]
+  difficulty: 1
+  note: "This asks what you close when it is cold: the ドア, the door."
+
+- id: n5-g3-0064
+  type: context
+  status: reviewed
+  sentence: "とりが そらを （　） います。"
+  en: "Birds are flying in the sky."
+  answer: とんで
+  wrong: [およいで, はしって, あるいて]
+  difficulty: 1
+  note: "This asks what birds do in the sky: とぶ, fly."
+
+- id: n5-g3-0065
+  type: context
+  status: reviewed
+  sentence: "この みせは ひとが たくさん いて、とても （　）です。"
+  en: "This shop is full of people and very lively."
+  answer: にぎやか
+  wrong: [しずか, ひま, じょうぶ]
+  difficulty: 1
+  note: "This asks what a place full of people is like: にぎやか, lively."
+
+- id: n5-g3-0066
+  type: context
+  status: reviewed
+  sentence: "いもうとは まいにち ピアノを （　）。"
+  en: "My younger sister plays the piano every day."
+  answer: ひきます
+  wrong: [うたいます, およぎます, はきます]
+  difficulty: 1
+  note: "This asks the verb for playing the piano: ひく."
+
+- id: n5-g3-0067
+  type: context
+  status: reviewed
+  sentence: "バスが きません。もう 30ぷん （　） います。"
+  en: "The bus isn't coming. I've been waiting for 30 minutes."
+  answer: まって
+  wrong:
+    - option: きて
+      why: "The bus is what is not coming. You have been waiting: まって いる."
+    - option: のって
+      why: "You cannot have been riding a bus that has not come."
+    - option: おりて
+      why: "おりる is getting off. The bus has not come yet."
+  difficulty: 2
+  note: "This asks what you have been doing for 30 minutes when the bus does not come: まって いる, waiting."
+
+- id: n5-g3-0068
+  type: context
+  status: reviewed
+  sentence: "わたしは まいあさ しんぶんを よんでから、うちを （　）。"
+  en: "Every morning I read the paper, then leave home."
+  answer: でます
+  wrong:
+    - option: はいります
+      why: "はいる is to go in. うちを, from home, goes with でる, to leave."
+    - option: かえります
+      why: "かえる is to go home. You read the paper at home, then leave."
+    - option: つきます
+      why: "つく is to arrive, and takes に, not を."
+  difficulty: 2
+  note: "This asks what you do from home after reading the paper: うちを でる, leave home."
+
+- id: n5-g3-0069
+  type: context
+  status: reviewed
+  sentence: "すみません、えきへ いく （　）を おしえて ください。"
+  en: "Excuse me, please tell me the way to the station."
+  answer: みち
+  wrong:
+    - option: ちず
+      why: "ちず is a map. You ask someone the way: みち."
+    - option: なまえ
+      why: "なまえ is a name. You ask the way to the station: みち."
+    - option: くるま
+      why: "くるま is a car. You ask the way: みち."
+  difficulty: 2
+  note: "This asks what you ask for to get to the station: the みち, the way."
+
+- id: n5-g3-0070
+  type: context
+  status: reviewed
+  sentence: "ゆうべ よく ねましたから、きょうは とても （　）です。"
+  en: "I slept well last night, so today I feel great."
+  answer: げんき
+  wrong:
+    - option: ひま
+      why: "ひま is having free time. Sleeping well makes you feel well, not free."
+    - option: しずか
+      why: "しずか is quiet. Sleeping well makes you feel well: げんき."
+    - option: きれい
+      why: "きれい is pretty or clean. Sleeping well makes you feel well: げんき."
+  difficulty: 2
+  note: "This asks how you feel after a good night's sleep: げんき, well and lively."
+
+- id: n5-g3-0071
+  type: context
+  status: reviewed
+  sentence: "この みちを まっすぐ いって、つぎの かどを みぎに （　） ください。"
+  en: "Go straight along this road, then turn right at the next corner."
+  answer: まがって
+  wrong:
+    - option: わたって
+      why: "わたる is to cross, for a road or a bridge. At a corner you turn: まがる."
+    - option: おりて
+      why: "おりる is to get off, not a way to go round a corner."
+    - option: のって
+      why: "のる is to get on. At a corner you turn: まがる."
+  difficulty: 2
+  note: "This asks what you do at a corner to go right: まがる, turn."
+
+- id: n5-g3-0072
+  type: context
+  status: reviewed
+  sentence: "つかれましたから、あそこの （　）に すわりましょう。"
+  en: "I'm tired, so let's sit on that chair over there."
+  answer: いす
+  wrong:
+    - option: まど
+      why: "まど is a window. You sit on a chair, not a window."
+    - option: いけ
+      why: "いけ is a pond. You cannot sit on a pond."
+    - option: そら
+      why: "そら is the sky. You cannot sit on the sky."
+  difficulty: 2
+  note: "This asks what you sit on: an いす, a chair."
+
+- id: n5-g3-0073
+  type: context
+  status: reviewed
+  sentence: "わたしは にほんごが （　） わかりません。もう いちど いって ください。"
+  en: "I don't really understand Japanese. Please say it once more."
+  answer: よく
+  wrong:
+    - option: すぐ
+      why: "すぐ is at once. It does not go with わかりません here."
+    - option: とても
+      why: "とても goes with a positive. It does not go with わかりません."
+    - option: たくさん
+      why: "たくさん is a lot, for amounts. It does not go with わかる."
+  difficulty: 3
+  note: "This asks which word goes with a negative here: よく わかりません, I don't really understand."
+
+- id: n5-g3-0074
+  type: context
+  status: reviewed
+  sentence: "あねは わたしより 3さい うえです。あねは いま 20さいですから、わたしは （　）です。"
+  en: "My sister is three years older than me. She is 20 now, so I am 17."
+  answer: 17さい
+  wrong:
+    - option: 23さい
+      why: "23 is three years older than your sister. You are younger: 20 minus 3."
+    - option: 20さい
+      why: "20 is your sister's age. You are three years younger."
+    - option: 3さい
+      why: "3 is the difference in age, not your age."
+  difficulty: 3
+  note: "This asks your age. Your sister is 20 and three years older, so you are 17."
+
+- id: n5-g3-0075
+  type: context
+  status: reviewed
+  sentence: "でんしゃが （　） いますから、タクシーで いきましょう。"
+  en: "The trains have stopped, so let's take a taxi."
+  answer: とまって
+  wrong:
+    - option: はしって
+      why: "If the trains were running, there would be no need for a taxi."
+    - option: ついて
+      why: "ついて いる is that it has arrived: no reason to take a taxi."
+    - option: あいて
+      why: "あいて いる is open or empty. An empty train is no reason to take a taxi."
+  difficulty: 3
+  note: "This asks why you would take a taxi: the trains have stopped, とまって いる."
+
+- id: n5-g3-0076
+  type: context
+  status: reviewed
+  sentence: "この くすりは 1にち 3かい、ごはんの あとに （　） ください。"
+  en: "Take this medicine three times a day, after meals."
+  answer: のんで
+  wrong:
+    - option: たべて
+      why: "Medicine is taken with のむ in Japanese, not たべる, even as a tablet."
+    - option: あびて
+      why: "あびる is for a shower."
+    - option: すって
+      why: "すう is to breathe in or to smoke."
+  difficulty: 3
+  note: "This asks the verb for taking medicine: くすりを のむ, even for tablets."
+
+- id: n5-g3-0077
+  type: context
+  status: reviewed
+  sentence: "らいねん にほんの だいがくへ いきます。いま にほんごを （　） います。"
+  en: "I'm going to a Japanese university next year. I'm learning Japanese now."
+  answer: ならって
+  wrong:
+    - option: おしえて
+      why: "You are the one going to study, so you are learning, not teaching."
+    - option: わすれて
+      why: "わすれる is to forget, which would not help you get ready."
+    - option: わかって
+      why: "わかる takes が, not を, and says you understand already."
+  difficulty: 3
+  note: "This asks what you do with Japanese before going to a Japanese university: ならう, learn it."
+
+- id: n5-g3-0078
+  type: context
+  status: reviewed
+  sentence: "（　）で てを あらいます。"
+  en: "I wash my hands with soap."
+  answer: せっけん
+  wrong: [さとう, しお, さいふ]
+  difficulty: 1
+  note: "This asks what you wash your hands with: せっけん, soap. さとう is sugar, しお salt and さいふ a wallet."
+
+- id: n5-g3-0079
+  type: context
+  status: reviewed
+  sentence: "つかれましたから、（　）で ねます。"
+  en: "I'm tired, so I'll sleep in bed."
+  answer: ベッド
+  wrong: [プール, ポスト, エレベーター]
+  difficulty: 1
+  note: "This asks where you sleep: in a ベッド, a bed."
+
+- id: n5-g3-0080
+  type: context
+  status: reviewed
+  sentence: "この （　）は おもしろいですから、まいしゅう かって よみます。"
+  en: "This magazine is interesting, so I buy and read it every week."
+  answer: ざっし
+  wrong: [ちず, かさ, たまご]
+  difficulty: 1
+  note: "This asks what you buy and read every week: a ざっし, a magazine."
+
+- id: n5-g3-0081
+  type: context
+  status: reviewed
+  sentence: "ケーキは （　）で たべましょう。"
+  en: "Let's eat the cake with a fork."
+  answer: フォーク
+  wrong: [ナイフ, コップ, ストーブ]
+  difficulty: 1
+  note: "This asks what you eat cake with: a フォーク, a fork. A ナイフ cuts, a コップ is a cup and a ストーブ a heater."
+
+- id: n5-g3-0082
+  type: context
+  status: reviewed
+  sentence: "あたまが とても （　）ですから、びょういんへ いきます。"
+  en: "My head really hurts, so I'm going to the hospital."
+  answer: いたい
+  wrong: [ひろい, あおい, ほそい]
+  difficulty: 1
+  note: "This asks why you go to the hospital: your head is いたい, it hurts."
+
+- id: n5-g3-0083
+  type: context
+  status: reviewed
+  sentence: "わたしの （　）は 5がつ 10かです。"
+  en: "My birthday is May 10th."
+  answer: たんじょうび
+  wrong: [なまえ, くに, しごと]
+  difficulty: 1
+  note: "This asks what is on a date such as May 10th: your たんじょうび, your birthday."
+
+- id: n5-g3-0084
+  type: context
+  status: reviewed
+  sentence: "あした テストが ありますから、ことばを （　）。"
+  en: "There's a test tomorrow, so I'll memorise the words."
+  answer: おぼえます
+  wrong:
+    - option: わすれます
+      why: "わすれる is to forget: the opposite of what a test needs."
+    - option: こまります
+      why: "こまる is to be in trouble. It does not take ことばを."
+    - option: おしえます
+      why: "おしえる is to teach. Before a test you learn the words yourself."
+  difficulty: 2
+  note: "This asks what you do with words before a test: おぼえる, memorise them."
+
+- id: n5-g3-0085
+  type: context
+  status: reviewed
+  sentence: "さいふを （　）、こまって います。"
+  en: "I've lost my wallet and I'm in trouble."
+  answer: なくして
+  wrong:
+    - option: かって
+      why: "Buying a wallet would not leave you in trouble."
+    - option: あけて
+      why: "Opening your wallet is no trouble."
+    - option: みせて
+      why: "Showing your wallet is no reason to be in trouble."
+  difficulty: 2
+  note: "This asks what happened to the wallet that left you in trouble: you lost it, なくした."
+
+- id: n5-g3-0086
+  type: context
+  status: reviewed
+  sentence: "まいにち しごとが おおくて、とても （　）です。"
+  en: "I have a lot of work every day, so I'm very busy."
+  answer: いそがしい
+  wrong:
+    - option: ひま
+      why: "ひま is having free time: the opposite of a lot of work."
+    - option: すずしい
+      why: "すずしい is cool, for the weather."
+    - option: かわいい
+      why: "かわいい is cute. Work does not make you cute."
+  difficulty: 2
+  note: "This asks what a lot of work makes you: いそがしい, busy."
+
+- id: n5-g3-0087
+  type: context
+  status: reviewed
+  sentence: "きょうは あついですね。（　） ビールが のみたいです。"
+  en: "It's hot today, isn't it? I want a cold beer."
+  answer: つめたい
+  wrong:
+    - option: あたたかい
+      why: "あたたかい is warm. On a hot day you want a cold drink."
+    - option: ぬるい
+      why: "ぬるい is lukewarm. On a hot day you want it cold."
+    - option: ほそい
+      why: "ほそい is thin, for things like a pen or a road."
+  difficulty: 2
+  note: "This asks what drink you want on a hot day: a つめたい one, cold."
+
+- id: n5-g3-0088
+  type: context
+  status: reviewed
+  sentence: "ケーキを （　） たべましたから、もう ありません。"
+  en: "I ate all the cake, so there's none left."
+  answer: ぜんぶ
+  wrong:
+    - option: すこし
+      why: "If you ate only a little, some would be left."
+    - option: ちょっと
+      why: "ちょっと is a little. Then some would be left."
+    - option: また
+      why: "また is again. It says nothing about how much is left."
+  difficulty: 2
+  note: "This asks how much you ate if none is left: ぜんぶ, all of it."
+
+- id: n5-g3-0089
+  type: context
+  status: reviewed
+  sentence: "つぎの （　）を わたって、みぎに まがって ください。"
+  en: "Cross the next intersection, then turn right."
+  answer: こうさてん
+  wrong:
+    - option: ろうか
+      why: "ろうか is a corridor, inside a building. You cross a road at an intersection."
+    - option: エレベーター
+      why: "You ride an エレベーター; you do not cross it."
+    - option: へや
+      why: "へや is a room. You cross a road at an intersection."
+  difficulty: 2
+  note: "This asks what you cross on a road before turning: a こうさてん, an intersection."
+
+- id: n5-g3-0090
+  type: context
+  status: reviewed
+  sentence: "この ぼうしは ちいさくて、とても （　）ですね。"
+  en: "This hat is small and very cute."
+  answer: かわいい
+  wrong:
+    - option: ふとい
+      why: "ふとい is thick, for a pen or a road, not a hat."
+    - option: うるさい
+      why: "うるさい is noisy. A hat makes no noise."
+    - option: すずしい
+      why: "すずしい is cool, for the weather."
+  difficulty: 2
+  note: "This asks what a small hat can be: かわいい, cute."
+
+- id: n5-g3-0091
+  type: context
+  status: reviewed
+  sentence: "わたしは まいあさ 6じに おきます。きょうは 7じに おきましたから、いつもより （　） おきました。"
+  en: "I get up at six every morning. Today I got up at seven, so I got up later than usual."
+  answer: おそく
+  wrong:
+    - option: はやく
+      why: "Seven is later than six, not earlier."
+    - option: たくさん
+      why: "たくさん is a lot, for amounts, not for times."
+    - option: すこし
+      why: "すこし is a little. You need a word for later: おそく."
+  difficulty: 3
+  note: "This asks how seven compares with six in the morning: it is later, おそく."
+
+- id: n5-g3-0092
+  type: context
+  status: reviewed
+  sentence: "A「コーヒーと こうちゃと、どちらが すきですか。」\nB「コーヒーの （　）が すきです。」"
+  en: "A: Which do you like, coffee or tea? B: I like coffee better."
+  answer: ほう
+  wrong:
+    - option: より
+      why: "より marks what is compared against: こうちゃより コーヒーが すき."
+    - option: ほか
+      why: "ほか is other. The answer picks one of the two."
+    - option: まえ
+      why: "まえ is in front, or before."
+  difficulty: 3
+  note: "This asks how to answer どちら: 〜の ほうが すき, I like this one better."
+
+- id: n5-g3-0093
+  type: context
+  status: reviewed
+  sentence: "りんごを みっつ かいました。いもうとに ひとつ あげましたから、いま （　） あります。"
+  en: "I bought three apples. I gave one to my sister, so now I have two."
+  answer: ふたつ
+  wrong:
+    - option: みっつ
+      why: "You gave one away, so three is no longer right."
+    - option: よっつ
+      why: "You had three, not four, before giving one away."
+    - option: ひとつ
+      why: "One is what you gave away. Three minus one is two."
+  difficulty: 3
+  note: "This asks how many are left: three minus one is two, ふたつ."
+
+- id: n5-g3-0094
+  type: context
+  status: reviewed
+  sentence: "この スープは ちょっと （　）ですね。しおを いれましょう。"
+  en: "This soup is a bit bland. Let's add salt."
+  answer: うすい
+  wrong:
+    - option: おおい
+      why: "おおい is many. Soup that needs salt tastes weak: うすい."
+    - option: あまい
+      why: "あまい is sweet. Salt is added to soup that tastes weak."
+    - option: ふるい
+      why: "ふるい is old. Salt fixes a weak taste, not age."
+  difficulty: 3
+  note: "This asks why you add salt: the soup tastes うすい, weak or bland."
+
+- id: n5-g3-0095
+  type: context
+  status: reviewed
+  sentence: "この かばんは わたしのでは ありません。（　）のですか。"
+  en: "This bag isn't mine. Whose is it?"
+  answer: だれ
+  wrong:
+    - option: なに
+      why: "なに asks what. Asking whose takes だれの."
+    - option: いつ
+      why: "いつ asks when."
+    - option: どれ
+      why: "どれ asks which one. Asking whose takes だれの."
+  difficulty: 3
+  note: "This asks which question word asks whose: だれの."
+
+- id: n5-g3-0096
+  type: context
+  status: reviewed
+  sentence: "あめが ふって いますから、（　）を もって いきましょう。"
+  en: "It's raining, so let's take an umbrella."
+  answer: かさ
+  wrong: [めがね, えんぴつ, くつした]
+  difficulty: 1
+  note: "This asks what you take when it rains: かさ, an umbrella."
+
+- id: n5-g3-0097
+  type: context
+  status: reviewed
+  sentence: "ねる まえに、でんきを （　） ください。"
+  en: "Please turn off the light before you go to bed."
+  answer: けして
+  wrong:
+    - option: しめて
+      why: "しめる is to close a door or a window. A light is turned off: けす."
+    - option: あけて
+      why: "あける is to open a door or a window."
+    - option: とって
+      why: "とる is to take. A light is turned off: けす."
+  difficulty: 2
+  note: "This asks the verb for turning off a light: でんきを けす."
+
+- id: n5-g3-0098
+  type: context
+  status: reviewed
+  sentence: "あついですね。うわぎを （　）も いいですか。"
+  en: "It's hot, isn't it? May I take off my jacket?"
+  answer: ぬいで
+  wrong:
+    - option: きて
+      why: "きる is to put on. In the heat, you take a jacket off: ぬぐ."
+    - option: しめて
+      why: "しめる is to close a door or a window."
+    - option: はいて
+      why: "はく is for shoes, socks and trousers. A jacket comes off: ぬぐ."
+  difficulty: 2
+  note: "This asks the verb for taking off clothes: ぬぐ, here ぬいでも いいですか."
+
+- id: n5-g3-0099
+  type: context
+  status: reviewed
+  sentence: "さいふを いえに わすれて、とても （　） います。"
+  en: "I left my wallet at home, and I'm in real trouble."
+  answer: こまって
+  wrong:
+    - option: ねて
+      why: "ねる is to sleep. With no wallet, you are in trouble: こまる."
+    - option: あそんで
+      why: "あそぶ is to play."
+    - option: はしって
+      why: "はしる is to run. とても does not go with it."
+  difficulty: 2
+  note: "This asks how you feel with no wallet: こまる, to be in trouble."
+
+- id: n5-g3-0100
+  type: context
+  status: reviewed
+  sentence: "ともだちの でんわばんごうを （　）ので、でんわが できません。"
+  en: "I've forgotten my friend's phone number, so I can't call."
+  answer: わすれた
+  wrong:
+    - option: おしえた
+      why: "おしえる is to teach or tell. Telling someone a number does not stop you calling."
+    - option: きいた
+      why: "きく is to ask or hear. If you had asked, you could call."
+    - option: みた
+      why: "みる is to see. If you had seen the number, you could call."
+  difficulty: 3
+  note: "This asks why you can't call: you forgot the number, わすれた."
+
+- id: n5-g3-0101
+  type: context
+  status: reviewed
+  sentence: "きょうは たくさん あるいたので、（　）。"
+  en: "I walked a lot today, so I'm tired."
+  answer: つかれました
+  wrong: [はれました, ふりました, きえました]
+  difficulty: 1
+  note: "This asks how you feel after a long walk: つかれました, tired."
+
+- id: n5-g3-0102
+  type: context
+  status: reviewed
+  sentence: "あさは はれて いましたが、ごごから そらが （　）。"
+  en: "It was sunny in the morning, but the sky clouded over in the afternoon."
+  answer: くもりました
+  wrong:
+    - option: ふりました
+      why: "Rain and snow fall, ふる. The sky does not."
+    - option: ふきました
+      why: "Wind blows, ふく. The sky does not."
+    - option: はれました
+      why: "It was sunny already. が, but, tells you the weather changed."
+  difficulty: 3
+  note: "This asks what the sky does when it turns grey: くもる, to cloud over."
+
+- id: n5-g3-0103
+  type: context
+  status: reviewed
+  sentence: "この おかしは さとうが たくさん はいって いて、とても （　）です。"
+  en: "These sweets have lots of sugar in them, so they're very sweet."
+  answer: あまい
+  wrong: [かるい, せまい, ひろい]
+  difficulty: 1
+  note: "This asks how sugar tastes: あまい, sweet."
+
+- id: n5-g3-0104
+  type: context
+  status: reviewed
+  sentence: "あの せんせいは まだ にじゅうさいで、とても （　）です。"
+  en: "That teacher is only twenty, and very young."
+  answer: わかい
+  wrong:
+    - option: あたらしい
+      why: "あたらしい is new, for things. A young person is わかい."
+    - option: ひろい
+      why: "ひろい is wide, for rooms and places."
+    - option: みじかい
+      why: "みじかい is short, for length or time."
+  difficulty: 2
+  note: "This asks the word for a young person: わかい."
+
+- id: n5-g3-0105
+  type: context
+  status: reviewed
+  sentence: "ひるは あついですが、よるは （　）です。"
+  en: "It's hot in the daytime, but cool at night."
+  answer: すずしい
+  wrong: [ほそい, ひくい, まるい]
+  difficulty: 1
+  note: "This asks the word for weather that is not hot: すずしい, cool."
+
+- id: n5-g3-0106
+  type: context
+  status: reviewed
+  sentence: "えきの そばに すんで いるので、とても （　）です。"
+  en: "I live near the station, so it's very convenient."
+  answer: べんり
+  wrong:
+    - option: りっぱ
+      why: "りっぱ is fine or grand. Living near a station is handy: べんり."
+    - option: きらい
+      why: "きらい is to dislike. Living near a station is handy: べんり."
+    - option: ひま
+      why: "ひま is free, with time to spare."
+  difficulty: 2
+  note: "This asks why living near a station is good: べんり, convenient."
+
+- id: n5-g3-0107
+  type: context
+  status: reviewed
+  sentence: "この くつは とても （　）です。ごねん はいて いますが、まだ きれいです。"
+  en: "These shoes are very sturdy. I've worn them for five years, and they're still in good shape."
+  answer: じょうぶ
+  wrong:
+    - option: しずか
+      why: "しずか is quiet. Shoes that last five years are strong: じょうぶ."
+    - option: ひま
+      why: "ひま is free, with time to spare."
+    - option: たいへん
+      why: "たいへん is hard or terrible. Lasting five years shows they are strong."
+  difficulty: 2
+  note: "This asks the word for something that lasts: じょうぶ, strong."
+
+- id: n5-g3-0108
+  type: context
+  status: reviewed
+  sentence: "この みちを （　） いくと、えきが あります。"
+  en: "Go straight along this road and you'll find the station."
+  answer: まっすぐ
+  wrong:
+    - option: だんだん
+      why: "だんだん is little by little, for things that change."
+    - option: いっしょに
+      why: "いっしょに is together, with someone. Directions take まっすぐ."
+    - option: とても
+      why: "とても is very, before an adjective."
+  difficulty: 2
+  note: "This asks how to give a direction: まっすぐ いく, go straight."
+
+- id: n5-g3-0109
+  type: context
+  status: reviewed
+  sentence: "いま （　） じゅうにじです。ひるごはんを たべましょう。"
+  en: "It's exactly twelve o'clock now. Let's have lunch."
+  answer: ちょうど
+  wrong:
+    - option: とても
+      why: "とても is very, before an adjective. A time takes ちょうど."
+    - option: たくさん
+      why: "たくさん is a lot, for amounts."
+    - option: もっと
+      why: "もっと is more, for comparing."
+  difficulty: 3
+  note: "This asks the word for an exact time: ちょうど."
+
+- id: n5-g3-0110
+  type: context
+  status: reviewed
+  sentence: "すみません、この りんごは ひとつ （　）ですか。"
+  en: "Excuse me, how much is one of these apples?"
+  answer: いくら
+  wrong:
+    - option: いくつ
+      why: "いくつ asks how many. A price takes いくら."
+    - option: どこ
+      why: "どこ asks where."
+    - option: どなた
+      why: "どなた asks who, politely."
+  difficulty: 2
+  note: "This asks the question word for a price: いくら."
+
+- id: n5-g3-0111
+  type: context
+  status: reviewed
+  sentence: "A「きのうは （　） がっこうを やすみましたか。」\nB「かぜを ひいたからです。」"
+  en: "A: Why were you off school yesterday? B: Because I caught a cold."
+  answer: どうして
+  wrong:
+    - option: なんじに
+      why: "なんじに asks what time. B gives a reason, から, so A asked why."
+    - option: どこで
+      why: "どこで asks where. B gives a reason, から."
+    - option: だれと
+      why: "だれと asks with whom. B gives a reason, から."
+  difficulty: 3
+  note: "This asks the question word that a から answer replies to: どうして, why."
+
+- id: n5-g3-0112
+  type: context
+  status: reviewed
+  sentence: "まいにち いちじかん、ピアノの （　）を します。"
+  en: "I practise the piano for an hour every day."
+  answer: れんしゅう
+  wrong:
+    - option: そうじ
+      why: "そうじ is cleaning. An hour of piano a day is practice."
+    - option: せんたく
+      why: "せんたく is doing the laundry."
+    - option: けっこん
+      why: "けっこん is marriage."
+  difficulty: 2
+  note: "This asks what you do with the piano every day: れんしゅう, practice."
+
+- id: n5-g3-0113
+  type: context
+  status: reviewed
+  sentence: "とうきょうから おおさかまで （　）で とんで いきました。"
+  en: "I flew from Tokyo to Osaka by plane."
+  answer: ひこうき
+  wrong:
+    - option: でんしゃ
+      why: "You can go to おおさか by でんしゃ, but a train runs on the ground. とんで, flew, needs a plane."
+    - option: バス
+      why: "You can go to おおさか by バス, but a bus runs on roads. とんで, flew, needs a plane."
+    - option: ちかてつ
+      why: "ちかてつ, the underground, runs below a city. It does not fly."
+  difficulty: 2
+  note: "This asks what you fly in: a ひこうき, a plane. とんで, from とぶ, to fly, rules out the others."
+
+- id: n5-g3-0114
+  type: context
+  status: reviewed
+  sentence: "かいものから かえって、たまごを （　）に いれました。"
+  en: "When I got back from shopping, I put the eggs in the fridge."
+  answer: れいぞうこ
+  wrong: [ほんだな, ポスト, ふろ]
+  difficulty: 1
+  note: "This asks where you keep eggs cold: the れいぞうこ, the fridge."
+
+- id: n5-g3-0115
+  type: context
+  status: reviewed
+  sentence: "つめたい （　）を のみました。"
+  en: "I drank some cold milk."
+  answer: ぎゅうにゅう
+  wrong: [パン, たまご, りんご]
+  difficulty: 1
+  note: "This asks what you can drink: ぎゅうにゅう, milk."
+
+- id: n5-g3-0116
+  type: context
+  status: reviewed
+  sentence: "（　）の バスは なんじに きますか。"
+  en: "What time does the next bus come?"
+  answer: つぎ
+  wrong: [まえ, よこ, なか]
+  difficulty: 1
+  note: "This asks which bus is still to come: the つぎ, the next one."
+
+- id: n5-g3-0117
+  type: context
+  status: reviewed
+  sentence: "あつい （　）に はいって、からだが あたたかく なりました。"
+  en: "I got into a hot bath and warmed up."
+  answer: おふろ
+  wrong: [つくえ, まど, ほんだな]
+  difficulty: 1
+  note: "This asks what you get into to warm up: a hot おふろ, a bath."
+
+- id: n5-g3-0118
+  type: context
+  status: reviewed
+  sentence: "（　）で えいがを みました。"
+  en: "I saw a film at the cinema."
+  answer: えいがかん
+  wrong: [としょかん, びょういん, がっこう]
+  difficulty: 1
+  note: "This asks where you see a film: the えいがかん, a cinema."
+
+- id: n5-g3-0119
+  type: context
+  status: reviewed
+  sentence: "てがみを （　）に いれて、きってを はりました。"
+  en: "I put the letter in an envelope and stuck a stamp on it."
+  answer: ふうとう
+  wrong:
+    - option: はがき
+      why: "はがき is a postcard. You can't put a letter inside it."
+    - option: さいふ
+      why: "さいふ is a wallet. A stamp goes on an envelope."
+    - option: ほんだな
+      why: "ほんだな is a bookcase."
+  difficulty: 2
+  note: "This asks what you put a letter in: a ふうとう, an envelope."
+
+- id: n5-g3-0120
+  type: context
+  status: reviewed
+  sentence: "A「ケーキを もう ひとつ どうですか。」\nB「いいえ、もう （　）です。」"
+  en: "A: How about another piece of cake? B: No, thank you. I've had enough."
+  answer: けっこう
+  wrong:
+    - option: すき
+      why: "すき is to like. B's いいえ says no, thank you: もう けっこうです."
+    - option: しずか
+      why: "しずか is quiet."
+    - option: きれい
+      why: "きれい is pretty or clean."
+  difficulty: 2
+  note: "This asks the polite way to say no to more: いいえ、もう けっこうです."
+
+- id: n5-g3-0121
+  type: context
+  status: reviewed
+  sentence: "A「かぜは もう （　）ですか。」\nB「はい、もう よく なりました。」"
+  en: "A: Are you over your cold now? B: Yes, I'm better now."
+  answer: だいじょうぶ
+  wrong:
+    - option: ひま
+      why: "ひま is free, with time to spare."
+    - option: たいへん
+      why: "たいへん is hard or terrible. B says the cold is better."
+    - option: いや
+      why: "いや is unpleasant. B answers about getting better."
+  difficulty: 2
+  note: "This asks how to ask if someone is all right: だいじょうぶですか."
+
+- id: n5-g3-0122
+  type: context
+  status: reviewed
+  sentence: "A「たんじょうびに なにが （　）ですか。」\nB「あたらしい かばんです。」"
+  en: "A: What do you want for your birthday? B: A new bag."
+  answer: ほしい
+  wrong:
+    - option: すき
+      why: "すき is to like. A birthday present is something you want: ほしい."
+    - option: ほそい
+      why: "ほそい is thin."
+    - option: まるい
+      why: "まるい is round."
+  difficulty: 2
+  note: "This asks the word for wanting something: ほしい."
+
+- id: n5-g3-0123
+  type: context
+  status: reviewed
+  sentence: "この しゅくだいは いちじかん （　）。"
+  en: "This homework took an hour."
+  answer: かかりました
+  wrong:
+    - option: ありました
+      why: "ある is for things that are there. The time a job takes is かかる."
+    - option: しました
+      why: "する is to do. The time a job takes is かかる."
+    - option: なりました
+      why: "なる is to become."
+  difficulty: 2
+  note: "This asks the verb for how long something takes: かかる."
+
+- id: n5-g3-0124
+  type: context
+  status: reviewed
+  sentence: "めがねを （　） しんぶんを よみます。"
+  en: "I put on my glasses and read the newspaper."
+  answer: かけて
+  wrong:
+    - option: きて
+      why: "きる is for clothes on your body. Glasses take かける."
+    - option: はいて
+      why: "はく is for shoes, socks and trousers."
+    - option: かぶって
+      why: "かぶる is for hats."
+  difficulty: 2
+  note: "This asks the verb for putting on glasses: めがねを かける."
+
+- id: n5-g3-0125
+  type: context
+  status: reviewed
+  sentence: "きのうの テストは とても （　）、できませんでした。"
+  en: "Yesterday's test was very hard, and I couldn't do it."
+  answer: むずかしくて
+  wrong:
+    - option: やさしくて
+      why: "やさしい is easy. An easy test you could do."
+    - option: みじかくて
+      why: "みじかい is short. A short test is not why you can't do it."
+    - option: おもくて
+      why: "おもい is heavy, for things you carry."
+  difficulty: 2
+  note: "This asks why you couldn't do the test: it was むずかしい, difficult."
+
+- id: n5-g3-0126
+  type: context
+  status: reviewed
+  sentence: "わからない ことばが ありましたから、（　）を ひきました。"
+  en: "There was a word I didn't know, so I looked it up in the dictionary."
+  answer: じしょ
+  wrong:
+    - option: しんぶん
+      why: "You read a しんぶん. You look a word up in a じしょ: じしょを ひく."
+    - option: ノート
+      why: "A ノート is for writing in."
+    - option: てがみ
+      why: "A てがみ is a letter."
+  difficulty: 2
+  note: "This asks what you look a word up in: a じしょ, with じしょを ひく."
+
+- id: n5-g3-0127
+  type: context
+  status: reviewed
+  sentence: "A「にほんは （　）ですか。」\nB「いいえ、きょねんも きました。」"
+  en: "A: Is this your first time in Japan? B: No, I came last year too."
+  answer: はじめて
+  wrong:
+    - option: いつも
+      why: "いつも is always. B says no, they came last year too, so A asked about a first time."
+    - option: もう
+      why: "もう is already."
+    - option: ときどき
+      why: "ときどき is sometimes."
+  difficulty: 2
+  note: "This asks the word for a first time: はじめて."
+
+- id: n5-g3-0128
+  type: context
+  status: reviewed
+  sentence: "ははが よんで いますから、（　） いきます。"
+  en: "My mother is calling me, so I'll go right away."
+  answer: すぐに
+  wrong:
+    - option: ときどき
+      why: "ときどき is sometimes. When someone calls, you go at once."
+    - option: いつも
+      why: "いつも is always. This is about one call, now."
+    - option: もっと
+      why: "もっと is more, for comparing."
+  difficulty: 2
+  note: "This asks the word for at once: すぐに."
+
+- id: n5-g3-0129
+  type: context
+  status: reviewed
+  sentence: "ともだちに かりた ほんを （　）。"
+  en: "I gave back the book I'd borrowed from my friend."
+  answer: かえしました
+  wrong:
+    - option: かしました
+      why: "かす is to lend. The book was your friend's, and you had borrowed it."
+    - option: あげました
+      why: "あげる is to give as a present. A borrowed book goes back."
+    - option: もらいました
+      why: "もらう is to receive. The book is going back to your friend."
+  difficulty: 3
+  note: "This asks the verb for giving back something you borrowed: かえす."
+
+- id: n5-g3-0130
+  type: context
+  status: reviewed
+  sentence: "きれいな はなを かいましたから、（　）に いれました。"
+  en: "I bought some pretty flowers, so I put them in a vase."
+  answer: かびん
+  wrong: [さいふ, くつ, ポスト]
+  difficulty: 1
+  note: "This asks what you put flowers in: a かびん, a vase."
+
+- id: n5-g3-0131
+  type: context
+  status: reviewed
+  sentence: "まいあさ （　）を つくって、ひるに かいしゃで たべます。"
+  en: "Every morning I make a packed lunch and eat it at work at midday."
+  answer: おべんとう
+  wrong: [ほんだな, くつした, かばん]
+  difficulty: 1
+  note: "This asks what you make in the morning and eat at lunch: an おべんとう, a packed lunch."
+
+- id: n5-g3-0132
+  type: context
+  status: reviewed
+  sentence: "わたしの （　）は ねこです。なまえは タマです。"
+  en: "My pet is a cat. Its name is Tama."
+  answer: ペット
+  wrong: [ノート, ラジオ, パン]
+  difficulty: 1
+  note: "This asks what a cat with a name can be: a ペット, a pet."
+
+- id: n5-g3-0133
+  type: context
+  status: reviewed
+  sentence: "あしたは にほんごの （　）が ありますから、こんばん べんきょうします。"
+  en: "There's a Japanese test tomorrow, so I'm studying tonight."
+  answer: テスト
+  wrong: [ポスト, ペン, ストーブ]
+  difficulty: 1
+  note: "This asks what you study for the night before: a テスト, a test."
+
+- id: n5-g3-0134
+  type: context
+  status: reviewed
+  sentence: "この はしを （　）と、むこうに こうえんが あります。"
+  en: "Cross this bridge and there's a park on the other side."
+  answer: わたる
+  wrong:
+    - option: はいる
+      why: "はいる is to go into a room or a building. You cross a bridge: わたる."
+    - option: あける
+      why: "あける is to open."
+    - option: のる
+      why: "のる is to get on a bus or a train."
+  difficulty: 2
+  note: "This asks the verb for crossing a bridge or a road: わたる."
+
+- id: n5-g3-0135
+  type: context
+  status: reviewed
+  sentence: "この ボタンを （　）と、ドアが あきます。"
+  en: "Press this button and the door opens."
+  answer: おす
+  wrong:
+    - option: ひく
+      why: "ひく is to pull. A button is pushed: おす."
+    - option: しめる
+      why: "しめる is to close."
+    - option: けす
+      why: "けす is to turn off a light."
+  difficulty: 2
+  note: "This asks the verb for pressing a button: おす."
+
+- id: n5-g3-0136
+  type: context
+  status: reviewed
+  sentence: "A「この ケーキは 100えんですよ。」\nB「えっ、（　）ですか。やすいですね。」"
+  en: "A: This cake is 100 yen. B: What, really? That's cheap."
+  answer: ほんとう
+  wrong:
+    - option: しずか
+      why: "しずか is quiet. B is surprised and asks: really?"
+    - option: いや
+      why: "いや is unpleasant."
+    - option: きれい
+      why: "きれい is pretty or clean. B is surprised by the price."
+  difficulty: 2
+  note: "This asks the word for asking if something is true: ほんとうですか, really?"
+
+- id: n5-g3-0137
+  type: context
+  status: reviewed
+  sentence: "あしたは ともだちと （　）に えいがを みます。"
+  en: "Tomorrow I'm going to see a film together with a friend."
+  answer: いっしょ
+  wrong:
+    - option: すこし
+      why: "すこし is a little. ともだちと … に means with a friend: いっしょに."
+    - option: たくさん
+      why: "たくさん is a lot."
+    - option: とても
+      why: "とても is very, before an adjective."
+  difficulty: 2
+  note: "This asks the word for doing something together: いっしょに."
+
+- id: n5-g3-0138
+  type: context
+  status: reviewed
+  sentence: "でかける まえに、ドアに （　）を かけて ください。"
+  en: "Please lock the door before you go out."
+  answer: かぎ
+  wrong:
+    - option: めがね
+      why: "めがねを かける is to put on glasses. A door is locked with a かぎ."
+    - option: しょうゆ
+      why: "しょうゆを かける is to pour soy sauce on food."
+    - option: おかね
+      why: "おかねを かける is to spend money."
+  difficulty: 2
+  note: "This asks what you lock a door with: a かぎ, a key, with かぎを かける."
+
+- id: n5-g3-0139
+  type: context
+  status: reviewed
+  sentence: "みせの ひとが （　）に みちを おしえました。"
+  en: "The shop assistant kindly told me the way."
+  answer: しんせつ
+  wrong:
+    - option: ひま
+      why: "ひま is free, with time to spare."
+    - option: いや
+      why: "いや is unpleasant."
+    - option: きらい
+      why: "きらい is to dislike."
+  difficulty: 2
+  note: "This asks the word for being kind and helpful: しんせつ."
+
+- id: n5-g3-0140
+  type: context
+  status: reviewed
+  sentence: "しごとが （　）から、うちへ かえります。"
+  en: "Work has finished, so I'm going home."
+  answer: おわりました
+  wrong:
+    - option: はじまりました
+      why: "はじまる is to begin. You go home when work ends."
+    - option: ありました
+      why: "ある is for things that are there. You go home when work is over."
+    - option: なりました
+      why: "なる is to become."
+  difficulty: 2
+  note: "This asks the verb for work coming to an end: おわる."
+
+- id: n5-g3-0141
+  type: context
+  status: reviewed
+  sentence: "かばんは ここに （　） ください。"
+  en: "Please put your bag here."
+  answer: おいて
+  wrong:
+    - option: とって
+      why: "とる is to take. To leave it here, you put it down: おく."
+    - option: すわって
+      why: "すわる is to sit."
+    - option: あけて
+      why: "あける is to open."
+  difficulty: 2
+  note: "This asks the verb for putting something down: おく."
+
+- id: n5-g3-0142
+  type: context
+  status: reviewed
+  sentence: "あねは びょういんで （　） います。"
+  en: "My older sister works at a hospital."
+  answer: はたらいて
+  wrong:
+    - option: すんで
+      why: "すむ is to live. People work at a hospital: はたらく."
+    - option: あそんで
+      why: "あそぶ is to play."
+    - option: およいで
+      why: "およぐ is to swim."
+  difficulty: 2
+  note: "This asks the verb for having a job somewhere: はたらく."
+
+- id: n5-g3-0143
+  type: context
+  status: reviewed
+  sentence: "あさ はやく おきて、ふじさんに （　）。"
+  en: "I got up early and climbed Mount Fuji."
+  answer: のぼりました
+  wrong:
+    - option: のりました
+      why: "のる is for a bus, a train or a bicycle. You climb a mountain: のぼる."
+    - option: すわりました
+      why: "すわる is to sit."
+    - option: はしりました
+      why: "はしる is to run. You climb a mountain: のぼる."
+  difficulty: 2
+  note: "This asks the verb for climbing a mountain: のぼる."

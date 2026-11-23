@@ -84,7 +84,7 @@ describe(`the exam router`, () => {
   });
 
   it(`starts the test each command names, and only that test`, async () => {
-    // WHY: both commands share one router. If /dokkai started the grammar test, students would sit the wrong paper, and nothing would look broken.
+    // WHY: every test's command shares one router. If /dokkai or /goi started the grammar test, students would sit the wrong paper, and nothing would look broken.
     const grammarOnly = () => {
       const { deps, reached } = recordingDeps();
       const replies: string[] = [];
@@ -126,6 +126,13 @@ describe(`the exam router`, () => {
       `No questions are ready for this test yet.`
     ]);
     expect(reading.reached).not.toContain(`begin`);
+
+    const vocabulary = grammarOnly();
+    await handleExamInteraction(vocabulary.deps, command(`goi`, `start`));
+    expect(vocabulary.replies).toEqual([
+      `No questions are ready for this test yet.`
+    ]);
+    expect(vocabulary.reached).not.toContain(`begin`);
 
     const grammar = grammarOnly();
     await handleExamInteraction(grammar.deps, command(`bunpou`, `start`));

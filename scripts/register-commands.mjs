@@ -255,6 +255,22 @@ const commands = [
         description: `End the test in this channel and show the results.`
       }
     ]
+  },
+  {
+    name: `goi`,
+    description: `JLPT N5 vocabulary mock test (文字・語彙).`,
+    options: [
+      {
+        type: SUB_COMMAND,
+        name: `start`,
+        description: `Start a vocabulary mock test in this channel.`
+      },
+      {
+        type: SUB_COMMAND,
+        name: `end`,
+        description: `End the test in this channel and show the results.`
+      }
+    ]
   }
 ];
 

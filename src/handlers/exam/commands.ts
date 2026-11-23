@@ -15,7 +15,8 @@ import { BUTTON, parseResults, parseVote } from "./render.js";
 /** Each test's slash command. `start` and `end` work the same for every test. */
 export const TESTS: Readonly<Partial<Record<string, TestId>>> = {
   bunpou: `bunpou`,
-  dokkai: `dokkai`
+  dokkai: `dokkai`,
+  goi: `goi`
 };
 
 /**

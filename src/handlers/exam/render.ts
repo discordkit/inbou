@@ -4,9 +4,16 @@ import {
   type ActionRow,
   type MessageComponent
 } from "@discordkit/client";
-import type { Mondai, TestId } from "./blueprint.js";
+import type { TestId } from "./blueprint.js";
 import { OPTION_COUNT, type ExamQuestion } from "./draw.js";
-import { bare, BLANK, display, readingsOf, type ReviewLink } from "./items.js";
+import {
+  bare,
+  BLANK,
+  display,
+  readingsOf,
+  type ItemType,
+  type ReviewLink
+} from "./items.js";
 import type { Answer, Result, Tally } from "./machine.js";
 
 /**
@@ -93,26 +100,44 @@ export const parseResults = (customId: string): string | null => {
 /** What each test is called on its cards. */
 export const TEST_NAMES: Readonly<Record<TestId, string>> = {
   bunpou: `文法(ぶんぽう) · N5`,
-  dokkai: `読解(どっかい) · N5`
+  dokkai: `読解(どっかい) · N5`,
+  goi: `文字(もじ)・語彙(ごい) · N5`
 };
+
+/** How Section 1's instructions mark the underlined word, as the paper draws its line. */
+const UNDERLINE = `＿＿`;
 
 /**
  * The paper's instruction line for each type, in its own wording.
  *
  * Markup, so the kanji carry readings as on the paper.
  */
-export const INSTRUCTIONS: Readonly<Record<Mondai, string>> = {
-  1: `${BLANK}に {何|なに}を {入|い}れますか。1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
-  2: `★に {入|はい}る ものは どれですか。1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
-  3: `［　］に {何|なに}を {入|い}れますか。ぶんしょうの いみを かんがえて、1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
-  4: `つぎの ぶんしょうを {読|よ}んで、しつもんに こたえて ください。こたえは、1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
-  5: `つぎの ぶんしょうを {読|よ}んで、しつもんに こたえて ください。こたえは、1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
+export const INSTRUCTIONS: Readonly<Record<ItemType, string>> = {
+  form: `${BLANK}に {何|なに}を {入|い}れますか。1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
+  compose: `★に {入|はい}る ものは どれですか。1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
+  passage: `［　］に {何|なに}を {入|い}れますか。ぶんしょうの いみを かんがえて、1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
+  short: `つぎの ぶんしょうを {読|よ}んで、しつもんに こたえて ください。こたえは、1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
+  mid: `つぎの ぶんしょうを {読|よ}んで、しつもんに こたえて ください。こたえは、1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
   // The paper's 右の ページ: here the picture sits in the card, so つぎの.
-  6: `つぎの ページを {見|み}て、しつもんに こたえて ください。こたえは、1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`
+  info: `つぎの ページを {見|み}て、しつもんに こたえて ください。こたえは、1・2・3・4から いちばん いい ものを {一|ひと}つ えらんで ください。`,
+  // Section 1 writes its instructions in kana, ひとつ too.
+  kanji: `${UNDERLINE}の ことばは ひらがなで どう かきますか。1・2・3・4から いちばん いい ものを ひとつ えらんで ください。`,
+  spelling: `${UNDERLINE}の ことばは どう かきますか。1・2・3・4から いちばん いい ものを ひとつ えらんで ください。`,
+  context: `${BLANK}に なにが はいりますか。1・2・3・4から いちばん いい ものを ひとつ えらんで ください。`,
+  paraphrase: `${UNDERLINE}の ぶんと だいたい おなじ いみの ぶんが あります。1・2・3・4から いちばん いい ものを ひとつ えらんで ください。`
 };
 
-/** Reading puts its options in the card, and its buttons show only the number. */
-const isReading = (question: ExamQuestion): boolean => question.mondai >= 4;
+/** Reading: a text or picture with questions, each revealed with its stem. */
+const isReading = (question: ExamQuestion): boolean =>
+  question.type === `short` ||
+  question.type === `mid` ||
+  question.type === `info`;
+
+/**
+ * Options too long for a button sit in the card, numbered, and the buttons show only the number: reading's, and 言い換え's whole sentences. Everything else is labelled on its buttons, the user's choice for Section 1 too.
+ */
+const optionsInCard = (question: ExamQuestion): boolean =>
+  isReading(question) || question.type === `paraphrase`;
 
 /** Discord's cap on a picture's description, its alt text. */
 const ALT_MAX = 1024;
@@ -260,6 +285,8 @@ const fitAlt = (text: string): string =>
  * A reading card: the text or picture once, then each question with its options in the card.
  *
  * Reading options are sentences, too long for a button and too important to trim, so they sit in the card as the paper prints them, numbered 1–4, and the buttons show only the number. A 問題6 card puts its question above the picture, as the paper puts it above the page. Until the picture pipeline hosts the picture, its text stands in.
+ *
+ * A 言い換え card is laid out the same way: its options are whole sentences too.
  */
 const readingBody = (view: QuestionView, closed: boolean): MessageComponent => {
   const first = view.questions.at(0);
@@ -313,7 +340,9 @@ const readingBody = (view: QuestionView, closed: boolean): MessageComponent => {
           ];
 
   const asks = view.questions.flatMap((question, index) => [
-    ...(index > 0 || first.material === undefined
+    // 言い換え has no stem: its sentence is the question.
+    ...((index > 0 || first.material === undefined) &&
+    question.question !== undefined
       ? [{ type: ComponentType.TextDisplay as const, content: stem(question) }]
       : []),
     { type: ComponentType.TextDisplay as const, content: optionsOf(question) },
@@ -328,7 +357,7 @@ const readingBody = (view: QuestionView, closed: boolean): MessageComponent => {
         { type: ComponentType.TextDisplay, content: headingOf(view, closed) },
         {
           type: ComponentType.TextDisplay,
-          content: `-# ${display(INSTRUCTIONS[first.mondai])}`
+          content: `-# ${display(INSTRUCTIONS[first.type])}`
         },
         ...(first.intro === undefined
           ? []
@@ -342,7 +371,11 @@ const readingBody = (view: QuestionView, closed: boolean): MessageComponent => {
           ? [
               {
                 type: ComponentType.TextDisplay as const,
-                content: passageBlock(first.prompt)
+                // A 言い換え sentence is one line, large like every other sentence; a reading text is a quote at reading size.
+                content:
+                  first.type === `paraphrase`
+                    ? sentenceBlock(first.prompt)
+                    : passageBlock(first.prompt)
               }
             ]
           : [
@@ -366,7 +399,7 @@ const questionBody = (
 ): MessageComponent => {
   const first = view.questions.at(0);
   if (first === undefined) return [];
-  if (isReading(first)) return readingBody(view, closed);
+  if (optionsInCard(first)) return readingBody(view, closed);
   const heading = headingOf(view, closed);
 
   const rows =
@@ -388,7 +421,7 @@ const questionBody = (
         { type: ComponentType.TextDisplay, content: heading },
         {
           type: ComponentType.TextDisplay,
-          content: `-# ${display(INSTRUCTIONS[first.mondai])}`
+          content: `-# ${display(INSTRUCTIONS[first.type])}`
         },
         ...(first.intro === undefined
           ? []
@@ -401,7 +434,7 @@ const questionBody = (
         {
           type: ComponentType.TextDisplay,
           content:
-            first.mondai === 3
+            first.type === `passage`
               ? passageBlock(first.prompt)
               : sentenceBlock(first.prompt)
         },
@@ -774,4 +807,35 @@ export const myResultsText = (
     if (text.length <= CONTENT_MAX) return text;
   }
   return withLinks(0);
+};
+
+/**
+ * My results as messages that each fit Discord's 2,000 characters: one, or more when the whys alone run past it.
+ *
+ * Links are dropped first, as {@link myResultsText} does. Whys are never dropped, because a private follow-up vanishes when Discord reloads and this is where a student reads it again; /goi asks 21 questions, and a student who missed most of them can have more whys than one message holds. So the rest go in further messages, and a question always stays with its why.
+ */
+export const myResultsPages = (
+  questions: readonly ExamQuestion[],
+  answers: readonly Answer[],
+  result: Result | undefined
+): string[] => {
+  const text = myResultsText(questions, answers, result);
+  if (text.length <= CONTENT_MAX) return [text];
+
+  // A why is the `> ` line under its question, and moves with it.
+  const blocks = text
+    .split(`\n`)
+    .reduce<string[]>(
+      (all, line) =>
+        line.startsWith(`> `) && all.length > 0
+          ? [...all.slice(0, -1), `${all.at(-1) ?? ``}\n${line}`]
+          : [...all, line],
+      []
+    );
+  return blocks.reduce<string[]>((pages, block) => {
+    const last = pages.at(-1);
+    return last !== undefined && last.length + 1 + block.length <= CONTENT_MAX
+      ? [...pages.slice(0, -1), `${last}\n${block}`]
+      : [...pages, block];
+  }, []);
 };

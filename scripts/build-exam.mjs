@@ -36,8 +36,12 @@ import {
   itemHints,
   itemProblems,
   itemsSchema,
+  PAPER_KANJI,
   pointsOf,
-  reviewLinksOf
+  reviewLinksOf,
+  vocabListSchema,
+  wordHints,
+  wordProblems
 } from "../src/handlers/exam/items.ts";
 import { pictureName, versionsOf } from "./lib/pictures.mjs";
 
@@ -75,8 +79,8 @@ if (pointIds.size !== points.length) {
   process.exit(1);
 }
 
-/** Grammar, then reading: one folder of YAML each. */
-const DECKS = [`bunpou`, `dokkai`];
+/** Grammar, reading and vocabulary: one folder of YAML each. */
+const DECKS = [`bunpou`, `dokkai`, `goi`];
 
 const items = DECKS.flatMap((deck) =>
   readdirSync(`${ROOT}/${deck}`)
@@ -91,9 +95,17 @@ const items = DECKS.flatMap((deck) =>
     )
 );
 
+// The N5 and N4 words, which the vocabulary items are checked against. Built by `exam:vocab`.
+const vocab = parseOrExit(
+  vocabListSchema,
+  JSON.parse(readFileSync(`data/jlpt/vocab.json`, `utf8`)),
+  `vocab.json`
+);
+
 const problems = [
   ...corpusProblems(items),
-  ...items.flatMap((item) => itemProblems(item, pointIds))
+  ...items.flatMap((item) => itemProblems(item, pointIds)),
+  ...wordProblems(items, vocab)
 ];
 if (problems.length > 0) {
   for (const problem of problems) console.error(problem);
@@ -102,7 +114,7 @@ if (problems.length > 0) {
 }
 
 // Hints never fail the build: they need a reviewer's judgement.
-const hints = items.flatMap(itemHints);
+const hints = [...items.flatMap(itemHints), ...wordHints(items, vocab)];
 for (const hint of hints) console.log(`hint: ${hint}`);
 
 const shipped = items.filter((item) => DRAFTS || item.status === `reviewed`);
@@ -144,15 +156,18 @@ console.log(
 
 // Coverage: how many cards each deck holds, beside what one test draws. A
 // deck is playable when it holds at least twice that, so two tests in a row
-// differ. 問題1's cards are slots, 問題2's windows, and 問題3's whole passages.
-const unitsOf = (mondai) =>
-  shipped.flatMap((item) =>
-    mondai === 1 && item.type === `form`
-      ? item.slots
-      : mondai === 2 && item.type === `compose`
-        ? item.windows
-        : []
-  );
+// differ. A form's cards are its slots, a compose item's its windows, a
+// passage deck's its whole passages, and a vocabulary item is one card.
+const unitsOf = (type) =>
+  shipped
+    .filter((item) => item.type === type)
+    .flatMap((item) =>
+      item.type === `form`
+        ? item.slots
+        : item.type === `compose`
+          ? item.windows
+          : [item]
+    );
 const report = (label, have, draw) =>
   console.log(
     `${label}: ${String(have)} cards, a test draws ${String(draw)} (${have >= draw * 2 ? `ok` : `short`})`
@@ -189,13 +204,51 @@ for (const [type, label] of Object.entries(READING)) {
   }
 }
 
+// Vocabulary: items per type, drafts included, as for reading. A vocabulary item is one question.
+const VOCAB = {
+  kanji: `問題1 漢字読み`,
+  spelling: `問題2 表記`,
+  context: `問題3 文脈規定`,
+  paraphrase: `問題4 言い換え類義`
+};
+for (const [type, label] of Object.entries(VOCAB)) {
+  const of = items.filter((item) => item.type === type);
+  const reviewed = of.filter((item) => item.status === `reviewed`).length;
+  const levels = [1, 2, 3]
+    .map(
+      (level) =>
+        `d${String(level)} ${String(of.filter((item) => item.difficulty === level).length)}`
+    )
+    .join(`, `);
+  console.log(
+    `goi ${label}: ${String(of.length)} items (${String(reviewed)} reviewed; ${levels})`
+  );
+}
+
+// How much of N5 the 漢字読み and 表記 decks reach, drafts included, to steer the next batch toward words not yet asked.
+const asked = new Set(
+  items
+    .filter((item) => item.type === `kanji` || item.type === `spelling`)
+    .map((item) => item.word)
+);
+// Only spellings the paper could print: kanji from N5 and N4 (彼処 for あそこ is JMdict's, not the paper's).
+const printable = (form) =>
+  [...form].every(
+    (char) => !/\p{Script=Han}/u.test(char) || PAPER_KANJI.has(char)
+  ) && /\p{Script=Han}/u.test(form);
+const n5Kanji = vocab.words.filter(
+  (word) => word.level === 5 && word.kanji.some(printable)
+);
+console.log(
+  `goi asks ${String(n5Kanji.filter((word) => word.kanji.some((form) => asked.has(form))).length)} of ${String(n5Kanji.length)} N5 words the paper could write in kanji`
+);
+
 for (const [test, plans] of Object.entries(BLUEPRINTS)) {
   for (const plan of plans) {
     if (`questions` in plan) {
       // Reading shares one mix across its decks, shuffled each test, so a deck may be dealt a level up to as often as the mix holds it.
-      const type = { 4: `short`, 5: `mid`, 6: `info` }[plan.mondai];
       const questions = shipped
-        .filter((item) => item.type === type)
+        .filter((item) => item.type === plan.type)
         .flatMap((item) => item.questions);
       for (const level of [1, 2, 3]) {
         report(
@@ -204,13 +257,13 @@ for (const [test, plans] of Object.entries(BLUEPRINTS)) {
           Math.min(plan.questions, READING_MIX[level])
         );
       }
-    } else if (plan.mondai === 3) {
+    } else if (plan.type === `passage`) {
       const passages = shipped.filter(
         (item) => item.type === `passage` && item.blanks.length >= plan.blanks
       ).length;
       report(`${test} 問題3 passages`, passages, 1);
     } else {
-      const units = unitsOf(plan.mondai);
+      const units = unitsOf(plan.type);
       for (const level of [1, 2, 3]) {
         report(
           `${test} 問題${String(plan.mondai)} difficulty ${String(level)}`,

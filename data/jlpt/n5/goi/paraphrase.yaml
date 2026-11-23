@@ -1,0 +1,1360 @@
+# 問題4 言い換え類義 — choose the sentence that means about the same as the underlined one.
+#
+# The sentence and the options are all kana, as on the paper, and the card underlines the whole sentence. The options are whole sentences that differ from each other in one word or phrase, so the student compares meanings, not sentences. Exactly one means the same: each wrong option must change the meaning, never only the tone. Original sentences only: never copy a published one.
+#
+# A medium or hard question says why each wrong option is wrong (`- option: … why: …`): what the changed word means, and how that changes the sentence. The build fails without them. The note is public at the reveal: the word or phrase that is paraphrased, and what it means.
+
+- id: n5-g4-0001
+  type: paraphrase
+  status: reviewed
+  sentence: "この へやは せまいです。"
+  en: "This room is small."
+  answer: "この へやは ひろくないです。"
+  wrong:
+    - "この へやは ひろいです。"
+    - "この へやは あかるくないです。"
+    - "この へやは しずかです。"
+  difficulty: 1
+  note: "This asks for another way to say せまい, small (of a space): ひろくない, not spacious."
+
+- id: n5-g4-0002
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしは まいあさ コーヒーを のみます。"
+  en: "I drink coffee every morning."
+  answer: "わたしは あさは いつも コーヒーを のみます。"
+  wrong:
+    - "わたしは あさは ときどき コーヒーを のみます。"
+    - "わたしは よるは いつも コーヒーを のみます。"
+    - "わたしは あさは あまり コーヒーを のみません。"
+  difficulty: 1
+  note: "This asks for another way to say まいあさ, every morning: あさは いつも."
+
+- id: n5-g4-0003
+  type: paraphrase
+  status: reviewed
+  sentence: "この えいがは つまらなかったです。"
+  en: "This film was boring."
+  answer: "この えいがは おもしろくなかったです。"
+  wrong:
+    - option: "この えいがは おもしろかったです。"
+      why: "おもしろかった is the opposite: the film was fun."
+    - option: "この えいがは みじかかったです。"
+      why: "みじかい is short. つまらない is about being dull, not about length."
+    - option: "この えいがは ながかったです。"
+      why: "ながい is long. A long film is not always a dull one."
+  difficulty: 2
+  note: "This asks for another way to say つまらない, boring: おもしろくない, not interesting."
+
+- id: n5-g4-0004
+  type: paraphrase
+  status: reviewed
+  sentence: "ここは だいどころです。"
+  en: "This is the kitchen."
+  answer: "ここで りょうりを します。"
+  wrong:
+    - option: "ここで ねます。"
+      why: "You sleep in a bedroom. A だいどころ is for cooking."
+    - option: "ここで おふろに はいります。"
+      why: "That is the bathroom. A だいどころ is for cooking."
+    - option: "ここで べんきょうを します。"
+      why: "A だいどころ is a kitchen, for cooking, not for studying."
+  difficulty: 2
+  note: "This asks what a だいどころ is: the room where you cook, りょうりを する ところ."
+
+- id: n5-g4-0005
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしは おととい びょういんへ いきました。"
+  en: "I went to the hospital the day before yesterday."
+  answer: "わたしは ふつかまえに びょういんへ いきました。"
+  wrong:
+    - option: "わたしは きのう びょういんへ いきました。"
+      why: "きのう is one day ago. おととい is two."
+    - option: "わたしは みっかまえに びょういんへ いきました。"
+      why: "みっかまえ is three days ago. おととい is two."
+    - option: "わたしは けさ びょういんへ いきました。"
+      why: "けさ is this morning. おととい is two days ago."
+  difficulty: 2
+  note: "This asks for another way to say おととい, the day before yesterday: ふつかまえ, two days ago."
+
+- id: n5-g4-0006
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしは あさって とうきょうへ いきます。"
+  en: "I am going to Tokyo the day after tomorrow."
+  answer: "わたしは あしたの つぎの ひに とうきょうへ いきます。"
+  wrong:
+    - option: "わたしは きのうの つぎの ひに とうきょうへ いきます。"
+      why: "The day after yesterday is today, not あさって."
+    - option: "わたしは あしたの まえの ひに とうきょうへ いきます。"
+      why: "The day before tomorrow is today, not あさって."
+    - option: "わたしは おとといの つぎの ひに とうきょうへ いきます。"
+      why: "The day after おととい is きのう, yesterday."
+  difficulty: 3
+  note: "This asks which day あさって is: the day after tomorrow, あしたの つぎの ひ. Each wrong option counts from another day and lands somewhere else."
+
+- id: n5-g4-0007
+  type: paraphrase
+  status: reviewed
+  sentence: "あには わたしより せが たかいです。"
+  en: "My older brother is taller than me."
+  answer: "わたしは あにより せが ひくいです。"
+  wrong:
+    - option: "わたしは あにより せが たかいです。"
+      why: "This turns it round: here I am the taller one."
+    - option: "あには わたしより せが ひくいです。"
+      why: "This says my brother is shorter, the opposite."
+    - option: "わたしと あには せが おなじぐらいです。"
+      why: "おなじぐらい is about the same height, but the sentence says he is taller."
+  difficulty: 3
+  note: "This asks for the same comparison from the other side: if my brother is taller than me, I am shorter than him, あにより ひくい."
+
+- id: n5-g4-0008
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしは すしが だいすきです。"
+  en: "I love sushi."
+  answer: "わたしは すしが とても すきです。"
+  wrong:
+    - "わたしは すしが あまり すきじゃ ありません。"
+    - "わたしは すしが すこし すきです。"
+    - "わたしは すしが きらいです。"
+  difficulty: 1
+  note: "This asks for another way to say だいすき, to love: とても すき."
+
+- id: n5-g4-0009
+  type: paraphrase
+  status: reviewed
+  sentence: "きょうは いい てんきです。"
+  en: "The weather is nice today."
+  answer: "きょうは はれて います。"
+  wrong:
+    - "きょうは あめが ふって います。"
+    - "きょうは くもって います。"
+    - "きょうは さむいです。"
+  difficulty: 1
+  note: "This asks what いい てんき means: fine weather, a sunny day, はれ."
+
+- id: n5-g4-0010
+  type: paraphrase
+  status: reviewed
+  sentence: "ちちは いま でかけて います。"
+  en: "My father is out right now."
+  answer: "ちちは いま うちに いません。"
+  wrong:
+    - "ちちは いま うちに います。"
+    - "ちちは いま ねて います。"
+    - "ちちは いま しごとを して います。"
+  difficulty: 1
+  note: "This asks what でかけて いる means: someone has gone out, so they are not at home, うちに いない."
+
+- id: n5-g4-0011
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしは ことし はたちです。"
+  en: "I am twenty this year."
+  answer: "わたしは ことし にじゅっさいです。"
+  wrong:
+    - option: "わたしは ことし じゅっさいです。"
+      why: "じゅっさい is ten years old. はたち is twenty."
+    - option: "わたしは ことし にさいです。"
+      why: "にさい is two years old. はたち is twenty."
+    - option: "わたしは ことし にじゅうにさいです。"
+      why: "にじゅうにさい is twenty-two. はたち is twenty."
+  difficulty: 2
+  note: "This asks what はたち means: twenty years old, にじゅっさい. The age twenty has a word of its own."
+
+- id: n5-g4-0012
+  type: paraphrase
+  status: reviewed
+  sentence: "この こうえんは にぎやかです。"
+  en: "This park is lively."
+  answer: "この こうえんには ひとが おおぜい います。"
+  wrong:
+    - option: "この こうえんは しずかです。"
+      why: "しずか is quiet, the opposite of にぎやか."
+    - option: "この こうえんには ひとが あまり いません。"
+      why: "Few people make a park quiet, not にぎやか."
+    - option: "この こうえんは きれいです。"
+      why: "きれい is pretty or clean. にぎやか is about people and noise."
+  difficulty: 2
+  note: "This asks what にぎやか means: lively, with many people about, ひとが おおぜい."
+
+- id: n5-g4-0013
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしは あさごはんを たべませんでした。"
+  en: "I didn't have breakfast."
+  answer: "わたしは けさ なにも たべませんでした。"
+  wrong:
+    - option: "わたしは けさ たくさん たべました。"
+      why: "This is the opposite: it says you ate a lot."
+    - option: "わたしは ゆうべ なにも たべませんでした。"
+      why: "ゆうべ is last night. The sentence is about the morning."
+    - option: "わたしは ひるごはんを たべませんでした。"
+      why: "ひるごはん is lunch. あさごはん is breakfast."
+  difficulty: 2
+  note: "This asks for another way to say you had no breakfast: けさ なにも たべませんでした, you ate nothing this morning."
+
+- id: n5-g4-0014
+  type: paraphrase
+  status: reviewed
+  sentence: "この みせは よる 9じに しまります。"
+  en: "This shop closes at nine at night."
+  answer: "この みせは よる 9じまで あいて います。"
+  wrong:
+    - option: "この みせは よる 9じから あいて います。"
+      why: "から is from: this shop would open at nine at night."
+    - option: "この みせは あさ 9じに しまります。"
+      why: "あさ is the morning. The shop closes at night."
+    - option: "この みせは よる 9じに あきます。"
+      why: "あく is to open. しまる is to close."
+  difficulty: 3
+  note: "This asks for another way to say the shop closes at nine at night: it is open until then, 9じまで あいて います."
+
+- id: n5-g4-0015
+  type: paraphrase
+  status: reviewed
+  sentence: "ははの おとうとは いしゃです。"
+  en: "My mother's younger brother is a doctor."
+  answer: "わたしの おじさんは いしゃです。"
+  wrong:
+    - option: "わたしの おじいさんは いしゃです。"
+      why: "おじいさん, with a long い, is a grandfather. Your mother's brother is おじさん."
+    - option: "わたしの おばさんは いしゃです。"
+      why: "おばさん is an aunt, a woman. ははの おとうと is a man."
+    - option: "わたしの おとうとは いしゃです。"
+      why: "おとうと is your own younger brother. Your mother's younger brother is your uncle."
+  difficulty: 3
+  note: "This asks who your mother's younger brother is: your uncle, おじさん."
+
+- id: n5-g4-0016
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしは きのう がっこうを やすみました。"
+  en: "I stayed home from school yesterday."
+  answer: "わたしは きのう がっこうへ いきませんでした。"
+  wrong:
+    - option: "わたしは きのう がっこうへ いきました。"
+      why: "This is the opposite: it says you went to school."
+    - option: "わたしは きのう がっこうで やすみました。"
+      why: "がっこうで やすみました is resting at school, so you were there. がっこうを やすむ is staying away."
+    - option: "わたしは きのう がっこうに おそく つきました。"
+      why: "This says you were late, but you still went."
+  difficulty: 3
+  note: "This asks what がっこうを やすむ means: to stay away from school, がっこうへ いかない."
+
+- id: n5-g4-0017
+  type: paraphrase
+  status: reviewed
+  sentence: "この みせは にちようびが やすみです。"
+  en: "This shop is closed on Sundays."
+  answer: "この みせは にちようびに あいて いません。"
+  wrong:
+    - "この みせは にちようびに あいて います。"
+    - "この みせは どようびが やすみです。"
+    - "この みせは にちようびが いそがしいです。"
+  difficulty: 1
+  note: "This asks what やすみ means for a shop: it is closed, あいて いない."
+
+- id: n5-g4-0018
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしは まいにち あるいて がっこうへ いきます。"
+  en: "I walk to school every day."
+  answer: "わたしは まいにち がっこうまで あるきます。"
+  wrong:
+    - "わたしは まいにち バスで がっこうへ いきます。"
+    - "わたしは まいにち はしって がっこうへ いきます。"
+    - "わたしは まいにち がっこうから あるいて かえります。"
+  difficulty: 1
+  note: "This asks for another way to say you go to school on foot: がっこうまで あるく."
+
+- id: n5-g4-0019
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしは けさ 7じに うちを でました。"
+  en: "I left home at seven this morning."
+  answer: "わたしは けさ 7じに でかけました。"
+  wrong:
+    - "わたしは けさ 7じに かえりました。"
+    - "わたしは けさ 7じに おきました。"
+    - "わたしは けさ 7じに うちに いました。"
+  difficulty: 1
+  note: "This asks for another way to say you left home: でかけました, went out."
+
+- id: n5-g4-0020
+  type: paraphrase
+  status: reviewed
+  sentence: "あねは りょうりが へたです。"
+  en: "My older sister is bad at cooking."
+  answer: "あねは りょうりが じょうずじゃ ありません。"
+  wrong:
+    - option: "あねは りょうりが じょうずです。"
+      why: "じょうず is good at it, the opposite of へた."
+    - option: "あねは りょうりが きらいです。"
+      why: "きらい is to dislike. へた is about skill, not liking."
+    - option: "あねは りょうりを しません。"
+      why: "This says she never cooks. へた says she cooks badly."
+  difficulty: 2
+  note: "This asks what へた means: bad at something, じょうずじゃ ない."
+
+- id: n5-g4-0021
+  type: paraphrase
+  status: reviewed
+  sentence: "この まちは ひとが すくないです。"
+  en: "Few people live in this town."
+  answer: "この まちには ひとが あまり いません。"
+  wrong:
+    - option: "この まちには ひとが おおぜい います。"
+      why: "おおぜい is many people, the opposite of すくない."
+    - option: "この まちには ひとが ぜんぜん いません。"
+      why: "ぜんぜん いません is nobody at all. すくない is a few."
+    - option: "この まちは ひとが おおいです。"
+      why: "おおい is many, the opposite of すくない."
+  difficulty: 2
+  note: "This asks what すくない means here: there are not many people, ひとが あまり いない."
+
+- id: n5-g4-0022
+  type: paraphrase
+  status: reviewed
+  sentence: "やまださんは わたしに じしょを かしました。"
+  en: "Yamada lent me a dictionary."
+  answer: "わたしは やまださんに じしょを かりました。"
+  wrong:
+    - option: "わたしは やまださんに じしょを かしました。"
+      why: "This turns it round: here you lent the dictionary to やまださん."
+    - option: "やまださんは わたしに じしょを かりました。"
+      why: "This says やまださん borrowed it from you, the other way round."
+    - option: "わたしは やまださんに じしょを あげました。"
+      why: "あげる is to give something away for good, and here it goes the other way."
+  difficulty: 2
+  note: "This asks for the same lending from the other side: if やまださん lent it to you, you borrowed it, かりました."
+
+- id: n5-g4-0023
+  type: paraphrase
+  status: reviewed
+  sentence: "あしたは しごとが ありません。"
+  en: "I have no work tomorrow."
+  answer: "あしたは やすみです。"
+  wrong:
+    - option: "あしたは しごとが たくさん あります。"
+      why: "This is the opposite: a busy day at work."
+    - option: "あしたは しごとが はやく おわります。"
+      why: "This says you work, but finish early."
+    - option: "あしたは しごとに おそく いきます。"
+      why: "This says you go to work, only late."
+  difficulty: 2
+  note: "This asks for another way to say you have no work: やすみ, a day off."
+
+- id: n5-g4-0024
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしは あにに ほんを もらいました。"
+  en: "I got a book from my older brother."
+  answer: "あには わたしに ほんを くれました。"
+  wrong:
+    - option: "わたしは あにに ほんを あげました。"
+      why: "This turns it round: here you gave the book to your brother."
+    - option: "あには わたしに ほんを もらいました。"
+      why: "This says your brother got the book from you, the other way round."
+    - option: "あには わたしに ほんを かしました。"
+      why: "かす is to lend: you would give the book back. もらう is to keep it."
+  difficulty: 3
+  note: "This asks for the same gift from the giver's side: you got it from your brother, so he gave it to you, くれました."
+
+- id: n5-g4-0025
+  type: paraphrase
+  status: reviewed
+  sentence: "やまださんは わたしより としが うえです。"
+  en: "Yamada is older than me."
+  answer: "わたしは やまださんより わかいです。"
+  wrong:
+    - option: "やまださんは わたしより わかいです。"
+      why: "This turns it round: やまださん would be the younger one."
+    - option: "わたしは やまださんより としが うえです。"
+      why: "This says you are the older one."
+    - option: "わたしと やまださんは おなじ としです。"
+      why: "おなじ とし is the same age, but やまださん is older."
+  difficulty: 3
+  note: "This asks for the same comparison from the other side: if やまださん is older than you, you are younger, わかい."
+
+- id: n5-g4-0026
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしは まいばん 10じに ねて、まいあさ 6じに おきます。"
+  en: "I go to bed at ten every night and get up at six every morning."
+  answer: "わたしは まいにち 8じかん ねます。"
+  wrong:
+    - option: "わたしは まいにち 6じかん ねます。"
+      why: "From ten at night to six in the morning is eight hours, not six."
+    - option: "わたしは まいにち 4じかん ねます。"
+      why: "Ten minus six is four, but sleep runs on past midnight: from ten to six is eight hours."
+    - option: "わたしは まいにち 10じかん ねます。"
+      why: "Ten is the time you go to bed, not how long you sleep."
+  difficulty: 3
+  note: "This asks how long you sleep: from ten at night to six in the morning, 8じかん."
+
+- id: n5-g4-0027
+  type: paraphrase
+  status: reviewed
+  sentence: "この へやは さむいです。"
+  en: "This room is cold."
+  answer: "この へやは あたたかくないです。"
+  wrong:
+    - "この へやは あたたかいです。"
+    - "この へやは あかるくないです。"
+    - "この へやは しずかじゃ ありません。"
+  difficulty: 1
+  note: "This asks for another way to say さむい, cold: あたたかくない, not warm."
+
+- id: n5-g4-0028
+  type: paraphrase
+  status: reviewed
+  sentence: "この ケーキは あまり おいしくないです。"
+  en: "This cake is not very good."
+  answer: "この ケーキは まずいです。"
+  wrong:
+    - "この ケーキは おいしいです。"
+    - "この ケーキは たかいです。"
+    - "この ケーキは あまいです。"
+  difficulty: 1
+  note: "This asks for another way to say a food is not good: まずい."
+
+- id: n5-g4-0029
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしの いえは がっこうの となりです。"
+  en: "My house is next to the school."
+  answer: "わたしの いえは がっこうの すぐ よこです。"
+  wrong:
+    - "わたしの いえは がっこうの まえです。"
+    - "わたしの いえは がっこうから とおいです。"
+    - "わたしの いえは がっこうの うしろです。"
+  difficulty: 1
+  note: "This asks for another way to say となり, next door: すぐ よこ, right beside."
+
+- id: n5-g4-0030
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしは にほんごを ならって います。"
+  en: "I am learning Japanese."
+  answer: "わたしは にほんごを べんきょうして います。"
+  wrong:
+    - option: "わたしは にほんごを おしえて います。"
+      why: "おしえる is to teach, the other way round."
+    - option: "わたしは にほんごを はなして います。"
+      why: "はなす is to speak. ならう is to learn."
+    - option: "わたしは にほんごが わかりません。"
+      why: "This says you do not understand Japanese. ならう says you are learning it."
+  difficulty: 2
+  note: "This asks for another way to say ならう, to learn: べんきょうする, to study."
+
+- id: n5-g4-0031
+  type: paraphrase
+  status: reviewed
+  sentence: "あしたは あめが ふるでしょう。"
+  en: "It will probably rain tomorrow."
+  answer: "あしたは たぶん あめです。"
+  wrong:
+    - option: "あしたは あめが ふりません。"
+      why: "This is the opposite: no rain."
+    - option: "きのうは あめが ふりました。"
+      why: "This is about yesterday, and what did happen. でしょう is about what will probably happen."
+    - option: "あしたは ゆきが ふるでしょう。"
+      why: "ゆき is snow, not rain."
+  difficulty: 2
+  note: "This asks for another way to say でしょう, probably: たぶん."
+
+- id: n5-g4-0032
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしの ちちは ぎんこういんです。"
+  en: "My father is a bank clerk."
+  answer: "わたしの ちちは ぎんこうで はたらいて います。"
+  wrong:
+    - option: "わたしの ちちは ぎんこうで かいものを します。"
+      why: "You shop at a shop, not at a bank. A ぎんこういん works at one."
+    - option: "わたしの ちちは びょういんで はたらいて います。"
+      why: "びょういん is a hospital. A ぎんこういん works at a bank."
+    - option: "わたしの ちちは ぎんこうへ よく いきます。"
+      why: "This says he often goes to the bank, not that he works there."
+  difficulty: 2
+  note: "This asks what a ぎんこういん is: someone who works at a bank, ぎんこうで はたらく ひと."
+
+- id: n5-g4-0033
+  type: paraphrase
+  status: reviewed
+  sentence: "この みせは かようびから にちようびまで あいて います。"
+  en: "This shop is open from Tuesday to Sunday."
+  answer: "この みせは げつようびが やすみです。"
+  wrong:
+    - option: "この みせは かようびが やすみです。"
+      why: "かようび is the first day it is open. Only げつようび is left out."
+    - option: "この みせは にちようびが やすみです。"
+      why: "にちようび is the last day it is open."
+    - option: "この みせは まいにち あいて います。"
+      why: "げつようび is not among the days, so it is not open every day."
+  difficulty: 3
+  note: "This asks which day is left out. Tuesday to Sunday is six days; the shop is closed on Monday, げつようび."
+
+- id: n5-g4-0034
+  type: paraphrase
+  status: reviewed
+  sentence: "この ペンは 100えんで、あの ペンは 150えんです。"
+  en: "This pen is 100 yen, and that pen is 150 yen."
+  answer: "あの ペンは この ペンより 50えん たかいです。"
+  wrong:
+    - option: "この ペンは あの ペンより 50えん たかいです。"
+      why: "This turns it round: この ペン is the cheaper one."
+    - option: "あの ペンは この ペンより 50えん やすいです。"
+      why: "あの ペン costs more, not less."
+    - option: "あの ペンは この ペンより 150えん たかいです。"
+      why: "150 yen is its price. The difference is 50 yen."
+  difficulty: 3
+  note: "This asks for the same prices as a comparison: 150 yen is 50 yen more than 100, so あの ペン is 50えん たかい."
+
+- id: n5-g4-0035
+  type: paraphrase
+  status: reviewed
+  sentence: "じゅぎょうは 9じに はじまって、12じに おわりました。"
+  en: "The class began at nine and ended at twelve."
+  answer: "じゅぎょうは 3じかん でした。"
+  wrong:
+    - option: "じゅぎょうは 12じかん でした。"
+      why: "12 is the time it ended, not how long it was."
+    - option: "じゅぎょうは 9じかん でした。"
+      why: "9 is the time it began. From nine to twelve is three hours."
+    - option: "じゅぎょうは 4じかん でした。"
+      why: "From nine to twelve is three hours, not four."
+  difficulty: 3
+  note: "This asks how long the class was: from nine to twelve, 3じかん."
+
+- id: n5-g4-0036
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしは にくより さかなが すきです。"
+  en: "I like fish more than meat."
+  answer: "わたしは さかなの ほうが すきです。"
+  wrong:
+    - "わたしは にくの ほうが すきです。"
+    - "わたしは にくも さかなも すきです。"
+    - "わたしは にくも さかなも きらいです。"
+  difficulty: 1
+  note: "This asks for another way to say you like fish more than meat: さかなの ほうが すき."
+
+- id: n5-g4-0037
+  type: paraphrase
+  status: reviewed
+  sentence: "ここは きっさてんです。"
+  en: "This is a café."
+  answer: "ここで コーヒーを のみます。"
+  wrong:
+    - "ここで ほんを かります。"
+    - "ここで くすりを かいます。"
+    - "ここで ねます。"
+  difficulty: 1
+  note: "This asks what a きっさてん is: a place to drink coffee, コーヒーを のむ ところ."
+
+- id: n5-g4-0038
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしは いつも 7じに おきます。"
+  en: "I always get up at seven."
+  answer: "わたしは まいあさ 7じに おきます。"
+  wrong:
+    - "わたしは ときどき 7じに おきます。"
+    - "わたしは まいばん 7じに おきます。"
+    - "わたしは きのう 7じに おきました。"
+  difficulty: 1
+  note: "This asks for another way to say you always get up at seven: まいあさ, every morning."
+
+- id: n5-g4-0039
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしは きのう かぜを ひきました。"
+  en: "I caught a cold yesterday."
+  answer: "わたしは きのう びょうきに なりました。"
+  wrong:
+    - option: "わたしは きのう げんきに なりました。"
+      why: "げんきに なる is getting well, the opposite."
+    - option: "きのうは かぜが つよかったです。"
+      why: "This かぜ is the wind. かぜを ひく, with ひく, is catching a cold."
+    - option: "わたしは きのう くすりを かいました。"
+      why: "This says you bought medicine, not that you fell ill."
+  difficulty: 2
+  note: "This asks what かぜを ひく means: to catch a cold, to fall ill, びょうきに なる."
+
+- id: n5-g4-0040
+  type: paraphrase
+  status: reviewed
+  sentence: "ははは いま だいどころで りょうりを して います。"
+  en: "My mother is cooking in the kitchen now."
+  answer: "ははは いま だいどころで ごはんを つくって います。"
+  wrong:
+    - option: "ははは いま だいどころで ごはんを たべて います。"
+      why: "たべる is eating. りょうりを する is cooking: making the food."
+    - option: "ははは いま だいどころで おさらを あらって います。"
+      why: "This is washing the dishes, not cooking."
+    - option: "ははは いま だいどころで ごはんを かって います。"
+      why: "かう is to buy. Nobody buys food in their kitchen."
+  difficulty: 2
+  note: "This asks what りょうりを する means: to cook, ごはんを つくる."
+
+- id: n5-g4-0041
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしは まいにち さんぽを します。"
+  en: "I take a walk every day."
+  answer: "わたしは まいにち すこし あるきます。"
+  wrong:
+    - option: "わたしは まいにち すこし はしります。"
+      why: "はしる is to run. さんぽ is a walk."
+    - option: "わたしは まいにち すこし およぎます。"
+      why: "およぐ is to swim. さんぽ is a walk."
+    - option: "わたしは ときどき すこし あるきます。"
+      why: "ときどき is sometimes. まいにち is every day."
+  difficulty: 2
+  note: "This asks what さんぽを する means: to go for a walk, すこし あるく."
+
+- id: n5-g4-0042
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしは らいねん 20さいに なります。"
+  en: "I will be 20 next year."
+  answer: "わたしは ことし 19さいです。"
+  wrong:
+    - option: "わたしは ことし 20さいです。"
+      why: "If you turn 20 next year, you are 19 this year."
+    - option: "わたしは ことし 21さいです。"
+      why: "21 is older than you will be next year."
+    - option: "わたしは きょねん 20さいでした。"
+      why: "Last year you were 18. 20 comes next year."
+  difficulty: 3
+  note: "This asks your age now. If you turn 20 next year, this year you are 19."
+
+- id: n5-g4-0043
+  type: paraphrase
+  status: reviewed
+  sentence: "いま 1じ 15ふんです。じゅぎょうは 30ぷん あとに はじまります。"
+  en: "It's 1:15 now. The class starts in 30 minutes."
+  answer: "じゅぎょうは 1じ 45ふんに はじまります。"
+  wrong:
+    - option: "じゅぎょうは 1じ 30ぷんに はじまります。"
+      why: "1:30 is only 15 minutes from now."
+    - option: "じゅぎょうは 12じ 45ふんに はじまりました。"
+      why: "That is 30 minutes ago. The class starts 30 minutes from now."
+    - option: "じゅぎょうは 2じ 15ふんに はじまります。"
+      why: "2:15 is an hour from now, not 30 minutes."
+  difficulty: 3
+  note: "This asks when the class starts: 30 minutes after 1:15 is 1:45."
+
+- id: n5-g4-0044
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしは たなかさんに ペンを かしました。"
+  en: "I lent Tanaka a pen."
+  answer: "たなかさんは わたしに ペンを かりました。"
+  wrong:
+    - option: "たなかさんは わたしに ペンを かしました。"
+      why: "This turns it round: here たなかさん lent the pen."
+    - option: "わたしは たなかさんに ペンを かりました。"
+      why: "This says you borrowed it, the other way round."
+    - option: "わたしは たなかさんに ペンを もらいました。"
+      why: "もらう is to receive and keep, and here it goes the other way."
+  difficulty: 3
+  note: "This asks for the same lending from the other side: if you lent it, たなかさん borrowed it from you, かりました."
+
+- id: n5-g4-0045
+  type: paraphrase
+  status: reviewed
+  sentence: "きょうは たいへん さむいです。"
+  en: "It is very cold today."
+  answer: "きょうは とても さむいです。"
+  wrong:
+    - "きょうは すこし さむいです。"
+    - "きょうは あまり さむくないです。"
+    - "きょうは とても あついです。"
+  difficulty: 1
+  note: "This asks what たいへん means before an adjective: very, とても."
+
+- id: n5-g4-0046
+  type: paraphrase
+  status: reviewed
+  sentence: "こんばん ともだちに でんわします。"
+  en: "I'll phone a friend this evening."
+  answer: "きょうの よる ともだちに でんわします。"
+  wrong:
+    - "きのうの よる ともだちに でんわしました。"
+    - "あしたの よる ともだちに でんわします。"
+    - "きょうの あさ ともだちに でんわします。"
+  difficulty: 1
+  note: "This asks what こんばん means: this evening, きょうの よる."
+
+- id: n5-g4-0047
+  type: paraphrase
+  status: reviewed
+  sentence: "きょうは ひまです。"
+  en: "I'm free today."
+  answer: "きょうは いそがしく ありません。"
+  wrong:
+    - "きょうは とても いそがしいです。"
+    - "きょうは しごとが たくさん あります。"
+    - "きょうは げんきじゃ ありません。"
+  difficulty: 1
+  note: "This asks what ひま means: having free time, not いそがしい."
+
+- id: n5-g4-0048
+  type: paraphrase
+  status: reviewed
+  sentence: "けさ こうえんを さんぽしました。"
+  en: "I took a walk in the park this morning."
+  answer: "きょうの あさ こうえんを さんぽしました。"
+  wrong:
+    - "きのうの あさ こうえんを さんぽしました。"
+    - "きょうの よる こうえんを さんぽしました。"
+    - "あしたの あさ こうえんを さんぽします。"
+  difficulty: 1
+  note: "This asks what けさ means: this morning, きょうの あさ."
+
+- id: n5-g4-0049
+  type: paraphrase
+  status: reviewed
+  sentence: "あには おととし けっこんしました。"
+  en: "My older brother got married the year before last."
+  answer: "あには にねんまえに けっこんしました。"
+  wrong:
+    - option: "あには きょねん けっこんしました。"
+      why: "きょねん is last year, one year ago. おととし is two."
+    - option: "あには さんねんまえに けっこんしました。"
+      why: "さんねんまえ is three years ago. おととし is two."
+    - option: "あには らいねん けっこんします。"
+      why: "らいねん is next year, still to come."
+  difficulty: 2
+  note: "This asks what おととし means: the year before last, にねんまえ, two years ago."
+
+- id: n5-g4-0050
+  type: paraphrase
+  status: reviewed
+  sentence: "にわに はなが たくさん さいて います。"
+  en: "Lots of flowers are blooming in the garden."
+  answer: "にわに はなが いっぱい さいて います。"
+  wrong:
+    - option: "にわに はなが すこし さいて います。"
+      why: "すこし is a few, the opposite of たくさん."
+    - option: "にわには はなが ありません。"
+      why: "This says there are no flowers at all."
+    - option: "にわに きれいな はなが さいて います。"
+      why: "きれい says how they look, not how many there are."
+  difficulty: 2
+  note: "This asks for another word for たくさん, a lot: いっぱい."
+
+- id: n5-g4-0051
+  type: paraphrase
+  status: reviewed
+  sentence: "また あそびに きて ください。"
+  en: "Please come and visit again."
+  answer: "もう いちど あそびに きて ください。"
+  wrong:
+    - option: "はじめて あそびに きて ください。"
+      why: "はじめて is for the first time. また is again."
+    - option: "あとで あそびに いきます。"
+      why: "This says you will go later. また asks them to come again."
+    - option: "もう こないで ください。"
+      why: "This asks them not to come any more, the opposite."
+  difficulty: 2
+  note: "This asks what また means: again, もう いちど."
+
+- id: n5-g4-0052
+  type: paraphrase
+  status: reviewed
+  sentence: "となりの へやが うるさいです。"
+  en: "The next room is noisy."
+  answer: "となりの へやの おとが おおきいです。"
+  wrong:
+    - option: "となりの へやは しずかです。"
+      why: "しずか is quiet, the opposite of うるさい."
+    - option: "となりの へやは せまいです。"
+      why: "せまい is about size, not noise."
+    - option: "となりの へやは くらいです。"
+      why: "くらい is dark: about light, not noise."
+  difficulty: 2
+  note: "This asks what うるさい means: noisy, with loud sounds, おとが おおきい."
+
+- id: n5-g4-0053
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしは さらいねん だいがくを でます。"
+  en: "I will graduate from university the year after next."
+  answer: "わたしは らいねんの つぎの とし だいがくを でます。"
+  wrong:
+    - option: "わたしは らいねん だいがくを でます。"
+      why: "らいねん is next year. さらいねん is the year after that."
+    - option: "わたしは おととし だいがくを でました。"
+      why: "おととし is two years ago, in the past."
+    - option: "わたしは ことし だいがくを でます。"
+      why: "ことし is this year."
+  difficulty: 3
+  note: "This asks what さらいねん means: the year after next, らいねんの つぎの とし."
+
+- id: n5-g4-0054
+  type: paraphrase
+  status: reviewed
+  sentence: "この クラスで やまださんが いちばん せが たかいです。"
+  en: "Yamada is the tallest in this class."
+  answer: "この クラスに やまださんより せが たかい ひとは いません。"
+  wrong:
+    - option: "この クラスに やまださんより せが ひくい ひとは いません。"
+      why: "This would make やまださん the shortest."
+    - option: "この クラスで やまださんは いちばん せが ひくいです。"
+      why: "This is the opposite: the shortest."
+    - option: "この クラスには やまださんと おなじぐらいの ひとが たくさん います。"
+      why: "いちばん says nobody is taller. This says many are about the same."
+  difficulty: 3
+  note: "This asks for another way to say the tallest: nobody is taller than やまださん, やまださんより たかい ひとは いない."
+
+- id: n5-g4-0055
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしには きょうだいが いません。"
+  en: "I have no brothers or sisters."
+  answer: "わたしには あにも あねも おとうとも いもうとも いません。"
+  wrong:
+    - option: "わたしには ともだちが いません。"
+      why: "ともだち are friends. きょうだい are brothers and sisters."
+    - option: "わたしには あにが ひとり います。"
+      why: "This says you have one older brother."
+    - option: "わたしには こどもが いません。"
+      why: "こども are children. きょうだい are brothers and sisters."
+  difficulty: 3
+  note: "This asks what きょうだい means: brothers and sisters, あに, あね, おとうと and いもうと."
+
+- id: n5-g4-0056
+  type: paraphrase
+  status: reviewed
+  sentence: "あねは わたしと おなじ がっこうの がくせいです。"
+  en: "My older sister is a student at the same school as me."
+  answer: "わたしも あねも その がっこうの がくせいです。"
+  wrong:
+    - option: "あねは わたしの がっこうの せんせいです。"
+      why: "This makes your sister a teacher there, not a student."
+    - option: "あねと わたしは ちがう がっこうの がくせいです。"
+      why: "ちがう is different, the opposite of おなじ."
+    - option: "あねは わたしの がっこうの そばに すんで います。"
+      why: "This says where she lives, not where she studies."
+  difficulty: 3
+  note: "This asks what おなじ がっこう means: you both study at that school, わたしも あねも."
+
+- id: n5-g4-0057
+  type: paraphrase
+  status: reviewed
+  sentence: "けいかんに みちを ききました。"
+  en: "I asked a police officer the way."
+  answer: "おまわりさんに みちを ききました。"
+  wrong:
+    - option: "がくせいに みちを ききました。"
+      why: "がくせい is a student. けいかん is a police officer, おまわりさん."
+    - option: "せんせいに みちを ききました。"
+      why: "せんせい is a teacher. けいかん is a police officer, おまわりさん."
+    - option: "えきの ひとに みちを ききました。"
+      why: "えきの ひと works at the station. けいかん is a police officer."
+  difficulty: 2
+  note: "This asks another word for けいかん, a police officer: おまわりさん."
+
+- id: n5-g4-0058
+  type: paraphrase
+  status: reviewed
+  sentence: "マリアさんは にほんの だいがくの りゅうがくせいです。"
+  en: "Maria is an international student at a Japanese university."
+  answer: "マリアさんは ほかの くにから きて、にほんの だいがくで べんきょうして います。"
+  wrong:
+    - option: "マリアさんは ほかの くにから きて、にほんの だいがくで おしえて います。"
+      why: "おしえる is to teach. A りゅうがくせい studies."
+    - option: "マリアさんは ほかの くにから きて、にほんの だいがくで はたらいて います。"
+      why: "はたらく is to work. A りゅうがくせい studies."
+    - option: "マリアさんは にほんから ほかの くにへ いって、だいがくで べんきょうして います。"
+      why: "This is the other way round. The sentence says にほんの だいがく."
+  difficulty: 3
+  note: "This asks what りゅうがくせい means: a student from another country, ほかの くにから きて べんきょうして いる ひと."
+
+- id: n5-g4-0059
+  type: paraphrase
+  status: reviewed
+  sentence: "こうえんに ひとが おおぜい います。"
+  en: "There are lots of people in the park."
+  answer: "こうえんに ひとが たくさん います。"
+  wrong:
+    [
+      "こうえんに ひとが すこし います。",
+      "こうえんに ひとが ふたり います。",
+      "こうえんに ひとが ひとりも いません。"
+    ]
+  difficulty: 1
+  note: "This asks what おおぜい means: many people, たくさん."
+
+- id: n5-g4-0060
+  type: paraphrase
+  status: reviewed
+  sentence: "やまださんの おくさんは せんせいです。"
+  en: "Mr Yamada's wife is a teacher."
+  answer: "やまださんと けっこんして いる ひとは せんせいです。"
+  wrong:
+    - option: "やまださんの おかあさんは せんせいです。"
+      why: "おかあさん is his mother. おくさん is his wife."
+    - option: "やまださんの いもうとさんは せんせいです。"
+      why: "いもうとさん is his younger sister. おくさん is his wife."
+    - option: "やまださんの おねえさんは せんせいです。"
+      why: "おねえさん is his older sister. おくさん is his wife."
+  difficulty: 2
+  note: "This asks what おくさん means: someone's wife, the person married to him, けっこんして いる ひと."
+
+- id: n5-g4-0061
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしは さかなが きらいです。"
+  en: "I don't like fish."
+  answer: "わたしは さかなが すきでは ありません。"
+  wrong:
+    [
+      "わたしは さかなが だいすきです。",
+      "わたしは さかなを よく たべます。",
+      "わたしは さかなが ほしいです。"
+    ]
+  difficulty: 1
+  note: "This asks what きらい means: not liking something, すきでは ない."
+
+- id: n5-g4-0062
+  type: paraphrase
+  status: reviewed
+  sentence: "ばんごはんの あとで、しゅくだいを します。"
+  en: "I do my homework after dinner."
+  answer: "よるの ごはんを たべてから、しゅくだいを します。"
+  wrong:
+    - option: "あさの ごはんを たべてから、しゅくだいを します。"
+      why: "あさの ごはん is breakfast. ばんごはん is the evening meal."
+    - option: "ひるの ごはんを たべてから、しゅくだいを します。"
+      why: "ひるの ごはん is lunch. ばんごはん is the evening meal."
+    - option: "よるの ごはんを たべる まえに、しゅくだいを します。"
+      why: "まえに is before. あとで is after."
+  difficulty: 2
+  note: "This asks what ばんごはんの あとで means: after the evening meal, よるの ごはんを たべてから."
+
+- id: n5-g4-0063
+  type: paraphrase
+  status: reviewed
+  sentence: "きょうは せんたくを しました。"
+  en: "I did the laundry today."
+  answer: "きょうは ふくを あらいました。"
+  wrong:
+    - option: "きょうは へやを きれいに しました。"
+      why: "This is cleaning a room. せんたく is washing clothes."
+    - option: "きょうは ふくを かいました。"
+      why: "かう is to buy. せんたく is washing clothes."
+    - option: "きょうは おさらを あらいました。"
+      why: "せんたく is washing clothes, not dishes."
+  difficulty: 2
+  note: "This asks what せんたく means: washing clothes, ふくを あらう."
+
+- id: n5-g4-0064
+  type: paraphrase
+  status: reviewed
+  sentence: "あには ゆうびんきょくに つとめて います。"
+  en: "My older brother works at the post office."
+  answer: "あには ゆうびんきょくで はたらいて います。"
+  wrong:
+    - option: "あには ゆうびんきょくへ てがみを だしに いきました。"
+      why: "This says he went there once, to post a letter."
+    - option: "あには ゆうびんきょくの まえに すんで います。"
+      why: "This says where he lives."
+    - option: "あには まいにち ゆうびんきょくの まえを とおります。"
+      why: "This says he walks past it every day."
+  difficulty: 2
+  note: "This asks what つとめて いる means: works there, はたらいて いる."
+
+- id: n5-g4-0065
+  type: paraphrase
+  status: reviewed
+  sentence: "ともだちが げんかんで まって います。"
+  en: "My friend is waiting at the front door."
+  answer: "ともだちが いえの いりぐちで まって います。"
+  wrong:
+    - option: "ともだちが いえの まどの そばで まって います。"
+      why: "まど is a window. げんかん is the way into a house."
+    - option: "ともだちが いえの にわで まって います。"
+      why: "にわ is a garden. げんかん is the way into a house."
+    - option: "ともだちが いえの だいどころで まって います。"
+      why: "だいどころ is the kitchen. げんかん is the way into a house."
+  difficulty: 2
+  note: "This asks what げんかん is: the way into a house, いえの いりぐち."
+
+- id: n5-g4-0066
+  type: paraphrase
+  status: reviewed
+  sentence: "この おちゃは ぬるいです。"
+  en: "This tea is lukewarm."
+  answer: "この おちゃは あまり あつく ありません。"
+  wrong:
+    - option: "この おちゃは とても あついです。"
+      why: "This is the opposite. ぬるい tea is not hot enough."
+    - option: "この おちゃは あまいです。"
+      why: "あまい is sweet. ぬるい is about how hot it is."
+    - option: "この おちゃは たかく ありません。"
+      why: "This says it is cheap. ぬるい is about how hot it is."
+  difficulty: 3
+  note: "This asks what ぬるい means: not as hot as it should be, あまり あつく ない."
+
+- id: n5-g4-0067
+  type: paraphrase
+  status: reviewed
+  sentence: "おとうとさんは いくつですか。"
+  en: "How old is your younger brother?"
+  answer: "おとうとさんは なんさいですか。"
+  wrong:
+    - option: "おとうとさんは どこに いますか。"
+      why: "どこ asks where. いくつ, about a person, asks their age."
+    - option: "おとうとさんは なにが すきですか。"
+      why: "This asks what he likes. いくつ, about a person, asks their age."
+    - option: "おとうとさんは なんにん いますか。"
+      why: "This asks how many brothers. いくつ, about a person, asks their age."
+  difficulty: 2
+  note: "This asks what いくつ means about a person: their age, なんさい."
+
+- id: n5-g4-0068
+  type: paraphrase
+  status: reviewed
+  sentence: "ちょっと やすみましょう。"
+  en: "Let's take a short rest."
+  answer: "すこし やすみましょう。"
+  wrong:
+    [
+      "たくさん やすみましょう。",
+      "もう やすみません。",
+      "あしたまで やすみましょう。"
+    ]
+  difficulty: 1
+  note: "This asks what ちょっと means: a little, すこし."
+
+- id: n5-g4-0069
+  type: paraphrase
+  status: reviewed
+  sentence: "コーヒーは いかがですか。"
+  en: "Would you like some coffee?"
+  answer: "コーヒーを のみませんか。"
+  wrong:
+    [
+      "コーヒーは どこですか。",
+      "コーヒーは あまいですか。",
+      "コーヒーが すきですか。"
+    ]
+  difficulty: 1
+  note: "This asks what いかがですか means when you offer something: won't you have some, のみませんか."
+
+- id: n5-g4-0070
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしの かばんは これと ちがいます。"
+  en: "My bag is not this one."
+  answer: "これは わたしの かばんでは ありません。"
+  wrong:
+    [
+      "これは わたしの かばんです。",
+      "わたしの かばんは これと おなじです。",
+      "わたしの かばんは これより おおきいです。"
+    ]
+  difficulty: 1
+  note: "This asks what ちがいます means here: it is a different bag, so this one is not mine."
+
+- id: n5-g4-0071
+  type: paraphrase
+  status: reviewed
+  sentence: "あそこは こうばんです。"
+  en: "That's a police box over there."
+  answer: "あそこに おまわりさんが います。"
+  wrong:
+    [
+      "あそこで パンを うって います。",
+      "あそこで きってを かいます。",
+      "あそこで えいがを みます。"
+    ]
+  difficulty: 1
+  note: "This asks what a こうばん is: a small police station, where an おまわりさん works."
+
+- id: n5-g4-0072
+  type: paraphrase
+  status: reviewed
+  sentence: "ひとりで いくのは いやです。"
+  en: "I don't want to go on my own."
+  answer: "ひとりで いきたく ありません。"
+  wrong:
+    - option: "ひとりで いきたいです。"
+      why: "This is the opposite. いや means you don't want to."
+    - option: "ひとりで いく ことが できます。"
+      why: "This says you are able to go alone."
+    - option: "ふたりで いきたく ありません。"
+      why: "The sentence is about going alone, ひとりで."
+  difficulty: 2
+  note: "This asks what いや means: something you don't want, here いきたく ありません."
+
+- id: n5-g4-0073
+  type: paraphrase
+  status: reviewed
+  sentence: "デパートで かいものを しました。"
+  en: "I went shopping at the department store."
+  answer: "デパートで いろいろな ものを かいました。"
+  wrong:
+    - option: "デパートで ごはんを たべました。"
+      why: "This is a meal. かいもの is buying things."
+    - option: "デパートで ともだちに あいました。"
+      why: "This says you met a friend."
+    - option: "デパートで はたらきました。"
+      why: "This says you worked there."
+  difficulty: 2
+  note: "This asks what かいもの is: buying things, ものを かう."
+
+- id: n5-g4-0074
+  type: paraphrase
+  status: reviewed
+  sentence: "この かわの みずは きれいです。"
+  en: "The water in this river is clean."
+  answer: "この かわの みずは きたなく ありません。"
+  wrong:
+    - option: "この かわの みずは きたないです。"
+      why: "This is the opposite."
+    - option: "この かわの みずは つめたく ありません。"
+      why: "This is about how cold it is."
+    - option: "この かわの みずは あまり ありません。"
+      why: "This says there is not much water."
+  difficulty: 2
+  note: "This asks what きれい means about water: clean, きたなく ない."
+
+- id: n5-g4-0075
+  type: paraphrase
+  status: reviewed
+  sentence: "この ほんは うすいです。"
+  en: "This book is thin."
+  answer: "この ほんは あつく ありません。"
+  wrong:
+    - option: "この ほんは とても あついです。"
+      why: "This is the opposite. A thin book is not あつい, thick."
+    - option: "この ほんは あたらしく ありません。"
+      why: "This is about how new it is."
+    - option: "この ほんは おもしろく ありません。"
+      why: "This is about whether it is fun to read."
+  difficulty: 2
+  note: "This asks what うすい means for a book: thin, あつく ない. Here あつい is thick, not hot."
+
+- id: n5-g4-0076
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしは やまだせんせいに ピアノを ならいました。"
+  en: "I learned the piano from Yamada-sensei."
+  answer: "やまだせんせいが わたしに ピアノを おしえました。"
+  wrong:
+    - option: "わたしが やまだせんせいに ピアノを おしえました。"
+      why: "This is the other way round: you taught the teacher."
+    - option: "やまだせんせいが わたしに ピアノを ならいました。"
+      why: "ならう is what the learner does. The teacher teaches: おしえる."
+    - option: "わたしは やまだせんせいと いっしょに ピアノを ならいました。"
+      why: "This says you both learned, with someone else teaching."
+  difficulty: 3
+  note: "This asks for the same lessons from the teacher's side: you learned from the teacher, so the teacher taught you, おしえました."
+
+- id: n5-g4-0077
+  type: paraphrase
+  status: reviewed
+  sentence: "としょかんでは しずかに して ください。"
+  en: "Please be quiet in the library."
+  answer: "としょかんでは おおきい こえで はなさないで ください。"
+  wrong:
+    - option: "としょかんでは おおきい こえで はなして ください。"
+      why: "This is the opposite."
+    - option: "としょかんでは ほんを よまないで ください。"
+      why: "This says don't read books. しずかに is about noise."
+    - option: "としょかんでは なにも たべないで ください。"
+      why: "This is about food, not noise."
+  difficulty: 3
+  note: "This asks what しずかに する means: not making noise, so not talking loudly."
+
+- id: n5-g4-0078
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしは にほんに 3ねん すんで います。"
+  en: "I have lived in Japan for three years."
+  answer: "わたしは 3ねん まえに にほんへ きました。"
+  wrong:
+    - option: "わたしは 3ねん あとに にほんへ きます。"
+      why: "This is the future. すんで います says you live there now and have for three years."
+    - option: "わたしは にほんへ 3かい きました。"
+      why: "This counts visits, not years."
+    - option: "わたしは まえに 3ねん にほんに すんで いました。"
+      why: "すんで いました is in the past: you no longer live there. すんで います is now."
+  difficulty: 3
+  note: "This asks what 3ねん すんで います means: you came three years ago and still live there."
+
+- id: n5-g4-0079
+  type: paraphrase
+  status: reviewed
+  sentence: "こちらは やまださんです。"
+  en: "This is Mr Yamada."
+  answer: "この ひとは やまださんです。"
+  wrong:
+    [
+      "あの ひとは やまださんです。",
+      "やまださんは ここに いません。",
+      "やまださんは あちらに います。"
+    ]
+  difficulty: 1
+  note: "This asks what こちら means when you introduce someone: this person, この ひと."
+
+- id: n5-g4-0080
+  type: paraphrase
+  status: reviewed
+  sentence: "あの かたは どなたですか。"
+  en: "Who is that person?"
+  answer: "あの ひとは だれですか。"
+  wrong:
+    [
+      "あの ひとは どこに いますか。",
+      "あの ひとは なんさいですか。",
+      "あの ひとは なにを して いますか。"
+    ]
+  difficulty: 1
+  note: "This asks what the polite words かた and どなた mean: かた is ひと, a person, and どなた is だれ, who."
+
+- id: n5-g4-0081
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしは にほんごが すこし できます。"
+  en: "I can speak a little Japanese."
+  answer: "わたしは にほんごが すこし わかります。"
+  wrong:
+    [
+      "わたしは にほんごが よく わかります。",
+      "わたしは にほんごが わかりません。",
+      "わたしは えいごが すこし わかります。"
+    ]
+  difficulty: 1
+  note: "This asks what すこし できます means for a language: you understand a little, すこし わかります."
+
+- id: n5-g4-0082
+  type: paraphrase
+  status: reviewed
+  sentence: "いまから でかけます。"
+  en: "I'm going out now."
+  answer: "これから でかけます。"
+  wrong: ["きのう でかけました。", "あした でかけます。", "もう でかけません。"]
+  difficulty: 1
+  note: "This asks what いまから means: from now, これから."
+
+- id: n5-g4-0083
+  type: paraphrase
+  status: reviewed
+  sentence: "おじいさんは ことし 80さいです。"
+  en: "My grandfather is 80 this year."
+  answer: "ははの ちちは ことし 80さいです。"
+  wrong:
+    - option: "ははの あには ことし 80さいです。"
+      why: "ははの あに is your mother's older brother, an uncle: おじさん."
+    - option: "ちちの ははは ことし 80さいです。"
+      why: "ちちの はは is a grandmother: おばあさん."
+    - option: "ちちの おとうとは ことし 80さいです。"
+      why: "ちちの おとうと is an uncle: おじさん."
+  difficulty: 2
+  note: "This asks who おじいさん is: a grandfather, ははの ちち or ちちの ちち."
+
+- id: n5-g4-0084
+  type: paraphrase
+  status: reviewed
+  sentence: "りっぱな いえですね。"
+  en: "What a fine house!"
+  answer: "おおきくて きれいな いえですね。"
+  wrong:
+    - option: "せまい いえですね。"
+      why: "せまい is small inside. りっぱ is fine and grand."
+    - option: "きたない いえですね。"
+      why: "きたない is dirty. りっぱ is fine and grand."
+    - option: "やすい いえですね。"
+      why: "やすい is cheap. りっぱ is about how the house looks."
+  difficulty: 2
+  note: "This asks what りっぱ means: fine and grand, here おおきくて きれい."
+
+- id: n5-g4-0085
+  type: paraphrase
+  status: reviewed
+  sentence: "この まちには いろいろな くにの ひとが すんで います。"
+  en: "People from many different countries live in this town."
+  answer: "この まちには たくさんの くにの ひとが すんで います。"
+  wrong:
+    - option: "この まちには ひとつの くにの ひとだけ すんで います。"
+      why: "だけ means only. いろいろな くに is many countries."
+    - option: "この まちには ほかの くにの ひとが すんで いません。"
+      why: "This says nobody from another country lives there."
+    - option: "この まちには にほんの ひとが たくさん すんで います。"
+      why: "This says many Japanese people. いろいろな くに is many countries."
+  difficulty: 2
+  note: "This asks what いろいろな means: many kinds, here many countries, たくさんの くに."
+
+- id: n5-g4-0086
+  type: paraphrase
+  status: reviewed
+  sentence: "きのうは あめでしたから、そとへ でかけませんでした。"
+  en: "It rained yesterday, so I didn't go out."
+  answer: "きのうは あめでしたから、いちにち いえに いました。"
+  wrong:
+    - option: "きのうは いい てんきでしたから、いえに いました。"
+      why: "The sentence says it rained."
+    - option: "きのうは あめでしたが、そとへ でかけました。"
+      why: "This says you went out. The sentence says you didn't."
+    - option: "きのうは あめでしたから、そとで あそびました。"
+      why: "This says you played outside."
+  difficulty: 2
+  note: "This asks what not going out means: you stayed at home all day, いちにち いえに いました."
+
+- id: n5-g4-0087
+  type: paraphrase
+  status: reviewed
+  sentence: "しゅくだいを しました。それから、ほんを よみました。"
+  en: "I did my homework. After that, I read a book."
+  answer: "しゅくだいを してから、ほんを よみました。"
+  wrong:
+    - option: "ほんを よんでから、しゅくだいを しました。"
+      why: "This is the other order."
+    - option: "しゅくだいを しないで、ほんを よみました。"
+      why: "This says you did not do your homework."
+    - option: "しゅくだいを する まえに、ほんを よみました。"
+      why: "まえに is before. それから means after that."
+  difficulty: 3
+  note: "This asks what それから means: after that, the same as てから."
+
+- id: n5-g4-0088
+  type: paraphrase
+  status: reviewed
+  sentence: "わたしの へやは あねの へやより ひろいです。"
+  en: "My room is bigger than my older sister's."
+  answer: "あねの へやは わたしの へやより せまいです。"
+  wrong:
+    - option: "あねの へやは わたしの へやより ひろいです。"
+      why: "This is the other way round."
+    - option: "わたしの へやは あねの へやより せまいです。"
+      why: "This says your room is the smaller one."
+    - option: "わたしの へやと あねの へやは おなじです。"
+      why: "The sentence says one room is bigger."
+  difficulty: 3
+  note: "This asks for the same comparison from the other side: if your room is ひろい, your sister's is せまい."
+
+- id: n5-g4-0089
+  type: paraphrase
+  status: reviewed
+  sentence: "きのうは すいようびでした。"
+  en: "Yesterday was Wednesday."
+  answer: "あしたは きんようびです。"
+  wrong:
+    - option: "あしたは すいようびです。"
+      why: "Wednesday was yesterday, not tomorrow."
+    - option: "きょうは かようびです。"
+      why: "かようび, Tuesday, was the day before yesterday."
+    - option: "あしたは どようびです。"
+      why: "Yesterday was Wednesday, so today is Thursday and tomorrow is Friday, not Saturday."
+  difficulty: 3
+  note: "This asks you to count the days: yesterday was Wednesday, so tomorrow is Friday, きんようび."

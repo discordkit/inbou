@@ -80,9 +80,9 @@ const slotSchema = v.strictObject({
 
 /**
  * Permanent. Results and statistics refer to it, so an id is never reused.
- * `n5-b1-0001` is N5, bunpou 問題1, item 1.
+ * `n5-b1-0001` is N5, bunpou 問題1, item 1; `n5-g1-0001` is goi 問題1.
  */
-const idSchema = v.pipe(v.string(), v.regex(/^n[1-5]-[bd][1-6]-\d{4}$/u));
+const idSchema = v.pipe(v.string(), v.regex(/^n[1-5]-[bdg][1-6]-\d{4}$/u));
 
 /** 問題1: choose the form that fits the blank. */
 export const formItemSchema = v.strictObject({
@@ -144,9 +144,9 @@ export const passageItemSchema = v.strictObject({
 // A reading item is a text, or a picture's material, with several questions. A test asks one or two of them, so an item that comes up again asks something new. Reading questions test no grammar point, so they carry no points and no review link.
 
 /**
- * A reading option: its text, or its text and why it is wrong.
+ * A reading or vocabulary option: its text, or its text and why it is wrong.
  *
- * Reading is comprehension, not a grammar point, so a student who chose a wrong option needs to know what in the text rules it out. A medium or hard question explains every wrong option; an easy one may leave its note to say what the question asked.
+ * Reading is comprehension, not a grammar point, so a student who chose a wrong option needs to know what in the text rules it out; a near-miss reading such as はんふん needs its rule. A medium or hard question explains every wrong option; an easy one may leave its note to say what the question asked.
  */
 const optionSchema = v.union([
   text,
@@ -638,13 +638,76 @@ export const infoItemSchema = v.strictObject({
   questions: v.pipe(v.array(readingQuestionSchema), v.minLength(1))
 });
 
+// ─── Vocabulary: Section 1 ─────────────────────────────────────────────────
+//
+// Section 1 prints everything in kana except what it tests: the kanji a 漢字読み question asks the reading of, and a 表記 question's spellings. So these items carry no ruby and the card has no readings line, and a target's reading has no way onto the card before its reveal.
+
+/** What every vocabulary item has. Each is one question: a sentence and its options. */
+const vocabFields = {
+  id: idSchema,
+  status: v.picklist([`draft`, `reviewed`]),
+  /** The sentence in English, shown at the reveal. */
+  en: text,
+  answer: text,
+  /** Three or more, each wrong in THIS sentence. Three are drawn. */
+  wrong: v.pipe(v.array(optionSchema), v.minLength(3)),
+  difficulty: v.picklist([1, 2, 3]),
+  /** What the question asks, and its trap. Shown at the reveal. */
+  note: text
+};
+
+/**
+ * The dictionary form of the word a 漢字読み or 表記 question asks about, as JMdict spells it: 半分, 書く, ワイシャツ.
+ *
+ * Checked against the N5 word list, and used by the draw so that one test never asks the same word in both 問題.
+ */
+const wordField = text;
+
+/** 問題1 漢字読み: read the underlined kanji, and choose its hiragana. */
+export const kanjiItemSchema = v.strictObject({
+  ...vocabFields,
+  type: v.literal(`kanji`),
+  word: wordField,
+  /** Kana, but for one `__target__` in kanji: `ケーキを __半分__ たべました。` */
+  sentence: text
+});
+
+/** 問題2 表記: the underlined word is in kana; choose how it is written. */
+export const spellingItemSchema = v.strictObject({
+  ...vocabFields,
+  type: v.literal(`spelling`),
+  word: wordField,
+  /** All kana, with one `__target__`. The options are its spellings, in kanji or katakana. */
+  sentence: text
+});
+
+/** 問題3 文脈規定: choose the word that fits the blank. */
+export const contextItemSchema = v.strictObject({
+  ...vocabFields,
+  type: v.literal(`context`),
+  /** All kana, with one {@link BLANK}. The options are one word class, in one form. */
+  sentence: text
+});
+
+/** 問題4 言い換え類義: choose the sentence that means about the same. */
+export const paraphraseItemSchema = v.strictObject({
+  ...vocabFields,
+  type: v.literal(`paraphrase`),
+  /** All kana. The card underlines all of it, and the options are whole sentences. */
+  sentence: text
+});
+
 export const itemSchema = v.variant(`type`, [
   formItemSchema,
   composeItemSchema,
   passageItemSchema,
   shortItemSchema,
   midItemSchema,
-  infoItemSchema
+  infoItemSchema,
+  kanjiItemSchema,
+  spellingItemSchema,
+  contextItemSchema,
+  paraphraseItemSchema
 ]);
 export const itemsSchema = v.array(itemSchema);
 
@@ -661,7 +724,24 @@ export type Tone = v.InferOutput<typeof toneSchema>;
 export type ShortItem = v.InferOutput<typeof shortItemSchema>;
 export type MidItem = v.InferOutput<typeof midItemSchema>;
 export type InfoItem = v.InferOutput<typeof infoItemSchema>;
+export type KanjiItem = v.InferOutput<typeof kanjiItemSchema>;
+export type SpellingItem = v.InferOutput<typeof spellingItemSchema>;
+export type ContextItem = v.InferOutput<typeof contextItemSchema>;
+export type ParaphraseItem = v.InferOutput<typeof paraphraseItemSchema>;
+/** A Section 1 item: one sentence, one question. */
+export type VocabItem = KanjiItem | SpellingItem | ContextItem | ParaphraseItem;
 export type Item = v.InferOutput<typeof itemSchema>;
+
+/** Is this a Section 1 item? */
+export const isVocab = (item: Item): item is VocabItem =>
+  item.type === `kanji` ||
+  item.type === `spelling` ||
+  item.type === `context` ||
+  item.type === `paraphrase`;
+/**
+ * What kind of question an item asks. It decides a question's instructions, its timer and its card. The 問題 number does not: each test section numbers its own 問題 from 1.
+ */
+export type ItemType = Item[`type`];
 
 /** How many chunks a ★ question arranges, as on the paper. */
 export const WINDOW_SIZE = 4;
@@ -733,6 +813,12 @@ export const pointsOf = (item: Item): string[] => {
     case `mid`:
     case `info`:
       return item.questions.flatMap((question) => question.points ?? []);
+    // Vocabulary tests words, not grammar.
+    case `kanji`:
+    case `spelling`:
+    case `context`:
+    case `paraphrase`:
+      return [];
   }
 };
 
@@ -1327,6 +1413,23 @@ const readingMarkupProblems = (markup: string, where: string): string[] => [
   ...markupProblems(markup, where)
 ];
 
+/**
+ * A medium or hard question says why each wrong option is wrong, because the answer may not be obvious to a student (the user's rule, 2026-11-22). An easy question's note is enough.
+ */
+const whyProblems = (
+  wrongs: readonly Option[],
+  difficulty: Difficulty,
+  where: string
+): string[] =>
+  difficulty === 1
+    ? []
+    : wrongs
+        .filter((wrong) => whyOf(wrong) === undefined)
+        .map(
+          (wrong) =>
+            `${where}: a medium or hard question says why each wrong option is wrong; "${optionText(wrong)}" has no why`
+        );
+
 const readingQuestionProblems = (
   question: ReadingQuestion,
   points: ReadonlySet<string>,
@@ -1370,15 +1473,7 @@ const readingQuestionProblems = (
       )
     );
   }
-  if (question.difficulty > 1) {
-    for (const wrong of wrongs) {
-      if (whyOf(wrong) === undefined) {
-        problems.push(
-          `${where}: a medium or hard question says why each wrong option is wrong; "${optionText(wrong)}" has no why`
-        );
-      }
-    }
-  }
+  problems.push(...whyProblems(wrongs, question.difficulty, where));
   for (const point of question.points ?? []) {
     if (!points.has(point)) {
       problems.push(`${where}: grammar point "${point}" is not in the list`);
@@ -1542,6 +1637,133 @@ const questionsProblems = (
     )
   );
 
+/** A 漢字読み or 表記 question's underlined word: `__半分__`. */
+const TARGET = /__([^_]+)__/gu;
+/** What a 漢字読み answer is written in: the paper asks for it ひらがなで. */
+const HIRAGANA = /^\p{Script=Hiragana}+$/u;
+
+/** The underlined words in a vocabulary sentence. */
+export const targetsOf = (sentence: string): string[] =>
+  [...sentence.matchAll(TARGET)].map(([, word]) => word);
+
+/** A vocabulary sentence with its underlined word shown another way: written, or with its reading. */
+export const withTarget = (
+  sentence: string,
+  show: (word: string) => string
+): string => sentence.replace(TARGET, (_, word: string) => show(word));
+
+/** A vocabulary sentence without its underlined word. */
+const outsideTargets = (sentence: string): string =>
+  sentence.replaceAll(TARGET, ``);
+
+const kanjiIn = (text: string): string[] =>
+  text.match(/\p{Script=Han}/gu) ?? [];
+
+/**
+ * What is mechanically wrong with a Section 1 item.
+ *
+ * The paper's script rule is the heart of it: everything in kana except what is tested. A kanji elsewhere would need a reading the paper does not print, and a reading on the card could give a 漢字読み answer away.
+ */
+const vocabProblems = (item: VocabItem): string[] => {
+  const where = item.id;
+  const texts = item.wrong.map(optionText);
+  const options = [item.answer, ...texts];
+  const targets = targetsOf(item.sentence);
+  const problems: string[] = [];
+
+  if (texts.includes(item.answer)) {
+    problems.push(`${where}: the answer is also in the wrong pool`);
+  }
+  if (new Set(texts).size !== texts.length) {
+    problems.push(`${where}: the wrong pool repeats an option`);
+  }
+  if (/[{}|]/u.test(item.sentence)) {
+    problems.push(
+      `${where}: Section 1 prints no readings; write the sentence without ruby`
+    );
+  }
+  problems.push(...whyProblems(item.wrong, item.difficulty, where));
+
+  const underlined = item.type === `kanji` || item.type === `spelling`;
+  if (underlined && targets.length !== 1) {
+    problems.push(`${where}: underline exactly one word, as __…__`);
+  }
+  if (!underlined && targets.length > 0) {
+    problems.push(`${where}: only 漢字読み and 表記 underline a word`);
+  }
+  const blanks = item.sentence.split(BLANK).length - 1;
+  if (item.type === `context` ? blanks !== 1 : blanks > 0) {
+    problems.push(
+      item.type === `context`
+        ? `${where}: a 文脈規定 sentence has exactly one ${BLANK}`
+        : `${where}: only 文脈規定 has a ${BLANK}`
+    );
+  }
+
+  // Everything but the tested word is kana.
+  const outside =
+    item.type === `kanji` ? outsideTargets(item.sentence) : item.sentence;
+  for (const char of kanjiIn(outside)) {
+    problems.push(
+      `${where}: kanji ${char} in the sentence; Section 1 writes everything but the tested word in kana`
+    );
+  }
+
+  switch (item.type) {
+    case `kanji`: {
+      const [target = ``] = targets;
+      if (kanjiIn(target).length === 0) {
+        problems.push(`${where}: the underlined word has no kanji to read`);
+      }
+      for (const char of kanjiIn(target)) {
+        if (!PAPER_KANJI.has(char)) {
+          problems.push(
+            `${where}: kanji ${char} is above N4; the paper would not ask its reading`
+          );
+        }
+      }
+      for (const option of options) {
+        if (!HIRAGANA.test(option)) {
+          problems.push(
+            `${where}: option "${option}" is not hiragana; 漢字読み answers are written ひらがなで`
+          );
+        }
+      }
+      break;
+    }
+    case `spelling`: {
+      const [target = ``] = targets;
+      if (!KANA.test(target.replaceAll(` `, ``))) {
+        problems.push(
+          `${where}: the underlined word must be kana; it is what the student spells`
+        );
+      }
+      if (HIRAGANA.test(item.answer)) {
+        problems.push(
+          `${where}: the answer is all hiragana; a 表記 answer is written in kanji or katakana`
+        );
+      }
+      for (const char of kanjiIn(item.answer)) {
+        if (!PAPER_KANJI.has(char)) {
+          problems.push(
+            `${where}: kanji ${char} is above N4; the paper would not ask the student to write it`
+          );
+        }
+      }
+      break;
+    }
+    case `context`:
+    case `paraphrase`:
+      for (const char of options.flatMap(kanjiIn)) {
+        problems.push(
+          `${where}: kanji ${char} in an option; Section 1 writes these in kana`
+        );
+      }
+      break;
+  }
+  return problems;
+};
+
 export const itemProblems = (
   item: Item,
   points: ReadonlySet<string>
@@ -1573,8 +1795,119 @@ export const itemProblems = (
         ...materialProblems(item.material, item.id),
         ...questionsProblems(item.questions, points, item.id)
       ];
+    case `kanji`:
+    case `spelling`:
+    case `context`:
+    case `paraphrase`:
+      return vocabProblems(item);
   }
 };
+
+/**
+ * `data/jlpt/vocab.json`: the N5 and N4 words, as JMdict writes and reads them, and every reading of their kanji spellings. Built by `exam:vocab`.
+ */
+export const vocabListSchema = v.strictObject({
+  source: text,
+  levels: text,
+  license: text,
+  words: v.array(
+    v.strictObject({
+      level: v.picklist([5, 4]),
+      kanji: v.array(text),
+      kana: v.array(text)
+    })
+  ),
+  /** Every reading JMdict gives a kanji spelling, from every entry that has it. */
+  readings: v.record(v.string(), v.array(text))
+});
+export type VocabList = v.InferOutput<typeof vocabListSchema>;
+
+type ListedWord = VocabList[`words`][number];
+
+/** Every listed word a spelling or reading belongs to. */
+const listedAs = (list: VocabList, form: string): ListedWord[] =>
+  list.words.filter(
+    (word) => word.kanji.includes(form) || word.kana.includes(form)
+  );
+
+/**
+ * What the word list says is wrong with a 漢字読み or 表記 item.
+ *
+ * The trap a reviewer misses most: an option that is wrong here but right somewhere. 大人 is おとな, but JMdict also reads it だいにん, as a fare sign does; はし is 橋 and also 箸. So no 漢字読み option may be another reading of its kanji, and no 表記 option another N5 or N4 word with the same reading. An underlined word that is not the word's own form (書いて for 書く) is checked only for its word.
+ */
+export const wordProblems = (
+  items: readonly Item[],
+  list: VocabList
+): string[] => {
+  const readings = new Map(Object.entries(list.readings));
+  return items.flatMap((item) => {
+    if (item.type !== `kanji` && item.type !== `spelling`) return [];
+    const where = item.id;
+    if (listedAs(list, item.word).length === 0) {
+      return [
+        `${where}: ${item.word} is not an N5 or N4 word on the list; check its spelling, or choose another word`
+      ];
+    }
+    const [target = ``] = targetsOf(item.sentence);
+    const wrongs = item.wrong.map(optionText);
+    const problems: string[] = [];
+
+    if (item.type === `kanji`) {
+      const read = readings.get(target);
+      if (read === undefined) return [];
+      if (!read.includes(item.answer)) {
+        problems.push(
+          `${where}: JMdict does not read ${target} as ${item.answer}`
+        );
+      }
+      for (const wrong of wrongs.filter((option) => read.includes(option))) {
+        problems.push(
+          `${where}: ${wrong} is also a reading of ${target}, so the option is right somewhere`
+        );
+      }
+      return problems;
+    }
+
+    const kana = target.replaceAll(` `, ``);
+    const sameSound = list.words.filter((word) => word.kana.includes(kana));
+    const own = sameSound.filter(
+      (word) => word.kanji.includes(item.word) || word.kana.includes(item.word)
+    );
+    if (
+      own.length > 0 &&
+      !own.some(
+        (word) =>
+          word.kanji.includes(item.answer) || word.kana.includes(item.answer)
+      )
+    ) {
+      problems.push(
+        `${where}: ${item.answer} is not how JMdict writes ${kana}`
+      );
+    }
+    for (const wrong of wrongs) {
+      if (
+        sameSound.some(
+          (word) => word.kanji.includes(wrong) || word.kana.includes(wrong)
+        )
+      ) {
+        problems.push(
+          `${where}: ${wrong} is also an N5 or N4 word read ${kana}, so the option is right somewhere`
+        );
+      }
+    }
+    return problems;
+  });
+};
+
+/** What the word list says a reviewer should look at: a word from N4, which the N5 paper rarely tests. */
+export const wordHints = (items: readonly Item[], list: VocabList): string[] =>
+  items.flatMap((item) =>
+    (item.type === `kanji` || item.type === `spelling`) &&
+    listedAs(list, item.word).length > 0 &&
+    listedAs(list, item.word).every((word) => word.level === 4)
+      ? [`${item.id}: ${item.word} is an N4 word; the N5 paper tests N5 words`]
+      : []
+  );
 
 /** Problems that only show across the whole corpus. */
 export const corpusProblems = (items: readonly Item[]): string[] => {
@@ -1624,9 +1957,8 @@ export const itemHints = (item: Item): string[] => {
             words: false
           })
         )
-      : item.type === `compose`
-        ? []
-        : item.questions.flatMap((question, index) =>
+      : item.type === `short` || item.type === `mid` || item.type === `info`
+        ? item.questions.flatMap((question, index) =>
             `wrong` in question
               ? [
                   {
@@ -1639,19 +1971,31 @@ export const itemHints = (item: Item): string[] => {
                   }
                 ]
               : []
-          );
-  return pools.flatMap(({ label, options, words }) => {
-    const shared = sharedEnding(options.map(plain));
-    const space = shared.indexOf(` `);
-    const ending = !words
-      ? shared
-      : space === -1
-        ? ``
-        : shared.slice(space + 1);
-    return ending === ``
-      ? []
-      : [
-          `${item.id} ${label}: every option ends in "${ending}"; move it into the sentence unless it is part of what varies`
-        ];
-  });
+          )
+        : // A ★ window's options are its chunks; a vocabulary option is a whole word or sentence, as the paper prints it.
+          [];
+  const giveaway =
+    (item.type === `kanji` || item.type === `spelling`) &&
+    outsideTargets(item.sentence).includes(item.answer)
+      ? [
+          `${item.id}: the answer "${item.answer}" also appears outside the underlined word, which may give it away`
+        ]
+      : [];
+  return [
+    ...giveaway,
+    ...pools.flatMap(({ label, options, words }) => {
+      const shared = sharedEnding(options.map(plain));
+      const space = shared.indexOf(` `);
+      const ending = !words
+        ? shared
+        : space === -1
+          ? ``
+          : shared.slice(space + 1);
+      return ending === ``
+        ? []
+        : [
+            `${item.id} ${label}: every option ends in "${ending}"; move it into the sentence unless it is part of what varies`
+          ];
+    })
+  ];
 };

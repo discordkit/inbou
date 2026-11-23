@@ -62,15 +62,16 @@ The full design is in [docs/specs/conjugation-quiz.md](docs/specs/conjugation-qu
 
 Practice in the shape of the real JLPT paper. The bot asks one question at a time with numbered buttons. Everyone votes privately, can change their vote until the question closes, and scores if they are right. Speed does not count, and harder questions are worth more. Each reveal teaches the point the question tested and, where Tofugu has an article on it, links there. The end of a test shows everyone's score, with a private breakdown for each player that links each missed question the same way.
 
-| Command         | What it does                                                                                                               |
-| --------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `/bunpou start` | An N5 grammar (文法) test, shaped like the paper: 9 forms to choose, 4 sentences to order (★), and a passage.              |
-| `/dokkai start` | An N5 reading (読解) test, shaped like the paper: two short texts, a longer text with two questions, and a page to search. |
-| `/bunpou end`   | End the test in this channel and show the results. `/dokkai end` does the same.                                            |
+| Command         | What it does                                                                                                                             |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `/bunpou start` | An N5 grammar (文法) test, shaped like the paper: 9 forms to choose, 4 sentences to order (★), and a passage.                            |
+| `/dokkai start` | An N5 reading (読解) test, shaped like the paper: two short texts, a longer text with two questions, and a page to search.               |
+| `/goi start`    | An N5 vocabulary (文字・語彙) test, shaped like the paper: 7 kanji to read, 5 words to write, 6 blanks to fill and 3 sentences to match. |
+| `/bunpou end`   | End the test in this channel and show the results. `/dokkai end` and `/goi end` do the same.                                             |
 
-Together the two tests are the real paper's grammar-and-reading section, 22 questions, and their timers add up to its 40 minutes. In a reading test, a student who chose a wrong option is told privately why it was wrong, just after the answer is revealed; the channel sees only the answer and a short note. The page to search is a picture of a real kind of Japanese document, such as a bus-stop timetable, a receipt or a medicine bag, drawn in code at build time.
+Together `/bunpou` and `/dokkai` are the real paper's grammar-and-reading section, 22 questions, and their timers add up to its 40 minutes. `/goi` is its vocabulary section, 21 questions in 20 minutes. In reading and vocabulary tests, a student who chose a wrong option is told privately why it was wrong, just after the answer is revealed; the channel sees only the answer and a short note. The page to search is a picture of a real kind of Japanese document, such as a bus-stop timetable, a receipt or a medicine bag, drawn in code at build time.
 
-Every question is written and reviewed by hand. The design, and the plan for full-section tests (`/moshi`), is in [docs/specs/jlpt-mock-tests.md](docs/specs/jlpt-mock-tests.md).
+Every question is written and reviewed by hand. Vocabulary questions are also checked against JMdict, so a wrong option can't be a real reading or spelling of the word. The design, and the plan for full-section tests (`/moshi`), is in [docs/specs/jlpt-mock-tests.md](docs/specs/jlpt-mock-tests.md).
 
 ### What it stores, and how to stop it
 
@@ -190,18 +191,19 @@ identically and keeps no leaderboard, rather than refusing to start.
 
 ## 🔧 Running it
 
-| What              | Command                    | Notes                                                              |
-| ----------------- | -------------------------- | ------------------------------------------------------------------ |
-| Local dev         | `vp run dev`               | Runs both Workers and the DO in real workerd via Miniflare.        |
-| Tests             | `vp test`                  | Drives a real Durable Object inside workerd.                       |
-| Bundle check      | `vp run check:bundle`      | Fails if the bundle pulls in a Node builtin.                       |
-| Register commands | `vp run commands:register` | Dev: pushes to `DISCORD_GUILD_ID`, instantly.                      |
-| Publish commands  | `vp run commands:publish`  | Global: every guild that has the bot. What users get.              |
-| Migrate scores    | `vp run scores:migrate`    | Applies the D1 schema locally. Add `--remote` for live.            |
-| Rebuild corpus    | `vp run corpus:build`      | Regenerates the word list from JMdict. Rarely needed.              |
-| Build mock tests  | `vp run exam:build`        | Checks the test items and writes the reviewed ones.                |
-| Draw pictures     | `vp run exam:draw`         | Draws the 問題6 pictures into `dist/assets`.                       |
-| Deploy            | `vp run deploy`            | Build, draw, migrate, deploy all three Workers, register commands. |
+| What              | Command                    | Notes                                                                           |
+| ----------------- | -------------------------- | ------------------------------------------------------------------------------- |
+| Local dev         | `vp run dev`               | Runs both Workers and the DO in real workerd via Miniflare.                     |
+| Tests             | `vp test`                  | Drives a real Durable Object inside workerd.                                    |
+| Bundle check      | `vp run check:bundle`      | Fails if the bundle pulls in a Node builtin.                                    |
+| Register commands | `vp run commands:register` | Dev: pushes to `DISCORD_GUILD_ID`, instantly.                                   |
+| Publish commands  | `vp run commands:publish`  | Global: every guild that has the bot. What users get.                           |
+| Migrate scores    | `vp run scores:migrate`    | Applies the D1 schema locally. Add `--remote` for live.                         |
+| Rebuild corpus    | `vp run corpus:build`      | Regenerates the word list from JMdict. Rarely needed.                           |
+| Build mock tests  | `vp run exam:build`        | Checks the test items and writes the reviewed ones.                             |
+| Rebuild word list | `vp run exam:vocab`        | Regenerates the N5/N4 list vocabulary items are checked against. Rarely needed. |
+| Draw pictures     | `vp run exam:draw`         | Draws the 問題6 pictures into `dist/assets`.                                    |
+| Deploy            | `vp run deploy`            | Build, draw, migrate, deploy all three Workers, register commands.              |
 
 Slash commands are registered over REST and persist on Discord's side, so this is a deliberate step rather than something the bot does at boot. Re-running it replaces the whole set, which is what makes a removed command disappear.
 
