@@ -1888,7 +1888,7 @@
 
 - id: n5-g1-0125
   type: kanji
-  status: draft
+  status: reviewed
   word: 西
   sentence: "わたしの へやの まどは __西__に あります。"
   en: "The window of my room faces west."
@@ -1899,7 +1899,7 @@
 
 - id: n5-g1-0126
   type: kanji
-  status: draft
+  status: reviewed
   word: 赤い
   sentence: "__赤い__ りんごを みっつ かいました。"
   en: "I bought three red apples."
@@ -1910,7 +1910,7 @@
 
 - id: n5-g1-0127
   type: kanji
-  status: draft
+  status: reviewed
   word: お兄さん
   sentence: "__お兄さん__は なんさいですか。"
   en: "How old is your older brother?"
@@ -1921,7 +1921,7 @@
 
 - id: n5-g1-0128
   type: kanji
-  status: draft
+  status: reviewed
   word: 村
   sentence: "おじいさんは ちいさな __村__に すんで います。"
   en: "My grandfather lives in a small village."
@@ -1932,7 +1932,7 @@
 
 - id: n5-g1-0129
   type: kanji
-  status: draft
+  status: reviewed
   word: 妹
   sentence: "__妹__は まだ ろくさいです。"
   en: "My younger sister is only six."
@@ -1943,7 +1943,7 @@
 
 - id: n5-g1-0130
   type: kanji
-  status: draft
+  status: reviewed
   word: 男の子
   sentence: "あの __男の子__は だれですか。"
   en: "Who is that boy?"
@@ -1954,7 +1954,7 @@
 
 - id: n5-g1-0131
   type: kanji
-  status: draft
+  status: reviewed
   word: 五つ
   sentence: "りんごを __五つ__ ください。"
   en: "Five apples, please."
@@ -1971,7 +1971,7 @@
 
 - id: n5-g1-0132
   type: kanji
-  status: draft
+  status: reviewed
   word: 茶わん
   sentence: "あたらしい __茶わん__で ごはんを たべます。"
   en: "I eat my rice from a new rice bowl."
@@ -1988,7 +1988,7 @@
 
 - id: n5-g1-0133
   type: kanji
-  status: draft
+  status: reviewed
   word: 言う
   sentence: "せんせいは なんと __言いました__か。"
   en: "What did the teacher say?"
@@ -2005,7 +2005,7 @@
 
 - id: n5-g1-0134
   type: kanji
-  status: draft
+  status: reviewed
   word: お手洗い
   sentence: "__お手洗い__は にかいに あります。"
   en: "The toilets are on the second floor."
@@ -2022,7 +2022,7 @@
 
 - id: n5-g1-0135
   type: kanji
-  status: draft
+  status: reviewed
   word: 九つ
   sentence: "この へやには いすが __九つ__ あります。"
   en: "There are nine chairs in this room."
@@ -2039,7 +2039,7 @@
 
 - id: n5-g1-0136
   type: kanji
-  status: draft
+  status: reviewed
   word: 六日
   sentence: "__六日__に ははが くにから きます。"
   en: "My mother is coming from my home country on the 6th."

@@ -1676,7 +1676,7 @@
 
 - id: n5-g2-0109
   type: spelling
-  status: draft
+  status: reviewed
   word: 太い
   sentence: "この えんぴつは __ふとい__です。"
   en: "This pencil is thick."
@@ -1687,7 +1687,7 @@
 
 - id: n5-g2-0110
   type: spelling
-  status: draft
+  status: reviewed
   word: 早い
   sentence: "けさは __はやく__ おきました。"
   en: "I got up early this morning."
@@ -1698,7 +1698,7 @@
 
 - id: n5-g2-0111
   type: spelling
-  status: draft
+  status: reviewed
   word: ゼロ
   sentence: "__ぜろ__から きゅうまで かいて ください。"
   en: "Please write from zero to nine."
@@ -1709,7 +1709,7 @@
 
 - id: n5-g2-0112
   type: spelling
-  status: draft
+  status: reviewed
   word: グラム
   sentence: "さとうを 500 __ぐらむ__ かいました。"
   en: "I bought 500 grams of sugar."
@@ -1720,7 +1720,7 @@
 
 - id: n5-g2-0113
   type: spelling
-  status: draft
+  status: reviewed
   word: プール
   sentence: "がっこうの __ぷーる__は おおきいです。"
   en: "The school's pool is big."
@@ -1731,7 +1731,7 @@
 
 - id: n5-g2-0114
   type: spelling
-  status: draft
+  status: reviewed
   word: 土曜日
   sentence: "__どようび__に えいがを みます。"
   en: "I'm going to see a film on Saturday."
@@ -1742,7 +1742,7 @@
 
 - id: n5-g2-0115
   type: spelling
-  status: draft
+  status: reviewed
   word: 青い
   sentence: "この __あおい__ ノートは だれのですか。"
   en: "Whose is this blue notebook?"
@@ -1753,7 +1753,7 @@
 
 - id: n5-g2-0116
   type: spelling
-  status: draft
+  status: reviewed
   word: 開ける
   sentence: "あついですから、まどを __あけます__。"
   en: "It's hot, so I'll open the window."
@@ -1770,7 +1770,7 @@
 
 - id: n5-g2-0117
   type: spelling
-  status: draft
+  status: reviewed
   word: シャワー
   sentence: "この へやには __しゃわー__が ありません。"
   en: "This room has no shower."
@@ -1787,7 +1787,7 @@
 
 - id: n5-g2-0118
   type: spelling
-  status: draft
+  status: reviewed
   word: コップ
   sentence: "__こっぷ__に みずを いれて ください。"
   en: "Please put some water in the glass."
@@ -1804,7 +1804,7 @@
 
 - id: n5-g2-0119
   type: spelling
-  status: draft
+  status: reviewed
   word: 天気
   sentence: "あしたの __てんき__は どうですか。"
   en: "What will the weather be like tomorrow?"
@@ -1821,7 +1821,7 @@
 
 - id: n5-g2-0120
   type: spelling
-  status: draft
+  status: reviewed
   word: 魚
   sentence: "この __さかな__は おいしいです。"
   en: "This fish is delicious."
@@ -1838,7 +1838,7 @@
 
 - id: n5-g2-0121
   type: spelling
-  status: draft
+  status: reviewed
   word: カレンダー
   sentence: "かべに __かれんだー__が あります。"
   en: "There's a calendar on the wall."
@@ -1855,7 +1855,7 @@
 
 - id: n5-g2-0122
   type: spelling
-  status: draft
+  status: reviewed
   word: レコード
   sentence: "ちちは よる __れこーど__を ききます。"
   en: "My father listens to records in the evening."

@@ -1194,7 +1194,7 @@
 
 - id: n5-g4-0079
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "こちらは やまださんです。"
   en: "This is Mr Yamada."
   answer: "この ひとは やまださんです。"
@@ -1209,7 +1209,7 @@
 
 - id: n5-g4-0080
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "あの かたは どなたですか。"
   en: "Who is that person?"
   answer: "あの ひとは だれですか。"
@@ -1224,7 +1224,7 @@
 
 - id: n5-g4-0081
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしは にほんごが すこし できます。"
   en: "I can speak a little Japanese."
   answer: "わたしは にほんごが すこし わかります。"
@@ -1239,7 +1239,7 @@
 
 - id: n5-g4-0082
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "いまから でかけます。"
   en: "I'm going out now."
   answer: "これから でかけます。"
@@ -1249,7 +1249,7 @@
 
 - id: n5-g4-0083
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "おじいさんは ことし 80さいです。"
   en: "My grandfather is 80 this year."
   answer: "ははの ちちは ことし 80さいです。"
@@ -1265,7 +1265,7 @@
 
 - id: n5-g4-0084
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "りっぱな いえですね。"
   en: "What a fine house!"
   answer: "おおきくて きれいな いえですね。"
@@ -1281,7 +1281,7 @@
 
 - id: n5-g4-0085
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "この まちには いろいろな くにの ひとが すんで います。"
   en: "People from many different countries live in this town."
   answer: "この まちには たくさんの くにの ひとが すんで います。"
@@ -1297,7 +1297,7 @@
 
 - id: n5-g4-0086
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "きのうは あめでしたから、そとへ でかけませんでした。"
   en: "It rained yesterday, so I didn't go out."
   answer: "きのうは あめでしたから、いちにち いえに いました。"
@@ -1313,7 +1313,7 @@
 
 - id: n5-g4-0087
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "しゅくだいを しました。それから、ほんを よみました。"
   en: "I did my homework. After that, I read a book."
   answer: "しゅくだいを してから、ほんを よみました。"
@@ -1329,7 +1329,7 @@
 
 - id: n5-g4-0088
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "わたしの へやは あねの へやより ひろいです。"
   en: "My room is bigger than my older sister's."
   answer: "あねの へやは わたしの へやより せまいです。"
@@ -1345,7 +1345,7 @@
 
 - id: n5-g4-0089
   type: paraphrase
-  status: draft
+  status: reviewed
   sentence: "きのうは すいようびでした。"
   en: "Yesterday was Wednesday."
   answer: "あしたは きんようびです。"
